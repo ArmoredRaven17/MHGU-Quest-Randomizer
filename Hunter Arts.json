@@ -1,0 +1,728 @@
+[
+  {
+    "HunterArtName": "Absolute Evasion",
+    "Weapon": "All"
+  },
+  {
+    "HunterArtName": "Absolute Readiness",
+    "Weapon": "All"
+  },
+  {
+    "HunterArtName": "Heal Gain",
+    "Weapon": "All"
+  },
+  {
+    "HunterArtName": "Escape Runner",
+    "Weapon": "All"
+  },
+  {
+    "HunterArtName": "Hunter's Oasis",
+    "Weapon": "All"
+  },
+  {
+    "HunterArtName": "Mass Combiner",
+    "Weapon": "All"
+  },
+  {
+    "HunterArtName": "Frenzy Fever",
+    "Weapon": "All"
+  },
+  {
+    "HunterArtName": "Castle Walls",
+    "Weapon": "All"
+  },
+  {
+    "HunterArtName": "Fortress Walls",
+    "Weapon": "All"
+  },
+  {
+    "HunterArtName": "Arisen Phoenix",
+    "Weapon": "All"
+  },
+
+  {
+    "HunterArtName": "Ground Slash I",
+    "Weapon": "Great Sword"
+  },
+  {
+    "HunterArtName": "Ground Slash II",
+    "Weapon": "Great Sword"
+  },
+  {
+    "HunterArtName": "Ground Slash III",
+    "Weapon": "Great Sword"
+  },
+  {
+    "HunterArtName": "Lion's Maw I",
+    "Weapon": "Great Sword"
+  },
+  {
+    "HunterArtName": "Lion's Maw II",
+    "Weapon": "Great Sword"
+  },
+  {
+    "HunterArtName": "Lion's Maw III",
+    "Weapon": "Great Sword"
+  },
+  {
+    "HunterArtName": "Brimstone Slash I",
+    "Weapon": "Great Sword"
+  },
+  {
+    "HunterArtName": "Brimstone Slash II",
+    "Weapon": "Great Sword"
+  },
+  {
+    "HunterArtName": "Brimstone Slash III",
+    "Weapon": "Great Sword"
+  },
+  {
+    "HunterArtName": "Moonbreaker I",
+    "Weapon": "Great Sword"
+  },
+  {
+    "HunterArtName": "Moonbreaker II",
+    "Weapon": "Great Sword"
+  },
+  {
+    "HunterArtName": "Moonbreaker III",
+    "Weapon": "Great Sword"
+  },
+
+  {
+    "HunterArtName": "Sakura Slash I",
+    "Weapon": "Long Sword"
+  },
+  {
+    "HunterArtName": "Sakura Slash II",
+    "Weapon": "Long Sword"
+  },
+  {
+    "HunterArtName": "Sakura Slash III",
+    "Weapon": "Long Sword"
+  },
+  {
+    "HunterArtName": "Unhinged Spirit I",
+    "Weapon": "Long Sword"
+  },
+  {
+    "HunterArtName": "Unhinged Spirit II",
+    "Weapon": "Long Sword"
+  },
+  {
+    "HunterArtName": "Unhinged Spirit III",
+    "Weapon": "Long Sword"
+  },
+  {
+    "HunterArtName": "Critical Juncture I",
+    "Weapon": "Long Sword"
+  },
+  {
+    "HunterArtName": "Critical Juncture II",
+    "Weapon": "Long Sword"
+  },
+  {
+    "HunterArtName": "Critical Juncture III",
+    "Weapon": "Long Sword"
+  },
+  {
+    "HunterArtName": "Devouring Demon I",
+    "Weapon": "Long Sword"
+  },
+  {
+    "HunterArtName": "Devouring Demon II",
+    "Weapon": "Long Sword"
+  },
+  {
+    "HunterArtName": "Devouring Demon III",
+    "Weapon": "Long Sword"
+  },
+
+  {
+    "HunterArtName": "Sword Dance I",
+    "Weapon": "Sword and Shield"
+  },
+  {
+    "HunterArtName": "Sword Dance II",
+    "Weapon": "Sword and Shield"
+  },
+  {
+    "HunterArtName": "Sword Dance III",
+    "Weapon": "Sword and Shield"
+  },
+  {
+    "HunterArtName": "Round Force I",
+    "Weapon": "Sword and Shield"
+  },
+  {
+    "HunterArtName": "Round Force II",
+    "Weapon": "Sword and Shield"
+  },
+  {
+    "HunterArtName": "Round Force III",
+    "Weapon": "Sword and Shield"
+  },
+  {
+    "HunterArtName": "Shoryugeki I",
+    "Weapon": "Sword and Shield"
+  },
+  {
+    "HunterArtName": "Shoryugeki II",
+    "Weapon": "Sword and Shield"
+  },
+  {
+    "HunterArtName": "Shoryugeki III",
+    "Weapon": "Sword and Shield"
+  },
+  {
+    "HunterArtName": "Chaos Oil I",
+    "Weapon": "Sword and Shield"
+  },
+  {
+    "HunterArtName": "Chaos Oil II",
+    "Weapon": "Sword and Shield"
+  },
+  {
+    "HunterArtName": "Chaos Oil III",
+    "Weapon": "Sword and Shield"
+  },
+
+  {
+    "HunterArtName": "Blood Wind I",
+    "Weapon": "Dual Blades"
+  },
+  {
+    "HunterArtName": "Blood Wind II",
+    "Weapon": "Dual Blades"
+  },
+  {
+    "HunterArtName": "Blood Wind III",
+    "Weapon": "Dual Blades"
+  },
+  {
+    "HunterArtName": "Aerial Slam I",
+    "Weapon": "Dual Blades"
+  },
+  {
+    "HunterArtName": "Aerial Slam II",
+    "Weapon": "Dual Blades"
+  },
+  {
+    "HunterArtName": "Aerial Slam III",
+    "Weapon": "Dual Blades"
+  },
+  {
+    "HunterArtName": "Wolf's Maw I",
+    "Weapon": "Dual Blades"
+  },
+  {
+    "HunterArtName": "Wolf's Maw II",
+    "Weapon": "Dual Blades"
+  },
+  {
+    "HunterArtName": "Wolf's Maw III",
+    "Weapon": "Dual Blades"
+  },
+  {
+    "HunterArtName": "Spiral Slice I",
+    "Weapon": "Dual Blades"
+  },
+  {
+    "HunterArtName": "Spiral Slice II",
+    "Weapon": "Dual Blades"
+  },
+  {
+    "HunterArtName": "Spiral Slice III",
+    "Weapon": "Dual Blades"
+  },
+
+  {
+    "HunterArtName": "Spinning Meteor I",
+    "Weapon": "Hammer"
+  },
+  {
+    "HunterArtName": "Spinning Meteor II",
+    "Weapon": "Hammer"
+  },
+  {
+    "HunterArtName": "Spinning Meteor III",
+    "Weapon": "Hammer"
+  },
+  {
+    "HunterArtName": "Provoke I",
+    "Weapon": "Hammer"
+  },
+  {
+    "HunterArtName": "Provoke II",
+    "Weapon": "Hammer"
+  },
+  {
+    "HunterArtName": "Provoke III",
+    "Weapon": "Hammer"
+  },
+  {
+    "HunterArtName": "Typhoon Trigger I",
+    "Weapon": "Hammer"
+  },
+  {
+    "HunterArtName": "Typhoon Trigger II",
+    "Weapon": "Hammer"
+  },
+  {
+    "HunterArtName": "Typhoon Trigger III",
+    "Weapon": "Hammer"
+  },
+  {
+    "HunterArtName": "Impact Press I",
+    "Weapon": "Hammer"
+  },
+  {
+    "HunterArtName": "Impact Press II",
+    "Weapon": "Hammer"
+  },
+  {
+    "HunterArtName": "Impact Press III",
+    "Weapon": "Hammer"
+  },
+
+  {
+    "HunterArtName": "Euphony I",
+    "Weapon": "Hunting Horn"
+  },
+  {
+    "HunterArtName": "Euphony II",
+    "Weapon": "Hunting Horn"
+  },
+  {
+    "HunterArtName": "Euphony III",
+    "Weapon": "Hunting Horn"
+  },
+  {
+    "HunterArtName": "Sonic Smash I",
+    "Weapon": "Hunting Horn"
+  },
+  {
+    "HunterArtName": "Sonic Smash II",
+    "Weapon": "Hunting Horn"
+  },
+  {
+    "HunterArtName": "Sonic Smash III",
+    "Weapon": "Hunting Horn"
+  },
+  {
+    "HunterArtName": "Harmonize I",
+    "Weapon": "Hunting Horn"
+  },
+  {
+    "HunterArtName": "Harmonize II",
+    "Weapon": "Hunting Horn"
+  },
+  {
+    "HunterArtName": "Harmonize III",
+    "Weapon": "Hunting Horn"
+  },
+  {
+    "HunterArtName": "Invigoration I",
+    "Weapon": "Hunting Horn"
+  },
+  {
+    "HunterArtName": "Invigoration II",
+    "Weapon": "Hunting Horn"
+  },
+  {
+    "HunterArtName": "Invigoration III",
+    "Weapon": "Hunting Horn"
+  },
+
+  {
+    "HunterArtName": "Shield Assault I",
+    "Weapon": "Lance"
+  },
+  {
+    "HunterArtName": "Shield Assault II",
+    "Weapon": "Lance"
+  },
+  {
+    "HunterArtName": "Shield Assault III",
+    "Weapon": "Lance"
+  },
+  {
+    "HunterArtName": "Corkscrew Jab I",
+    "Weapon": "Lance"
+  },
+  {
+    "HunterArtName": "Corkscrew Jab II",
+    "Weapon": "Lance"
+  },
+  {
+    "HunterArtName": "Corkscrew Jab III",
+    "Weapon": "Lance"
+  },
+  {
+    "HunterArtName": "Enraged Guard I",
+    "Weapon": "Lance"
+  },
+  {
+    "HunterArtName": "Enraged Guard II",
+    "Weapon": "Lance"
+  },
+  {
+    "HunterArtName": "Enraged Guard III",
+    "Weapon": "Lance"
+  },
+  {
+    "HunterArtName": "Healing Shield I",
+    "Weapon": "Lance"
+  },
+  {
+    "HunterArtName": "Healing Shield II",
+    "Weapon": "Lance"
+  },
+  {
+    "HunterArtName": "Healing Shield III",
+    "Weapon": "Lance"
+  },
+
+  {
+    "HunterArtName": "Dragon Blast I",
+    "Weapon": "Gunlance"
+  },
+  {
+    "HunterArtName": "Dragon Blast II",
+    "Weapon": "Gunlance"
+  },
+  {
+    "HunterArtName": "Dragon Blast III",
+    "Weapon": "Gunlance"
+  },
+  {
+    "HunterArtName": "Blast Dash I",
+    "Weapon": "Gunlance"
+  },
+  {
+    "HunterArtName": "Blast Dash II",
+    "Weapon": "Gunlance"
+  },
+  {
+    "HunterArtName": "Blast Dash III",
+    "Weapon": "Gunlance"
+  },
+  {
+    "HunterArtName": "Dragon Breath I",
+    "Weapon": "Gunlance"
+  },
+  {
+    "HunterArtName": "Dragon Breath II",
+    "Weapon": "Gunlance"
+  },
+  {
+    "HunterArtName": "Dragon Breath III",
+    "Weapon": "Gunlance"
+  },
+  {
+    "HunterArtName": "AA Flare I",
+    "Weapon": "Gunlance"
+  },
+  {
+    "HunterArtName": "AA Flare II",
+    "Weapon": "Gunlance"
+  },
+  {
+    "HunterArtName": "AA Flare III",
+    "Weapon": "Gunlance"
+  },
+
+  {
+    "HunterArtName": "Trance Slash I",
+    "Weapon": "Switch Axe"
+  },
+  {
+    "HunterArtName": "Trance Slash II",
+    "Weapon": "Switch Axe"
+  },
+  {
+    "HunterArtName": "Trance Slash III",
+    "Weapon": "Switch Axe"
+  },
+  {
+    "HunterArtName": "Demon Riot I",
+    "Weapon": "Switch Axe"
+  },
+  {
+    "HunterArtName": "Demon Riot II",
+    "Weapon": "Switch Axe"
+  },
+  {
+    "HunterArtName": "Demon Riot III",
+    "Weapon": "Switch Axe"
+  },
+  {
+    "HunterArtName": "Energy Charge I",
+    "Weapon": "Switch Axe"
+  },
+  {
+    "HunterArtName": "Energy Charge II",
+    "Weapon": "Switch Axe"
+  },
+  {
+    "HunterArtName": "Energy Charge III",
+    "Weapon": "Switch Axe"
+  },
+  {
+    "HunterArtName": "Tempest Axe I",
+    "Weapon": "Switch Axe"
+  },
+  {
+    "HunterArtName": "Tempest Axe II",
+    "Weapon": "Switch Axe"
+  },
+  {
+    "HunterArtName": "Tempest Axe III",
+    "Weapon": "Switch Axe"
+  },
+
+  {
+    "HunterArtName": "Energy Blade I",
+    "Weapon": "Charge Blade"
+  },
+  {
+    "HunterArtName": "Energy Blade II",
+    "Weapon": "Charge Blade"
+  },
+  {
+    "HunterArtName": "Energy Blade III",
+    "Weapon": "Charge Blade"
+  },
+  {
+    "HunterArtName": "Limit Breaker I",
+    "Weapon": "Charge Blade"
+  },
+  {
+    "HunterArtName": "Limit Breaker II",
+    "Weapon": "Charge Blade"
+  },
+  {
+    "HunterArtName": "Limit Breaker III",
+    "Weapon": "Charge Blade"
+  },
+  {
+    "HunterArtName": "Healing Phial I",
+    "Weapon": "Charge Blade"
+  },
+  {
+    "HunterArtName": "Healing Phial II",
+    "Weapon": "Charge Blade"
+  },
+  {
+    "HunterArtName": "Healing Phial III",
+    "Weapon": "Charge Blade"
+  },
+  {
+    "HunterArtName": "Ripper Shield I",
+    "Weapon": "Charge Blade"
+  },
+  {
+    "HunterArtName": "Ripper Shield II",
+    "Weapon": "Charge Blade"
+  },
+  {
+    "HunterArtName": "Ripper Shield III",
+    "Weapon": "Charge Blade"
+  },
+
+  {
+    "HunterArtName": "Extract Hunter I",
+    "Weapon": "Insect Glaive"
+  },
+  {
+    "HunterArtName": "Extract Hunter II",
+    "Weapon": "Insect Glaive"
+  },
+  {
+    "HunterArtName": "Extract Hunter III",
+    "Weapon": "Insect Glaive"
+  },
+  {
+    "HunterArtName": "Swarm I",
+    "Weapon": "Insect Glaive"
+  },
+  {
+    "HunterArtName": "Swarm II",
+    "Weapon": "Insect Glaive"
+  },
+  {
+    "HunterArtName": "Swarm III",
+    "Weapon": "Insect Glaive"
+  },
+  {
+    "HunterArtName": "Bug Blow I",
+    "Weapon": "Insect Glaive"
+  },
+  {
+    "HunterArtName": "Bug Blow II",
+    "Weapon": "Insect Glaive"
+  },
+  {
+    "HunterArtName": "Bug Blow III",
+    "Weapon": "Insect Glaive"
+  },
+  {
+    "HunterArtName": "Bug Majeure I",
+    "Weapon": "Insect Glaive"
+  },
+  {
+    "HunterArtName": "Bug Majeure II",
+    "Weapon": "Insect Glaive"
+  },
+  {
+    "HunterArtName": "Bug Majeure III",
+    "Weapon": "Insect Glaive"
+  },
+
+  {
+    "HunterArtName": "Bullet Geyser I",
+    "Weapon": "Light Bowgun"
+  },
+  {
+    "HunterArtName": "Bullet Geyser II",
+    "Weapon": "Light Bowgun"
+  },
+  {
+    "HunterArtName": "Bullet Geyser III",
+    "Weapon": "Light Bowgun"
+  },
+  {
+    "HunterArtName": "Full House I",
+    "Weapon": "Light Bowgun"
+  },
+  {
+    "HunterArtName": "Full House II",
+    "Weapon": "Light Bowgun"
+  },
+  {
+    "HunterArtName": "Full House III",
+    "Weapon": "Light Bowgun"
+  },
+  {
+    "HunterArtName": "Rapid Fire Rain I",
+    "Weapon": "Light Bowgun"
+  },
+  {
+    "HunterArtName": "Rapid Fire Rain II",
+    "Weapon": "Light Bowgun"
+  },
+  {
+    "HunterArtName": "Rapid Fire Rain III",
+    "Weapon": "Light Bowgun"
+  },
+  {
+    "HunterArtName": "Charge Shot I",
+    "Weapon": "Light Bowgun"
+  },
+  {
+    "HunterArtName": "Charge Shot II",
+    "Weapon": "Light Bowgun"
+  },
+  {
+    "HunterArtName": "Charge Shot III",
+    "Weapon": "Light Bowgun"
+  },
+
+  {
+    "HunterArtName": "Super Nova I",
+    "Weapon": "Heavy Bowgun"
+  },
+  {
+    "HunterArtName": "Super Nova II",
+    "Weapon": "Heavy Bowgun"
+  },
+  {
+    "HunterArtName": "Super Nova III",
+    "Weapon": "Heavy Bowgun"
+  },
+  {
+    "HunterArtName": "Guns Blazing I",
+    "Weapon": "Heavy Bowgun"
+  },
+  {
+    "HunterArtName": "Guns Blazing II",
+    "Weapon": "Heavy Bowgun"
+  },
+  {
+    "HunterArtName": "Guns Blazing III",
+    "Weapon": "Heavy Bowgun"
+  },
+  {
+    "HunterArtName": "Gunpowder Infusion I",
+    "Weapon": "Heavy Bowgun"
+  },
+  {
+    "HunterArtName": "Gunpowder Infusion II",
+    "Weapon": "Heavy Bowgun"
+  },
+  {
+    "HunterArtName": "Gunpowder Infusion III",
+    "Weapon": "Heavy Bowgun"
+  },
+  {
+    "HunterArtName": "Void Piercer I",
+    "Weapon": "Heavy Bowgun"
+  },
+  {
+    "HunterArtName": "Void Piercer II",
+    "Weapon": "Heavy Bowgun"
+  },
+  {
+    "HunterArtName": "Void Piercer III",
+    "Weapon": "Heavy Bowgun"
+  },
+
+  {
+    "HunterArtName": "Triple Volley I",
+    "Weapon": "Bow"
+  },
+  {
+    "HunterArtName": "Triple Volley II",
+    "Weapon": "Bow"
+  },
+  {
+    "HunterArtName": "Triple Volley III",
+    "Weapon": "Bow"
+  },
+  {
+    "HunterArtName": "Haste Rain I",
+    "Weapon": "Bow"
+  },
+  {
+    "HunterArtName": "Haste Rain II",
+    "Weapon": "Bow"
+  },
+  {
+    "HunterArtName": "Haste Rain III",
+    "Weapon": "Bow"
+  },
+  {
+    "HunterArtName": "Blade Wire I",
+    "Weapon": "Bow"
+  },
+  {
+    "HunterArtName": "Blade Wire II",
+    "Weapon": "Bow"
+  },
+  {
+    "HunterArtName": "Blade Wire III",
+    "Weapon": "Bow"
+  },
+  {
+    "HunterArtName": "Tactical Retreat I",
+    "Weapon": "Bow"
+  },
+  {
+    "HunterArtName": "Tactical Retreat II",
+    "Weapon": "Bow"
+  },
+  {
+    "HunterArtName": "Tactical Retreat III",
+    "Weapon": "Bow"
+  }
+]

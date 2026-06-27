@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="MHGU_Quest_Randomizer.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MHGU_Quest_Randomizer"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="MHGU Quest Randomizer">
+
+    <Window.SystemBackdrop>
+        <MicaBackdrop />
+    </Window.SystemBackdrop>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <StackPanel Orientation="Vertical" Padding="10">
+        <ComboBox Name="questType" SelectionChanged="QuestType_SelectionChanged" Header="Type of Quest" PlaceholderText="select quest type" Width="200" Canvas.Top="50" Canvas.Left="20">
+            <x:String>Village</x:String>
+            <x:String>Hub</x:String>
+            <x:String>Pub</x:String>
+            <x:String>Special Permits</x:String>
+            <x:String>Events</x:String>
+        </ComboBox>
+         <!--This drop down will be used for star levels-->
+        <ComboBox Name="questLevel" DisplayMemberPath="QuestLevel" SelectedValuePath="QuestValue" Header="Quest Level" PlaceholderText="select level" Width="200" Canvas.Top="50" Canvas.Left="240">
+        </ComboBox>
+            <TextBlock>Prowler Filters</TextBlock>
+            <StackPanel Orientation="Horizontal">
+        <CheckBox Name="prowlerCheck"> Prowler?</CheckBox>
+        <CheckBox Name="prowlerQuestsCheck">Prowler Quests?</CheckBox>
+            </StackPanel>
+            <!--This check box is for added difficulty quests like EXs or Hypers-->
+            <TextBlock>Quest Filters</TextBlock>
+            <StackPanel Orientation="Horizontal">
+        <CheckBox Name="hyperCheck">Hypers?</CheckBox>
+        <CheckBox Name="eggCheck">Egg Delivery?</CheckBox>
+        <CheckBox Name="gatheringCheck">Gathering?</CheckBox>
+        <CheckBox Name="smMonstersCheck">Small Monsters?</CheckBox>
+            </StackPanel>
+            <TextBlock>Weapons</TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Name="gsCheck">Remove GS?</CheckBox>
+                <CheckBox Name="lsCheck">Remove LS?</CheckBox>
+                <CheckBox Name="snsCheck">Remove SnS?</CheckBox>
+                <CheckBox Name="dbCheck">Remove DB?</CheckBox>
+                <CheckBox Name="hmCheck">Remove Hm?</CheckBox>
+                <CheckBox Name="hhCheck">Remove HH?</CheckBox>
+                <CheckBox Name="lncCheck">Remove Lnc?</CheckBox>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Name="glCheck">Remove GL?</CheckBox>
+                <CheckBox Name="saCheck">Remove SA?</CheckBox>
+                <CheckBox Name="cbCheck">Remove CB?</CheckBox>
+                <CheckBox Name="igCheck">Remove IG</CheckBox>
+                <CheckBox Name="lbgCheck">Remove LBG?</CheckBox>
+                <CheckBox Name="hbgCheck">Remove HBG?</CheckBox>
+                <CheckBox IsChecked="True" IsEnabled="False" Name="bowCheck">Remove Bow?</CheckBox>
+            </StackPanel>
+            <TextBlock>Styles</TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Name="gldCheck">Remove Guild?</CheckBox>
+                <CheckBox Name="stkrCheck">Remove Striker?</CheckBox>
+                <CheckBox Name="adpCheck">Remove Adpet?</CheckBox>
+                <CheckBox Name="arlCheck">Remove Aerial</CheckBox>
+                <CheckBox Name="vlrCheck">Remove Valor?</CheckBox>
+                <CheckBox Name="alcCheck">Remove Alchemy?</CheckBox>
+            </StackPanel>
+        
+        <Button Name="submitButton" Click="SubmitButton_ClickAsync">Submit</Button>
+        
+        
+            <TextBlock>Quest Name:</TextBlock>
+            <TextBlock Padding="5" Name="questName" FontWeight="Bold"></TextBlock>
+            <TextBlock>Target Monster(s):</TextBlock>
+            <TextBlock Padding="5" Name="questMain" FontWeight="Bold"></TextBlock>
+            <TextBlock>Weapon Type:</TextBlock>
+            <TextBlock Padding="5" Name="weaponText" FontWeight="Bold"></TextBlock>
+        
+            <TextBlock>Hunting Style:</TextBlock>
+            <TextBlock Padding="5" Name="styleText" FontWeight="Bold"></TextBlock>
+            <TextBlock>Hunter Art 1:</TextBlock>
+            <TextBlock Padding="5" Name="hunterArt1" FontWeight="Bold"></TextBlock>
+            <TextBlock>Hunter Art 2:</TextBlock>
+            <TextBlock Padding="5" Name="hunterArt2" FontWeight="Bold"></TextBlock>
+            <TextBlock>Hunter Art 3:</TextBlock>
+            <TextBlock Padding="5" Name="hunterArt3" FontWeight="Bold"></TextBlock>
+    </StackPanel>
+    </ScrollViewer>
+</Window>

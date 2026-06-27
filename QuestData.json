@@ -1,0 +1,86 @@
+[
+  {
+    "Type": "Village",
+    "Name": "Village 1★ // Find the Ferns",
+    "Main": "Deliver 8 Unique Ferns",
+    "Level": 1,
+    "LgMonster": false,
+    "Prowler": false,
+    "Hyper": false,
+    "Egg": false,
+    "Gathering": true,
+    "SmMonsters": false
+  },
+  {
+    "Type": "Village",
+    "Name": "Village 1★ // Due for Dragon Amber",
+    "Main": "Deliver 3 Dragon Amber Pieces",
+    "Level": 1,
+    "LgMonster": false,
+    "Prowler": false,
+    "Hyper": false,
+    "Egg": false,
+    "Gathering": true,
+    "SmMonsters": false
+  },
+  {
+    "Type": "Village",
+    "Name": "Village 1★ // Medicinal Moths",
+    "Main": "Deliver 3 Immortal Moths",
+    "Level": 1,
+    "LgMonster": false,
+    "Prowler": false,
+    "Hyper": false,
+    "Egg": false,
+    "Gathering": true,
+    "SmMonsters": false
+  },
+  {
+    "Type": "Village",
+    "Name": "Village 1★ // Horns o' Plenty",
+    "Main": "Deliver 3 Kelbi Horns",
+    "Level": 1,
+    "LgMonster": false,
+    "Prowler": false,
+    "Hyper": false,
+    "Egg": false,
+    "Gathering": true,
+    "SmMonsters": false
+  },
+  {
+    "Type": "Village",
+    "Name": "Village 1★ // A Fungal Hunt",
+    "Main": "Deliver 5 Abyssal Mushrooms",
+    "Level": 1,
+    "LgMonster": false,
+    "Prowler": false,
+    "Hyper": false,
+    "Egg": false,
+    "Gathering": true,
+    "SmMonsters": false
+  },
+  {
+    "Type": "Village",
+    "Name": "Village 1★ // Wipe Out!",
+    "Main": "Slay 10 Maccao",
+    "Level": 2,
+    "LgMonster": false,
+    "Prowler": false,
+    "Hyper": false,
+    "Egg": false,
+    "Gathering": false,
+    "SmMonsters": true
+  },
+  {
+    "Type": "Village",
+    "Name": "Village 2★ // Attack of the Dee Bugg",
+    "Main": "Hunt Test Monster",
+    "Level": 2,
+    "LgMonster": true,
+    "Prowler": false,
+    "Hyper": false,
+    "Egg": false,
+    "Gathering": false,
+    "SmMonsters": false
+  }
+]
