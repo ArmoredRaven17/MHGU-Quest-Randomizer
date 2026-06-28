@@ -284,6 +284,49 @@
                                 </Border>
                             </StackPanel>
                         </Expander>
+                        <!-- Blacklist -->
+                        <Expander Header="Blacklist"
+                                  HorizontalAlignment="Stretch"
+                                  HorizontalContentAlignment="Stretch">
+                            <StackPanel Padding="4,4,0,4" Spacing="6">
+                                <TextBlock Text="Weapon + style combos to reroll automatically"
+                                           Style="{StaticResource CaptionTextBlockStyle}"
+                                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                           Margin="0,0,0,2"/>
+                                <Grid ColumnSpacing="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ComboBox x:Name="blWeaponCombo"
+                                              Grid.Column="0"
+                                              HorizontalAlignment="Stretch"
+                                              PlaceholderText="Weapon"
+                                              FontSize="12"/>
+                                    <ComboBox x:Name="blStyleCombo"
+                                              Grid.Column="1"
+                                              HorizontalAlignment="Stretch"
+                                              PlaceholderText="Style"
+                                              FontSize="12"/>
+                                    <Button x:Name="blAddButton"
+                                            Grid.Column="2"
+                                            Click="BlacklistAdd_Click"
+                                            Padding="8,4"
+                                            FontSize="12">Add</Button>
+                                </Grid>
+                                <Border MaxHeight="100"
+                                        BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="4"
+                                        Padding="4">
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                        <StackPanel x:Name="blacklistPanel" Spacing="3"/>
+                                    </ScrollViewer>
+                                </Border>
+                            </StackPanel>
+                        </Expander>
+
                         <!-- Prowler -->
                         <Expander Header="Prowler"
                                   HorizontalAlignment="Stretch"

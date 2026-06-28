@@ -7,7 +7,7 @@
 <title>MHGU Quest Randomizer</title>
 <link rel="icon" href="assets/MonsterIcons/MHGU-Question_Mark_Icon.webp">
 <!-- Bump ?v= on any styles/app/data change so browsers fetch fresh copies (no hard-refresh needed) -->
-<link rel="stylesheet" href="styles.css?v=18">
+<link rel="stylesheet" href="styles.css?v=19">
 </head>
 <body>
 <div id="app">
@@ -73,6 +73,19 @@
             <button id="artCollapse" class="btn tiny">Collapse All</button>
           </div>
           <div id="artTree" class="tree"></div>
+        </div>
+      </section>
+
+      <section class="panel" data-open="false">
+        <button class="panel-head">Blacklist <span class="chev">&#9662;</span></button>
+        <div class="panel-body">
+          <p class="hint">Weapon + style combos to reroll automatically (e.g. Bow + Aerial)</p>
+          <div class="bl-add">
+            <select id="blWeapon"></select>
+            <select id="blStyle"></select>
+            <button id="blAdd" class="btn tiny">Add</button>
+          </div>
+          <div id="blList" class="bl-list"></div>
         </div>
       </section>
 
@@ -191,7 +204,7 @@
   </div>
 </div>
 
-<script src="data.js?v=18"></script>
-<script src="app.js?v=18"></script>
+<script src="data.js?v=19"></script>
+<script src="app.js?v=19"></script>
 </body>
 </html>
