@@ -1064,6 +1064,30 @@ namespace MHGU_Quest_Randomizer
             _updatingArtSelection = false;
         }
 
+        private async void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            var secondary = (Brush)Application.Current.Resources["TextFillColorSecondaryBrush"];
+            var panel = new StackPanel { Spacing = 8, Width = 320 };
+            panel.Children.Add(new TextBlock { Text = "An unofficial, non-commercial fan tool.", TextWrapping = TextWrapping.Wrap });
+            panel.Children.Add(new TextBlock { Text = "Quest data: Kiranico (mhgu.kiranico.com)", TextWrapping = TextWrapping.Wrap });
+            panel.Children.Add(new TextBlock { Text = "Icons: the mhgu-editor project & the Monster Hunter Wiki", TextWrapping = TextWrapping.Wrap });
+            panel.Children.Add(new TextBlock
+            {
+                Text = "Monster Hunter Generations Ultimate is © Capcom. This tool is not affiliated with or endorsed by Capcom.",
+                TextWrapping = TextWrapping.Wrap,
+                Foreground = secondary,
+            });
+
+            var dialog = new ContentDialog
+            {
+                Title = "About / Attributions",
+                CloseButtonText = "Close",
+                XamlRoot = Content.XamlRoot,
+                Content = panel,
+            };
+            await dialog.ShowAsync();
+        }
+
         private async void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
             var panel = new StackPanel { Spacing = 16, Width = 240 };

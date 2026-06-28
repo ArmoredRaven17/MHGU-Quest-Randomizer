@@ -26,15 +26,21 @@
                            Foreground="{ThemeResource TextFillColorPrimaryBrush}"/>
             </StackPanel>
             <!-- Right margin clears the Windows min/max/close caption buttons (~138px) -->
-            <Button x:Name="settingsButton"
-                    Click="SettingsButton_Click"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    Margin="0,0,150,0"
-                    Padding="8,6"
-                    ToolTipService.ToolTip="Settings">
-                <FontIcon Glyph="&#xE713;" FontFamily="Segoe Fluent Icons" FontSize="16"/>
-            </Button>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center"
+                        Margin="0,0,150,0" Spacing="4">
+                <Button x:Name="aboutButton"
+                        Click="AboutButton_Click"
+                        Padding="8,6"
+                        ToolTipService.ToolTip="About / Attributions">
+                    <FontIcon Glyph="&#xE897;" FontFamily="Segoe Fluent Icons" FontSize="16"/>
+                </Button>
+                <Button x:Name="settingsButton"
+                        Click="SettingsButton_Click"
+                        Padding="8,6"
+                        ToolTipService.ToolTip="Settings">
+                    <FontIcon Glyph="&#xE713;" FontFamily="Segoe Fluent Icons" FontSize="16"/>
+                </Button>
+            </StackPanel>
         </Grid>
 
         <!-- Scaled content -->

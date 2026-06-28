@@ -525,6 +525,9 @@
   $("themeBtn").addEventListener("click", () => $("themeModal").classList.remove("hidden"));
   $("themeClose").addEventListener("click", () => $("themeModal").classList.add("hidden"));
   $("themeModal").addEventListener("click", (e) => { if (e.target.id === "themeModal") $("themeModal").classList.add("hidden"); });
+  $("aboutBtn").addEventListener("click", () => $("aboutModal").classList.remove("hidden"));
+  $("aboutClose").addEventListener("click", () => $("aboutModal").classList.add("hidden"));
+  $("aboutModal").addEventListener("click", (e) => { if (e.target.id === "aboutModal") $("aboutModal").classList.add("hidden"); });
 
   $("resetBtn").addEventListener("click", () => {
     ["f_hyper","f_egg","f_gathering","f_small","p_prowler","p_quests"].forEach(id => $(id).checked = false);
