@@ -1070,7 +1070,7 @@ namespace MHGU_Quest_Randomizer
             var panel = new StackPanel { Spacing = 8, Width = 340 };
             panel.Children.Add(new TextBlock { Text = "An unofficial, non-commercial fan tool. The original prototype was hand-built by the author and refined with Claude (Claude Code).", TextWrapping = TextWrapping.Wrap });
             panel.Children.Add(new TextBlock { Text = "Quest data: Kiranico (mhgu.kiranico.com)", TextWrapping = TextWrapping.Wrap });
-            panel.Children.Add(new TextBlock { Text = "Monster icons: monsterhunter.fandom.com", TextWrapping = TextWrapping.Wrap });
+            panel.Children.Add(new TextBlock { Text = "Icons: monsterhunter.fandom.com", TextWrapping = TextWrapping.Wrap });
             panel.Children.Add(new TextBlock { Text = "Hyper UI icon: monsterhunterwiki.org", TextWrapping = TextWrapping.Wrap });
             panel.Children.Add(new TextBlock
             {
