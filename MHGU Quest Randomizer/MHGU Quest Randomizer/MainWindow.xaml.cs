@@ -1067,13 +1067,14 @@ namespace MHGU_Quest_Randomizer
         private async void AboutButton_Click(object sender, RoutedEventArgs e)
         {
             var secondary = (Brush)Application.Current.Resources["TextFillColorSecondaryBrush"];
-            var panel = new StackPanel { Spacing = 8, Width = 320 };
-            panel.Children.Add(new TextBlock { Text = "An unofficial, non-commercial fan tool.", TextWrapping = TextWrapping.Wrap });
+            var panel = new StackPanel { Spacing = 8, Width = 340 };
+            panel.Children.Add(new TextBlock { Text = "An unofficial, non-commercial fan tool. The original prototype was hand-built by the author and refined with Claude (Claude Code).", TextWrapping = TextWrapping.Wrap });
             panel.Children.Add(new TextBlock { Text = "Quest data: Kiranico (mhgu.kiranico.com)", TextWrapping = TextWrapping.Wrap });
-            panel.Children.Add(new TextBlock { Text = "Icons: the mhgu-editor project & the Monster Hunter Wiki", TextWrapping = TextWrapping.Wrap });
+            panel.Children.Add(new TextBlock { Text = "Monster icons: monsterhunter.fandom.com", TextWrapping = TextWrapping.Wrap });
+            panel.Children.Add(new TextBlock { Text = "Hyper UI icon: monsterhunterwiki.org", TextWrapping = TextWrapping.Wrap });
             panel.Children.Add(new TextBlock
             {
-                Text = "Monster Hunter Generations Ultimate is © Capcom. This tool is not affiliated with or endorsed by Capcom.",
+                Text = "Monster Hunter content is owned by Capcom. This tool is not affiliated with or endorsed by Capcom.",
                 TextWrapping = TextWrapping.Wrap,
                 Foreground = secondary,
             });
