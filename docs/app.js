@@ -235,7 +235,7 @@
     }
     const byW = {};
     DATA.arts.forEach(a => { (byW[a.Weapon] = byW[a.Weapon] || {}); const b = baseName(a.HunterArtName); (byW[a.Weapon][b] = byW[a.Weapon][b] || []).push(a.HunterArtName); });
-    const weapons = Object.keys(byW).sort((x, y) => (x === "All") - (y === "All") || x.localeCompare(y));
+    const weapons = Object.keys(byW).sort((x, y) => (y === "All") - (x === "All") || x.localeCompare(y));
     for (const w of weapons) {
       const wg = groupEl(w);
       const wLeaves = [];
