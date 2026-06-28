@@ -352,7 +352,10 @@ namespace MHGU_Quest_Randomizer
         // Compared by list position since both bind the same ordered level list.
         private void QuestLevel_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!_syncingLevels && fromLevel.SelectedIndex >= 0 && questLevel.SelectedIndex >= 0)
+            // Arena uses a single selector, so no From/To sync there.
+            bool isArena = questType.SelectedItem?.ToString()
+                              ?.Equals("Arena", StringComparison.OrdinalIgnoreCase) == true;
+            if (!_syncingLevels && !isArena && fromLevel.SelectedIndex >= 0 && questLevel.SelectedIndex >= 0)
             {
                 _syncingLevels = true;
                 if (sender == fromLevel && fromLevel.SelectedIndex > questLevel.SelectedIndex)
@@ -419,11 +422,28 @@ namespace MHGU_Quest_Randomizer
                     break;
             }
 
+            bool isArena = selection == "arena";
             _syncingLevels = true;
             fromLevel.ItemsSource   = levels;
             questLevel.ItemsSource  = levels;
-            fromLevel.SelectedIndex  = 0;                                      // lowest
-            questLevel.SelectedIndex = levels.Count > 0 ? levels.Count - 1 : -1; // highest by default
+            if (isArena)
+            {
+                // Arena is a single category pick (All/Normal/Challenge), not a range —
+                // hide From Level and move the category selector under Quest Type.
+                fromLevel.Visibility = Visibility.Collapsed;
+                Microsoft.UI.Xaml.Controls.Grid.SetColumn(questLevel, 0);
+                questLevel.Header = "Arena Type";
+                fromLevel.SelectedIndex  = 0;
+                questLevel.SelectedIndex = 0;   // default "All"
+            }
+            else
+            {
+                fromLevel.Visibility = Visibility.Visible;
+                Microsoft.UI.Xaml.Controls.Grid.SetColumn(questLevel, 1);
+                questLevel.Header = "Up to Level";
+                fromLevel.SelectedIndex  = 0;                                      // lowest
+                questLevel.SelectedIndex = levels.Count > 0 ? levels.Count - 1 : -1; // highest
+            }
             _syncingLevels = false;
             UpdateRandomizeButton();
         }
@@ -502,11 +522,11 @@ namespace MHGU_Quest_Randomizer
                     int tier = GetSpecialPermitTier(q.Name ?? "");
                     if (tier < selectedFromLevel || tier > selectedLevel) continue;
                 }
-                // Arena: 0=All, 1=Normal, 2=Challenge — range filter; 0 bypasses both bounds.
+                // Arena: single category pick — 0=All (everything), else exact level match
+                // (1=Normal/Grudge Match, 2=Challenge/XX Trials).
                 else if (type.Equals("Arena", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (selectedLevel != 0 &&
-                        (q.Level < selectedFromLevel || q.Level > selectedLevel)) continue;
+                    if (selectedLevel != 0 && q.Level != selectedLevel) continue;
                 }
                 else
                 {
