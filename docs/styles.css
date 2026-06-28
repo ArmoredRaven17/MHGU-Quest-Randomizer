@@ -54,7 +54,7 @@ body{
   display:flex;justify-content:space-between;align-items:center;
 }
 .panel-head:hover{background:#ffffff0d}
-.chev{transition:transform .15s;font-size:15px;font-weight:700;color:var(--accent)}
+.chev{transition:transform .15s;font-size:20px;font-weight:700;color:var(--accent)}
 .panel[data-open="true"] .chev{transform:rotate(180deg)}
 .panel-body{display:none;padding:6px 12px 12px;flex-direction:column;gap:4px}
 .panel[data-open="true"] .panel-body{display:flex}
@@ -76,7 +76,7 @@ body{
 .tree .species>.chk{font-weight:600}
 .tree .children{margin-left:22px;display:none;flex-direction:column}
 .tree .species.open .children{display:flex}
-.tree .twist{cursor:pointer;width:18px;display:inline-block;text-align:center;color:var(--accent);font-size:14px;font-weight:700;user-select:none}
+.tree .twist{cursor:pointer;width:22px;display:inline-block;text-align:center;color:var(--accent);font-size:18px;font-weight:700;user-select:none}
 .tree .twist:hover{filter:brightness(1.4)}
 /* Hunter Arts tree (nestable groups) */
 .agrp .akids{margin-left:18px;display:none;flex-direction:column}
