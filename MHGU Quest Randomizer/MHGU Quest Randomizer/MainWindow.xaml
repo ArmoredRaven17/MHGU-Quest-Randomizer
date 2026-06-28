@@ -403,6 +403,12 @@
                                 <Image x:Name="questTargetIcon"
                                        Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
                                        Width="52" Height="52" VerticalAlignment="Center"/>
+                                <!-- Hyper aura overlay (slightly larger, framing the monster icon) -->
+                                <Image x:Name="hyperOverlay"
+                                       Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
+                                       Width="64" Height="64"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       Visibility="Collapsed" IsHitTestVisible="False"/>
                                 <Grid Grid.Row="0" Grid.Column="1" ColumnSpacing="8" VerticalAlignment="Bottom">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
