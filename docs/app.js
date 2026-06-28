@@ -91,13 +91,18 @@
   // ── Hunter arts ──────────────────────────────────────────────────────────
   // Arts list uses "Sword and Shield"; weapon list uses "Sword & Shield" — normalize.
   const normWeapon = (w) => w.toLowerCase().replace(/ & /g, " and ");
+  // Strip a trailing level suffix so "Haste Rain I" and "Haste Rain III" compare equal —
+  // the same art can't be equipped at two levels.
+  const artBase = (n) => n.replace(/ (III|II|I)$/, "");
   function rollArt(weapon, ex1, ex2) {
     const wn = normWeapon(weapon);
+    const b1 = ex1 ? artBase(ex1) : null, b2 = ex2 ? artBase(ex2) : null;
     for (let i = 0; i < 1000; i++) {
       const a = DATA.arts[rand(DATA.arts.length)];
-      if (a.HunterArtName === ex1 || a.HunterArtName === ex2) continue;
       const aw = a.Weapon.toLowerCase();
       if (aw !== "all" && aw !== wn) continue;
+      const b = artBase(a.HunterArtName);
+      if (b === b1 || b === b2) continue;
       return a.HunterArtName;
     }
     return null;
