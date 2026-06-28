@@ -22,6 +22,7 @@ namespace MHGU_Quest_Randomizer
         private List<HunterArt> _arts = new();
         private List<Monster> _monsters = new();
         private bool _updatingTreeSelection = false;
+        private bool _syncingLevels = false;
 
         private (CheckBox Pill, string Name)[] _weaponPills = Array.Empty<(CheckBox, string)>();
         private (CheckBox Pill, string Name)[] _stylePills  = Array.Empty<(CheckBox, string)>();
@@ -327,8 +328,22 @@ namespace MHGU_Quest_Randomizer
             submitButton.IsEnabled = hasQuestType && hasWeapon && hasStyle && hasMonster && biasOk;
         }
 
+        // Shared by both fromLevel and questLevel (Up to Level). Keeps From ≤ To:
+        // raising From above To pushes To up; lowering To below From pulls From down.
+        // Compared by list position since both bind the same ordered level list.
         private void QuestLevel_SelectionChanged(object sender, SelectionChangedEventArgs e)
-            => UpdateRandomizeButton();
+        {
+            if (!_syncingLevels && fromLevel.SelectedIndex >= 0 && questLevel.SelectedIndex >= 0)
+            {
+                _syncingLevels = true;
+                if (sender == fromLevel && fromLevel.SelectedIndex > questLevel.SelectedIndex)
+                    questLevel.SelectedIndex = fromLevel.SelectedIndex;
+                else if (sender == questLevel && questLevel.SelectedIndex < fromLevel.SelectedIndex)
+                    fromLevel.SelectedIndex = questLevel.SelectedIndex;
+                _syncingLevels = false;
+            }
+            UpdateRandomizeButton();
+        }
 
         private void QuestType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -385,10 +400,12 @@ namespace MHGU_Quest_Randomizer
                     break;
             }
 
+            _syncingLevels = true;
             fromLevel.ItemsSource   = levels;
-            fromLevel.SelectedIndex = 0;       // default to minimum
             questLevel.ItemsSource  = levels;
-            questLevel.SelectedIndex = -1;
+            fromLevel.SelectedIndex  = 0;                                      // lowest
+            questLevel.SelectedIndex = levels.Count > 0 ? levels.Count - 1 : -1; // highest by default
+            _syncingLevels = false;
             UpdateRandomizeButton();
         }
 

@@ -187,13 +187,22 @@
     const type = $("questType").value;
     const opts = LEVELS[type] || [];
     const from = $("fromLevel"), to = $("toLevel");
-    from.innerHTML = ""; to.innerHTML = `<option value="" disabled selected>Select level</option>`;
+    from.innerHTML = ""; to.innerHTML = "";
     opts.forEach(([lbl, val]) => {
       from.add(new Option(lbl, val));
       to.add(new Option(lbl, val));
     });
-    from.selectedIndex = 0; // default minimum
-    to.selectedIndex = 0;   // placeholder
+    from.selectedIndex = 0;                          // lowest
+    to.selectedIndex = Math.max(0, opts.length - 1); // highest by default
+    updateRollBtn();
+  }
+
+  // Keep From ≤ To (compared by list position, same ordered options in both).
+  function syncLevels(changed) {
+    const from = $("fromLevel"), to = $("toLevel");
+    if (from.selectedIndex < 0 || to.selectedIndex < 0) { updateRollBtn(); return; }
+    if (changed === "from" && from.selectedIndex > to.selectedIndex) to.selectedIndex = from.selectedIndex;
+    if (changed === "to" && to.selectedIndex < from.selectedIndex) from.selectedIndex = to.selectedIndex;
     updateRollBtn();
   }
 
@@ -350,7 +359,8 @@
       const p = h.parentElement; p.dataset.open = p.dataset.open === "true" ? "false" : "true";
     }));
   $("questType").addEventListener("change", fillLevels);
-  $("toLevel").addEventListener("change", updateRollBtn);
+  $("fromLevel").addEventListener("change", () => syncLevels("from"));
+  $("toLevel").addEventListener("change", () => syncLevels("to"));
   document.querySelectorAll("#weaponList,#styleList,#biasList").forEach(c =>
     c.addEventListener("change", updateRollBtn));
   $("p_prowler").addEventListener("change", updateRollBtn);
