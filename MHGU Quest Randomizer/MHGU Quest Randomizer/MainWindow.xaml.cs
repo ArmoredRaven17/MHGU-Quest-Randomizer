@@ -753,14 +753,22 @@ namespace MHGU_Quest_Randomizer
             return Random.Shared.NextDouble() < 1.0 / 3.0 ? art + " [SP]" : art;
         }
 
+        // Strip a trailing level suffix (" I"/" II"/" III") so e.g. "Haste Rain I" and
+        // "Haste Rain III" compare equal — you can't equip the same art at two levels.
+        private static string ArtBase(string name) =>
+            System.Text.RegularExpressions.Regex.Replace(name, @" (III|II|I)$", "");
+
         private string? RollArt(string weapon, string? exclude1, string? exclude2)
         {
+            string? b1 = exclude1 != null ? ArtBase(exclude1) : null;
+            string? b2 = exclude2 != null ? ArtBase(exclude2) : null;
             for (int attempt = 0; attempt < 1000; attempt++)
             {
                 var art = _arts[Random.Shared.Next(_arts.Count)];
-                if (art.HunterArtName == exclude1 || art.HunterArtName == exclude2) continue;
                 if (!art.Weapon.Equals("All", StringComparison.OrdinalIgnoreCase)
                     && !art.Weapon.Equals(weapon, StringComparison.OrdinalIgnoreCase)) continue;
+                string b = ArtBase(art.HunterArtName);
+                if (b == b1 || b == b2) continue;
                 return art.HunterArtName;
             }
             return null;
