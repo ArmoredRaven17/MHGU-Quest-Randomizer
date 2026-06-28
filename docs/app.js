@@ -189,8 +189,9 @@
   })();
   const includedMonsters = () => new Set(monsterChecks.filter(m => m.input.checked).map(m => m.name.toLowerCase()));
   function setAllMonsters(v) {
-    document.querySelectorAll("#monsterTree input").forEach(i => i.checked = v);
+    document.querySelectorAll("#monsterTree input").forEach(i => { i.checked = v; i.indeterminate = false; });
     updateRollBtn();
+    saveFilters();
   }
 
   // ── Hunter Arts tree (3-level: Weapon → Art → Levels) ─────────────────────
@@ -213,7 +214,7 @@
     artSyncing = false;
   }
   const excludedArts = () => new Set(artLeaves.filter(l => !l.input.checked).map(l => l.name));
-  function setAllArts(v) { artLeaves.forEach(l => l.input.checked = v); refreshArtGroups(); }
+  function setAllArts(v) { artLeaves.forEach(l => l.input.checked = v); refreshArtGroups(); saveFilters(); }
   (function buildArtTree() {
     const tree = $("artTree");
     const baseName = (n) => n.replace(/ (III|II|I)$/, "");
@@ -536,8 +537,56 @@
     setAllArts(true);
     syncProwlerQuests();
     updateRollBtn();
+    saveFilters();
   });
 
+  // ── Persist filter state (localStorage), like the theme ──────────────────
+  const FILTER_KEY = "mhgu-filters";
+  function refreshMonsterGroups() {
+    document.querySelectorAll("#monsterTree .species").forEach(sp => {
+      const spIn = sp.querySelector("input.sp");
+      const kids = [...sp.querySelectorAll(".children input")];
+      const n = kids.filter(i => i.checked).length;
+      spIn.checked = n === kids.length;
+      spIn.indeterminate = n > 0 && n < kids.length;
+    });
+  }
+  const uncheckedNames = (sel) => [...document.querySelectorAll(sel)].filter(i => !i.checked).map(i => i.dataset.name);
+  function saveFilters() {
+    const d = {
+      weapons: uncheckedNames("#weaponList input"),
+      styles: uncheckedNames("#styleList input"),
+      biases: uncheckedNames("#biasList input"),
+      monsters: monsterChecks.filter(m => !m.input.checked).map(m => m.name),
+      arts: artLeaves.filter(l => !l.input.checked).map(l => l.name),
+      t: {
+        hyper: $("f_hyper").checked, egg: $("f_egg").checked,
+        gathering: $("f_gathering").checked, small: $("f_small").checked,
+        prowler: $("p_prowler").checked, pQuests: $("p_quests").checked,
+      },
+    };
+    try { localStorage.setItem(FILTER_KEY, JSON.stringify(d)); } catch (e) {}
+  }
+  function loadFilters() {
+    let d; try { d = JSON.parse(localStorage.getItem(FILTER_KEY) || "null"); } catch (e) {}
+    if (!d) return;
+    const applyUnchecked = (sel, names) => { const s = new Set(names || []); document.querySelectorAll(sel).forEach(i => { if (s.has(i.dataset.name)) i.checked = false; }); };
+    applyUnchecked("#weaponList input", d.weapons);
+    applyUnchecked("#styleList input", d.styles);
+    applyUnchecked("#biasList input", d.biases);
+    const ms = new Set(d.monsters || []); monsterChecks.forEach(m => { if (ms.has(m.name)) m.input.checked = false; });
+    const as = new Set(d.arts || []);     artLeaves.forEach(l => { if (as.has(l.name)) l.input.checked = false; });
+    if (d.t) {
+      $("f_hyper").checked = !!d.t.hyper; $("f_egg").checked = !!d.t.egg;
+      $("f_gathering").checked = !!d.t.gathering; $("f_small").checked = !!d.t.small;
+      $("p_prowler").checked = !!d.t.prowler; $("p_quests").checked = !!d.t.pQuests;
+    }
+    refreshMonsterGroups(); refreshArtGroups();
+  }
+  // Save on any user-driven filter change (event delegation over the sidebar).
+  document.querySelector(".sidebar").addEventListener("change", saveFilters);
+
+  loadFilters();
   syncProwlerQuests();
   updateRollBtn();
 })();
