@@ -412,7 +412,13 @@
   $("toLevel").addEventListener("change", () => syncLevels("to"));
   document.querySelectorAll("#weaponList,#styleList,#biasList").forEach(c =>
     c.addEventListener("change", updateRollBtn));
-  $("p_prowler").addEventListener("change", updateRollBtn);
+  // "Prowler Quests?" only applies when "Prowler?" is on — only Prowlers can take them.
+  function syncProwlerQuests() {
+    const on = $("p_prowler").checked;
+    $("p_quests").disabled = !on;
+    if (!on) $("p_quests").checked = false;
+  }
+  $("p_prowler").addEventListener("change", () => { syncProwlerQuests(); updateRollBtn(); });
   $("rollBtn").addEventListener("click", randomize);
   $("monAll").addEventListener("click", () => setAllMonsters(true));
   $("monNone").addEventListener("click", () => setAllMonsters(false));
@@ -424,8 +430,10 @@
     ["f_hyper","f_egg","f_gathering","f_small","p_prowler","p_quests"].forEach(id => $(id).checked = false);
     document.querySelectorAll("#weaponList input,#styleList input,#biasList input").forEach(i => i.checked = true);
     setAllMonsters(true);
+    syncProwlerQuests();
     updateRollBtn();
   });
 
+  syncProwlerQuests();
   updateRollBtn();
 })();
