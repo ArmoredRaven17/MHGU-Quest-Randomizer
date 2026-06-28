@@ -148,9 +148,9 @@
     DATA.monsters.forEach(m => { (bySpecies[m.Species] = bySpecies[m.Species] || []).push(m.MonsterName); });
     Object.keys(bySpecies).sort().forEach(species => {
       const wrap = document.createElement("div");
-      wrap.className = "species open";
+      wrap.className = "species";
       const head = document.createElement("div");
-      head.innerHTML = `<span class="twist">▾</span>`;
+      head.innerHTML = `<span class="twist">▸</span>`;
       const lbl = document.createElement("label");
       lbl.className = "chk";
       lbl.innerHTML = `<input type="checkbox" class="sp" checked>${escapeHtml(species)}`;
@@ -178,7 +178,7 @@
         childInputs.forEach(i => i.checked = spInput.checked);
         updateRollBtn();
       });
-      head.querySelector(".twist").addEventListener("click", () => wrap.classList.toggle("open"));
+      head.querySelector(".twist").addEventListener("click", (e) => { wrap.classList.toggle("open"); e.target.textContent = wrap.classList.contains("open") ? "▾" : "▸"; });
       wrap.appendChild(head); wrap.appendChild(children);
       tree.appendChild(wrap);
     });
@@ -493,10 +493,24 @@
   }
   $("p_prowler").addEventListener("change", () => { syncProwlerQuests(); updateRollBtn(); });
   $("rollBtn").addEventListener("click", randomize);
-  $("monAll").addEventListener("click", () => setAllMonsters(true));
-  $("monNone").addEventListener("click", () => setAllMonsters(false));
-  $("artAll").addEventListener("click", () => setAllArts(true));
-  $("artNone").addEventListener("click", () => setAllArts(false));
+  // Expand/Collapse all groups (selection is managed by the checkboxes; at least one
+  // monster and one art should stay selected, so there are no All/None shortcuts).
+  function setMonstersOpen(open) {
+    document.querySelectorAll("#monsterTree .species").forEach(s => {
+      s.classList.toggle("open", open);
+      const tw = s.querySelector(".twist"); if (tw) tw.textContent = open ? "▾" : "▸";
+    });
+  }
+  function setArtsOpen(open) {
+    document.querySelectorAll("#artTree .agrp").forEach(g => {
+      g.classList.toggle("open", open);
+      const tw = g.querySelector(":scope > .ahead > .twist"); if (tw) tw.textContent = open ? "▾" : "▸";
+    });
+  }
+  $("monExpand").addEventListener("click", () => setMonstersOpen(true));
+  $("monCollapse").addEventListener("click", () => setMonstersOpen(false));
+  $("artExpand").addEventListener("click", () => setArtsOpen(true));
+  $("artCollapse").addEventListener("click", () => setArtsOpen(false));
   $("themeBtn").addEventListener("click", () => $("themeModal").classList.remove("hidden"));
   $("themeClose").addEventListener("click", () => $("themeModal").classList.add("hidden"));
   $("themeModal").addEventListener("click", (e) => { if (e.target.id === "themeModal") $("themeModal").classList.add("hidden"); });
