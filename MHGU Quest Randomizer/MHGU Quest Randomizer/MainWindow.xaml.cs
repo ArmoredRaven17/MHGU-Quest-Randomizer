@@ -283,6 +283,9 @@ namespace MHGU_Quest_Randomizer
             SetImage(bmbIcon,  Path.Combine(prowlerDir, "MH4G-Barrel_Icon_Brown.webp"));
             SetImage(gthIcon,  Path.Combine(prowlerDir, "MH4G-Boomerang_Icon_Blue.webp"));
             SetImage(bstIcon,  Path.Combine(prowlerDir, "FourthGen-Claw_Icon_Dark_Red.webp"));
+
+            // Hyper aura overlay (shown over the target icon for Hyper quests)
+            SetImage(hyperOverlay, Path.Combine(baseDir, "Assets", "MonsterIcons", "MHGU-Hyper_Monster_Icon.png"));
         }
 
         private static void SetImage(Image img, string path)
@@ -571,7 +574,8 @@ namespace MHGU_Quest_Randomizer
 
             questName.Text = quest.Name ?? "";
             questMain.Text = quest.Main ?? "";
-            hyperBadge.Visibility = quest.Hyper ? Visibility.Visible : Visibility.Collapsed;
+            hyperBadge.Visibility   = quest.Hyper ? Visibility.Visible : Visibility.Collapsed;
+            hyperOverlay.Visibility = quest.Hyper ? Visibility.Visible : Visibility.Collapsed;
 
             string baseDir = AppContext.BaseDirectory;
             // For Special Permits the Deviant is the true target; derive it from the quest name.
