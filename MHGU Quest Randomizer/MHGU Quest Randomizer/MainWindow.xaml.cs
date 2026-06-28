@@ -571,6 +571,7 @@ namespace MHGU_Quest_Randomizer
 
             questName.Text = quest.Name ?? "";
             questMain.Text = quest.Main ?? "";
+            hyperBadge.Visibility = quest.Hyper ? Visibility.Visible : Visibility.Collapsed;
 
             string baseDir = AppContext.BaseDirectory;
             // For Special Permits the Deviant is the true target; derive it from the quest name.
