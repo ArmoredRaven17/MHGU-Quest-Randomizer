@@ -7,7 +7,7 @@
 <title>MHGU Quest Randomizer</title>
 <link rel="icon" href="assets/MonsterIcons/MHGU-Question_Mark_Icon.webp">
 <!-- Bump ?v= on any styles/app/data change so browsers fetch fresh copies (no hard-refresh needed) -->
-<link rel="stylesheet" href="styles.css?v=8">
+<link rel="stylesheet" href="styles.css?v=9">
 </head>
 <body>
 <div id="app">
@@ -15,6 +15,7 @@
   <header class="titlebar">
     <img class="title-icon" src="assets/MonsterIcons/MHGU-Question_Mark_Icon.webp" alt="">
     <h1>MHGU Quest Randomizer</h1>
+    <button id="aboutBtn" class="icon-btn" title="About / Attributions" aria-label="About">?</button>
     <button id="themeBtn" class="icon-btn" title="Theme" aria-label="Theme">&#9881;</button>
   </header>
 
@@ -143,6 +144,20 @@
   </main>
 </div>
 
+<!-- About / Attributions dialog -->
+<div id="aboutModal" class="modal hidden">
+  <div class="modal-card">
+    <h2>About / Attributions</h2>
+    <p>An unofficial, non-commercial fan tool.</p>
+    <p><strong>Quest data:</strong> <a href="https://mhgu.kiranico.com" target="_blank" rel="noopener">Kiranico</a> (mhgu.kiranico.com)</p>
+    <p><strong>Icons:</strong> the mhgu-editor project &amp; the Monster Hunter Wiki</p>
+    <p class="muted">Monster Hunter Generations Ultimate is © Capcom. This tool is not affiliated with or endorsed by Capcom.</p>
+    <div class="row end gap">
+      <button id="aboutClose" class="btn">Close</button>
+    </div>
+  </div>
+</div>
+
 <!-- Theme dialog -->
 <div id="themeModal" class="modal hidden">
   <div class="modal-card">
@@ -154,7 +169,7 @@
   </div>
 </div>
 
-<script src="data.js?v=8"></script>
-<script src="app.js?v=8"></script>
+<script src="data.js?v=9"></script>
+<script src="app.js?v=9"></script>
 </body>
 </html>
