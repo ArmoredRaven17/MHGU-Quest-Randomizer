@@ -81,8 +81,10 @@ body{
 /* Hunter Arts tree (nestable groups) */
 .agrp .akids{margin-left:18px;display:none;flex-direction:column}
 .agrp.open>.akids{display:flex}
-.ahead{display:flex;align-items:center}
-.chk.grp{font-weight:600}
+.ahead,.grphead{display:flex;align-items:center}
+.grphead input,.ahead input{accent-color:var(--accent);width:16px;height:16px;cursor:pointer;flex-shrink:0;margin:0 2px}
+.grp-name{cursor:pointer;font-weight:600;flex:1;padding:3px 0 3px 6px;line-height:1.3;user-select:none}
+.grp-name:hover{color:var(--accent-hover)}
 .chk input:indeterminate{opacity:.7}
 
 /* Quest pickers */
