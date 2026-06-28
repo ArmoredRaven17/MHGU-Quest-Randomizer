@@ -24,9 +24,34 @@ namespace MHGU_Quest_Randomizer
         private bool _updatingTreeSelection = false;
         private bool _updatingArtSelection  = false;
         private bool _syncingLevels = false;
+        private bool _loadingSettings = false;
 
         private (CheckBox Pill, string Name)[] _weaponPills = Array.Empty<(CheckBox, string)>();
         private (CheckBox Pill, string Name)[] _stylePills  = Array.Empty<(CheckBox, string)>();
+        private (CheckBox Pill, string Name)[] _biasPills   = Array.Empty<(CheckBox, string)>();
+
+        // Persisted settings (theme + filter state) in %LOCALAPPDATA%\MHGU Quest Randomizer\settings.json
+        private sealed class AppSettings
+        {
+            public string ThemeColor    { get; set; } = "#4A4A4A";
+            public List<string> ExWeapons  { get; set; } = new();
+            public List<string> ExStyles   { get; set; } = new();
+            public List<string> ExBiases   { get; set; } = new();
+            public List<string> ExMonsters { get; set; } = new();
+            public List<string> ExArts     { get; set; } = new();
+            public bool Hyper { get; set; }
+            public bool Egg { get; set; }
+            public bool Gathering { get; set; }
+            public bool SmMonsters { get; set; }
+            public bool Prowler { get; set; }
+            public bool ProwlerQuests { get; set; }
+        }
+        private static readonly JsonSerializerOptions SettingsJsonOpts = new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            PropertyNameCaseInsensitive = true,
+        };
+        private AppSettings? _loadedSettings;
 
         private double _uiScale  = 1.0;
         private Color  _pillColor;
@@ -198,14 +223,25 @@ namespace MHGU_Quest_Randomizer
                 (alchemyPill, "Alchemy"),
             };
 
-            // Wire all filter pills to re-evaluate the Randomize button
-            RoutedEventHandler onPillChanged = (_, _) => UpdateRandomizeButton();
-            foreach (var (pill, _) in _weaponPills)  { pill.Checked += onPillChanged; pill.Unchecked += onPillChanged; }
-            foreach (var (pill, _) in _stylePills)   { pill.Checked += onPillChanged; pill.Unchecked += onPillChanged; }
-            foreach (var bias in new CheckBox[] { chrPill, fghtPill, proPill, assPill, hlgPill, bmbPill, gthPill, bstPill })
-                { bias.Checked += onPillChanged; bias.Unchecked += onPillChanged; }
-            prowlerPill.Checked   += onPillChanged;
-            prowlerPill.Unchecked += onPillChanged;
+            _biasPills = new[]
+            {
+                (chrPill,  "Charisma"), (fghtPill, "Fighting"), (proPill, "Protection"), (assPill, "Assisting"),
+                (hlgPill,  "Healing"),  (bmbPill,  "Bombing"),  (gthPill, "Gathering"),  (bstPill, "Beast"),
+            };
+
+            // Wire all filter pills to re-evaluate the Randomize button and persist filter state.
+            RoutedEventHandler onPillChanged   = (_, _) => UpdateRandomizeButton();
+            RoutedEventHandler onFilterChanged = (_, _) => SaveSettings();
+            void Wire(CheckBox cb, bool affectsRandomize)
+            {
+                if (affectsRandomize) { cb.Checked += onPillChanged; cb.Unchecked += onPillChanged; }
+                cb.Checked += onFilterChanged; cb.Unchecked += onFilterChanged;
+            }
+            foreach (var (pill, _) in _weaponPills) Wire(pill, true);
+            foreach (var (pill, _) in _stylePills)  Wire(pill, true);
+            foreach (var (pill, _) in _biasPills)   Wire(pill, true);
+            Wire(prowlerPill, true);
+            foreach (var t in new[] { hyperPill, eggPill, gatheringPill, smMonstersPill, prowlerQuestsPill }) Wire(t, false);
 
             // "Prowler Quests?" only makes sense when "Prowler?" is on — only Prowlers can
             // take Prowler quests. Disable + clear it whenever "Prowler?" is off.
@@ -253,6 +289,7 @@ namespace MHGU_Quest_Randomizer
             rootGrid.Resources["CheckBoxCheckBackgroundStrokeCheckedPressed"]     = _cbStrokePress;
 
             InitPillColor();
+            ApplyLoadedFilters();   // restore saved filter selections (theme handled by InitPillColor)
             SetAppIcon(baseDir);
         }
 
@@ -408,6 +445,7 @@ namespace MHGU_Quest_Randomizer
                         RemoveDescendants(node, sender);
             }
             finally { _updatingArtSelection = false; }
+            SaveSettings();
         }
 
         private static void AddDescendants(TreeViewNode node, TreeView tv)
@@ -615,6 +653,7 @@ namespace MHGU_Quest_Randomizer
                 _updatingTreeSelection = false;
             }
             UpdateRandomizeButton();
+            SaveSettings();
         }
 
         // ─── Submit / Randomize ─────────────────────────────────────────────────
@@ -921,38 +960,134 @@ namespace MHGU_Quest_Randomizer
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                          "MHGU Quest Randomizer", "settings.json");
 
-        private Color LoadSavedColor()
+        private AppSettings LoadSettings()
         {
             try
             {
                 if (File.Exists(SettingsFilePath))
-                {
-                    string json = File.ReadAllText(SettingsFilePath);
-                    var m = System.Text.RegularExpressions.Regex.Match(
-                        json, @"""themeColor"":""(#[0-9A-Fa-f]{6})""");
-                    if (m.Success) return Hex(m.Groups[1].Value);
-                }
+                    return JsonSerializer.Deserialize<AppSettings>(File.ReadAllText(SettingsFilePath), SettingsJsonOpts) ?? new();
             }
             catch { }
-            return Hex("#4A4A4A"); // Charcoal default
+            return new();
         }
 
         private void SaveSettings()
         {
+            if (_loadingSettings) return;
             try
             {
+                var excArts = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                foreach (TreeViewNode w in artTreeView.RootNodes) CollectExcludedArts(w, excArts);
+
+                var s = new AppSettings
+                {
+                    ThemeColor = $"#{_pillColor.R:X2}{_pillColor.G:X2}{_pillColor.B:X2}",
+                    ExWeapons  = _weaponPills.Where(p => p.Pill.IsChecked != true).Select(p => p.Name).ToList(),
+                    ExStyles   = _stylePills.Where(p => p.Pill.IsChecked != true).Select(p => p.Name).ToList(),
+                    ExBiases   = _biasPills.Where(p => p.Pill.IsChecked != true).Select(p => p.Name).ToList(),
+                    ExMonsters = CollectUncheckedMonsters(),
+                    ExArts     = excArts.ToList(),
+                    Hyper = hyperPill.IsChecked == true,
+                    Egg = eggPill.IsChecked == true,
+                    Gathering = gatheringPill.IsChecked == true,
+                    SmMonsters = smMonstersPill.IsChecked == true,
+                    Prowler = prowlerPill.IsChecked == true,
+                    ProwlerQuests = prowlerQuestsPill.IsChecked == true,
+                };
                 Directory.CreateDirectory(Path.GetDirectoryName(SettingsFilePath)!);
-                File.WriteAllText(SettingsFilePath,
-                    $"{{\"themeColor\":\"#{_pillColor.R:X2}{_pillColor.G:X2}{_pillColor.B:X2}\"}}");
+                File.WriteAllText(SettingsFilePath, JsonSerializer.Serialize(s, SettingsJsonOpts));
             }
             catch { }
         }
 
+        private List<string> CollectUncheckedMonsters()
+        {
+            var list = new List<string>();
+            foreach (TreeViewNode sp in monsterTreeView.RootNodes)
+                foreach (TreeViewNode leaf in sp.Children)
+                    if (!monsterTreeView.SelectedNodes.Contains(leaf))
+                        list.Add((string)leaf.Content);
+            return list;
+        }
+
         private void InitPillColor()
         {
-            var color = LoadSavedColor();
+            _loadedSettings ??= LoadSettings();
+            Color color;
+            try { color = Hex(_loadedSettings.ThemeColor); } catch { color = Hex("#4A4A4A"); }
             _pillColor = color;
             ApplyPillColor(color);
+        }
+
+        // Apply the saved filter selections to the controls/trees. Guarded so the change
+        // handlers don't re-save mid-load.
+        private void ApplyLoadedFilters()
+        {
+            var s = _loadedSettings ??= LoadSettings();
+            _loadingSettings = true;
+            try
+            {
+                void ApplyPills((CheckBox Pill, string Name)[] pills, List<string> excluded)
+                {
+                    var ex = new HashSet<string>(excluded, StringComparer.OrdinalIgnoreCase);
+                    foreach (var (pill, name) in pills) pill.IsChecked = !ex.Contains(name);
+                }
+                ApplyPills(_weaponPills, s.ExWeapons);
+                ApplyPills(_stylePills,  s.ExStyles);
+                ApplyPills(_biasPills,   s.ExBiases);
+
+                hyperPill.IsChecked      = s.Hyper;
+                eggPill.IsChecked        = s.Egg;
+                gatheringPill.IsChecked  = s.Gathering;
+                smMonstersPill.IsChecked = s.SmMonsters;
+                prowlerPill.IsChecked    = s.Prowler;
+                prowlerQuestsPill.IsEnabled = s.Prowler;
+                prowlerQuestsPill.IsChecked = s.Prowler && s.ProwlerQuests;
+
+                // Monsters: deselect saved-unchecked leaves, then deselect any species not fully selected.
+                if (s.ExMonsters.Count > 0)
+                {
+                    var ex = new HashSet<string>(s.ExMonsters, StringComparer.OrdinalIgnoreCase);
+                    _updatingTreeSelection = true;
+                    foreach (TreeViewNode sp in monsterTreeView.RootNodes)
+                    {
+                        foreach (TreeViewNode leaf in sp.Children)
+                            if (ex.Contains((string)leaf.Content))
+                                monsterTreeView.SelectedNodes.Remove(leaf);
+                        if (sp.Children.Any(c => !monsterTreeView.SelectedNodes.Contains(c)))
+                            monsterTreeView.SelectedNodes.Remove(sp);
+                    }
+                    _updatingTreeSelection = false;
+                }
+
+                // Arts: deselect saved-unchecked leaves, then fix parent selection bottom-up.
+                if (s.ExArts.Count > 0)
+                {
+                    var ex = new HashSet<string>(s.ExArts, StringComparer.OrdinalIgnoreCase);
+                    _updatingArtSelection = true;
+                    foreach (TreeViewNode w in artTreeView.RootNodes) DeselectArtLeaves(w, ex);
+                    foreach (TreeViewNode w in artTreeView.RootNodes) FixArtParentSelection(w);
+                    _updatingArtSelection = false;
+                }
+            }
+            finally { _loadingSettings = false; }
+        }
+
+        private void DeselectArtLeaves(TreeViewNode node, HashSet<string> excluded)
+        {
+            if (node.Children.Count == 0)
+            {
+                if (excluded.Contains((string)node.Content)) artTreeView.SelectedNodes.Remove(node);
+            }
+            else
+                foreach (TreeViewNode c in node.Children) DeselectArtLeaves(c, excluded);
+        }
+
+        private void FixArtParentSelection(TreeViewNode node)
+        {
+            foreach (TreeViewNode c in node.Children) FixArtParentSelection(c);
+            if (node.Children.Count > 0 && node.Children.Any(c => !artTreeView.SelectedNodes.Contains(c)))
+                artTreeView.SelectedNodes.Remove(node);
         }
 
         private async void SetAppIcon(string baseDir)
@@ -1062,6 +1197,8 @@ namespace MHGU_Quest_Randomizer
             foreach (TreeViewNode w in artTreeView.RootNodes)
                 SelectNodeTree(w);
             _updatingArtSelection = false;
+
+            SaveSettings();   // persist the fully-reset state
         }
 
         private async void AboutButton_Click(object sender, RoutedEventArgs e)
