@@ -671,6 +671,11 @@ namespace MHGU_Quest_Randomizer
 
                 if (!include) continue;
 
+                // Hyper gate: most hyper quests are also large-monster quests (always
+                // included), so without this they'd appear regardless of the toggle. When
+                // Hypers is off, exclude hyper quests entirely.
+                if (q.Hyper && hyperPill.IsChecked != true) continue;
+
                 if (q.LgMonster && !string.IsNullOrEmpty(q.Monster) && anyMonsterFiltered)
                 {
                     if (!includedMonsters.Contains(q.Monster)) continue;
