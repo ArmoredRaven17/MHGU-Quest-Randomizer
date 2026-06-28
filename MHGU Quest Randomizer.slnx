@@ -6,6 +6,7 @@
   </Configurations>
   <Folder Name="/Solution Items/">
     <File Path="Hunter Arts.json" />
+    <File Path="LgMonsters.json" />
     <File Path="QuestData.json" />
   </Folder>
   <Project Path="MHGU Quest Randomizer/MHGU Quest Randomizer (Package)/MHGU Quest Randomizer (Package).wapproj" Type="c7167f0d-bc9f-4e6e-afe1-012c56b48db5">

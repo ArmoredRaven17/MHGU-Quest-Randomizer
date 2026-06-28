@@ -9,83 +9,465 @@
     mc:Ignorable="d"
     Title="MHGU Quest Randomizer">
 
-    <Window.SystemBackdrop>
-        <MicaBackdrop />
-    </Window.SystemBackdrop>
+    <Grid x:Name="windowRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-    <StackPanel Orientation="Vertical" Padding="10">
-        <ComboBox Name="questType" SelectionChanged="QuestType_SelectionChanged" Header="Type of Quest" PlaceholderText="select quest type" Width="200" Canvas.Top="50" Canvas.Left="20">
-            <x:String>Village</x:String>
-            <x:String>Hub</x:String>
-            <x:String>Pub</x:String>
-            <x:String>Special Permits</x:String>
-            <x:String>Events</x:String>
-        </ComboBox>
-         <!--This drop down will be used for star levels-->
-        <ComboBox Name="questLevel" DisplayMemberPath="QuestLevel" SelectedValuePath="QuestValue" Header="Quest Level" PlaceholderText="select level" Width="200" Canvas.Top="50" Canvas.Left="240">
-        </ComboBox>
-            <TextBlock>Prowler Filters</TextBlock>
-            <StackPanel Orientation="Horizontal">
-        <CheckBox Name="prowlerCheck"> Prowler?</CheckBox>
-        <CheckBox Name="prowlerQuestsCheck">Prowler Quests?</CheckBox>
+        <!-- Custom title bar -->
+        <Grid x:Name="appTitleBar" Grid.Row="0" Height="48">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10" Margin="14,0,0,0">
+                <Image x:Name="titleBarIcon" Width="36" Height="36" Stretch="Uniform"/>
+                <TextBlock Text="MHGU Quest Randomizer"
+                           VerticalAlignment="Center"
+                           FontSize="13"
+                           FontWeight="SemiBold"
+                           Foreground="{ThemeResource TextFillColorPrimaryBrush}"/>
             </StackPanel>
-            <!--This check box is for added difficulty quests like EXs or Hypers-->
-            <TextBlock>Quest Filters</TextBlock>
-            <StackPanel Orientation="Horizontal">
-        <CheckBox Name="hyperCheck">Hypers?</CheckBox>
-        <CheckBox Name="eggCheck">Egg Delivery?</CheckBox>
-        <CheckBox Name="gatheringCheck">Gathering?</CheckBox>
-        <CheckBox Name="smMonstersCheck">Small Monsters?</CheckBox>
+            <!-- Right margin clears the Windows min/max/close caption buttons (~138px) -->
+            <Button x:Name="settingsButton"
+                    Click="SettingsButton_Click"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Margin="0,0,150,0"
+                    Padding="8,6"
+                    ToolTipService.ToolTip="Settings">
+                <FontIcon Glyph="&#xE713;" FontFamily="Segoe Fluent Icons" FontSize="16"/>
+            </Button>
+        </Grid>
+
+        <!-- Scaled content -->
+        <Viewbox Stretch="Uniform" Grid.Row="1">
+        <Grid x:Name="rootGrid" Width="860" Height="500">
+
+        <!-- Main content -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="218"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- ── LEFT: filter panel (contents scaled to 75% via RenderTransform) ─── -->
+            <!-- Design size = cell size / 0.75 so the 0.75 scale renders into the 218x500 cell exactly. -->
+            <Grid Grid.Column="0"
+                  Width="290.667" Height="666.667"
+                  HorizontalAlignment="Left" VerticalAlignment="Top"
+                  RenderTransformOrigin="0,0">
+                <Grid.RenderTransform>
+                    <ScaleTransform ScaleX="0.75" ScaleY="0.75"/>
+                </Grid.RenderTransform>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Reset button -->
+                <Button Grid.Row="0"
+                        x:Name="resetFiltersButton"
+                        Click="ResetFilters_Click"
+                        HorizontalAlignment="Stretch"
+                        Margin="14,10,14,6"
+                        HorizontalContentAlignment="Center">
+                    Reset Filters
+                </Button>
+
+                <ScrollViewer x:Name="rootScroll" Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Padding="14,0,14,16" Spacing="4">
+
+                        <!-- Quest Filters -->
+                        <Expander Header="Quest Filters"
+                                  HorizontalAlignment="Stretch"
+                                  HorizontalContentAlignment="Stretch">
+                            <StackPanel Padding="4,4,0,4">
+                                <TextBlock Text="Quest types to include:" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,0,0,2"/>
+                                <CheckBox x:Name="gatheringPill">Gathering</CheckBox>
+                                <CheckBox x:Name="smMonstersPill">Small Monsters</CheckBox>
+                                <CheckBox x:Name="hyperPill">Hypers</CheckBox>
+                                <CheckBox x:Name="eggPill">Egg Delivery</CheckBox>
+                            </StackPanel>
+                        </Expander>
+
+                        <!-- Exclude Monsters -->
+                        <Expander Header="Monsters"
+                                  HorizontalAlignment="Stretch"
+                                  HorizontalContentAlignment="Stretch">
+
+                                <StackPanel Padding="4,4,0,4" Spacing="4">
+                                    <TextBlock Text="Monsters to include:" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,0,0,2"/>
+                                    <StackPanel Orientation="Horizontal" Spacing="4">
+                                        <Button x:Name="expandMonstersButton"
+                                                Click="ExpandMonsters_Click"
+                                                Padding="6,2" FontSize="11">Expand All</Button>
+                                        <Button x:Name="collapseMonstersButton"
+                                                Click="CollapseMonsters_Click"
+                                                Padding="6,2" FontSize="11">Collapse All</Button>
+                                    </StackPanel>
+                                    <Border MaxHeight="240"
+                                            BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+                                            BorderThickness="1"
+                                            CornerRadius="4">
+                                        <TreeView x:Name="monsterTreeView"
+                                                  SelectionMode="Multiple"
+                                                  Padding="4"
+                                                  SelectionChanged="MonsterTreeView_SelectionChanged">
+                                            <TreeView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Content}"
+                                                               TextWrapping="Wrap"
+                                                               VerticalAlignment="Center"
+                                                               FontSize="13"/>
+                                                </DataTemplate>
+                                            </TreeView.ItemTemplate>
+                                            <TreeView.ItemContainerStyle>
+                                                <Style TargetType="TreeViewItem">
+                                                    <Setter Property="Padding" Value="2,1,4,1"/>
+                                                    <Setter Property="MinHeight" Value="24"/>
+                                                </Style>
+                                            </TreeView.ItemContainerStyle>
+                                        </TreeView>
+                                    </Border>
+                                </StackPanel>
+                        </Expander>
+
+
+                        <!-- Exclude Weapons -->
+                        <Expander Header="Weapons"
+                                  HorizontalAlignment="Stretch"
+                                  HorizontalContentAlignment="Stretch">
+                            <StackPanel Padding="4,4,0,4">
+                                <TextBlock Text="Weapons to include:" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,0,0,2"/>
+                                <CheckBox x:Name="gsPill" IsChecked="True">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Image x:Name="gsIcon"  Width="18" Height="18" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Great Sword" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </CheckBox>
+                                <CheckBox x:Name="lsPill" IsChecked="True">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Image x:Name="lsIcon"  Width="18" Height="18" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Long Sword" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </CheckBox>
+                                <CheckBox x:Name="snsPill" IsChecked="True">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Image x:Name="snsIcon" Width="18" Height="18" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Sword &amp; Shield" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </CheckBox>
+                                <CheckBox x:Name="dbPill" IsChecked="True">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Image x:Name="dbIcon"  Width="18" Height="18" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Dual Blades" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </CheckBox>
+                                <CheckBox x:Name="hmPill" IsChecked="True">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Image x:Name="hmIcon"  Width="18" Height="18" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Hammer" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </CheckBox>
+                                <CheckBox x:Name="hhPill" IsChecked="True">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Image x:Name="hhIcon"  Width="18" Height="18" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Hunting Horn" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </CheckBox>
+                                <CheckBox x:Name="lncPill" IsChecked="True">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Image x:Name="lncIcon" Width="18" Height="18" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Lance" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </CheckBox>
+                                <CheckBox x:Name="glPill" IsChecked="True">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Image x:Name="glIcon"  Width="18" Height="18" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Gunlance" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </CheckBox>
+                                <CheckBox x:Name="saPill" IsChecked="True">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Image x:Name="saIcon"  Width="18" Height="18" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Switch Axe" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </CheckBox>
+                                <CheckBox x:Name="cbPill" IsChecked="True">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Image x:Name="cbIcon"  Width="18" Height="18" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Charge Blade" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </CheckBox>
+                                <CheckBox x:Name="igPill" IsChecked="True">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Image x:Name="igIcon"  Width="18" Height="18" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Insect Glaive" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </CheckBox>
+                                <CheckBox x:Name="lbgPill" IsChecked="True">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Image x:Name="lbgIcon" Width="18" Height="18" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Light Bowgun" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </CheckBox>
+                                <CheckBox x:Name="hbgPill" IsChecked="True">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Image x:Name="hbgIcon" Width="18" Height="18" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Heavy Bowgun" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </CheckBox>
+                                <CheckBox x:Name="bowPill" IsChecked="True">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Image x:Name="bowIcon" Width="18" Height="18" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Bow" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </CheckBox>
+                            </StackPanel>
+                        </Expander>
+
+                        <!-- Exclude Styles -->
+                        <Expander Header="Styles"
+                                  HorizontalAlignment="Stretch"
+                                  HorizontalContentAlignment="Stretch">
+                            <StackPanel Padding="4,4,0,4">
+                                <TextBlock Text="Styles to include:" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,0,0,2"/>
+                                <CheckBox x:Name="guildPill"   IsChecked="True">Guild</CheckBox>
+                                <CheckBox x:Name="strikerPill" IsChecked="True">Striker</CheckBox>
+                                <CheckBox x:Name="adeptPill"   IsChecked="True">Adept</CheckBox>
+                                <CheckBox x:Name="aerialPill"  IsChecked="True">Aerial</CheckBox>
+                                <CheckBox x:Name="valorPill"   IsChecked="True">Valor</CheckBox>
+                                <CheckBox x:Name="alchemyPill" IsChecked="True">Alchemy</CheckBox>
+                            </StackPanel>
+                        </Expander>
+                        <!-- Prowler -->
+                        <Expander Header="Prowler"
+                                  HorizontalAlignment="Stretch"
+                                  HorizontalContentAlignment="Stretch">
+                            <StackPanel Padding="4,4,0,4">
+                                <TextBlock Text="Options to include:" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,0,0,2"/>
+                                <CheckBox x:Name="prowlerPill">Prowler Mode</CheckBox>
+                                <CheckBox x:Name="prowlerQuestsPill">Prowler Quests</CheckBox>
+                                <TextBlock Text="Biases to include:"
+                                           Style="{StaticResource CaptionTextBlockStyle}"
+                                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                           Margin="0,6,0,2"/>
+                                <CheckBox x:Name="chrPill" IsChecked="True">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Image x:Name="chrIcon"  Width="18" Height="18" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Charisma" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </CheckBox>
+                                <CheckBox x:Name="fghtPill" IsChecked="True">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Image x:Name="fghtIcon" Width="18" Height="18" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Fighting" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </CheckBox>
+                                <CheckBox x:Name="proPill" IsChecked="True">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Image x:Name="proIcon"  Width="18" Height="18" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Protection" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </CheckBox>
+                                <CheckBox x:Name="assPill" IsChecked="True">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Image x:Name="assIcon"  Width="18" Height="18" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Assisting" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </CheckBox>
+                                <CheckBox x:Name="hlgPill" IsChecked="True">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Image x:Name="hlgIcon" Width="18" Height="18" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Healing" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </CheckBox>
+                                <CheckBox x:Name="bmbPill" IsChecked="True">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Image x:Name="bmbIcon" Width="18" Height="18" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Bombing" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </CheckBox>
+                                <CheckBox x:Name="gthPill" IsChecked="True">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Image x:Name="gthIcon" Width="18" Height="18" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Gathering" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </CheckBox>
+                                <CheckBox x:Name="bstPill" IsChecked="True">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Image x:Name="bstIcon" Width="18" Height="18" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Beast" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </CheckBox>
+                            </StackPanel>
+                        </Expander>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+
+            <!-- ── Vertical divider ────────────────────────────────────────────── -->
+            <Rectangle Grid.Column="1" Width="1"
+                       Fill="{ThemeResource DividerStrokeColorDefaultBrush}"/>
+
+            <!-- ── RIGHT: quest controls + output ─────────────────────────────── -->
+            <StackPanel Grid.Column="2"
+                        Padding="20,16,20,20"
+                        Spacing="14"
+                        VerticalAlignment="Top">
+
+                <!-- Quest controls -->
+                <Grid ColumnSpacing="12" RowSpacing="8">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ComboBox x:Name="questType"
+                              Grid.Row="0" Grid.Column="0"
+                              Header="Quest Type"
+                              PlaceholderText="Select type"
+                              Width="160"
+                              SelectionChanged="QuestType_SelectionChanged">
+                        <x:String>Village</x:String>
+                        <x:String>Hub</x:String>
+                        <x:String>Pub</x:String>
+                        <x:String>Arena</x:String>
+                        <x:String>Special Permits</x:String>
+                        <x:String>Events</x:String>
+                    </ComboBox>
+
+                    <Button x:Name="submitButton"
+                            Grid.Row="0" Grid.Column="1"
+                            Click="SubmitButton_ClickAsync"
+                            Style="{StaticResource AccentButtonStyle}"
+                            IsEnabled="False"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Bottom"
+                            Padding="20,8"
+                            FontSize="14">
+                        Randomize!
+                    </Button>
+
+                    <ComboBox x:Name="fromLevel"
+                              Grid.Row="1" Grid.Column="0"
+                              DisplayMemberPath="QuestLevel"
+                              SelectedValuePath="QuestValue"
+                              Header="From Level"
+                              Width="160"
+                              SelectionChanged="QuestLevel_SelectionChanged"/>
+
+                    <ComboBox x:Name="questLevel"
+                              Grid.Row="1" Grid.Column="1"
+                              DisplayMemberPath="QuestLevel"
+                              SelectedValuePath="QuestValue"
+                              Header="Up to Level"
+                              PlaceholderText="Select level"
+                              Width="150"
+                              SelectionChanged="QuestLevel_SelectionChanged"/>
+                </Grid>
+
+                <!-- Result card — MinHeight keeps layout stable before/after first roll -->
+                <Border BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Padding="16"
+                        MinHeight="230">
+                    <Grid>
+
+                        <!-- Placeholder -->
+                        <TextBlock x:Name="resultPlaceholder"
+                                   Text="Select a quest type and level, then press Randomize."
+                                   Style="{StaticResource CaptionTextBlockStyle}"
+                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"/>
+
+                        <!-- Result -->
+                        <StackPanel x:Name="resultContent" Visibility="Collapsed" Spacing="10">
+
+                            <Grid ColumnSpacing="14">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Image x:Name="questTargetIcon"
+                                       Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
+                                       Width="52" Height="52" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="questName"
+                                           Grid.Row="0" Grid.Column="1"
+                                           FontWeight="SemiBold"
+                                           TextWrapping="Wrap"
+                                           VerticalAlignment="Bottom"/>
+                                <TextBlock x:Name="questMain"
+                                           Grid.Row="1" Grid.Column="1"
+                                           Style="{StaticResource CaptionTextBlockStyle}"
+                                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                           TextWrapping="Wrap"
+                                           VerticalAlignment="Top"/>
+                            </Grid>
+
+                            <Rectangle Height="1" Fill="{ThemeResource DividerStrokeColorDefaultBrush}"/>
+
+                            <Grid ColumnSpacing="16">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Weapon -->
+                                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="10" VerticalAlignment="Top">
+                                    <Image x:Name="weaponIcon" Width="26" Height="26" VerticalAlignment="Top" Margin="0,2,0,0"/>
+                                    <StackPanel>
+                                        <TextBlock Text="Weapon"
+                                                   Style="{StaticResource CaptionTextBlockStyle}"
+                                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                                        <TextBlock x:Name="weaponText" FontWeight="SemiBold" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <!-- Style -->
+                                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10" VerticalAlignment="Top">
+                                    <Image x:Name="styleIcon" Width="26" Height="26" VerticalAlignment="Top" Margin="0,2,0,0" Opacity="0"/>
+                                    <StackPanel>
+                                        <TextBlock x:Name="styleLabel"
+                                                   Text="Style"
+                                                   Style="{StaticResource CaptionTextBlockStyle}"
+                                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                                        <TextBlock x:Name="styleText" FontWeight="SemiBold" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <!-- Hunter Arts -->
+                                <StackPanel x:Name="artsPanel" Grid.Column="2" Spacing="2"
+                                            Visibility="Collapsed" VerticalAlignment="Top">
+                                    <TextBlock Text="Hunter Arts"
+                                               Style="{StaticResource CaptionTextBlockStyle}"
+                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                                    <TextBlock x:Name="hunterArt1" FontWeight="SemiBold" TextWrapping="Wrap"/>
+                                    <TextBlock x:Name="hunterArt2" FontWeight="SemiBold" TextWrapping="Wrap"/>
+                                    <TextBlock x:Name="hunterArt3" FontWeight="SemiBold" TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Grid>
+
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
             </StackPanel>
-            <TextBlock>Weapons</TextBlock>
-            <StackPanel Orientation="Horizontal">
-                <CheckBox Name="gsCheck">Remove GS?</CheckBox>
-                <CheckBox Name="lsCheck">Remove LS?</CheckBox>
-                <CheckBox Name="snsCheck">Remove SnS?</CheckBox>
-                <CheckBox Name="dbCheck">Remove DB?</CheckBox>
-                <CheckBox Name="hmCheck">Remove Hm?</CheckBox>
-                <CheckBox Name="hhCheck">Remove HH?</CheckBox>
-                <CheckBox Name="lncCheck">Remove Lnc?</CheckBox>
-            </StackPanel>
-            
-            <StackPanel Orientation="Horizontal">
-                <CheckBox Name="glCheck">Remove GL?</CheckBox>
-                <CheckBox Name="saCheck">Remove SA?</CheckBox>
-                <CheckBox Name="cbCheck">Remove CB?</CheckBox>
-                <CheckBox Name="igCheck">Remove IG</CheckBox>
-                <CheckBox Name="lbgCheck">Remove LBG?</CheckBox>
-                <CheckBox Name="hbgCheck">Remove HBG?</CheckBox>
-                <CheckBox IsChecked="True" IsEnabled="False" Name="bowCheck">Remove Bow?</CheckBox>
-            </StackPanel>
-            <TextBlock>Styles</TextBlock>
-            <StackPanel Orientation="Horizontal">
-                <CheckBox Name="gldCheck">Remove Guild?</CheckBox>
-                <CheckBox Name="stkrCheck">Remove Striker?</CheckBox>
-                <CheckBox Name="adpCheck">Remove Adpet?</CheckBox>
-                <CheckBox Name="arlCheck">Remove Aerial</CheckBox>
-                <CheckBox Name="vlrCheck">Remove Valor?</CheckBox>
-                <CheckBox Name="alcCheck">Remove Alchemy?</CheckBox>
-            </StackPanel>
-        
-        <Button Name="submitButton" Click="SubmitButton_ClickAsync">Submit</Button>
-        
-        
-            <TextBlock>Quest Name:</TextBlock>
-            <TextBlock Padding="5" Name="questName" FontWeight="Bold"></TextBlock>
-            <TextBlock>Target Monster(s):</TextBlock>
-            <TextBlock Padding="5" Name="questMain" FontWeight="Bold"></TextBlock>
-            <TextBlock>Weapon Type:</TextBlock>
-            <TextBlock Padding="5" Name="weaponText" FontWeight="Bold"></TextBlock>
-        
-            <TextBlock>Hunting Style:</TextBlock>
-            <TextBlock Padding="5" Name="styleText" FontWeight="Bold"></TextBlock>
-            <TextBlock>Hunter Art 1:</TextBlock>
-            <TextBlock Padding="5" Name="hunterArt1" FontWeight="Bold"></TextBlock>
-            <TextBlock>Hunter Art 2:</TextBlock>
-            <TextBlock Padding="5" Name="hunterArt2" FontWeight="Bold"></TextBlock>
-            <TextBlock>Hunter Art 3:</TextBlock>
-            <TextBlock Padding="5" Name="hunterArt3" FontWeight="Bold"></TextBlock>
-    </StackPanel>
-    </ScrollViewer>
+
+        </Grid>
+        </Grid>
+        </Viewbox>
+    </Grid>
 </Window>
