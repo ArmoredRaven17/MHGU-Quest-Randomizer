@@ -4466,7 +4466,7 @@
     "Level": 11,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -4479,7 +4479,7 @@
     "Level": 11,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -4492,7 +4492,7 @@
     "Level": 11,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -4505,7 +4505,7 @@
     "Level": 11,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -7417,7 +7417,7 @@
     "Level": 6,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -7430,7 +7430,7 @@
     "Level": 6,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -7443,7 +7443,7 @@
     "Level": 6,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -7456,7 +7456,7 @@
     "Level": 6,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -7469,7 +7469,7 @@
     "Level": 6,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -7482,7 +7482,7 @@
     "Level": 6,
     "LgMonster": false,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": true,
     "SmMonsters": false
@@ -7508,7 +7508,7 @@
     "Level": 6,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -7521,7 +7521,7 @@
     "Level": 6,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -7534,7 +7534,7 @@
     "Level": 6,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -7547,7 +7547,7 @@
     "Level": 6,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -7560,7 +7560,7 @@
     "Level": 6,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -7573,7 +7573,7 @@
     "Level": 6,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -7586,7 +7586,7 @@
     "Level": 6,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -7599,7 +7599,7 @@
     "Level": 6,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -7612,7 +7612,7 @@
     "Level": 6,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -7625,7 +7625,7 @@
     "Level": 6,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -7638,7 +7638,7 @@
     "Level": 6,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -7651,7 +7651,7 @@
     "Level": 6,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -7664,7 +7664,7 @@
     "Level": 6,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -7677,7 +7677,7 @@
     "Level": 6,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -7690,7 +7690,7 @@
     "Level": 6,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8054,7 +8054,7 @@
     "Level": 7,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8067,7 +8067,7 @@
     "Level": 8,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8080,7 +8080,7 @@
     "Level": 8,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8093,7 +8093,7 @@
     "Level": 7,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8106,7 +8106,7 @@
     "Level": 7,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8119,7 +8119,7 @@
     "Level": 7,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8132,7 +8132,7 @@
     "Level": 8,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8145,7 +8145,7 @@
     "Level": 7,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8158,7 +8158,7 @@
     "Level": 7,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8171,7 +8171,7 @@
     "Level": 8,
     "LgMonster": false,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": true,
     "SmMonsters": false
@@ -8184,7 +8184,7 @@
     "Level": 7,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8197,7 +8197,7 @@
     "Level": 7,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8210,7 +8210,7 @@
     "Level": 7,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8223,7 +8223,7 @@
     "Level": 7,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8236,7 +8236,7 @@
     "Level": 8,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8249,7 +8249,7 @@
     "Level": 7,
     "LgMonster": false,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": true,
     "SmMonsters": false
@@ -8262,7 +8262,7 @@
     "Level": 8,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8275,7 +8275,7 @@
     "Level": 7,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8288,7 +8288,7 @@
     "Level": 7,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8301,7 +8301,7 @@
     "Level": 8,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8314,7 +8314,7 @@
     "Level": 8,
     "LgMonster": false,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": true,
     "SmMonsters": false
@@ -8327,7 +8327,7 @@
     "Level": 8,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8340,7 +8340,7 @@
     "Level": 7,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8353,7 +8353,7 @@
     "Level": 7,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8366,7 +8366,7 @@
     "Level": 8,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8379,7 +8379,7 @@
     "Level": 8,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8392,7 +8392,7 @@
     "Level": 8,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8405,7 +8405,7 @@
     "Level": 8,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8418,7 +8418,7 @@
     "Level": 8,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8470,7 +8470,7 @@
     "Level": 8,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8483,7 +8483,7 @@
     "Level": 8,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -8496,7 +8496,7 @@
     "Level": 8,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -9536,7 +9536,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -9549,7 +9549,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -9562,7 +9562,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -9575,7 +9575,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -9588,7 +9588,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -9601,7 +9601,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10095,7 +10095,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10108,7 +10108,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10121,7 +10121,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10134,7 +10134,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10147,7 +10147,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10160,7 +10160,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10173,7 +10173,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10186,7 +10186,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10199,7 +10199,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10212,7 +10212,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10225,7 +10225,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10238,7 +10238,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10251,7 +10251,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10264,7 +10264,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10277,7 +10277,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10290,7 +10290,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10303,7 +10303,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10758,7 +10758,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10771,7 +10771,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10784,7 +10784,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10797,7 +10797,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10810,7 +10810,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10823,7 +10823,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10836,7 +10836,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10849,7 +10849,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10862,7 +10862,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10875,7 +10875,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10888,7 +10888,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10901,7 +10901,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10914,7 +10914,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10927,7 +10927,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10940,7 +10940,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10953,7 +10953,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10966,7 +10966,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10979,7 +10979,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -10992,7 +10992,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -11005,7 +11005,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -11018,7 +11018,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -11031,7 +11031,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -11044,7 +11044,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -11057,7 +11057,7 @@
     "Level": 5,
     "LgMonster": false,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": true,
     "SmMonsters": false
@@ -11070,7 +11070,7 @@
     "Level": 5,
     "LgMonster": false,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": true,
     "SmMonsters": false
@@ -11083,7 +11083,7 @@
     "Level": 5,
     "LgMonster": false,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": true,
     "SmMonsters": false
@@ -11096,7 +11096,7 @@
     "Level": 5,
     "LgMonster": false,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": true,
     "SmMonsters": false
@@ -11109,7 +11109,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -11122,7 +11122,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -11174,7 +11174,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -11187,7 +11187,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -11200,7 +11200,7 @@
     "Level": 5,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -11681,7 +11681,7 @@
     "Level": 1,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -12929,7 +12929,7 @@
     "Level": 7,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -13579,7 +13579,7 @@
     "Level": 10,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -13969,7 +13969,7 @@
     "Level": 12,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -14047,7 +14047,7 @@
     "Level": 13,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -14125,7 +14125,7 @@
     "Level": 14,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -14294,7 +14294,7 @@
     "Level": 16,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -14372,7 +14372,7 @@
     "Level": 17,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -14450,7 +14450,7 @@
     "Level": 18,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -15269,7 +15269,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false,
@@ -15766,7 +15766,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -15792,7 +15792,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -15805,7 +15805,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -15844,7 +15844,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -15883,7 +15883,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -15922,7 +15922,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -15948,7 +15948,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -15974,7 +15974,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -16000,7 +16000,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -16026,7 +16026,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -16039,7 +16039,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -16052,7 +16052,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -16065,7 +16065,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -16182,7 +16182,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -16195,7 +16195,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -16208,7 +16208,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -16221,7 +16221,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -16234,7 +16234,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -16247,7 +16247,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -16260,7 +16260,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -16273,7 +16273,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -16377,7 +16377,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -16390,7 +16390,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -16507,7 +16507,7 @@
     "Level": 2,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -16676,7 +16676,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -16702,7 +16702,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -16715,7 +16715,7 @@
     "Level": 3,
     "LgMonster": false,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": true,
     "SmMonsters": false
@@ -16728,7 +16728,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -16741,7 +16741,7 @@
     "Level": 3,
     "LgMonster": false,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": true,
     "SmMonsters": false
@@ -16767,7 +16767,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -16780,7 +16780,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -16819,7 +16819,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -16871,7 +16871,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -16897,7 +16897,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -16910,7 +16910,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -16923,7 +16923,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -16936,7 +16936,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -17170,7 +17170,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false
@@ -17183,7 +17183,7 @@
     "Level": 3,
     "LgMonster": true,
     "Prowler": false,
-    "Hyper": false,
+    "Hyper": true,
     "Egg": false,
     "Gathering": false,
     "SmMonsters": false

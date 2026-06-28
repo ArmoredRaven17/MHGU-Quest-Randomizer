@@ -95,7 +95,9 @@ body{
 .result{display:flex;flex-direction:column;gap:22px}
 .result-quest{display:flex;gap:16px;align-items:center}
 .target-icon{width:84px;height:84px;object-fit:contain;flex-shrink:0}
-.r-name{font-size:20px;font-weight:700;margin-bottom:4px}
+.r-name-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.r-name{font-size:20px;font-weight:700}
+.hyper-pill{background:#f5b400;color:#fff;font-size:11px;font-weight:700;padding:2px 9px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;text-shadow:0 1px 1px rgba(0,0,0,.35)}
 .r-main{color:var(--text-dim);font-size:15px}
 .result-loadout{display:flex;flex-wrap:wrap;gap:32px;border-top:1px solid var(--line);padding-top:18px}
 .loadout-block{min-width:200px}

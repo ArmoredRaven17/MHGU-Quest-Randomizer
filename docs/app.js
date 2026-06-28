@@ -274,6 +274,7 @@
     $("result").classList.remove("hidden");
     $("r_name").textContent = quest.Name || "";
     $("r_main").textContent = quest.Main || "";
+    $("r_hyperPill").classList.toggle("hidden", !quest.Hyper);
 
     const iconMonster = (type === "Special Permits" && quest.Name)
       ? spDeviant(quest.Name, quest.Monster) : (quest.Monster || "");
