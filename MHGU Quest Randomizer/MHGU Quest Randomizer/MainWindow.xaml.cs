@@ -624,7 +624,7 @@ namespace MHGU_Quest_Randomizer
                     case "Adept":
                     case "Aerial":
                         s1 = RollArt(weapon, null, null);
-                        break;O
+                        break;
                     default:
                         s1 = RollArt(weapon, null, null);
                         break;
