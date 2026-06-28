@@ -211,8 +211,9 @@
   function updateRollBtn() {
     const hasType = !!$("questType").value;
     const hasLevel = $("toLevel").value !== "";
-    const hasWeapon = anyChecked("#weaponList input");
-    const hasStyle = anyChecked("#styleList input");
+    const isArena = $("questType").value === "Arena";
+    const hasWeapon = isArena || anyChecked("#weaponList input");
+    const hasStyle = isArena || anyChecked("#styleList input");
     const hasMonster = monsterChecks.some(m => m.input.checked);
     const biasOk = !$("p_prowler").checked || anyChecked("#biasList input");
     $("rollBtn").disabled = !(hasType && hasLevel && hasWeapon && hasStyle && hasMonster && biasOk);
@@ -267,6 +268,19 @@
     const img = $("r_target");
     img.src = monsterIcon(iconMonster);
     img.onerror = () => { img.onerror = null; img.src = FALLBACK_ICON; };
+
+    // Arena: preset equipment sets — roll which set, no weapon/style/arts roll.
+    if (type === "Arena") {
+      $("r_weaponLabel").textContent = "Loadout";
+      const w = $("r_weapon");
+      w.textContent = "Set " + (1 + rand(5));
+      w.style.color = "var(--text)";
+      $("r_weaponIcon").classList.add("hidden");
+      $("r_styleBlock").classList.add("hidden");
+      return;
+    }
+    $("r_weaponLabel").textContent = "Weapon";
+    $("r_styleBlock").classList.remove("hidden");
 
     // Weapon
     let weapon;
