@@ -1,3 +1,9 @@
+/* MHFU game font (falls back to sans-serif for glyphs it lacks, e.g. ★ — © ) */
+@font-face{
+  font-family:'MHFU';
+  src:url('fonts/mhfu_font.ttf') format('truetype');
+  font-display:swap;
+}
 /* Theme variables are set at runtime from the chosen color (see app.js). */
 :root{
   --bg:#3e3e3e; --bg2:#333; --hover:#2f2f2f; --accent:#7a7a7a; --accent-hover:#9a9a9a;
@@ -6,7 +12,7 @@
 *{box-sizing:border-box}
 html,body{margin:0;height:100%}
 body{
-  font-family:"Segoe UI",system-ui,sans-serif;
+  font-family:'MHFU',"Segoe UI",system-ui,sans-serif;
   background:var(--bg); color:var(--text); font-size:14px;
 }
 #app{display:flex;flex-direction:column;min-height:100vh}
