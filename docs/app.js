@@ -55,10 +55,10 @@
   // Theme colors named after MHGU monsters that evoke each hue. Label = monster (and its
   // icon filename); the hex values are unchanged so saved themes keep matching.
   const COLORS = [
-    ["Teostra","#922B21"],["Rathalos","#E74C3C"],["Tigrex","#E67E22"],["Uragaan","#F39C12"],
+    ["Teostra","#922B21"],["Rathalos","#E74C3C"],["Tigrex","#E67E22"],["Akantor","#F39C12"],
     ["Rajang","#F1C40F"],["Rathian","#27AE60"],["Zinogre","#1ABC9C"],["Lagiacrus","#3498DB"],
     ["Brachydios","#2980B9"],["Gore Magala","#5C6BC0"],["Chameleos","#9B59B6"],["Mizutsune","#D81B60"],
-    ["Barioth","#FFFFFF"],["Kushala Daora","#BDC3C7"],["Basarios","#95A5A6"],["Nargacuga","#4A4A4A"],
+    ["Ukanlos","#FFFFFF"],["Kushala Daora","#BDC3C7"],["Basarios","#95A5A6"],["Nargacuga","#4A4A4A"],
   ];
 
   // ── Icon path helpers ────────────────────────────────────────────────────
