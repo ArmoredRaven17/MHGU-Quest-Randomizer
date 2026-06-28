@@ -206,6 +206,18 @@ namespace MHGU_Quest_Randomizer
             prowlerPill.Checked   += onPillChanged;
             prowlerPill.Unchecked += onPillChanged;
 
+            // "Prowler Quests?" only makes sense when "Prowler?" is on — only Prowlers can
+            // take Prowler quests. Disable + clear it whenever "Prowler?" is off.
+            RoutedEventHandler syncProwlerQuests = (_, _) =>
+            {
+                bool on = prowlerPill.IsChecked == true;
+                prowlerQuestsPill.IsEnabled = on;
+                if (!on) prowlerQuestsPill.IsChecked = false;
+            };
+            prowlerPill.Checked   += syncProwlerQuests;
+            prowlerPill.Unchecked += syncProwlerQuests;
+            syncProwlerQuests(this, null!);   // initial state (Prowler off by default)
+
             rootGrid.Background = _backgroundBrush;
             // Opaque root so the Viewbox letterbox bars don't show the warm DWM window
             // base (which tints neutral surfaces — e.g. the White theme — brownish).
