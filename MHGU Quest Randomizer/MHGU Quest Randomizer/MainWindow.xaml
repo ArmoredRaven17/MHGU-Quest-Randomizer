@@ -81,7 +81,7 @@
                                   HorizontalAlignment="Stretch"
                                   HorizontalContentAlignment="Stretch">
                             <StackPanel Padding="4,4,0,4">
-                                <TextBlock Text="Quest types to include:" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,0,0,2"/>
+                                <TextBlock Text="Large-monster quests are always included — check these to add more" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,0,0,2"/>
                                 <CheckBox x:Name="gatheringPill">Gathering</CheckBox>
                                 <CheckBox x:Name="smMonstersPill">Small Monsters</CheckBox>
                                 <CheckBox x:Name="hyperPill">Hypers</CheckBox>
@@ -95,7 +95,7 @@
                                   HorizontalContentAlignment="Stretch">
 
                                 <StackPanel Padding="4,4,0,4" Spacing="4">
-                                    <TextBlock Text="Monsters to include:" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,0,0,2"/>
+                                    <TextBlock Text="Uncheck to exclude from pool" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,0,0,2"/>
                                     <StackPanel Orientation="Horizontal" Spacing="4">
                                         <Button x:Name="expandMonstersButton"
                                                 Click="ExpandMonsters_Click"
@@ -137,7 +137,7 @@
                                   HorizontalAlignment="Stretch"
                                   HorizontalContentAlignment="Stretch">
                             <StackPanel Padding="4,4,0,4">
-                                <TextBlock Text="Weapons to include:" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,0,0,2"/>
+                                <TextBlock Text="Uncheck to exclude from pool" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,0,0,2"/>
                                 <CheckBox x:Name="gsPill" IsChecked="True">
                                     <StackPanel Orientation="Horizontal" Spacing="8">
                                         <Image x:Name="gsIcon"  Width="18" Height="18" VerticalAlignment="Center"/>
@@ -230,7 +230,7 @@
                                   HorizontalAlignment="Stretch"
                                   HorizontalContentAlignment="Stretch">
                             <StackPanel Padding="4,4,0,4">
-                                <TextBlock Text="Styles to include:" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,0,0,2"/>
+                                <TextBlock Text="Uncheck to exclude from pool" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,0,0,2"/>
                                 <CheckBox x:Name="guildPill"   IsChecked="True">Guild</CheckBox>
                                 <CheckBox x:Name="strikerPill" IsChecked="True">Striker</CheckBox>
                                 <CheckBox x:Name="adeptPill"   IsChecked="True">Adept</CheckBox>
@@ -244,10 +244,10 @@
                                   HorizontalAlignment="Stretch"
                                   HorizontalContentAlignment="Stretch">
                             <StackPanel Padding="4,4,0,4">
-                                <TextBlock Text="Options to include:" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,0,0,2"/>
+                                <TextBlock Text="Prowler options" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,0,0,2"/>
                                 <CheckBox x:Name="prowlerPill">Prowler Mode</CheckBox>
                                 <CheckBox x:Name="prowlerQuestsPill">Prowler Quests</CheckBox>
-                                <TextBlock Text="Biases to include:"
+                                <TextBlock Text="Biases — uncheck to exclude (used when a Prowler is rolled)"
                                            Style="{StaticResource CaptionTextBlockStyle}"
                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                            Margin="0,6,0,2"/>

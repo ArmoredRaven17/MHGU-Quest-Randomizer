@@ -24,7 +24,7 @@
       <section class="panel" data-open="false">
         <button class="panel-head">Quest Filters <span class="chev">&#9662;</span></button>
         <div class="panel-body">
-          <p class="hint">Large-monster quests are always included. These add extra categories:</p>
+          <p class="hint">Large-monster quests are always included — check these to add more</p>
           <label class="chk"><input type="checkbox" id="f_hyper">Hypers</label>
           <label class="chk"><input type="checkbox" id="f_egg">Egg Delivery</label>
           <label class="chk"><input type="checkbox" id="f_gathering">Gathering</label>
@@ -35,6 +35,7 @@
       <section class="panel" data-open="false">
         <button class="panel-head">Monsters <span class="chev">&#9662;</span></button>
         <div class="panel-body">
+          <p class="hint">Uncheck to exclude from pool</p>
           <div class="row gap">
             <button id="monAll" class="btn tiny">All</button>
             <button id="monNone" class="btn tiny">None</button>
@@ -45,12 +46,18 @@
 
       <section class="panel" data-open="false">
         <button class="panel-head">Weapons <span class="chev">&#9662;</span></button>
-        <div class="panel-body" id="weaponList"></div>
+        <div class="panel-body">
+          <p class="hint">Uncheck to exclude from pool</p>
+          <div id="weaponList"></div>
+        </div>
       </section>
 
       <section class="panel" data-open="false">
         <button class="panel-head">Styles <span class="chev">&#9662;</span></button>
-        <div class="panel-body" id="styleList"></div>
+        <div class="panel-body">
+          <p class="hint">Uncheck to exclude from pool</p>
+          <div id="styleList"></div>
+        </div>
       </section>
 
       <section class="panel" data-open="false">
@@ -58,7 +65,7 @@
         <div class="panel-body">
           <label class="chk"><input type="checkbox" id="p_prowler">Prowler?</label>
           <label class="chk"><input type="checkbox" id="p_quests">Prowler Quests?</label>
-          <p class="hint">Biases (used when a Prowler is rolled):</p>
+          <p class="hint">Biases — uncheck to exclude (used when a Prowler is rolled)</p>
           <div id="biasList"></div>
         </div>
       </section>
