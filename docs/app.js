@@ -150,12 +150,15 @@
       const wrap = document.createElement("div");
       wrap.className = "species";
       const head = document.createElement("div");
-      head.innerHTML = `<span class="twist">▸</span>`;
-      const lbl = document.createElement("label");
-      lbl.className = "chk";
-      lbl.innerHTML = `<input type="checkbox" class="sp" checked>${escapeHtml(species)}`;
-      head.style.display = "flex"; head.style.alignItems = "center";
-      head.appendChild(lbl);
+      head.className = "grphead";
+      const twist = document.createElement("span"); twist.className = "twist"; twist.textContent = "▸";
+      const spInput = document.createElement("input"); spInput.type = "checkbox"; spInput.className = "sp"; spInput.checked = true;
+      const nameEl = document.createElement("span"); nameEl.className = "grp-name"; nameEl.textContent = species;
+      head.appendChild(twist); head.appendChild(spInput); head.appendChild(nameEl);
+      // Clicking the group name (or twist) expands/collapses; the checkbox still toggles selection.
+      const toggleOpen = () => { wrap.classList.toggle("open"); twist.textContent = wrap.classList.contains("open") ? "▾" : "▸"; };
+      twist.addEventListener("click", toggleOpen);
+      nameEl.addEventListener("click", toggleOpen);
       const children = document.createElement("div");
       children.className = "children";
       const childInputs = [];
@@ -168,17 +171,18 @@
         childInputs.push(input);
         monsterChecks.push({ input, name });
         input.addEventListener("change", () => {
-          spInput.checked = childInputs.some(i => i.checked);
+          const n = childInputs.filter(i => i.checked).length;
+          spInput.checked = n === childInputs.length;
+          spInput.indeterminate = n > 0 && n < childInputs.length;
           updateRollBtn();
         });
         children.appendChild(cl);
       });
-      const spInput = lbl.querySelector("input");
       spInput.addEventListener("change", () => {
         childInputs.forEach(i => i.checked = spInput.checked);
+        spInput.indeterminate = false;
         updateRollBtn();
       });
-      head.querySelector(".twist").addEventListener("click", (e) => { wrap.classList.toggle("open"); e.target.textContent = wrap.classList.contains("open") ? "▾" : "▸"; });
       wrap.appendChild(head); wrap.appendChild(children);
       tree.appendChild(wrap);
     });
@@ -225,13 +229,16 @@
       const wrap = document.createElement("div"); wrap.className = "agrp";
       const head = document.createElement("div"); head.className = "ahead";
       const tw = document.createElement("span"); tw.className = "twist"; tw.textContent = "▸";
-      tw.addEventListener("click", () => { wrap.classList.toggle("open"); tw.textContent = wrap.classList.contains("open") ? "▾" : "▸"; });
-      const cl = document.createElement("label"); cl.className = "chk grp";
-      cl.innerHTML = `<input type="checkbox" checked>${escapeHtml(label)}`;
-      head.appendChild(tw); head.appendChild(cl);
+      const input = document.createElement("input"); input.type = "checkbox"; input.checked = true;
+      const nameEl = document.createElement("span"); nameEl.className = "grp-name"; nameEl.textContent = label;
+      // Clicking the group name (or twist) expands/collapses; the checkbox still toggles selection.
+      const toggleOpen = () => { wrap.classList.toggle("open"); tw.textContent = wrap.classList.contains("open") ? "▾" : "▸"; };
+      tw.addEventListener("click", toggleOpen);
+      nameEl.addEventListener("click", toggleOpen);
+      head.appendChild(tw); head.appendChild(input); head.appendChild(nameEl);
       const kids = document.createElement("div"); kids.className = "akids";
       wrap.appendChild(head); wrap.appendChild(kids);
-      return { wrap, input: cl.querySelector("input"), kids };
+      return { wrap, input, kids };
     }
     const byW = {};
     DATA.arts.forEach(a => { (byW[a.Weapon] = byW[a.Weapon] || {}); const b = baseName(a.HunterArtName); (byW[a.Weapon][b] = byW[a.Weapon][b] || []).push(a.HunterArtName); });
