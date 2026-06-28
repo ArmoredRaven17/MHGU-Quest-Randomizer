@@ -1240,39 +1240,45 @@ namespace MHGU_Quest_Randomizer
             panel.Children.Add(scaleCombo);
 
             // ── Color ──────────────────────────────────────────────────────
+            // Named after MHGU monsters that evoke each hue (icon shown on each swatch).
             var namedColors = new (string Name, Color Value)[]
             {
-                // Spectrum
-                ("Red",      Hex("#E74C3C")),
-                ("Orange",   Hex("#E67E22")),
-                ("Amber",    Hex("#F39C12")),
-                ("Gold",     Hex("#F1C40F")),
-                ("Green",    Hex("#27AE60")),
-                ("Teal",     Hex("#1ABC9C")),
-                ("Sky Blue", Hex("#3498DB")),
-                ("Blue",     Hex("#2980B9")),
-                ("Indigo",   Hex("#5C6BC0")),
-                ("Purple",   Hex("#9B59B6")),
-                ("Magenta",  Hex("#D81B60")),
-                ("Pink",     Hex("#E91E63")),
-                // Monochrome
-                ("White",    Hex("#FFFFFF")),
-                ("Silver",   Hex("#BDC3C7")),
-                ("Gray",     Hex("#95A5A6")),
-                ("Charcoal", Hex("#4A4A4A")),
+                ("Teostra",       Hex("#922B21")),
+                ("Rathalos",      Hex("#E74C3C")),
+                ("Tigrex",        Hex("#E67E22")),
+                ("Uragaan",       Hex("#F39C12")),
+                ("Rajang",        Hex("#F1C40F")),
+                ("Rathian",       Hex("#27AE60")),
+                ("Zinogre",       Hex("#1ABC9C")),
+                ("Lagiacrus",     Hex("#3498DB")),
+                ("Brachydios",    Hex("#2980B9")),
+                ("Gore Magala",   Hex("#5C6BC0")),
+                ("Chameleos",     Hex("#9B59B6")),
+                ("Mizutsune",     Hex("#D81B60")),
+                ("Barioth",       Hex("#FFFFFF")),
+                ("Kushala Daora", Hex("#BDC3C7")),
+                ("Basarios",      Hex("#95A5A6")),
+                ("Nargacuga",     Hex("#4A4A4A")),
             };
 
             var colorCombo = new ComboBox { Header = "Background Color", Width = 200 };
             ComboBoxItem? matchItem = null;
 
+            string iconBase = AppContext.BaseDirectory;
             foreach (var (name, color) in namedColors)
             {
                 var swatch = new Border
                 {
-                    Width = 14, Height = 14,
+                    Width = 28, Height = 28,
                     Background    = new SolidColorBrush(color),
-                    CornerRadius  = new CornerRadius(2),
+                    CornerRadius  = new CornerRadius(4),
                     VerticalAlignment = VerticalAlignment.Center,
+                    Child = new Image
+                    {
+                        Source  = LoadMonsterIcon(iconBase, name),
+                        Stretch = Stretch.Uniform,
+                        Margin  = new Thickness(1),
+                    },
                 };
                 var row = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 10 };
                 row.Children.Add(swatch);
