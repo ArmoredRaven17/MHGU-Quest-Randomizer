@@ -616,11 +616,11 @@
     "Main": "Deliver 2 Ancient Berries",
     "Monster": "Yian Kut-Ku",
     "Level": 3,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -629,11 +629,11 @@
     "Main": "Deliver 1 Wyvern Tear",
     "Monster": "Great Maccao",
     "Level": 3,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -928,11 +928,11 @@
     "Main": "Deliver 1 Wyvern Tear",
     "Monster": "Royal Ludroth",
     "Level": 3,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -1383,11 +1383,11 @@
     "Main": "Deliver 1 Beast Tear",
     "Monster": "Lagombi",
     "Level": 4,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -1448,11 +1448,11 @@
     "Main": "Deliver 1 Toad Tear",
     "Monster": "Tetsucabra",
     "Level": 4,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -1487,11 +1487,11 @@
     "Main": "Deliver 1 Wyvern Tear",
     "Monster": "Najarala",
     "Level": 4,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -1500,11 +1500,11 @@
     "Main": "Deliver 1 Wyvern Tear",
     "Monster": "Khezu",
     "Level": 4,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -1669,11 +1669,11 @@
     "Main": "Deliver 1 Wyvern Tear",
     "Monster": "Yian Garuga",
     "Level": 5,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -2098,11 +2098,11 @@
     "Main": "Deliver 1 Wyvern Tear",
     "Monster": "Seregios",
     "Level": 6,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -2761,11 +2761,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Yian Kut-Ku",
     "Level": 7,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -2943,11 +2943,11 @@
     "Main": "Deliver 3 Ancient Berries",
     "Monster": "Tetsucabra",
     "Level": 7,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -2995,11 +2995,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Yian Kut-Ku",
     "Level": 7,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -3047,11 +3047,11 @@
     "Main": "Deliver 1 Large Beast Tear",
     "Monster": "Arzuros",
     "Level": 7,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -3424,11 +3424,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Nibelsnarf",
     "Level": 8,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -3580,11 +3580,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Basarios",
     "Level": 8,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -3736,11 +3736,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Lagiacrus",
     "Level": 9,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -3788,11 +3788,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Yian Garuga",
     "Level": 9,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -3879,11 +3879,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Tigrex",
     "Level": 9,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -3892,11 +3892,11 @@
     "Main": "Deliver 1 Large Toad Tear",
     "Monster": "Zamtrios",
     "Level": 9,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -4074,11 +4074,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Agnaktor",
     "Level": 9,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -4269,11 +4269,11 @@
     "Main": "Deliver 1 Old Dragon Treasure",
     "Monster": "Valstrax",
     "Level": 10,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -4347,11 +4347,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Rathian",
     "Level": 10,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -4425,11 +4425,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Deviljho",
     "Level": 10,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -4438,11 +4438,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Barioth",
     "Level": 10,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -4945,11 +4945,11 @@
     "Main": "Deliver 5 Abyssal Mushrooms",
     "Monster": "Great Maccao",
     "Level": 1,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -4971,11 +4971,11 @@
     "Main": "Deliver 1 Wyvern Tear",
     "Monster": "Gypceros",
     "Level": 1,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -5179,11 +5179,11 @@
     "Main": "Deliver 5 Royal Honeys",
     "Monster": "Arzuros",
     "Level": 1,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -5374,11 +5374,11 @@
     "Main": "Deliver 1 Wyvern Tear",
     "Monster": "Gendrome",
     "Level": 2,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -5595,11 +5595,11 @@
     "Main": "Deliver 1 Beast Tear",
     "Monster": "Arzuros",
     "Level": 2,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -5764,11 +5764,11 @@
     "Main": "Deliver 1 Wyvern Tear",
     "Monster": "Tigrex",
     "Level": 3,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -5842,11 +5842,11 @@
     "Main": "Deliver 1 Beast Tear",
     "Monster": "Gammoth",
     "Level": 3,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -5881,11 +5881,11 @@
     "Main": "Deliver 1 Wyvern Tear",
     "Monster": "Zinogre",
     "Level": 3,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -5933,11 +5933,11 @@
     "Main": "Deliver 1 Wyvern Tear",
     "Monster": "Rathalos",
     "Level": 3,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -5946,11 +5946,11 @@
     "Main": "Deliver 1 Wyvern Tear",
     "Monster": "Astalos",
     "Level": 3,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -5985,11 +5985,11 @@
     "Main": "Deliver 1 Crab Pearl",
     "Monster": "Shogun Ceanataur",
     "Level": 3,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -6336,11 +6336,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Yian Kut-Ku",
     "Level": 4,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -6479,11 +6479,11 @@
     "Main": "Deliver 3 Ancient Berries",
     "Monster": "Tetsucabra",
     "Level": 4,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -6505,11 +6505,11 @@
     "Main": "Deliver 5 Piscine Livers",
     "Monster": "Cephadrome",
     "Level": 4,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -6531,11 +6531,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Yian Kut-Ku",
     "Level": 4,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -6583,11 +6583,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Giadrome",
     "Level": 4,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -6609,11 +6609,11 @@
     "Main": "Deliver 3 White Livers",
     "Monster": "Arzuros",
     "Level": 4,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -6791,11 +6791,11 @@
     "Main": "Deliver 1 Large Beast Tear",
     "Monster": "Kecha Wacha",
     "Level": 5,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -6817,11 +6817,11 @@
     "Main": "Deliver 1 Territorial Dung+",
     "Monster": "Congalala",
     "Level": 5,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -6908,11 +6908,11 @@
     "Main": "Deliver 5 Monster Guts",
     "Monster": "Zamtrios",
     "Level": 5,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -7051,11 +7051,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Malfestio",
     "Level": 5,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -7064,11 +7064,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Barroth",
     "Level": 5,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -7077,11 +7077,11 @@
     "Main": "Deliver 5 Apceros Livers",
     "Monster": "Nibelsnarf",
     "Level": 5,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -7168,11 +7168,11 @@
     "Main": "Deliver 1 Queen Substance",
     "Monster": "Nerscylla",
     "Level": 5,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -7207,11 +7207,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Basarios",
     "Level": 5,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -7233,11 +7233,11 @@
     "Main": "Deliver 1 Powderstone",
     "Monster": "Volvidon",
     "Level": 5,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -7389,11 +7389,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Astalos",
     "Level": 6,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -7454,11 +7454,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Mizutsune",
     "Level": 6,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -7480,11 +7480,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Barioth",
     "Level": 6,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -7493,11 +7493,11 @@
     "Main": "Deliver 5 Popo Tongues",
     "Monster": "Gammoth",
     "Level": 6,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -7545,11 +7545,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Gravios",
     "Level": 6,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -7623,11 +7623,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Glavenus",
     "Level": 6,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -7701,11 +7701,11 @@
     "Main": "Deliver 1 Territorial Dung+",
     "Monster": "Blangonga",
     "Level": 6,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -7740,11 +7740,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Lagiacrus",
     "Level": 6,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -7818,11 +7818,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Lavasioth",
     "Level": 6,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -8039,11 +8039,11 @@
     "Main": "Deliver 1 Large Toad Tear",
     "Monster": "Tetsucabra",
     "Level": 6,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -8325,11 +8325,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Astalos",
     "Level": 7,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -8338,11 +8338,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Mizutsune",
     "Level": 7,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -8390,11 +8390,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Glavenus",
     "Level": 7,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -8403,11 +8403,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Zinogre",
     "Level": 7,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -8416,11 +8416,11 @@
     "Main": "Deliver 1 Large Beast Tear",
     "Monster": "Rajang",
     "Level": 7,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -8728,11 +8728,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Rathian",
     "Level": 8,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -8806,11 +8806,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Gypceros",
     "Level": 7,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -8871,11 +8871,11 @@
     "Main": "Deliver 2 Large Wyvern Tears",
     "Monster": "Yian Garuga",
     "Level": 8,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -9014,11 +9014,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Silver Rathalos",
     "Level": 7,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -9443,11 +9443,11 @@
     "Main": "Deliver 1 Large Beast Tear",
     "Monster": "Arzuros",
     "Level": 1,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -9534,11 +9534,11 @@
     "Main": "Deliver 5 Slagtoth Oils",
     "Monster": "Kecha Wacha",
     "Level": 1,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -9573,11 +9573,11 @@
     "Main": "Deliver 5 Ancient Berries",
     "Monster": "Seltas",
     "Level": 1,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -9781,11 +9781,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Malfestio",
     "Level": 2,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -9807,11 +9807,11 @@
     "Main": "Deliver 1 Crab Pearl+",
     "Monster": "Shogun Ceanataur",
     "Level": 2,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -10132,11 +10132,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Nargacuga",
     "Level": 2,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -10145,11 +10145,11 @@
     "Main": "Deliver 5 pieces of Moofah Fur",
     "Monster": "Malfestio",
     "Level": 2,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -10197,11 +10197,11 @@
     "Main": "Deliver 1 Territorial Dung+",
     "Monster": "Congalala",
     "Level": 2,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -10457,11 +10457,11 @@
     "Main": "Deliver 1 Vile Frenzy Crystal",
     "Monster": "Gore Magala",
     "Level": 3,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -10509,11 +10509,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Yian Garuga",
     "Level": 3,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -10652,11 +10652,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Rathalos",
     "Level": 3,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -10769,11 +10769,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Lavasioth",
     "Level": 3,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -11172,11 +11172,11 @@
     "Main": "Deliver 1 Old Dragon Treasure",
     "Monster": "Valstrax",
     "Level": 4,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -11393,11 +11393,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Glavenus",
     "Level": 4,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -12537,11 +12537,11 @@
     "Main": "Deliver 1 Large Beast Tear",
     "Monster": "Snowbaron Lagombi",
     "Level": 2,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -17464,11 +17464,11 @@
     "Main": "Deliver 2 Wyvern Tears",
     "Monster": "Uragaan",
     "Level": 1,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -17633,11 +17633,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Yian Garuga",
     "Level": 2,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -17646,11 +17646,11 @@
     "Main": "Deliver 10 Piscine Livers",
     "Monster": "Rathian",
     "Level": 2,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -17750,11 +17750,11 @@
     "Main": "Deliver 2 Large Wyvern Tears",
     "Monster": "Mizutsune",
     "Level": 2,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -17776,11 +17776,11 @@
     "Main": "Deliver 1 Large Wyvern Tear",
     "Monster": "Astalos",
     "Level": 2,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -18556,11 +18556,11 @@
     "Main": "Deliver 4 pieces of Dung",
     "Monster": "Brachydios",
     "Level": 3,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -18621,11 +18621,11 @@
     "Main": "Deliver 2 Large Toad Tears",
     "Monster": "Zamtrios",
     "Level": 3,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -18673,11 +18673,11 @@
     "Main": "Deliver 2 Large Wyvern Tears",
     "Monster": "Basarios",
     "Level": 3,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
