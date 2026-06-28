@@ -61,6 +61,18 @@
       </section>
 
       <section class="panel" data-open="false">
+        <button class="panel-head">Hunter Arts <span class="chev">&#9662;</span></button>
+        <div class="panel-body">
+          <p class="hint">Uncheck to exclude from pool (by weapon, art, or level)</p>
+          <div class="row gap">
+            <button id="artAll" class="btn tiny">All</button>
+            <button id="artNone" class="btn tiny">None</button>
+          </div>
+          <div id="artTree" class="tree"></div>
+        </div>
+      </section>
+
+      <section class="panel" data-open="false">
         <button class="panel-head">Prowler <span class="chev">&#9662;</span></button>
         <div class="panel-body">
           <label class="chk"><input type="checkbox" id="p_prowler">Prowler?</label>

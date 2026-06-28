@@ -22,6 +22,7 @@ namespace MHGU_Quest_Randomizer
         private List<HunterArt> _arts = new();
         private List<Monster> _monsters = new();
         private bool _updatingTreeSelection = false;
+        private bool _updatingArtSelection  = false;
         private bool _syncingLevels = false;
 
         private (CheckBox Pill, string Name)[] _weaponPills = Array.Empty<(CheckBox, string)>();
@@ -231,6 +232,7 @@ namespace MHGU_Quest_Randomizer
 
             LoadPillIcons(baseDir);
             PopulateMonsterTree();
+            PopulateArtTree();
 
             // Register persistent brushes once so visual states hold the same object
             // reference — subsequent .Color mutations propagate immediately.
@@ -340,6 +342,118 @@ namespace MHGU_Quest_Randomizer
         {
             foreach (TreeViewNode node in monsterTreeView.RootNodes)
                 node.IsExpanded = false;
+        }
+
+        // ─── Hunter Arts tree (Weapon → Art → Levels) ───────────────────────────
+
+        private static string ArtBaseName(string n) =>
+            System.Text.RegularExpressions.Regex.Replace(n, @" (III|II|I)$", "");
+
+        private void PopulateArtTree()
+        {
+            var byWeapon = _arts
+                .GroupBy(a => a.Weapon)
+                .OrderBy(g => g.Key == "All" ? 1 : 0).ThenBy(g => g.Key);
+
+            foreach (var wGroup in byWeapon)
+            {
+                var weaponNode = new TreeViewNode { Content = wGroup.Key };
+                foreach (var baseGroup in wGroup.GroupBy(a => ArtBaseName(a.HunterArtName)).OrderBy(g => g.Key))
+                {
+                    var levels = baseGroup.OrderBy(a => a.HunterArtName).ToList();
+                    if (levels.Count == 1)
+                    {
+                        weaponNode.Children.Add(new TreeViewNode { Content = levels[0].HunterArtName });
+                    }
+                    else
+                    {
+                        var baseNode = new TreeViewNode { Content = baseGroup.Key };
+                        foreach (var art in levels)
+                            baseNode.Children.Add(new TreeViewNode { Content = art.HunterArtName });
+                        weaponNode.Children.Add(baseNode);
+                    }
+                }
+                artTreeView.RootNodes.Add(weaponNode);
+            }
+
+            // All checked by default
+            _updatingArtSelection = true;
+            foreach (TreeViewNode w in artTreeView.RootNodes)
+                SelectNodeTree(w);
+            _updatingArtSelection = false;
+        }
+
+        private void SelectNodeTree(TreeViewNode node)
+        {
+            if (!artTreeView.SelectedNodes.Contains(node)) artTreeView.SelectedNodes.Add(node);
+            foreach (TreeViewNode c in node.Children) SelectNodeTree(c);
+        }
+
+        // Depth-agnostic cascade: checking a node selects all descendants; unchecking a node
+        // deselects its descendants — but only when the node was explicitly unchecked (none of
+        // its own children are also being removed, which would mean it was auto-removed because
+        // a descendant changed).
+        private void ArtTreeView_SelectionChanged(TreeView sender, TreeViewSelectionChangedEventArgs args)
+        {
+            if (_updatingArtSelection) return;
+            _updatingArtSelection = true;
+            try
+            {
+                foreach (TreeViewNode node in args.AddedItems.OfType<TreeViewNode>().Where(n => n.Children.Count > 0))
+                    AddDescendants(node, sender);
+
+                var removed = new HashSet<TreeViewNode>(args.RemovedItems.OfType<TreeViewNode>());
+                foreach (TreeViewNode node in args.RemovedItems.OfType<TreeViewNode>().Where(n => n.Children.Count > 0))
+                    if (!node.Children.Any(c => removed.Contains(c)))
+                        RemoveDescendants(node, sender);
+            }
+            finally { _updatingArtSelection = false; }
+        }
+
+        private static void AddDescendants(TreeViewNode node, TreeView tv)
+        {
+            foreach (TreeViewNode c in node.Children)
+            {
+                if (!tv.SelectedNodes.Contains(c)) tv.SelectedNodes.Add(c);
+                AddDescendants(c, tv);
+            }
+        }
+
+        private static void RemoveDescendants(TreeViewNode node, TreeView tv)
+        {
+            foreach (TreeViewNode c in node.Children)
+            {
+                tv.SelectedNodes.Remove(c);
+                RemoveDescendants(c, tv);
+            }
+        }
+
+        private void CollectExcludedArts(TreeViewNode node, HashSet<string> excl)
+        {
+            if (node.Children.Count == 0)
+            {
+                if (!artTreeView.SelectedNodes.Contains(node))
+                    excl.Add((string)node.Content);
+            }
+            else
+                foreach (TreeViewNode c in node.Children) CollectExcludedArts(c, excl);
+        }
+
+        private void ExpandArts_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (TreeViewNode n in artTreeView.RootNodes) SetExpandedTree(n, true);
+        }
+
+        private void CollapseArts_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (TreeViewNode n in artTreeView.RootNodes) SetExpandedTree(n, false);
+        }
+
+        private static void SetExpandedTree(TreeViewNode node, bool expanded)
+        {
+            if (node.Children.Count == 0) return;
+            node.IsExpanded = expanded;
+            foreach (TreeViewNode c in node.Children) SetExpandedTree(c, expanded);
         }
 
         // ─── Quest level dropdown ───────────────────────────────────────────────
@@ -731,26 +845,30 @@ namespace MHGU_Quest_Randomizer
                 hunterArt2.Text = "";
                 hunterArt3.Text = "";
 
+                // Arts the user filtered out (unchecked leaves in the Hunter Arts tree)
+                var excludedArts = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                foreach (TreeViewNode w in artTreeView.RootNodes) CollectExcludedArts(w, excludedArts);
+
                 string? s1 = null, s2 = null, s3 = null;
                 switch (style)
                 {
                     case "Striker":
                     case "Alchemy":
-                        s1 = RollArt(weapon, null, null);
-                        s2 = RollArt(weapon, s1,   null);
-                        s3 = RollArt(weapon, s1,   s2);
+                        s1 = RollArt(weapon, null, null, excludedArts);
+                        s2 = RollArt(weapon, s1,   null, excludedArts);
+                        s3 = RollArt(weapon, s1,   s2,   excludedArts);
                         break;
                     case "Guild":
-                        s1 = RollArt(weapon, null, null);
-                        s2 = RollArt(weapon, s1, null);
+                        s1 = RollArt(weapon, null, null, excludedArts);
+                        s2 = RollArt(weapon, s1, null, excludedArts);
                         break;
                     case "Valor":
                     case "Adept":
                     case "Aerial":
-                        s1 = RollArt(weapon, null, null);
+                        s1 = RollArt(weapon, null, null, excludedArts);
                         break;
                     default:
-                        s1 = RollArt(weapon, null, null);
+                        s1 = RollArt(weapon, null, null, excludedArts);
                         break;
                 }
 
@@ -775,13 +893,14 @@ namespace MHGU_Quest_Randomizer
         private static string ArtBase(string name) =>
             System.Text.RegularExpressions.Regex.Replace(name, @" (III|II|I)$", "");
 
-        private string? RollArt(string weapon, string? exclude1, string? exclude2)
+        private string? RollArt(string weapon, string? exclude1, string? exclude2, HashSet<string> excludedArts)
         {
             string? b1 = exclude1 != null ? ArtBase(exclude1) : null;
             string? b2 = exclude2 != null ? ArtBase(exclude2) : null;
             for (int attempt = 0; attempt < 1000; attempt++)
             {
                 var art = _arts[Random.Shared.Next(_arts.Count)];
+                if (excludedArts.Contains(art.HunterArtName)) continue;   // filtered out by the user
                 if (!art.Weapon.Equals("All", StringComparison.OrdinalIgnoreCase)
                     && !art.Weapon.Equals(weapon, StringComparison.OrdinalIgnoreCase)) continue;
                 string b = ArtBase(art.HunterArtName);
@@ -930,6 +1049,14 @@ namespace MHGU_Quest_Randomizer
                     monsterTreeView.SelectedNodes.Add(child);
             }
             _updatingTreeSelection = false;
+
+            // Hunter Arts — re-select all
+            _updatingArtSelection = true;
+            foreach (var node in artTreeView.SelectedNodes.ToList())
+                artTreeView.SelectedNodes.Remove(node);
+            foreach (TreeViewNode w in artTreeView.RootNodes)
+                SelectNodeTree(w);
+            _updatingArtSelection = false;
         }
 
         private async void SettingsButton_Click(object sender, RoutedEventArgs e)

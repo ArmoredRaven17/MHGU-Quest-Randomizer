@@ -239,6 +239,39 @@
                                 <CheckBox x:Name="alchemyPill" IsChecked="True">Alchemy</CheckBox>
                             </StackPanel>
                         </Expander>
+                        <!-- Hunter Arts -->
+                        <Expander Header="Hunter Arts"
+                                  HorizontalAlignment="Stretch"
+                                  HorizontalContentAlignment="Stretch">
+                            <StackPanel Padding="4,4,0,4" Spacing="4">
+                                <TextBlock Text="Uncheck to exclude (by weapon, art, or level)" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,0,0,2"/>
+                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <Button x:Name="expandArtsButton" Click="ExpandArts_Click" Padding="6,2" FontSize="11">Expand All</Button>
+                                    <Button x:Name="collapseArtsButton" Click="CollapseArts_Click" Padding="6,2" FontSize="11">Collapse All</Button>
+                                </StackPanel>
+                                <Border MaxHeight="240"
+                                        BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="4">
+                                    <TreeView x:Name="artTreeView"
+                                              SelectionMode="Multiple"
+                                              Padding="4"
+                                              SelectionChanged="ArtTreeView_SelectionChanged">
+                                        <TreeView.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Content}" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="13"/>
+                                            </DataTemplate>
+                                        </TreeView.ItemTemplate>
+                                        <TreeView.ItemContainerStyle>
+                                            <Style TargetType="TreeViewItem">
+                                                <Setter Property="Padding" Value="2,1,4,1"/>
+                                                <Setter Property="MinHeight" Value="24"/>
+                                            </Style>
+                                        </TreeView.ItemContainerStyle>
+                                    </TreeView>
+                                </Border>
+                            </StackPanel>
+                        </Expander>
                         <!-- Prowler -->
                         <Expander Header="Prowler"
                                   HorizontalAlignment="Stretch"

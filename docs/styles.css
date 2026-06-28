@@ -77,6 +77,12 @@ body{
 .tree .children{margin-left:22px;display:none;flex-direction:column}
 .tree .species.open .children{display:flex}
 .tree .twist{cursor:pointer;width:14px;display:inline-block;text-align:center;opacity:.7;user-select:none}
+/* Hunter Arts tree (nestable groups) */
+.agrp .akids{margin-left:18px;display:none;flex-direction:column}
+.agrp.open>.akids{display:flex}
+.ahead{display:flex;align-items:center}
+.chk.grp{font-weight:600}
+.chk input:indeterminate{opacity:.7}
 
 /* Quest pickers */
 .quest-pickers{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;margin-bottom:18px}

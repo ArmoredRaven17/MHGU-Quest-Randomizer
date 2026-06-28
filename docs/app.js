@@ -94,11 +94,12 @@
   // Strip a trailing level suffix so "Haste Rain I" and "Haste Rain III" compare equal —
   // the same art can't be equipped at two levels.
   const artBase = (n) => n.replace(/ (III|II|I)$/, "");
-  function rollArt(weapon, ex1, ex2) {
+  function rollArt(weapon, ex1, ex2, excl) {
     const wn = normWeapon(weapon);
     const b1 = ex1 ? artBase(ex1) : null, b2 = ex2 ? artBase(ex2) : null;
     for (let i = 0; i < 1000; i++) {
       const a = DATA.arts[rand(DATA.arts.length)];
+      if (excl && excl.has(a.HunterArtName)) continue;   // filtered out by the user
       const aw = a.Weapon.toLowerCase();
       if (aw !== "all" && aw !== wn) continue;
       const b = artBase(a.HunterArtName);
@@ -187,6 +188,75 @@
     document.querySelectorAll("#monsterTree input").forEach(i => i.checked = v);
     updateRollBtn();
   }
+
+  // ── Hunter Arts tree (3-level: Weapon → Art → Levels) ─────────────────────
+  const artLeaves = [];   // {input, name}
+  const artGroups = [];   // {input, leaves:[leafInput,...]}  (weapon and base-art groups)
+  let artSyncing = false;
+  function refreshArtGroups() {
+    for (const g of artGroups) {
+      const on = g.leaves.filter(l => l.checked).length;
+      g.input.checked = on === g.leaves.length;
+      g.input.indeterminate = on > 0 && on < g.leaves.length;
+    }
+  }
+  function onArtLeaf() { if (artSyncing) return; artSyncing = true; refreshArtGroups(); artSyncing = false; }
+  function onArtGroup(g) {
+    if (artSyncing) return;
+    artSyncing = true;
+    g.leaves.forEach(l => l.checked = g.input.checked);
+    refreshArtGroups();
+    artSyncing = false;
+  }
+  const excludedArts = () => new Set(artLeaves.filter(l => !l.input.checked).map(l => l.name));
+  function setAllArts(v) { artLeaves.forEach(l => l.input.checked = v); refreshArtGroups(); }
+  (function buildArtTree() {
+    const tree = $("artTree");
+    const baseName = (n) => n.replace(/ (III|II|I)$/, "");
+    function leafEl(name) {
+      const lbl = document.createElement("label"); lbl.className = "chk";
+      lbl.innerHTML = `<input type="checkbox" checked>${escapeHtml(name)}`;
+      const input = lbl.querySelector("input"); input.dataset.name = name;
+      input.addEventListener("change", onArtLeaf);
+      artLeaves.push({ input, name });
+      return { el: lbl, input };
+    }
+    function groupEl(label) {
+      const wrap = document.createElement("div"); wrap.className = "agrp";
+      const head = document.createElement("div"); head.className = "ahead";
+      const tw = document.createElement("span"); tw.className = "twist"; tw.textContent = "▸";
+      tw.addEventListener("click", () => { wrap.classList.toggle("open"); tw.textContent = wrap.classList.contains("open") ? "▾" : "▸"; });
+      const cl = document.createElement("label"); cl.className = "chk grp";
+      cl.innerHTML = `<input type="checkbox" checked>${escapeHtml(label)}`;
+      head.appendChild(tw); head.appendChild(cl);
+      const kids = document.createElement("div"); kids.className = "akids";
+      wrap.appendChild(head); wrap.appendChild(kids);
+      return { wrap, input: cl.querySelector("input"), kids };
+    }
+    const byW = {};
+    DATA.arts.forEach(a => { (byW[a.Weapon] = byW[a.Weapon] || {}); const b = baseName(a.HunterArtName); (byW[a.Weapon][b] = byW[a.Weapon][b] || []).push(a.HunterArtName); });
+    const weapons = Object.keys(byW).sort((x, y) => (x === "All") - (y === "All") || x.localeCompare(y));
+    for (const w of weapons) {
+      const wg = groupEl(w);
+      const wLeaves = [];
+      for (const b of Object.keys(byW[w]).sort()) {
+        const fulls = byW[w][b].slice().sort();
+        if (fulls.length === 1) {
+          const lf = leafEl(fulls[0]); wg.kids.appendChild(lf.el); wLeaves.push(lf.input);
+        } else {
+          const bg = groupEl(b); const bLeaves = [];
+          for (const f of fulls) { const lf = leafEl(f); bg.kids.appendChild(lf.el); bLeaves.push(lf.input); wLeaves.push(lf.input); }
+          const grp = { input: bg.input, leaves: bLeaves };
+          artGroups.push(grp); bg.input.addEventListener("change", () => onArtGroup(grp));
+          wg.kids.appendChild(bg.wrap);
+        }
+      }
+      const wgrp = { input: wg.input, leaves: wLeaves };
+      artGroups.push(wgrp); wg.input.addEventListener("change", () => onArtGroup(wgrp));
+      tree.appendChild(wg.wrap);
+    }
+    refreshArtGroups();
+  })();
 
   // ── Level dropdowns ──────────────────────────────────────────────────────
   function fillLevels() {
@@ -359,14 +429,15 @@
       styleLabel.textContent = "Style";
       styleEl.textContent = style;
 
+      const excl = excludedArts();
       let picks = [];
       if (style === "Striker" || style === "Alchemy") {
-        const a = rollArt(weapon, null, null), b = rollArt(weapon, a, null), c = rollArt(weapon, a, b);
+        const a = rollArt(weapon, null, null, excl), b = rollArt(weapon, a, null, excl), c = rollArt(weapon, a, b, excl);
         picks = [a, b, c];
       } else if (style === "Guild") {
-        const a = rollArt(weapon, null, null); picks = [a, rollArt(weapon, a, null)];
+        const a = rollArt(weapon, null, null, excl); picks = [a, rollArt(weapon, a, null, excl)];
       } else {
-        picks = [rollArt(weapon, null, null)];
+        picks = [rollArt(weapon, null, null, excl)];
       }
       picks.map(maybeSP).filter(Boolean).forEach(t => {
         const li = document.createElement("li"); li.textContent = t; arts.appendChild(li);
@@ -424,6 +495,8 @@
   $("rollBtn").addEventListener("click", randomize);
   $("monAll").addEventListener("click", () => setAllMonsters(true));
   $("monNone").addEventListener("click", () => setAllMonsters(false));
+  $("artAll").addEventListener("click", () => setAllArts(true));
+  $("artNone").addEventListener("click", () => setAllArts(false));
   $("themeBtn").addEventListener("click", () => $("themeModal").classList.remove("hidden"));
   $("themeClose").addEventListener("click", () => $("themeModal").classList.add("hidden"));
   $("themeModal").addEventListener("click", (e) => { if (e.target.id === "themeModal") $("themeModal").classList.add("hidden"); });
@@ -432,6 +505,7 @@
     ["f_hyper","f_egg","f_gathering","f_small","p_prowler","p_quests"].forEach(id => $(id).checked = false);
     document.querySelectorAll("#weaponList input,#styleList input,#biasList input").forEach(i => i.checked = true);
     setAllMonsters(true);
+    setAllArts(true);
     syncProwlerQuests();
     updateRollBtn();
   });
