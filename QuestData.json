@@ -1929,11 +1929,11 @@
     "Main": "Earn 700 Wycademy Points",
     "Monster": "Great Maccao",
     "Level": 5,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -1942,11 +1942,11 @@
     "Main": "Earn 700 Wycademy Points",
     "Monster": "Gendrome",
     "Level": 5,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -1955,11 +1955,11 @@
     "Main": "Earn 700 Wycademy Points",
     "Monster": "Arzuros",
     "Level": 5,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -2189,11 +2189,11 @@
     "Main": "Earn 700 Wycademy Points",
     "Monster": "Velocidrome",
     "Level": 6,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -2202,11 +2202,11 @@
     "Main": "Earn 700 Wycademy Points",
     "Monster": "Bulldrome",
     "Level": 6,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -2215,11 +2215,11 @@
     "Main": "Earn 700 Wycademy Points",
     "Monster": "Royal Ludroth",
     "Level": 6,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -2228,11 +2228,11 @@
     "Main": "Earn 700 Wycademy Points",
     "Monster": "Iodrome",
     "Level": 6,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -2241,11 +2241,11 @@
     "Main": "Earn 700 Wycademy Points",
     "Monster": "Volvidon",
     "Level": 6,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -2397,11 +2397,11 @@
     "Main": "Earn 700 Wycademy Points",
     "Monster": "Tigrex",
     "Level": 6,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -2982,11 +2982,11 @@
     "Main": "Earn 500 Wycademy Points",
     "Monster": "Daimyo Hermitaur",
     "Level": 7,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -3333,11 +3333,11 @@
     "Main": "Earn 500 Wycademy Points",
     "Monster": "Kecha Wacha",
     "Level": 8,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -3515,11 +3515,11 @@
     "Main": "Earn 500 Wycademy Points",
     "Monster": "Malfestio",
     "Level": 8,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -3541,11 +3541,11 @@
     "Main": "Earn 500 Wycademy Points",
     "Monster": "Shogun Ceanataur",
     "Level": 8,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -4009,11 +4009,11 @@
     "Main": "Earn 500 Wycademy Points",
     "Monster": "Blangonga",
     "Level": 9,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -4100,11 +4100,11 @@
     "Main": "Earn 1000 Wycademy Points",
     "Monster": "Great Maccao",
     "Level": 9,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -4126,11 +4126,11 @@
     "Main": "Earn 1000 Wycademy Points",
     "Monster": "Iodrome",
     "Level": 9,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -4477,11 +4477,11 @@
     "Main": "Earn 1000 Wycademy Points",
     "Monster": "Gypceros",
     "Level": 10,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -4490,11 +4490,11 @@
     "Main": "Earn 1000 Wycademy Points",
     "Monster": "Velocidrome",
     "Level": 10,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -4503,11 +4503,11 @@
     "Main": "Earn 1000 Wycademy Points",
     "Monster": "Royal Ludroth",
     "Level": 10,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -4516,11 +4516,11 @@
     "Main": "Earn 1000 Wycademy Points",
     "Monster": "Malfestio",
     "Level": 10,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -4529,11 +4529,11 @@
     "Main": "Earn 1000 Wycademy Points",
     "Monster": "Congalala",
     "Level": 10,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -6037,11 +6037,11 @@
     "Main": "Earn 700 Wycademy Points",
     "Monster": "Great Maccao",
     "Level": 3,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -6050,11 +6050,11 @@
     "Main": "Earn 700 Wycademy Points",
     "Monster": "Gendrome",
     "Level": 3,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -6063,11 +6063,11 @@
     "Main": "Earn 700 Wycademy Points",
     "Monster": "Arzuros",
     "Level": 3,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -6076,11 +6076,11 @@
     "Main": "Earn 700 Wycademy Points",
     "Monster": "Iodrome",
     "Level": 3,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -6089,11 +6089,11 @@
     "Main": "Earn 700 Wycademy Points",
     "Monster": "Volvidon",
     "Level": 3,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -7272,11 +7272,11 @@
     "Main": "Earn 1500 Wycademy Points",
     "Monster": "Volvidon",
     "Level": 5,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -7285,11 +7285,11 @@
     "Main": "Earn 1500 Wycademy Points",
     "Monster": "Daimyo Hermitaur",
     "Level": 5,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -7831,11 +7831,11 @@
     "Main": "Earn 1500 Wycademy Points",
     "Monster": "Rathian",
     "Level": 6,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -7844,11 +7844,11 @@
     "Main": "Earn 1500 Wycademy Points",
     "Monster": "Malfestio",
     "Level": 6,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -7857,11 +7857,11 @@
     "Main": "Earn 1500 Wycademy Points",
     "Monster": "Khezu",
     "Level": 6,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -7870,11 +7870,11 @@
     "Main": "Earn 1500 Wycademy Points",
     "Monster": "Yian Garuga",
     "Level": 6,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -7883,11 +7883,11 @@
     "Main": "Earn 1500 Wycademy Points",
     "Monster": "Nargacuga",
     "Level": 6,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -7896,11 +7896,11 @@
     "Main": "Earn 1500 Wycademy Points",
     "Monster": "Bulldrome",
     "Level": 6,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -7909,11 +7909,11 @@
     "Main": "Earn 1500 Wycademy Points",
     "Monster": "Shogun Ceanataur",
     "Level": 6,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -8351,11 +8351,11 @@
     "Main": "Earn 500 Wycademy Points",
     "Monster": "Gammoth",
     "Level": 7,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -9980,7 +9980,7 @@
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -10006,7 +10006,7 @@
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -10028,11 +10028,11 @@
     "Main": "Earn 1500 Wycademy Points",
     "Monster": "Volvidon",
     "Level": 2,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -10795,11 +10795,11 @@
     "Main": "Earn 2500 Wycademy Points",
     "Monster": "Cephadrome",
     "Level": 3,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -10808,11 +10808,11 @@
     "Main": "Earn 2500 Wycademy Points",
     "Monster": "Great Maccao",
     "Level": 3,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -10821,11 +10821,11 @@
     "Main": "Earn 2500 Wycademy Points",
     "Monster": "Gendrome",
     "Level": 3,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -11445,11 +11445,11 @@
     "Main": "Earn 2500 Wycademy Points",
     "Monster": "Malfestio",
     "Level": 4,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -11458,11 +11458,11 @@
     "Main": "Earn 2500 Wycademy Points",
     "Monster": "Yian Garuga",
     "Level": 4,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -11471,11 +11471,11 @@
     "Main": "Earn 2500 Wycademy Points",
     "Monster": "Royal Ludroth",
     "Level": 4,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -11484,11 +11484,11 @@
     "Main": "Earn 2500 Wycademy Points",
     "Monster": "Gravios",
     "Level": 4,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -11809,11 +11809,11 @@
     "Main": "Earn 2500 Wycademy Points",
     "Monster": "Basarios",
     "Level": 5,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -11822,11 +11822,11 @@
     "Main": "Earn 2500 Wycademy Points",
     "Monster": "Barroth",
     "Level": 5,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -11835,11 +11835,11 @@
     "Main": "Earn 2500 Wycademy Points",
     "Monster": "Congalala",
     "Level": 5,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
@@ -11848,11 +11848,11 @@
     "Main": "Earn 2500 Wycademy Points",
     "Monster": "Khezu",
     "Level": 5,
-    "LgMonster": true,
+    "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
     "Egg": false,
-    "Gathering": false,
+    "Gathering": true,
     "SmMonsters": false
   },
   {
