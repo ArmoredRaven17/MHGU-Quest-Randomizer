@@ -1255,9 +1255,9 @@ namespace MHGU_Quest_Randomizer
                 ("Gore Magala",   Hex("#5C6BC0")),
                 ("Chameleos",     Hex("#9B59B6")),
                 ("Mizutsune",     Hex("#D81B60")),
-                ("Ukanlos",       Hex("#FFFFFF")),
+                ("Amatsu",        Hex("#FFFFFF")),
                 ("Kushala Daora", Hex("#BDC3C7")),
-                ("Basarios",      Hex("#95A5A6")),
+                ("Ukanlos",       Hex("#95A5A6")),
                 ("Nargacuga",     Hex("#4A4A4A")),
             };
 
