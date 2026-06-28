@@ -52,11 +52,13 @@
     Events:  [["Low Rank",1],["High Rank",2],["G Rank",3]],
   };
 
+  // Theme colors named after MHGU monsters that evoke each hue. Label = monster (and its
+  // icon filename); the hex values are unchanged so saved themes keep matching.
   const COLORS = [
-    ["Red","#E74C3C"],["Orange","#E67E22"],["Amber","#F39C12"],["Gold","#F1C40F"],
-    ["Green","#27AE60"],["Teal","#1ABC9C"],["Sky Blue","#3498DB"],["Blue","#2980B9"],
-    ["Indigo","#5C6BC0"],["Purple","#9B59B6"],["Magenta","#D81B60"],["Pink","#E91E63"],
-    ["White","#FFFFFF"],["Silver","#BDC3C7"],["Gray","#95A5A6"],["Charcoal","#4A4A4A"],
+    ["Teostra","#922B21"],["Rathalos","#E74C3C"],["Tigrex","#E67E22"],["Uragaan","#F39C12"],
+    ["Rajang","#F1C40F"],["Rathian","#27AE60"],["Zinogre","#1ABC9C"],["Lagiacrus","#3498DB"],
+    ["Brachydios","#2980B9"],["Gore Magala","#5C6BC0"],["Chameleos","#9B59B6"],["Mizutsune","#D81B60"],
+    ["Barioth","#FFFFFF"],["Kushala Daora","#BDC3C7"],["Basarios","#95A5A6"],["Nargacuga","#4A4A4A"],
   ];
 
   // ── Icon path helpers ────────────────────────────────────────────────────
@@ -478,7 +480,8 @@
     COLORS.forEach(([name, hex]) => {
       const d = document.createElement("div");
       d.className = "swatch"; d.dataset.hex = hex; d.style.background = hex;
-      d.title = name; d.innerHTML = `<span>${name}</span>`;
+      d.title = name;
+      d.innerHTML = `<img class="swatch-icon" src="${monsterIcon(name)}" alt=""><span>${name}</span>`;
       d.addEventListener("click", () => applyTheme(hex));
       wrap.appendChild(d);
     });
