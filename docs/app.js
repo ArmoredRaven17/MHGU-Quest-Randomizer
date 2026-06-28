@@ -30,6 +30,7 @@
     ["Gathering", "MH4G-Boomerang_Icon_Blue.webp"],
     ["Beast",     "FourthGen-Claw_Icon_Dark_Red.webp"],
   ];
+  const BIAS_FILE = Object.fromEntries(BIASES);
 
   const DEVIANT_FULL = {
     redhelm:"Redhelm Arzuros", snowbaron:"Snowbaron Lagombi", stonefist:"Stonefist Hermitaur",
@@ -269,14 +270,37 @@
     img.src = monsterIcon(iconMonster);
     img.onerror = () => { img.onerror = null; img.src = FALLBACK_ICON; };
 
-    // Arena: preset equipment sets — roll which set, no weapon/style/arts roll.
+    // Arena: preset equipment sets from the quest description. Hunter arenas offer a
+    // fixed weapon list; Prowler arenas a fixed bias list. Roll within the set; style
+    // and arts are part of the set, so we don't roll them.
     if (type === "Arena") {
-      $("r_weaponLabel").textContent = "Loadout";
       const w = $("r_weapon");
-      w.textContent = "Set " + (1 + rand(5));
-      w.style.color = "var(--text)";
-      $("r_weaponIcon").classList.add("hidden");
-      $("r_styleBlock").classList.add("hidden");
+      $("r_arts").innerHTML = "";
+      if (quest.ArenaBiases && quest.ArenaBiases.length) {
+        const bias = pick(quest.ArenaBiases);
+        $("r_weaponLabel").textContent = "Weapon";
+        w.textContent = "Prowler"; w.style.color = WEAPON_COLORS["Prowler"];
+        $("r_weaponIcon").classList.add("hidden");
+        $("r_styleBlock").classList.remove("hidden");
+        $("r_styleLabel").textContent = "Bias";
+        $("r_style").textContent = bias;
+        const bi = $("r_biasIcon");
+        if (BIAS_FILE[bias]) { bi.src = prowlerIcon(BIAS_FILE[bias]); bi.classList.remove("hidden"); }
+        else bi.classList.add("hidden");
+      } else if (quest.ArenaWeapons && quest.ArenaWeapons.length) {
+        const weapon = pick(quest.ArenaWeapons);
+        $("r_weaponLabel").textContent = "Weapon";
+        w.textContent = weapon; w.style.color = WEAPON_COLORS[weapon] || "var(--text)";
+        const wi = $("r_weaponIcon");
+        wi.classList.remove("hidden"); wi.src = weaponIcon(weapon);
+        wi.onerror = () => { wi.onerror = null; wi.classList.add("hidden"); };
+        $("r_styleBlock").classList.add("hidden");
+      } else {
+        $("r_weaponLabel").textContent = "Loadout";
+        w.textContent = "Set " + (1 + rand(5)); w.style.color = "var(--text)";
+        $("r_weaponIcon").classList.add("hidden");
+        $("r_styleBlock").classList.add("hidden");
+      }
       return;
     }
     $("r_weaponLabel").textContent = "Weapon";

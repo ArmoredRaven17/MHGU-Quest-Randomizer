@@ -14492,7 +14492,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Great Sword",
+      "Sword & Shield",
+      "Hammer",
+      "Gunlance",
+      "Heavy Bowgun"
+    ]
   },
   {
     "Type": "Arena",
@@ -14505,7 +14512,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Long Sword",
+      "Dual Blades",
+      "Switch Axe",
+      "Lance",
+      "Light Bowgun"
+    ]
   },
   {
     "Type": "Arena",
@@ -14518,7 +14532,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Sword & Shield",
+      "Insect Glaive",
+      "Switch Axe",
+      "Charge Blade",
+      "Bow"
+    ]
   },
   {
     "Type": "Arena",
@@ -14531,7 +14552,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Sword & Shield",
+      "Dual Blades",
+      "Hammer",
+      "Lance",
+      "Heavy Bowgun"
+    ]
   },
   {
     "Type": "Arena",
@@ -14544,7 +14572,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Long Sword",
+      "Dual Blades",
+      "Hunting Horn",
+      "Insect Glaive",
+      "Heavy Bowgun"
+    ]
   },
   {
     "Type": "Arena",
@@ -14557,7 +14592,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Great Sword",
+      "Sword & Shield",
+      "Hunting Horn",
+      "Gunlance",
+      "Light Bowgun"
+    ]
   },
   {
     "Type": "Arena",
@@ -14570,7 +14612,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Great Sword",
+      "Hammer",
+      "Charge Blade",
+      "Gunlance",
+      "Bow"
+    ]
   },
   {
     "Type": "Arena",
@@ -14583,7 +14632,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Long Sword",
+      "Insect Glaive",
+      "Charge Blade",
+      "Lance",
+      "Light Bowgun"
+    ]
   },
   {
     "Type": "Arena",
@@ -14596,7 +14652,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Dual Blades",
+      "Hammer",
+      "Insect Glaive",
+      "Switch Axe",
+      "Bow"
+    ]
   },
   {
     "Type": "Arena",
@@ -14609,7 +14672,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Great Sword",
+      "Hunting Horn",
+      "Switch Axe",
+      "Gunlance",
+      "Heavy Bowgun"
+    ]
   },
   {
     "Type": "Arena",
@@ -14622,7 +14692,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Long Sword",
+      "Hunting Horn",
+      "Charge Blade",
+      "Lance",
+      "Bow"
+    ]
   },
   {
     "Type": "Arena",
@@ -14635,7 +14712,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaBiases": [
+      "Fighting",
+      "Protection",
+      "Healing",
+      "Bombing",
+      "Gathering"
+    ]
   },
   {
     "Type": "Arena",
@@ -14648,7 +14732,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaBiases": [
+      "Charisma",
+      "Fighting",
+      "Protection",
+      "Healing",
+      "Gathering"
+    ]
   },
   {
     "Type": "Arena",
@@ -14661,7 +14752,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaBiases": [
+      "Charisma",
+      "Fighting",
+      "Healing",
+      "Bombing",
+      "Gathering"
+    ]
   },
   {
     "Type": "Arena",
@@ -14674,7 +14772,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaBiases": [
+      "Charisma",
+      "Protection",
+      "Assisting",
+      "Bombing",
+      "Beast"
+    ]
   },
   {
     "Type": "Arena",
@@ -14687,7 +14792,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaBiases": [
+      "Fighting",
+      "Assisting",
+      "Healing",
+      "Gathering",
+      "Beast"
+    ]
   },
   {
     "Type": "Arena",
@@ -14700,7 +14812,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaBiases": [
+      "Charisma",
+      "Protection",
+      "Assisting",
+      "Bombing",
+      "Beast"
+    ]
   },
   {
     "Type": "Arena",
@@ -14713,7 +14832,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Sword & Shield",
+      "Dual Blades",
+      "Hammer",
+      "Gunlance",
+      "Heavy Bowgun"
+    ]
   },
   {
     "Type": "Arena",
@@ -14726,7 +14852,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Great Sword",
+      "Dual Blades",
+      "Switch Axe",
+      "Insect Glaive",
+      "Bow"
+    ]
   },
   {
     "Type": "Arena",
@@ -14739,7 +14872,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Long Sword",
+      "Sword & Shield",
+      "Charge Blade",
+      "Lance",
+      "Heavy Bowgun"
+    ]
   },
   {
     "Type": "Arena",
@@ -14752,7 +14892,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Long Sword",
+      "Dual Blades",
+      "Hammer",
+      "Insect Glaive",
+      "Heavy Bowgun"
+    ]
   },
   {
     "Type": "Arena",
@@ -14765,11 +14912,18 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Sword & Shield",
+      "Hammer",
+      "Switch Axe",
+      "Gunlance",
+      "Bow"
+    ]
   },
   {
     "Type": "Arena",
-    "Name": "Arena // XX Trials: GraviosXX Trials: Gravios",
+    "Name": "Arena // XX Trials: Gravios",
     "Main": "Gravios",
     "Monster": "Gravios",
     "Level": 2,
@@ -14791,7 +14945,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Great Sword",
+      "Hunting Horn",
+      "Charge Blade",
+      "Gunlance",
+      "Light Bowgun"
+    ]
   },
   {
     "Type": "Arena",
@@ -14804,7 +14965,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Great Sword",
+      "Dual Blades",
+      "Switch Axe",
+      "Gunlance",
+      "Light Bowgun"
+    ]
   },
   {
     "Type": "Arena",
@@ -14817,7 +14985,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Long Sword",
+      "Sword & Shield",
+      "Hunting Horn",
+      "Lance",
+      "Bow"
+    ]
   },
   {
     "Type": "Arena",
@@ -14830,7 +15005,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Sword & Shield",
+      "Dual Blades",
+      "Charge Blade",
+      "Gunlance",
+      "Heavy Bowgun"
+    ]
   },
   {
     "Type": "Arena",
@@ -14843,7 +15025,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Dual Blades",
+      "Hammer",
+      "Switch Axe",
+      "Insect Glaive",
+      "Bow"
+    ]
   },
   {
     "Type": "Arena",
@@ -14856,7 +15045,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Great Sword",
+      "Sword & Shield",
+      "Hunting Horn",
+      "Charge Blade",
+      "Heavy Bowgun"
+    ]
   },
   {
     "Type": "Arena",
@@ -14869,7 +15065,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Great Sword",
+      "Long Sword",
+      "Hammer",
+      "Lance",
+      "Light Bowgun"
+    ]
   },
   {
     "Type": "Arena",
@@ -14882,7 +15085,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Long Sword",
+      "Dual Blades",
+      "Switch Axe",
+      "Insect Glaive",
+      "Bow"
+    ]
   },
   {
     "Type": "Arena",
@@ -14895,7 +15105,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Great Sword",
+      "Hammer",
+      "Lance",
+      "Gunlance",
+      "Light Bowgun"
+    ]
   },
   {
     "Type": "Arena",
@@ -14908,7 +15125,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Long Sword",
+      "Hunting Horn",
+      "Charge Blade",
+      "Lance",
+      "Light Bowgun"
+    ]
   },
   {
     "Type": "Arena",
@@ -14921,7 +15145,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Great Sword",
+      "Insect Glaive",
+      "Hammer",
+      "Switch Axe",
+      "Bow"
+    ]
   },
   {
     "Type": "Arena",
@@ -14934,7 +15165,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Long Sword",
+      "Hunting Horn",
+      "Switch Axe",
+      "Gunlance",
+      "Heavy Bowgun"
+    ]
   },
   {
     "Type": "Arena",
@@ -14947,7 +15185,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Sword & Shield",
+      "Lance",
+      "Charge Blade",
+      "Insect Glaive",
+      "Bow"
+    ]
   },
   {
     "Type": "Arena",
@@ -14960,7 +15205,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Long Sword",
+      "Dual Blades",
+      "Hammer",
+      "Gunlance",
+      "Light Bowgun"
+    ]
   },
   {
     "Type": "Arena",
@@ -14973,7 +15225,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Great Sword",
+      "Lance",
+      "Charge Blade",
+      "Insect Glaive",
+      "Light Bowgun"
+    ]
   },
   {
     "Type": "Arena",
@@ -14986,7 +15245,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Long Sword",
+      "Sword & Shield",
+      "Hunting Horn",
+      "Switch Axe",
+      "Bow"
+    ]
   },
   {
     "Type": "Arena",
@@ -14999,7 +15265,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Great Sword",
+      "Dual Blades",
+      "Gunlance",
+      "Charge Blade",
+      "Heavy Bowgun"
+    ]
   },
   {
     "Type": "Arena",
@@ -15012,7 +15285,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Long Sword",
+      "Lance",
+      "Hammer",
+      "Insect Glaive",
+      "Light Bowgun"
+    ]
   },
   {
     "Type": "Arena",
@@ -15025,7 +15305,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Sword & Shield",
+      "Hammer",
+      "Insect Glaive",
+      "Charge Blade",
+      "Light Bowgun"
+    ]
   },
   {
     "Type": "Arena",
@@ -15038,7 +15325,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Long Sword",
+      "Dual Blades",
+      "Hunting Horn",
+      "Bow",
+      "Gunlance"
+    ]
   },
   {
     "Type": "Arena",
@@ -15051,7 +15345,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Great Sword",
+      "Charge Blade",
+      "Switch Axe",
+      "Hunting Horn",
+      "Heavy Bowgun"
+    ]
   },
   {
     "Type": "Arena",
@@ -15064,7 +15365,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Long Sword",
+      "Sword & Shield",
+      "Hammer",
+      "Lance",
+      "Bow"
+    ]
   },
   {
     "Type": "Arena",
@@ -15077,7 +15385,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Great Sword",
+      "Dual Blades",
+      "Hunting Horn",
+      "Gunlance",
+      "Light Bowgun"
+    ]
   },
   {
     "Type": "Arena",
@@ -15090,7 +15405,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaBiases": [
+      "Charisma",
+      "Assisting",
+      "Healing",
+      "Bombing",
+      "Gathering"
+    ]
   },
   {
     "Type": "Arena",
@@ -15103,7 +15425,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaBiases": [
+      "Charisma",
+      "Fighting",
+      "Protection",
+      "Assisting",
+      "Beast"
+    ]
   },
   {
     "Type": "Arena",
@@ -15116,7 +15445,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaBiases": [
+      "Fighting",
+      "Protection",
+      "Assisting",
+      "Bombing",
+      "Beast"
+    ]
   },
   {
     "Type": "Arena",
@@ -15129,7 +15465,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaBiases": [
+      "Fighting",
+      "Assisting",
+      "Healing",
+      "Bombing",
+      "Beast"
+    ]
   },
   {
     "Type": "Arena",
@@ -15142,7 +15485,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaBiases": [
+      "Fighting",
+      "Protection",
+      "Assisting",
+      "Gathering",
+      "Beast"
+    ]
   },
   {
     "Type": "Arena",
@@ -15155,7 +15505,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaBiases": [
+      "Charisma",
+      "Fighting",
+      "Protection",
+      "Healing",
+      "Beast"
+    ]
   },
   {
     "Type": "Arena",
@@ -15168,7 +15525,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaBiases": [
+      "Charisma",
+      "Protection",
+      "Healing",
+      "Bombing",
+      "Gathering"
+    ]
   },
   {
     "Type": "Arena",
@@ -15181,7 +15545,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaBiases": [
+      "Charisma",
+      "Fighting",
+      "Protection",
+      "Healing",
+      "Bombing"
+    ]
   },
   {
     "Type": "Arena",
@@ -15194,7 +15565,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaBiases": [
+      "Protection",
+      "Bombing",
+      "Charisma",
+      "Fighting",
+      "Gathering"
+    ]
   },
   {
     "Type": "Arena",
@@ -15207,7 +15585,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaBiases": [
+      "Fighting",
+      "Protection",
+      "Healing",
+      "Bombing",
+      "Gathering"
+    ]
   },
   {
     "Type": "Arena",
@@ -15220,7 +15605,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaBiases": [
+      "Charisma",
+      "Fighting",
+      "Protection",
+      "Bombing",
+      "Gathering"
+    ]
   },
   {
     "Type": "Arena",
@@ -15233,7 +15625,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaBiases": [
+      "Charisma",
+      "Fighting",
+      "Protection",
+      "Healing",
+      "Gathering"
+    ]
   },
   {
     "Type": "Events",

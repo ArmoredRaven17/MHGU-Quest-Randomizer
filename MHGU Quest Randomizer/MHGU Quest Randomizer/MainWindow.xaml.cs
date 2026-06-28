@@ -90,6 +90,18 @@ namespace MHGU_Quest_Randomizer
             ["Prowler"]        = Hex("#c29930"),
         };
 
+        private static readonly Dictionary<string, string> BiasIcons = new(StringComparer.OrdinalIgnoreCase)
+        {
+            ["Charisma"]   = "FourthGen-Palico_Icon_Blue.webp",
+            ["Fighting"]   = "Palico_Weapon_Cutting_Icon_Red.webp",
+            ["Protection"] = "FourthGen-Down_Arrow_Icon_Blue.webp",
+            ["Assisting"]  = "MH4G-Trap_Icon_Purple.webp",
+            ["Healing"]    = "MH4G-Horn_Icon_Green.webp",
+            ["Bombing"]    = "MH4G-Barrel_Icon_Brown.webp",
+            ["Gathering"]  = "MH4G-Boomerang_Icon_Blue.webp",
+            ["Beast"]      = "FourthGen-Claw_Icon_Dark_Red.webp",
+        };
+
         private static Color Hex(string h)
         {
             h = h.TrimStart('#');
@@ -117,6 +129,10 @@ namespace MHGU_Quest_Randomizer
             public bool   Egg       { get; set; }
             public bool   Gathering { get; set; }
             public bool   SmMonsters{ get; set; }
+            // Arena preset sets (parsed from quest descriptions): a hunter arena quest
+            // offers ArenaWeapons; a Prowler arena quest offers ArenaBiases. Null otherwise.
+            public List<string>? ArenaWeapons { get; set; }
+            public List<string>? ArenaBiases  { get; set; }
         }
 
         private class HunterArt
@@ -532,17 +548,51 @@ namespace MHGU_Quest_Randomizer
                 : quest.Monster ?? "";
             questTargetIcon.Source = LoadMonsterIcon(baseDir, iconMonster);
 
-            // Arena quests use preset equipment sets (weapon + style + arts are all baked
-            // into the set), so we just roll which of the 5 sets to use — no separate
-            // weapon/style/arts roll.
+            // Arena quests use preset equipment sets (parsed from the quest description).
+            // Hunter arenas offer a fixed weapon list; Prowler arenas a fixed bias list.
+            // Roll within that set; style/arts are part of the set so we don't roll them.
             if (type.Equals("Arena", StringComparison.OrdinalIgnoreCase))
             {
-                weaponLabel.Text      = "Loadout";
-                weaponText.Text       = "Set " + (Random.Shared.Next(5) + 1);
-                weaponText.Foreground = (Brush)Application.Current.Resources["TextFillColorPrimaryBrush"];
-                weaponIcon.Visibility = Visibility.Collapsed;
-                styleBlock.Visibility = Visibility.Collapsed;
-                artsPanel.Visibility  = Visibility.Collapsed;
+                artsPanel.Visibility = Visibility.Collapsed;
+
+                if (quest.ArenaBiases is { Count: > 0 })
+                {
+                    // Prowler arena: roll a bias from the set.
+                    string bias = quest.ArenaBiases[Random.Shared.Next(quest.ArenaBiases.Count)];
+                    weaponLabel.Text      = "Weapon";
+                    weaponText.Text       = "Prowler";
+                    weaponText.Foreground = new SolidColorBrush(WeaponColors["Prowler"]);
+                    weaponIcon.Visibility = Visibility.Collapsed;
+                    styleBlock.Visibility = Visibility.Visible;
+                    styleLabel.Text       = "Bias";
+                    styleText.Text        = bias;
+                    styleIcon.Source      = BiasIcons.TryGetValue(bias, out var bf)
+                                                ? LoadProwlerIcon(baseDir, bf) : null;
+                    styleIcon.Opacity     = 1.0;
+                }
+                else if (quest.ArenaWeapons is { Count: > 0 })
+                {
+                    // Hunter arena: roll a weapon from the set.
+                    string w = quest.ArenaWeapons[Random.Shared.Next(quest.ArenaWeapons.Count)];
+                    weaponLabel.Text      = "Weapon";
+                    weaponText.Text       = w;
+                    weaponText.Foreground = WeaponColors.TryGetValue(w, out var wc2)
+                        ? new SolidColorBrush(wc2)
+                        : (Brush)Application.Current.Resources["TextFillColorPrimaryBrush"];
+                    string? wp = LoadWeaponIconPath(baseDir, w);
+                    if (wp != null) { weaponIcon.Source = new BitmapImage(new Uri(wp)); weaponIcon.Visibility = Visibility.Visible; }
+                    else weaponIcon.Visibility = Visibility.Collapsed;
+                    styleBlock.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    // No set data for this quest — fall back to a generic set number.
+                    weaponLabel.Text      = "Loadout";
+                    weaponText.Text       = "Set " + (Random.Shared.Next(5) + 1);
+                    weaponText.Foreground = (Brush)Application.Current.Resources["TextFillColorPrimaryBrush"];
+                    weaponIcon.Visibility = Visibility.Collapsed;
+                    styleBlock.Visibility = Visibility.Collapsed;
+                }
                 return;
             }
             // Non-arena: restore the weapon/style layout in case the previous roll was Arena.
