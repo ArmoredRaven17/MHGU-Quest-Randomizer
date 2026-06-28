@@ -717,27 +717,27 @@
   {
     "Type": "Village",
     "Name": "Village 3★ // Into the Wyvern's Den",
-    "Main": "Gather",
+    "Main": "Deliver 2 Wyvern Eggs",
     "Monster": "",
     "Level": 3,
     "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
-    "Egg": false,
-    "Gathering": true,
+    "Egg": true,
+    "Gathering": false,
     "SmMonsters": false
   },
   {
     "Type": "Village",
     "Name": "Village 3★ // Into the Wyvern's Den",
-    "Main": "Gather",
+    "Main": "Deliver 2 Wyvern Eggs",
     "Monster": "",
     "Level": 3,
     "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
-    "Egg": false,
-    "Gathering": true,
+    "Egg": true,
+    "Gathering": false,
     "SmMonsters": false
   },
   {
@@ -821,14 +821,14 @@
   {
     "Type": "Village",
     "Name": "Village 3★ // For Whom the Egg Yolks",
-    "Main": "Deliver 3 Gargwa Guano",
+    "Main": "Deliver 3 Gargwa Eggs",
     "Monster": "",
     "Level": 3,
     "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
-    "Egg": false,
-    "Gathering": true,
+    "Egg": true,
+    "Gathering": false,
     "SmMonsters": false
   },
   {
@@ -1159,14 +1159,14 @@
   {
     "Type": "Village",
     "Name": "Village 4★ // Unlock the Secret to...",
-    "Main": "Sever Rathian's tail",
+    "Main": "Deliver 2 Eternal Fossils",
     "Monster": "",
     "Level": 4,
     "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
-    "Egg": false,
-    "Gathering": true,
+    "Egg": true,
+    "Gathering": false,
     "SmMonsters": false
   },
   {
@@ -1198,14 +1198,14 @@
   {
     "Type": "Village",
     "Name": "Village 4★ // Mining: The Final Frontier",
-    "Main": "Hunt a Volvidon",
+    "Main": "Deliver 2 Meteor Chunks",
     "Monster": "",
     "Level": 4,
     "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
-    "Egg": false,
-    "Gathering": true,
+    "Egg": true,
+    "Gathering": false,
     "SmMonsters": false
   },
   {
@@ -1510,14 +1510,14 @@
   {
     "Type": "Village",
     "Name": "Village 4★ // An Offer You Can't Refuse",
-    "Main": "Gather",
+    "Main": "Deliver 3 Gargwa Eggs",
     "Monster": "",
     "Level": 4,
     "LgMonster": false,
     "Prowler": true,
     "Hyper": false,
-    "Egg": false,
-    "Gathering": true,
+    "Egg": true,
+    "Gathering": false,
     "SmMonsters": false
   },
   {
@@ -1874,14 +1874,14 @@
   {
     "Type": "Village",
     "Name": "Village 5★ // An Offer You Can't Relieve",
-    "Main": "Gather",
+    "Main": "Deliver a Wyvern Egg",
     "Monster": "",
     "Level": 5,
     "LgMonster": false,
     "Prowler": true,
     "Hyper": false,
-    "Egg": false,
-    "Gathering": true,
+    "Egg": true,
+    "Gathering": false,
     "SmMonsters": false
   },
   {
@@ -2602,14 +2602,14 @@
   {
     "Type": "Village",
     "Name": "Village 7★ // Wyvern Egg Delivery: Breakfast",
-    "Main": "Hunt a Royal Ludroth",
+    "Main": "Deliver 2 Wyvern Eggs",
     "Monster": "",
     "Level": 7,
     "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
-    "Egg": false,
-    "Gathering": true,
+    "Egg": true,
+    "Gathering": false,
     "SmMonsters": false
   },
   {
@@ -3018,14 +3018,14 @@
   {
     "Type": "Village",
     "Name": "Village 8★ // Wyvern Egg Delivery: Lunch",
-    "Main": "Hunt a Rathian",
+    "Main": "Deliver 2 Wyvern Eggs",
     "Monster": "",
     "Level": 8,
     "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
-    "Egg": false,
-    "Gathering": true,
+    "Egg": true,
+    "Gathering": false,
     "SmMonsters": false
   },
   {
@@ -3291,14 +3291,14 @@
   {
     "Type": "Village",
     "Name": "Village 8★ // Eggcellent Surprise",
-    "Main": "Gather",
+    "Main": "Deliver 2 Herbivore Eggs",
     "Monster": "",
     "Level": 8,
     "LgMonster": false,
     "Prowler": true,
     "Hyper": false,
-    "Egg": false,
-    "Gathering": true,
+    "Egg": true,
+    "Gathering": false,
     "SmMonsters": false
   },
   {
@@ -3668,14 +3668,14 @@
   {
     "Type": "Village",
     "Name": "Village 9★ // Interruption: Eggstra Delivery",
-    "Main": "Hunt a Rathalos",
+    "Main": "Deliver 2 Wyvern Eggs",
     "Monster": "",
     "Level": 9,
     "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
-    "Egg": false,
-    "Gathering": true,
+    "Egg": true,
+    "Gathering": false,
     "SmMonsters": false
   },
   {
@@ -4032,14 +4032,14 @@
   {
     "Type": "Village",
     "Name": "Village 10★ // Wyvern Egg Delivery: Dinner",
-    "Main": "Gather",
+    "Main": "Deliver 2 Herbivore Eggs",
     "Monster": "",
     "Level": 10,
     "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
-    "Egg": false,
-    "Gathering": true,
+    "Egg": true,
+    "Gathering": false,
     "SmMonsters": false
   },
   {
@@ -5124,13 +5124,13 @@
   {
     "Type": "Hub",
     "Name": "Hub 2★ // Royal Assassination",
-    "Main": "Deliver a Wyvern Egg",
+    "Main": "Hunt a Rathian",
     "Monster": "Rathian",
     "Level": 2,
-    "LgMonster": false,
+    "LgMonster": true,
     "Prowler": false,
     "Hyper": false,
-    "Egg": true,
+    "Egg": false,
     "Gathering": false,
     "SmMonsters": false
   },
@@ -5384,14 +5384,14 @@
   {
     "Type": "Hub",
     "Name": "Hub 3★ // Fossilized Memories",
-    "Main": "Gather",
+    "Main": "Deliver 3 Eternal Fossils",
     "Monster": "",
     "Level": 3,
     "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
-    "Egg": false,
-    "Gathering": true,
+    "Egg": true,
+    "Gathering": false,
     "SmMonsters": false
   },
   {
@@ -7217,14 +7217,14 @@
   {
     "Type": "Hub",
     "Name": "Hub 6★ // Quartz Rivalry",
-    "Main": "Slay 12 Ceanataurs",
+    "Main": "Deliver 2 Quartz Ores",
     "Monster": "",
     "Level": 6,
     "LgMonster": false,
     "Prowler": false,
     "Hyper": false,
-    "Egg": false,
-    "Gathering": true,
+    "Egg": true,
+    "Gathering": false,
     "SmMonsters": false
   },
   {
@@ -7737,14 +7737,14 @@
   {
     "Type": "Hub",
     "Name": "Hub 6★ // Big Bro's Benevolence",
-    "Main": "Gather",
+    "Main": "Deliver 2 Meteor Chunks",
     "Monster": "",
     "Level": 6,
     "LgMonster": false,
     "Prowler": true,
     "Hyper": false,
-    "Egg": false,
-    "Gathering": true,
+    "Egg": true,
+    "Gathering": false,
     "SmMonsters": false
   },
   {
@@ -8959,13 +8959,13 @@
   {
     "Type": "Pub",
     "Name": "Pub G1★// Riverside Rumble",
-    "Main": "Deliver 1 Gold Gargwa Egg",
+    "Main": "Hunt an Arzuros",
     "Monster": "Arzuros",
     "Level": 1,
-    "LgMonster": false,
+    "LgMonster": true,
     "Prowler": false,
     "Hyper": false,
-    "Egg": true,
+    "Egg": false,
     "Gathering": false,
     "SmMonsters": false
   },
@@ -9206,7 +9206,7 @@
   {
     "Type": "Pub",
     "Name": "Pub G2★// Royal Assassination",
-    "Main": "Slay 5 Jaggia",
+    "Main": "Hunt a Rathian",
     "Monster": "Rathian",
     "Level": 2,
     "LgMonster": true,
@@ -15657,14 +15657,14 @@
   {
     "Type": "Events",
     "Name": "Event // Nakayoshi: Silver Crystal",
-    "Main": "Gather",
+    "Main": "Deliver 2 Sootstone Ores",
     "Monster": "",
     "Level": 1,
     "LgMonster": false,
     "Prowler": true,
     "Hyper": false,
-    "Egg": false,
-    "Gathering": true,
+    "Egg": true,
+    "Gathering": false,
     "SmMonsters": false
   },
   {
@@ -16632,14 +16632,14 @@
   {
     "Type": "Events",
     "Name": "Event // Too Hot to Handle",
-    "Main": "Gather",
+    "Main": "Deliver 2 Powderstones",
     "Monster": "",
     "Level": 2,
     "LgMonster": false,
     "Prowler": true,
     "Hyper": false,
-    "Egg": false,
-    "Gathering": true,
+    "Egg": true,
+    "Gathering": false,
     "SmMonsters": false
   },
   {
