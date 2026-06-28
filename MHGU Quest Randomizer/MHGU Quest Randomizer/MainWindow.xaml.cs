@@ -1201,6 +1201,39 @@ namespace MHGU_Quest_Randomizer
             SaveSettings();   // persist the fully-reset state
         }
 
+        private async void HelpButton_Click(object sender, RoutedEventArgs e)
+        {
+            var secondary = (Brush)Application.Current.Resources["TextFillColorSecondaryBrush"];
+            var panel = new StackPanel { Spacing = 10, Width = 360 };
+
+            void Step(string head, string body)
+            {
+                var tb = new TextBlock { TextWrapping = TextWrapping.Wrap };
+                tb.Inlines.Add(new Microsoft.UI.Xaml.Documents.Run { Text = head + "  ", FontWeight = Microsoft.UI.Text.FontWeights.SemiBold });
+                tb.Inlines.Add(new Microsoft.UI.Xaml.Documents.Run { Text = body });
+                panel.Children.Add(tb);
+            }
+
+            Step("1. Pick a quest type & level.", "Choose a Quest Type, then the From / Up to Level range. (Arena uses a single All / Normal / Challenge picker instead of a range.)");
+            Step("2. Narrow the pool with the filters.", "Quest Filters add categories (large-monster quests are always in; check Hypers / Egg Delivery / Gathering / Small Monsters). Monsters, Weapons and Styles: uncheck to exclude. Hunter Arts: uncheck by weapon, named art, or level. Prowler: enable to allow Palico loadouts and Prowler-only quests, with biases for the roll.");
+            Step("3. Press Randomize!", "You get a quest plus a weapon, style, and Hunter Arts. Arena quests show which preset Set to bring; Prowler quests give a bias; Hyper quests show a yellow Hyper badge.");
+            panel.Children.Add(new TextBlock
+            {
+                Text = "Your filters and color theme are saved between sessions. Use Reset Filters to start over.",
+                TextWrapping = TextWrapping.Wrap,
+                Foreground = secondary,
+            });
+
+            var dialog = new ContentDialog
+            {
+                Title = "How to use",
+                CloseButtonText = "Close",
+                XamlRoot = Content.XamlRoot,
+                Content = new ScrollViewer { Content = panel, MaxHeight = 420 },
+            };
+            await dialog.ShowAsync();
+        }
+
         private async void AboutButton_Click(object sender, RoutedEventArgs e)
         {
             var secondary = (Brush)Application.Current.Resources["TextFillColorSecondaryBrush"];

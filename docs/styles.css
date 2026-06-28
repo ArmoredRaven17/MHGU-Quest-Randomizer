@@ -129,10 +129,13 @@ body{
 /* Theme modal */
 .modal{position:fixed;inset:0;background:#000000a8;display:flex;align-items:center;justify-content:center;z-index:10}
 .modal-card{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:22px;width:min(420px,90vw)}
+.modal-card{max-height:85vh;overflow-y:auto}
 .modal-card h2{margin:0 0 16px;font-size:18px}
 .modal-card p{margin:0 0 10px;line-height:1.45}
 .modal-card a{color:var(--accent-hover)}
 .modal-card .muted{color:var(--text-dim);font-size:13px}
+.modal-card ul{margin:0 0 10px;padding-left:18px}
+.modal-card li{margin-bottom:5px;line-height:1.4}
 .swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
 .swatch{aspect-ratio:1;border-radius:8px;border:2px solid transparent;cursor:pointer;position:relative;overflow:hidden}
 .swatch.sel{border-color:#fff}

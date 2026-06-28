@@ -7,7 +7,7 @@
 <title>MHGU Quest Randomizer</title>
 <link rel="icon" href="assets/MonsterIcons/MHGU-Question_Mark_Icon.webp">
 <!-- Bump ?v= on any styles/app/data change so browsers fetch fresh copies (no hard-refresh needed) -->
-<link rel="stylesheet" href="styles.css?v=17">
+<link rel="stylesheet" href="styles.css?v=18">
 </head>
 <body>
 <div id="app">
@@ -15,7 +15,8 @@
   <header class="titlebar">
     <img class="title-icon" src="assets/MonsterIcons/MHGU-Question_Mark_Icon.webp" alt="">
     <h1>MHGU Quest Randomizer</h1>
-    <button id="aboutBtn" class="icon-btn" title="About / Attributions" aria-label="About">?</button>
+    <button id="helpBtn" class="icon-btn" title="Help" aria-label="Help">?</button>
+    <button id="aboutBtn" class="icon-btn" title="About / Attributions" aria-label="About">&#9432;</button>
     <button id="themeBtn" class="icon-btn" title="Theme" aria-label="Theme">&#9881;</button>
   </header>
 
@@ -144,6 +145,26 @@
   </main>
 </div>
 
+<!-- Help dialog -->
+<div id="helpModal" class="modal hidden">
+  <div class="modal-card">
+    <h2>How to use</h2>
+    <p><strong>1. Pick a quest type &amp; level.</strong> Choose a Quest Type, then the From / Up to Level range. (Arena uses a single All / Normal / Challenge picker instead of a range.)</p>
+    <p><strong>2. Narrow the pool with the filters</strong> on the left:</p>
+    <ul>
+      <li><strong>Quest Filters</strong> — large-monster quests are always included; check Hypers, Egg Delivery, Gathering, or Small Monsters to add those categories.</li>
+      <li><strong>Monsters / Weapons / Styles</strong> — uncheck anything to exclude it from the roll.</li>
+      <li><strong>Hunter Arts</strong> — uncheck arts to exclude them, by weapon, by named art, or by individual level.</li>
+      <li><strong>Prowler</strong> — turn on "Prowler?" to allow Palico loadouts, "Prowler Quests?" to include Prowler-only quests; the biases apply when a Prowler is rolled.</li>
+    </ul>
+    <p><strong>3. Hit Randomize.</strong> You get a quest plus a weapon, style, and Hunter Arts. Arena quests show which preset Set to bring; Prowler quests give a bias instead; a yellow <span class="hyper-pill" style="position:static">Hyper</span> badge marks Hyper quests.</p>
+    <p class="muted">Your filters and color theme are saved between visits. Use Reset Filters to start over.</p>
+    <div class="row end gap">
+      <button id="helpClose" class="btn">Close</button>
+    </div>
+  </div>
+</div>
+
 <!-- About / Attributions dialog -->
 <div id="aboutModal" class="modal hidden">
   <div class="modal-card">
@@ -170,7 +191,7 @@
   </div>
 </div>
 
-<script src="data.js?v=17"></script>
-<script src="app.js?v=17"></script>
+<script src="data.js?v=18"></script>
+<script src="app.js?v=18"></script>
 </body>
 </html>
