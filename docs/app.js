@@ -338,6 +338,10 @@
         || (q.Egg && f.egg) || (q.Gathering && f.gathering) || (q.SmMonsters && f.small);
       if (!include) return false;
 
+      // Hyper gate: most hyper quests are also large-monster quests (always included), so
+      // without this they'd show regardless of the toggle. Hypers off → exclude hyper quests.
+      if (q.Hyper && !f.hyper) return false;
+
       if (q.LgMonster && q.Monster && anyFiltered && !inc.has(q.Monster.toLowerCase())) return false;
       return true;
     });
