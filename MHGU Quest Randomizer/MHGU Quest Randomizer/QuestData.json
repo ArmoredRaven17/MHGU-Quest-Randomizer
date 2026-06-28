@@ -14932,7 +14932,14 @@
     "Hyper": false,
     "Egg": false,
     "Gathering": false,
-    "SmMonsters": false
+    "SmMonsters": false,
+    "ArenaWeapons": [
+      "Sword & Shield",
+      "Charge Blade",
+      "Hunting Horn",
+      "Insect Glaive",
+      "Light Bowgun"
+    ]
   },
   {
     "Type": "Arena",
