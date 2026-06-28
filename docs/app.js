@@ -32,6 +32,11 @@
   ];
   const BIAS_FILE = Object.fromEntries(BIASES);
 
+  // ── Blacklist ────────────────────────────────────────────────────────────
+  // Each entry: {weapon, style}. When a weapon is rolled whose blacklisted styles
+  // cover all available styles, the weapon itself is rerolled.
+  let blacklist = [];
+
   const DEVIANT_FULL = {
     redhelm:"Redhelm Arzuros", snowbaron:"Snowbaron Lagombi", stonefist:"Stonefist Hermitaur",
     dreadqueen:"Dreadqueen Rathian", drilltusk:"Drilltusk Tetsucabra", silverwind:"Silverwind Nargacuga",
@@ -130,6 +135,39 @@
 
   buildChecklist($("weaponList"), WEAPONS, "w_", true);
   buildChecklist($("styleList"), STYLES, "s_", false);
+
+  // Blacklist UI
+  function renderBlacklist() {
+    const el = $("blList"); el.innerHTML = "";
+    if (!blacklist.length) {
+      el.innerHTML = '<p class="hint" style="margin:0">No combos blacklisted yet.</p>';
+      return;
+    }
+    blacklist.forEach((b, i) => {
+      const row = document.createElement("div"); row.className = "bl-tag";
+      row.innerHTML = `<span>${escapeHtml(b.weapon)} + ${escapeHtml(b.style)}</span>` +
+        `<button data-i="${i}" title="Remove" aria-label="Remove">×</button>`;
+      row.querySelector("button").addEventListener("click", () => {
+        blacklist.splice(i, 1); renderBlacklist(); saveFilters();
+      });
+      el.appendChild(row);
+    });
+  }
+  (function initBlacklist() {
+    const wSel = $("blWeapon"), sSel = $("blStyle");
+    WEAPONS.forEach(w => wSel.add(new Option(w, w)));
+    STYLES.forEach(s => sSel.add(new Option(s, s)));
+    $("blAdd").addEventListener("click", () => {
+      const w = wSel.value, s = sSel.value;
+      if (!w || !s) return;
+      if (!blacklist.some(b => b.weapon === w && b.style === s)) {
+        blacklist.push({ weapon: w, style: s });
+        renderBlacklist();
+        saveFilters();
+      }
+    });
+    renderBlacklist();
+  })();
   // Biases (default ON)
   (function () {
     const c = $("biasList"); c.innerHTML = "";
@@ -412,6 +450,15 @@
         .filter(i => i.checked).map(i => i.dataset.name);
       if ($("p_prowler").checked) chosen.push("Prowler");
       weapon = chosen.length ? pick(chosen) : "Great Sword";
+      // Reroll weapon if the blacklist blocks all available styles for it
+      if (weapon !== "Prowler" && blacklist.length) {
+        const baseStyles = STYLES.filter((_, i) => $("s_" + i).checked);
+        for (let t = 0; t < 50; t++) {
+          const blS = new Set(blacklist.filter(b => b.weapon === weapon).map(b => b.style));
+          if (baseStyles.some(s => !blS.has(s))) break;
+          weapon = chosen.length ? pick(chosen) : "Great Sword";
+        }
+      }
     }
     const wEl = $("r_weapon");
     wEl.textContent = weapon;
@@ -438,6 +485,9 @@
     } else {
       biasIcon.classList.add("hidden");
       let styles = STYLES.filter((_, i) => $("s_" + i).checked);
+      const blS = new Set(blacklist.filter(b => b.weapon === weapon).map(b => b.style));
+      const filtered = styles.filter(s => !blS.has(s));
+      if (filtered.length) styles = filtered;
       if (!styles.length) styles = ["Guild"];
       const style = pick(styles);
       styleLabel.textContent = "Style";
@@ -541,6 +591,7 @@
     document.querySelectorAll("#weaponList input,#styleList input,#biasList input").forEach(i => i.checked = true);
     setAllMonsters(true);
     setAllArts(true);
+    blacklist = []; renderBlacklist();
     syncProwlerQuests();
     updateRollBtn();
     saveFilters();
@@ -565,6 +616,7 @@
       biases: uncheckedNames("#biasList input"),
       monsters: monsterChecks.filter(m => !m.input.checked).map(m => m.name),
       arts: artLeaves.filter(l => !l.input.checked).map(l => l.name),
+      blacklist: blacklist.slice(),
       t: {
         hyper: $("f_hyper").checked, egg: $("f_egg").checked,
         gathering: $("f_gathering").checked, small: $("f_small").checked,
@@ -587,6 +639,7 @@
       $("f_gathering").checked = !!d.t.gathering; $("f_small").checked = !!d.t.small;
       $("p_prowler").checked = !!d.t.prowler; $("p_quests").checked = !!d.t.pQuests;
     }
+    if (Array.isArray(d.blacklist)) { blacklist = d.blacklist; renderBlacklist(); }
     refreshMonsterGroups(); refreshArtGroups();
   }
   // Save on any user-driven filter change (event delegation over the sidebar).

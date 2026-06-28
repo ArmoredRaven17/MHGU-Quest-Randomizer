@@ -26,11 +26,17 @@ namespace MHGU_Quest_Randomizer
         private bool _syncingLevels = false;
         private bool _loadingSettings = false;
 
+        private List<BlacklistEntry> _blacklist = new();
         private (CheckBox Pill, string Name)[] _weaponPills = Array.Empty<(CheckBox, string)>();
         private (CheckBox Pill, string Name)[] _stylePills  = Array.Empty<(CheckBox, string)>();
         private (CheckBox Pill, string Name)[] _biasPills   = Array.Empty<(CheckBox, string)>();
 
         // Persisted settings (theme + filter state) in %LOCALAPPDATA%\MHGU Quest Randomizer\settings.json
+        private sealed class BlacklistEntry
+        {
+            public string Weapon { get; set; } = "";
+            public string Style  { get; set; } = "";
+        }
         private sealed class AppSettings
         {
             public string ThemeColor    { get; set; } = "#4A4A4A";
@@ -39,6 +45,7 @@ namespace MHGU_Quest_Randomizer
             public List<string> ExBiases   { get; set; } = new();
             public List<string> ExMonsters { get; set; } = new();
             public List<string> ExArts     { get; set; } = new();
+            public List<BlacklistEntry> Blacklist { get; set; } = new();
             public bool Hyper { get; set; }
             public bool Egg { get; set; }
             public bool Gathering { get; set; }
@@ -269,6 +276,7 @@ namespace MHGU_Quest_Randomizer
             LoadPillIcons(baseDir);
             PopulateMonsterTree();
             PopulateArtTree();
+            InitBlacklistCombos();
 
             // Register persistent brushes once so visual states hold the same object
             // reference — subsequent .Color mutations propagate immediately.
@@ -485,6 +493,79 @@ namespace MHGU_Quest_Randomizer
         private void CollapseArts_Click(object sender, RoutedEventArgs e)
         {
             foreach (TreeViewNode n in artTreeView.RootNodes) SetExpandedTree(n, false);
+        }
+
+        // ─── Blacklist ──────────────────────────────────────────────────────────
+
+        private static readonly string[] _allWeapons =
+        {
+            "Great Sword","Long Sword","Sword & Shield","Dual Blades",
+            "Hammer","Hunting Horn","Lance","Gunlance","Switch Axe",
+            "Charge Blade","Insect Glaive","Light Bowgun","Heavy Bowgun","Bow",
+        };
+        private static readonly string[] _allStyles =
+            { "Guild","Striker","Adept","Aerial","Valor","Alchemy" };
+
+        private void InitBlacklistCombos()
+        {
+            foreach (var w in _allWeapons) blWeaponCombo.Items.Add(w);
+            foreach (var s in _allStyles)  blStyleCombo.Items.Add(s);
+            blWeaponCombo.SelectedIndex = 0;
+            blStyleCombo.SelectedIndex  = 0;
+            RenderBlacklist();
+        }
+
+        private void BlacklistAdd_Click(object sender, RoutedEventArgs e)
+        {
+            if (blWeaponCombo.SelectedItem is not string w || blStyleCombo.SelectedItem is not string s) return;
+            if (_blacklist.Any(b => b.Weapon.Equals(w, StringComparison.OrdinalIgnoreCase)
+                                 && b.Style.Equals(s, StringComparison.OrdinalIgnoreCase))) return;
+            _blacklist.Add(new BlacklistEntry { Weapon = w, Style = s });
+            RenderBlacklist();
+            SaveSettings();
+        }
+
+        private void RenderBlacklist()
+        {
+            blacklistPanel.Children.Clear();
+            if (_blacklist.Count == 0)
+            {
+                blacklistPanel.Children.Add(new TextBlock
+                {
+                    Text = "No combos blacklisted yet.",
+                    Style = (Style)Application.Current.Resources["CaptionTextBlockStyle"],
+                    Foreground = (Brush)Application.Current.Resources["TextFillColorSecondaryBrush"],
+                });
+                return;
+            }
+            for (int i = 0; i < _blacklist.Count; i++)
+            {
+                var entry = _blacklist[i];
+                var idx = i; // capture for lambda
+                var row = new Grid { ColumnSpacing = 8 };
+                row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                row.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                var label = new TextBlock
+                {
+                    Text = $"{entry.Weapon} + {entry.Style}",
+                    VerticalAlignment = VerticalAlignment.Center,
+                    TextTrimming = TextTrimming.CharacterEllipsis,
+                    FontSize = 12,
+                };
+                Grid.SetColumn(label, 0);
+                var removeBtn = new Button
+                {
+                    Content = "×",
+                    Padding = new Thickness(6, 2, 6, 2),
+                    FontSize = 13,
+                    MinWidth = 0,
+                };
+                removeBtn.Click += (_, _) => { _blacklist.RemoveAt(idx); RenderBlacklist(); SaveSettings(); };
+                Grid.SetColumn(removeBtn, 1);
+                row.Children.Add(label);
+                row.Children.Add(removeBtn);
+                blacklistPanel.Children.Add(row);
+            }
         }
 
         private static void SetExpandedTree(TreeViewNode node, bool expanded)
@@ -820,6 +901,22 @@ namespace MHGU_Quest_Randomizer
                 if (weapons.Count == 0) weapons.Add("Great Sword");
 
                 weapon = weapons[Random.Shared.Next(weapons.Count)];
+
+                // Reroll weapon if the blacklist blocks every available style for it
+                if (_blacklist.Count > 0)
+                {
+                    var baseStyles = new List<string> { "Guild","Striker","Adept","Aerial","Valor","Alchemy" };
+                    foreach (var (pill, name) in _stylePills)
+                        if (pill.IsChecked != true) baseStyles.Remove(name);
+                    for (int t = 0; t < 50; t++)
+                    {
+                        var blS = new HashSet<string>(
+                            _blacklist.Where(b => b.Weapon.Equals(weapon, StringComparison.OrdinalIgnoreCase))
+                                      .Select(b => b.Style), StringComparer.OrdinalIgnoreCase);
+                        if (baseStyles.Any(s => !blS.Contains(s))) break;
+                        weapon = weapons[Random.Shared.Next(weapons.Count)];
+                    }
+                }
             }
             weaponText.Text = weapon;
             weaponText.Foreground = WeaponColors.TryGetValue(weapon, out var wc)
@@ -877,6 +974,12 @@ namespace MHGU_Quest_Randomizer
 
                 var styles = new List<string> { "Guild","Striker","Adept","Aerial","Valor","Alchemy" };
                 styles.RemoveAll(s => excludedStyles.Contains(s));
+                // Apply blacklist: remove styles paired with this weapon
+                var blStyles = new HashSet<string>(
+                    _blacklist.Where(b => b.Weapon.Equals(weapon, StringComparison.OrdinalIgnoreCase))
+                              .Select(b => b.Style), StringComparer.OrdinalIgnoreCase);
+                var filteredStyles = styles.Where(s => !blStyles.Contains(s)).ToList();
+                if (filteredStyles.Count > 0) styles = filteredStyles;
                 if (styles.Count == 0) styles.Add("Guild");
 
                 string style = styles[Random.Shared.Next(styles.Count)];
@@ -987,6 +1090,7 @@ namespace MHGU_Quest_Randomizer
                     ExBiases   = _biasPills.Where(p => p.Pill.IsChecked != true).Select(p => p.Name).ToList(),
                     ExMonsters = CollectUncheckedMonsters(),
                     ExArts     = excArts.ToList(),
+                    Blacklist  = _blacklist.ToList(),
                     Hyper = hyperPill.IsChecked == true,
                     Egg = eggPill.IsChecked == true,
                     Gathering = gatheringPill.IsChecked == true,
@@ -1068,6 +1172,13 @@ namespace MHGU_Quest_Randomizer
                     foreach (TreeViewNode w in artTreeView.RootNodes) DeselectArtLeaves(w, ex);
                     foreach (TreeViewNode w in artTreeView.RootNodes) FixArtParentSelection(w);
                     _updatingArtSelection = false;
+                }
+
+                // Blacklist
+                if (s.Blacklist.Count > 0)
+                {
+                    _blacklist = s.Blacklist;
+                    RenderBlacklist();
                 }
             }
             finally { _loadingSettings = false; }
@@ -1197,6 +1308,10 @@ namespace MHGU_Quest_Randomizer
             foreach (TreeViewNode w in artTreeView.RootNodes)
                 SelectNodeTree(w);
             _updatingArtSelection = false;
+
+            // Blacklist — clear
+            _blacklist.Clear();
+            RenderBlacklist();
 
             SaveSettings();   // persist the fully-reset state
         }
