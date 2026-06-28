@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MHGU Quest Randomizer</title>
+<link rel="icon" href="assets/MonsterIcons/MHGU-Question_Mark_Icon.webp">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+  <!-- Title bar -->
+  <header class="titlebar">
+    <img class="title-icon" src="assets/MonsterIcons/MHGU-Question_Mark_Icon.webp" alt="">
+    <h1>MHGU Quest Randomizer</h1>
+    <button id="themeBtn" class="icon-btn" title="Theme" aria-label="Theme">&#9881;</button>
+  </header>
+
+  <main class="layout">
+    <!-- Sidebar: filters -->
+    <aside class="sidebar">
+      <button id="resetBtn" class="btn block">Reset Filters</button>
+
+      <section class="panel" data-open="false">
+        <button class="panel-head">Quest Filters <span class="chev">&#9662;</span></button>
+        <div class="panel-body">
+          <p class="hint">Large-monster quests are always included. These add extra categories:</p>
+          <label class="chk"><input type="checkbox" id="f_hyper">Hypers</label>
+          <label class="chk"><input type="checkbox" id="f_egg">Egg Delivery</label>
+          <label class="chk"><input type="checkbox" id="f_gathering">Gathering</label>
+          <label class="chk"><input type="checkbox" id="f_small">Small Monsters</label>
+        </div>
+      </section>
+
+      <section class="panel" data-open="false">
+        <button class="panel-head">Monsters <span class="chev">&#9662;</span></button>
+        <div class="panel-body">
+          <div class="row gap">
+            <button id="monAll" class="btn tiny">All</button>
+            <button id="monNone" class="btn tiny">None</button>
+          </div>
+          <div id="monsterTree" class="tree"></div>
+        </div>
+      </section>
+
+      <section class="panel" data-open="false">
+        <button class="panel-head">Weapons <span class="chev">&#9662;</span></button>
+        <div class="panel-body" id="weaponList"></div>
+      </section>
+
+      <section class="panel" data-open="false">
+        <button class="panel-head">Styles <span class="chev">&#9662;</span></button>
+        <div class="panel-body" id="styleList"></div>
+      </section>
+
+      <section class="panel" data-open="false">
+        <button class="panel-head">Prowler <span class="chev">&#9662;</span></button>
+        <div class="panel-body">
+          <label class="chk"><input type="checkbox" id="p_prowler">Prowler? <span class="sub">(adds Prowler to the weapon pool)</span></label>
+          <label class="chk"><input type="checkbox" id="p_quests">Prowler Quests? <span class="sub">(include Prowler-only quests)</span></label>
+          <p class="hint">Biases (used when a Prowler is rolled):</p>
+          <div id="biasList"></div>
+        </div>
+      </section>
+    </aside>
+
+    <!-- Result -->
+    <section class="content">
+      <div class="quest-pickers">
+        <label class="field">Quest Type
+          <select id="questType">
+            <option value="" disabled selected>Select type</option>
+            <option>Village</option><option>Hub</option><option>Pub</option>
+            <option>Arena</option><option>Special Permits</option><option>Events</option>
+          </select>
+        </label>
+        <label class="field">From Level
+          <select id="fromLevel"></select>
+        </label>
+        <label class="field">Up to Level
+          <select id="toLevel"><option value="" disabled selected>Select level</option></select>
+        </label>
+        <button id="rollBtn" class="btn accent" disabled>Randomize!</button>
+      </div>
+
+      <div class="result-card">
+        <p id="placeholder" class="placeholder">Select a quest type and level, then press Randomize.</p>
+        <div id="result" class="result hidden">
+          <div class="result-quest">
+            <img id="r_target" class="target-icon" src="" alt="">
+            <div>
+              <div id="r_name" class="r-name"></div>
+              <div id="r_main" class="r-main"></div>
+            </div>
+          </div>
+          <div class="result-loadout">
+            <div class="loadout-block">
+              <div class="r-label">Weapon</div>
+              <div class="r-weapon-row">
+                <img id="r_weaponIcon" class="weapon-icon" src="" alt="">
+                <span id="r_weapon" class="r-weapon"></span>
+              </div>
+            </div>
+            <div class="loadout-block">
+              <div class="r-label" id="r_styleLabel">Style</div>
+              <div class="r-weapon-row">
+                <img id="r_biasIcon" class="weapon-icon hidden" src="" alt="">
+                <span id="r_style" class="r-style"></span>
+              </div>
+              <ul id="r_arts" class="arts"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Theme dialog -->
+<div id="themeModal" class="modal hidden">
+  <div class="modal-card">
+    <h2>Theme</h2>
+    <div id="swatches" class="swatches"></div>
+    <div class="row end gap">
+      <button id="themeClose" class="btn">Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
