@@ -429,7 +429,7 @@
                                 <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="10" VerticalAlignment="Top">
                                     <Image x:Name="weaponIcon" Width="26" Height="26" VerticalAlignment="Top" Margin="0,2,0,0"/>
                                     <StackPanel>
-                                        <TextBlock Text="Weapon"
+                                        <TextBlock x:Name="weaponLabel" Text="Weapon"
                                                    Style="{StaticResource CaptionTextBlockStyle}"
                                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
                                         <TextBlock x:Name="weaponText" FontWeight="SemiBold" TextWrapping="Wrap"/>
@@ -437,7 +437,7 @@
                                 </StackPanel>
 
                                 <!-- Style -->
-                                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10" VerticalAlignment="Top">
+                                <StackPanel x:Name="styleBlock" Grid.Column="1" Orientation="Horizontal" Spacing="10" VerticalAlignment="Top">
                                     <Image x:Name="styleIcon" Width="26" Height="26" VerticalAlignment="Top" Margin="0,2,0,0" Opacity="0"/>
                                     <StackPanel>
                                         <TextBlock x:Name="styleLabel"

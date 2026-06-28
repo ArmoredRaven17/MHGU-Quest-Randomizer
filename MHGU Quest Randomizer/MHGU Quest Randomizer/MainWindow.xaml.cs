@@ -317,8 +317,11 @@ namespace MHGU_Quest_Randomizer
         {
             bool hasQuestType  = questType.SelectedItem   != null
                               && questLevel.SelectedValue != null;
-            bool hasWeapon     = _weaponPills.Any(p => p.Pill.IsChecked == true);
-            bool hasStyle      = _stylePills.Any(p => p.Pill.IsChecked  == true);
+            // Arena uses preset sets, so weapon/style filters don't gate the roll there.
+            bool isArena       = questType.SelectedItem?.ToString()
+                                    ?.Equals("Arena", StringComparison.OrdinalIgnoreCase) == true;
+            bool hasWeapon     = isArena || _weaponPills.Any(p => p.Pill.IsChecked == true);
+            bool hasStyle      = isArena || _stylePills.Any(p => p.Pill.IsChecked  == true);
             bool hasMonster    = monsterTreeView.SelectedNodes.Count > 0;
             bool biasOk        = prowlerPill.IsChecked != true
                               || new[] { chrPill, fghtPill, proPill, assPill,
@@ -528,6 +531,23 @@ namespace MHGU_Quest_Randomizer
                 ? GetSpecialPermitDeviant(quest.Name, quest.Monster)
                 : quest.Monster ?? "";
             questTargetIcon.Source = LoadMonsterIcon(baseDir, iconMonster);
+
+            // Arena quests use preset equipment sets (weapon + style + arts are all baked
+            // into the set), so we just roll which of the 5 sets to use — no separate
+            // weapon/style/arts roll.
+            if (type.Equals("Arena", StringComparison.OrdinalIgnoreCase))
+            {
+                weaponLabel.Text      = "Loadout";
+                weaponText.Text       = "Set " + (Random.Shared.Next(5) + 1);
+                weaponText.Foreground = (Brush)Application.Current.Resources["TextFillColorPrimaryBrush"];
+                weaponIcon.Visibility = Visibility.Collapsed;
+                styleBlock.Visibility = Visibility.Collapsed;
+                artsPanel.Visibility  = Visibility.Collapsed;
+                return;
+            }
+            // Non-arena: restore the weapon/style layout in case the previous roll was Arena.
+            weaponLabel.Text      = "Weapon";
+            styleBlock.Visibility = Visibility.Visible;
 
             // Weapon roll. Prowler quests can only be undertaken by a Prowler, so the
             // weapon is forced to "Prowler" regardless of the weapon filter pills.
