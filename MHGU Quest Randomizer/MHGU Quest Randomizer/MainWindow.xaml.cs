@@ -353,7 +353,7 @@ namespace MHGU_Quest_Randomizer
         {
             var byWeapon = _arts
                 .GroupBy(a => a.Weapon)
-                .OrderBy(g => g.Key == "All" ? 1 : 0).ThenBy(g => g.Key);
+                .OrderBy(g => g.Key == "All" ? 0 : 1).ThenBy(g => g.Key);
 
             foreach (var wGroup in byWeapon)
             {
