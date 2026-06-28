@@ -188,19 +188,25 @@
     const type = $("questType").value;
     const opts = LEVELS[type] || [];
     const from = $("fromLevel"), to = $("toLevel");
+    const isArena = type === "Arena";
     from.innerHTML = ""; to.innerHTML = "";
     opts.forEach(([lbl, val]) => {
       from.add(new Option(lbl, val));
       to.add(new Option(lbl, val));
     });
-    from.selectedIndex = 0;                          // lowest
-    to.selectedIndex = Math.max(0, opts.length - 1); // highest by default
+    from.selectedIndex = 0;
+    // Arena is a single category pick (All/Normal/Challenge), not a range —
+    // hide the From field, relabel, and default the selector to "All".
+    $("fromField").classList.toggle("hidden", isArena);
+    $("toLabel").textContent = isArena ? "Arena Type" : "Up to Level";
+    to.selectedIndex = isArena ? 0 : Math.max(0, opts.length - 1);
     updateRollBtn();
   }
 
   // Keep From ≤ To (compared by list position, same ordered options in both).
   function syncLevels(changed) {
     const from = $("fromLevel"), to = $("toLevel");
+    if ($("questType").value === "Arena") { updateRollBtn(); return; }
     if (from.selectedIndex < 0 || to.selectedIndex < 0) { updateRollBtn(); return; }
     if (changed === "from" && from.selectedIndex > to.selectedIndex) to.selectedIndex = from.selectedIndex;
     if (changed === "to" && to.selectedIndex < from.selectedIndex) from.selectedIndex = to.selectedIndex;
@@ -240,7 +246,7 @@
         const t = spTier(q.Name || "");
         if (t < fromLv || t > toLv) return false;
       } else if (type === "Arena") {
-        if (toLv !== 0 && (q.Level < fromLv || q.Level > toLv)) return false;
+        if (toLv !== 0 && q.Level !== toLv) return false;
       } else {
         if (q.Level < fromLv || q.Level > toLv) return false;
       }
