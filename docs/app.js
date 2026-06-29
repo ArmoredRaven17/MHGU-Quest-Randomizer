@@ -630,6 +630,9 @@
   $("monCollapse").addEventListener("click", () => setMonstersOpen(false));
   $("artExpand").addEventListener("click", () => setArtsOpen(true));
   $("artCollapse").addEventListener("click", () => setArtsOpen(false));
+  $("statsBtn").addEventListener("click", () => $("statsModal").classList.remove("hidden"));
+  $("statsClose").addEventListener("click", () => $("statsModal").classList.add("hidden"));
+  $("statsModal").addEventListener("click", (e) => { if (e.target.id === "statsModal") $("statsModal").classList.add("hidden"); });
   $("themeBtn").addEventListener("click", () => $("themeModal").classList.remove("hidden"));
   $("themeClose").addEventListener("click", () => $("themeModal").classList.add("hidden"));
   $("themeModal").addEventListener("click", (e) => { if (e.target.id === "themeModal") $("themeModal").classList.add("hidden"); });

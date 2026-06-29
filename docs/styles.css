@@ -151,6 +151,14 @@ body{
 .bl-tag button{background:transparent;border:none;color:var(--text-dim);cursor:pointer;font-size:16px;padding:0 2px;line-height:1;flex-shrink:0;font-family:inherit}
 .bl-tag button:hover{color:var(--text)}
 
+/* Combinations math table */
+.math-table{border-collapse:collapse;width:100%;margin:0 0 10px;font-size:13px}
+.math-table th{text-align:left;color:var(--text-dim);font-size:11px;text-transform:uppercase;letter-spacing:.4px;padding:2px 10px 2px 0}
+.math-table td{padding:3px 10px 3px 0;vertical-align:top}
+.math-table td:nth-child(2){white-space:nowrap}
+.math-table td:last-child{color:var(--text-dim);font-size:12px}
+.math-table tr:last-child td{border-top:1px solid var(--line);padding-top:5px}
+
 /* Mobile */
 @media (max-width:760px){
   .layout{flex-direction:column}
