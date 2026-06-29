@@ -7,7 +7,7 @@
 <title>MHGU Quest Randomizer</title>
 <link rel="icon" href="assets/MonsterIcons/MHGU-Question_Mark_Icon.webp">
 <!-- Bump ?v= on any styles/app/data change so browsers fetch fresh copies (no hard-refresh needed) -->
-<link rel="stylesheet" href="styles.css?v=36">
+<link rel="stylesheet" href="styles.css?v=64">
 </head>
 <body>
 <div id="app">
@@ -128,37 +128,36 @@
       <div class="result-card">
         <p id="placeholder" class="placeholder">Select a quest type and level, then press Randomize.</p>
         <div id="result" class="result hidden">
-          <div class="r-title-row">
+          <div class="rc-title">
             <span id="r_name" class="r-name"></span>
             <span id="r_capturePill" class="capture-pill hidden">Capture</span>
             <span id="r_hyperPill" class="hyper-pill hidden">Hyper</span>
           </div>
-          <div id="r_main" class="r-sub"></div>
-          <div class="r-body">
-            <div class="r-locale-col">
-              <div class="r-label">Locale</div>
-              <div id="r_locale" class="r-locale-val"></div>
+          <div class="rc-locale">
+            <div id="r_locale" class="r-locale-val"></div>
+          </div>
+          <div class="rc-main">
+            <div id="r_main" class="r-sub"></div>
+          </div>
+          <div class="rc-icon">
+            <img id="r_target" class="target-icon" src="" alt="">
+            <img id="r_hyperOverlay" class="hyper-overlay hidden" src="assets/MonsterIcons/MHGU-Hyper_Monster_Icon.png" alt="">
+          </div>
+          <div class="rc-loadout">
+            <div class="r-weapon-row">
+              <img id="r_weaponIcon" class="weapon-icon" src="" alt="">
+              <span id="r_weapon" class="r-weapon"></span>
             </div>
-            <div class="target-wrap">
-              <img id="r_target" class="target-icon" src="" alt="">
-              <img id="r_hyperOverlay" class="hyper-overlay hidden" src="assets/MonsterIcons/MHGU-Hyper_Monster_Icon.png" alt="">
-            </div>
-            <div class="r-loadout-col">
+            <div id="r_styleBlock">
+              <div class="r-label" id="r_styleLabel">Style</div>
               <div class="r-weapon-row">
-                <img id="r_weaponIcon" class="weapon-icon" src="" alt="">
-                <span id="r_weapon" class="r-weapon"></span>
+                <img id="r_biasIcon" class="weapon-icon hidden" src="" alt="">
+                <span id="r_style" class="r-style"></span>
               </div>
-              <div id="r_styleBlock">
-                <div class="r-label" id="r_styleLabel">Style</div>
-                <div class="r-weapon-row">
-                  <img id="r_biasIcon" class="weapon-icon hidden" src="" alt="">
-                  <span id="r_style" class="r-style"></span>
-                </div>
-                <ul id="r_arts" class="arts"></ul>
-              </div>
+              <ul id="r_arts" class="arts"></ul>
             </div>
           </div>
-          <div class="row gap">
+          <div class="rc-footer">
             <button id="copyResultBtn" class="btn tiny">Copy to Clipboard</button>
           </div>
         </div>
@@ -270,7 +269,7 @@
   </div>
 </div>
 
-<script src="data.js?v=23"></script>
+<script src="data.js?v=24"></script>
 <script src="app.js?v=54"></script>
 </body>
 </html>
