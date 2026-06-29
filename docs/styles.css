@@ -34,7 +34,7 @@ body{
 /* Layout */
 .layout{display:flex;flex:1;min-height:0}
 .sidebar{
-  width:300px;flex-shrink:0;padding:12px;overflow-y:auto;
+  width:300px;flex-shrink:0;padding:12px;overflow-y:auto;scrollbar-gutter:stable;
   background:var(--bg);border-right:1px solid var(--line);
   display:flex;flex-direction:column;gap:8px;
 }
