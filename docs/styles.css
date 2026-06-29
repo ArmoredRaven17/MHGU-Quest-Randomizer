@@ -53,7 +53,7 @@ body{
 .btn.accent:disabled{opacity:.45;cursor:not-allowed}
 
 /* Collapsible panels */
-.panel{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card)}
+.panel{border:1px solid var(--line);border-radius:8px;overflow:clip;background:var(--card)}
 .panel-head{
   width:100%;text-align:left;background:transparent;border:none;color:var(--text);
   padding:10px 12px;font-size:14px;font-weight:600;cursor:pointer;
