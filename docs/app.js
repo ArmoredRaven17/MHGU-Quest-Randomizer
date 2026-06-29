@@ -406,6 +406,7 @@
     $("result").classList.remove("hidden");
     $("r_name").textContent = quest.Name || "";
     $("r_main").textContent = quest.Main || "";
+    $("r_capturePill").classList.toggle("hidden", !quest.Capture);
     $("r_hyperPill").classList.toggle("hidden", !quest.Hyper);
     $("r_hyperOverlay").classList.toggle("hidden", !quest.Hyper);
 
