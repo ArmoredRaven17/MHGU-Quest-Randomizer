@@ -408,7 +408,8 @@
     const wHex = WEAPON_COLORS[name];
     el.style.cssText = "";
     if (wHex) {
-      el.style.color = document.documentElement.style.getPropertyValue("--text").trim() || "#fff";
+      el.style.color = "#fff";
+      el.style.textShadow = "-1px 0 rgba(0,0,0,0.55), 1px 0 rgba(0,0,0,0.55), 0 -1px rgba(0,0,0,0.55), 0 1px rgba(0,0,0,0.55)";
       el.style.background = wHex;
       el.style.padding = "3px 14px";
       el.style.borderRadius = "999px";
