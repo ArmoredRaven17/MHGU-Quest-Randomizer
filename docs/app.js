@@ -552,11 +552,11 @@
   const css = (rgb) => `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
   function applyTheme(hex) {
     const c = hexRgb(hex), r = document.documentElement.style;
-    r.setProperty("--bg",          css(darken(c,0.72)));
-    r.setProperty("--bg2",         css(darken(c,0.90)));
-    r.setProperty("--hover",       css(darken(c,0.63)));
-    r.setProperty("--accent",      css(darken(lighten(c,0.35),0.90)));
-    r.setProperty("--accent-hover",css(darken(lighten(c,0.50),0.90)));
+    r.setProperty("--bg",          css(darken(c,0.82)));
+    r.setProperty("--bg2",         css(darken(c,0.80)));
+    r.setProperty("--hover",       css(darken(c,0.58)));
+    r.setProperty("--accent",      css(darken(lighten(c,0.28),0.90)));
+    r.setProperty("--accent-hover",css(darken(lighten(c,0.40),0.90)));
     const bright = c[0]*0.299 + c[1]*0.587 + c[2]*0.114;
     const isLight = bright > 170;
     r.setProperty("--text",     isLight ? "#111111" : "#f3f3f3");
