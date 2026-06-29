@@ -558,7 +558,7 @@
     r.setProperty("--accent",      css(darken(lighten(c,0.25),0.81)));
     r.setProperty("--accent-hover",css(darken(lighten(c,0.36),0.81)));
     const bright = c[0]*0.299 + c[1]*0.587 + c[2]*0.114;
-    const isLight = bright > 170;
+    const isLight = bright > 200;
     r.setProperty("--text",     isLight ? "#111111" : "#f3f3f3");
     r.setProperty("--text-dim", isLight ? "#444444" : "#b8b8b8");
     r.setProperty("--line",     isLight ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.12)");
