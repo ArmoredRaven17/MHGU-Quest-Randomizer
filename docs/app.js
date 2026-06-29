@@ -20,6 +20,13 @@
 
   const STYLES = ["Guild","Striker","Adept","Aerial","Valor","Alchemy"];
 
+  const WEAPON_ABBREV = {
+    "Great Sword":"GS","Long Sword":"LS","Sword & Shield":"SnS","Dual Blades":"DB",
+    "Hammer":"Hammer","Hunting Horn":"HH","Lance":"Lance","Gunlance":"GL",
+    "Switch Axe":"SA","Charge Blade":"CB","Insect Glaive":"IG",
+    "Light Bowgun":"LBG","Heavy Bowgun":"HBG","Bow":"Bow",
+  };
+
   const BIASES = [
     ["Charisma",  "FourthGen-Palico_Icon_Blue.webp"],
     ["Fighting",  "Palico_Weapon_Cutting_Icon_Red.webp"],
@@ -145,7 +152,7 @@
     }
     blacklist.forEach((b, i) => {
       const row = document.createElement("div"); row.className = "bl-tag";
-      row.innerHTML = `<span>${escapeHtml(b.weapon)} + ${escapeHtml(b.style)}</span>` +
+      row.innerHTML = `<span>${escapeHtml(WEAPON_ABBREV[b.weapon] || b.weapon)} + ${escapeHtml(b.style)}</span>` +
         `<button data-i="${i}" title="Remove" aria-label="Remove">×</button>`;
       row.querySelector("button").addEventListener("click", () => {
         blacklist.splice(i, 1); renderBlacklist(); saveFilters();
@@ -155,7 +162,7 @@
   }
   (function initBlacklist() {
     const wSel = $("blWeapon"), sSel = $("blStyle");
-    WEAPONS.forEach(w => wSel.add(new Option(w, w)));
+    WEAPONS.forEach(w => wSel.add(new Option(WEAPON_ABBREV[w] || w, w)));
     STYLES.forEach(s => sSel.add(new Option(s, s)));
     $("blAdd").addEventListener("click", () => {
       const w = wSel.value, s = sSel.value;
