@@ -67,10 +67,10 @@
   // Theme colors named after MHGU monsters that evoke each hue. Label = monster (and its
   // icon filename); the hex values are unchanged so saved themes keep matching.
   const COLORS = [
-    ["Teostra","#922B21"],["Rathalos","#E74C3C"],["Agnaktor","#E67E22"],["Tigrex","#F39C12"],
-    ["Rajang","#F1C40F"],["Najarala","#CDDC39"],["Deviljho","#33691E"],["Rathian","#2ECC71"],
-    ["Zinogre","#1ABC9C"],["Lagiacrus","#5DADE2"],["Brachydios","#1A3A6C"],["Gore Magala","#5C6BC0"],
-    ["Nerscylla","#673AB7"],["Chameleos","#9B59B6"],["Mizutsune","#D81B60"],["Duramboros","#6D4C41"],
+    ["Teostra","#701010"],["Rathalos","#C23D3D"],["Agnaktor","#FF8000"],["Tigrex","#FFA34D"],
+    ["Rajang","#FFDD00"],["Najarala","#BBFF00"],["Deviljho","#217500"],["Rathian","#34CB34"],
+    ["Zinogre","#1ABC9C"],["Lagiacrus","#0099FF"],["Brachydios","#1A3A6C"],["Gore Magala","#3E487E"],
+    ["Nerscylla","#543091"],["Chameleos","#9C85B2"],["Mizutsune","#D86EA7"],["Duramboros","#987367"],
     ["Khezu","#FFFFFF"],["Kushala Daora","#BDC3C7"],["Basarios","#95A5A6"],["Question Mark","#4A4A4A"],
   ];
   const COLORS_HEX = Object.fromEntries(COLORS.map(([name, hex]) => [hex.toUpperCase(), name]));
@@ -548,7 +548,7 @@
   const darken  = (rgb, f) => { const [h,s,l] = rgbToHsl(rgb); return hslToRgb([h, s, clamp01(l*f)]); };
   const lighten = (rgb, b) => { const [h,s,l] = rgbToHsl(rgb); return hslToRgb([h, s, clamp01(l+(1-l)*b)]); };
   const css = (rgb) => `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
-  const QM_BG = css(darken(hexRgb("#4A4A4A"), 0.45)); // fixed neutral main bg
+  const deriveBg = (rgb) => { const [h,s,l] = rgbToHsl(rgb); return hslToRgb([h, clamp01(s*0.74), clamp01(l*0.35)]); };
   function applyTheme(hex) {
     const c = hexRgb(hex), r = document.documentElement.style;
     const bright = c[0]*0.299 + c[1]*0.587 + c[2]*0.114;
@@ -560,8 +560,8 @@
       r.setProperty("--accent",      css(darken(c,0.70)));
       r.setProperty("--accent-hover",css(darken(c,0.78)));
     } else {
-      r.setProperty("--bg",          QM_BG);
-      r.setProperty("--bg2",         css(darken(c,0.40)));
+      r.setProperty("--bg",          css(deriveBg(c)));
+      r.setProperty("--bg2",         css(c));
       r.setProperty("--hover",       css(darken(c,0.30)));
       r.setProperty("--accent",      css(darken(lighten(c,0.25),0.81)));
       r.setProperty("--accent-hover",css(darken(lighten(c,0.36),0.81)));
