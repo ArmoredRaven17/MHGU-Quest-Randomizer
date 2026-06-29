@@ -552,7 +552,7 @@
   function applyTheme(hex) {
     const c = hexRgb(hex), r = document.documentElement.style;
     const bright = c[0]*0.299 + c[1]*0.587 + c[2]*0.114;
-    const isLight = bright > 200;
+    const isLight = bright > 230;
     if (isLight) {
       r.setProperty("--bg",          css(darken(c,0.95)));
       r.setProperty("--bg2",         css(darken(c,0.90)));
@@ -561,7 +561,7 @@
       r.setProperty("--accent-hover",css(darken(c,0.78)));
     } else {
       r.setProperty("--bg",          css(deriveBg(c)));
-      r.setProperty("--bg2",         css(c));
+      r.setProperty("--bg2",         css(darken(c,0.70)));
       r.setProperty("--hover",       css(darken(c,0.30)));
       r.setProperty("--accent",      css(darken(lighten(c,0.25),0.81)));
       r.setProperty("--accent-hover",css(darken(lighten(c,0.36),0.81)));
