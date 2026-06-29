@@ -99,6 +99,9 @@
                                 <CheckBox x:Name="eggPill">Egg Delivery</CheckBox>
                                 <CheckBox x:Name="gatheringPill">Gathering</CheckBox>
                                 <CheckBox x:Name="smMonstersPill">Small Monsters</CheckBox>
+                                <TextBlock Text="S. Permit filters — narrow the quest pool" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,6,0,2"/>
+                                <CheckBox x:Name="oneFaintPill">S. Permit: One Faint</CheckBox>
+                                <CheckBox x:Name="onSitePill">S. Permit: On-Site Items</CheckBox>
                             </StackPanel>
                         </Expander>
 
