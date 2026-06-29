@@ -552,13 +552,21 @@
   const css = (rgb) => `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
   function applyTheme(hex) {
     const c = hexRgb(hex), r = document.documentElement.style;
-    r.setProperty("--bg",          css(darken(c,0.45)));
-    r.setProperty("--bg2",         css(darken(c,0.40)));
-    r.setProperty("--hover",       css(darken(c,0.30)));
-    r.setProperty("--accent",      css(darken(lighten(c,0.25),0.81)));
-    r.setProperty("--accent-hover",css(darken(lighten(c,0.36),0.81)));
     const bright = c[0]*0.299 + c[1]*0.587 + c[2]*0.114;
     const isLight = bright > 200;
+    if (isLight) {
+      r.setProperty("--bg",          css(darken(c,0.95)));
+      r.setProperty("--bg2",         css(darken(c,0.90)));
+      r.setProperty("--hover",       css(darken(c,0.80)));
+      r.setProperty("--accent",      css(darken(c,0.70)));
+      r.setProperty("--accent-hover",css(darken(c,0.78)));
+    } else {
+      r.setProperty("--bg",          css(darken(c,0.45)));
+      r.setProperty("--bg2",         css(darken(c,0.40)));
+      r.setProperty("--hover",       css(darken(c,0.30)));
+      r.setProperty("--accent",      css(darken(lighten(c,0.25),0.81)));
+      r.setProperty("--accent-hover",css(darken(lighten(c,0.36),0.81)));
+    }
     r.setProperty("--text",     isLight ? "#111111" : "#f3f3f3");
     r.setProperty("--text-dim", isLight ? "#444444" : "#b8b8b8");
     r.setProperty("--line",     isLight ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.12)");
