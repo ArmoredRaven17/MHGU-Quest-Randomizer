@@ -503,11 +503,16 @@
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Border x:Name="hyperBadge" Grid.Column="0" Visibility="Collapsed"
-                                            Background="#F5B400" CornerRadius="9" Padding="8,2"
-                                            VerticalAlignment="Center">
-                                        <TextBlock Text="HYPER" Foreground="White" FontSize="11" FontWeight="Bold"/>
-                                    </Border>
+                                    <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+                                        <Border x:Name="captureBadge" Visibility="Collapsed"
+                                                Background="#4A4A4A" CornerRadius="9" Padding="8,2">
+                                            <TextBlock Text="CAPTURE" Foreground="White" FontSize="11" FontWeight="Bold"/>
+                                        </Border>
+                                        <Border x:Name="hyperBadge" Visibility="Collapsed"
+                                                Background="#F5B400" CornerRadius="9" Padding="8,2">
+                                            <TextBlock Text="HYPER" Foreground="White" FontSize="11" FontWeight="Bold"/>
+                                        </Border>
+                                    </StackPanel>
                                     <TextBlock x:Name="questName" Grid.Column="1"
                                                FontWeight="SemiBold" TextWrapping="Wrap"
                                                VerticalAlignment="Bottom"/>

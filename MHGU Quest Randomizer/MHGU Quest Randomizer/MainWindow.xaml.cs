@@ -844,6 +844,7 @@ namespace MHGU_Quest_Randomizer
 
             questName.Text = quest.Name ?? "";
             questMain.Text = quest.Main ?? "";
+            captureBadge.Visibility = quest.Capture ? Visibility.Visible : Visibility.Collapsed;
             hyperBadge.Visibility   = quest.Hyper ? Visibility.Visible : Visibility.Collapsed;
             hyperOverlay.Visibility = quest.Hyper ? Visibility.Visible : Visibility.Collapsed;
 
