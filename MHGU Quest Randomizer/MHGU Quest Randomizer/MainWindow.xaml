@@ -93,11 +93,12 @@
                                   HorizontalAlignment="Stretch"
                                   HorizontalContentAlignment="Stretch">
                             <StackPanel Padding="4,4,0,4">
-                                <TextBlock Text="Large-monster quests are always included — check these to add more" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,0,0,2"/>
-                                <CheckBox x:Name="gatheringPill">Gathering</CheckBox>
-                                <CheckBox x:Name="smMonstersPill">Small Monsters</CheckBox>
+                                <TextBlock Text="Large-monster hunt quests are always included — check these to add more" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,0,0,2"/>
+                                <CheckBox x:Name="capturePill">Capture</CheckBox>
                                 <CheckBox x:Name="hyperPill">Hypers</CheckBox>
                                 <CheckBox x:Name="eggPill">Egg Delivery</CheckBox>
+                                <CheckBox x:Name="gatheringPill">Gathering</CheckBox>
+                                <CheckBox x:Name="smMonstersPill">Small Monsters</CheckBox>
                             </StackPanel>
                         </Expander>
 
