@@ -528,9 +528,27 @@
 
   // ── Theme ────────────────────────────────────────────────────────────────
   const hexRgb = (h) => { h = h.replace("#",""); return [0,2,4].map(i => parseInt(h.substr(i,2),16)); };
-  const clamp = (n) => Math.max(0, Math.min(255, Math.round(n)));
-  const darken = (rgb, f) => rgb.map(c => clamp(c*f));
-  const lighten = (rgb, b) => rgb.map(c => clamp(c + (255-c)*b));
+  const clamp   = (n) => Math.max(0, Math.min(255, Math.round(n)));
+  const clamp01 = (n) => Math.max(0, Math.min(1, n));
+  const rgbToHsl = ([r, g, b]) => {
+    r /= 255; g /= 255; b /= 255;
+    const max = Math.max(r,g,b), min = Math.min(r,g,b), d = max - min;
+    const l = (max + min) / 2;
+    if (d === 0) return [0, 0, l];
+    const s = d / (1 - Math.abs(2*l - 1));
+    const h = max===r ? ((g-b)/d + (g<b?6:0))/6
+            : max===g ? ((b-r)/d + 2)/6
+            :           ((r-g)/d + 4)/6;
+    return [h, s, l];
+  };
+  const hslToRgb = ([h, s, l]) => {
+    const c = (1 - Math.abs(2*l - 1)) * s, x = c*(1 - Math.abs((h*6)%2 - 1)), m = l - c/2;
+    const hi = Math.floor(h*6) % 6;
+    const [r,g,b] = hi===0?[c,x,0]:hi===1?[x,c,0]:hi===2?[0,c,x]:hi===3?[0,x,c]:hi===4?[x,0,c]:[c,0,x];
+    return [r+m, g+m, b+m].map(v => clamp(v*255));
+  };
+  const darken  = (rgb, f) => { const [h,s,l] = rgbToHsl(rgb); return hslToRgb([h, s, clamp01(l*f)]); };
+  const lighten = (rgb, b) => { const [h,s,l] = rgbToHsl(rgb); return hslToRgb([h, s, clamp01(l+(1-l)*b)]); };
   const css = (rgb) => `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
   function applyTheme(hex) {
     const c = hexRgb(hex), r = document.documentElement.style;
