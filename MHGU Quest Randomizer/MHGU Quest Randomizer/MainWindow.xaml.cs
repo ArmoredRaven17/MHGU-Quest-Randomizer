@@ -1404,8 +1404,8 @@ namespace MHGU_Quest_Randomizer
             {
                 ("Teostra",       Hex("#922B21")),
                 ("Rathalos",      Hex("#E74C3C")),
-                ("Tigrex",        Hex("#E67E22")),
-                ("Akantor",       Hex("#F39C12")),
+                ("Akantor",       Hex("#E67E22")),
+                ("Tigrex",        Hex("#F39C12")),
                 ("Rajang",        Hex("#F1C40F")),
                 ("Najarala",      Hex("#CDDC39")),
                 ("Deviljho",      Hex("#33691E")),
