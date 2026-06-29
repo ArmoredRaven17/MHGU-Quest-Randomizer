@@ -391,14 +391,10 @@
         || (q.Egg && f.egg) || (q.Gathering && f.gathering) || (q.SmMonsters && f.small);
       if (!include) return false;
 
-      // Hyper gate: most hyper quests are also large-monster quests (always included), so
-      // without this they'd show regardless of the toggle. Hypers off → exclude hyper quests.
+      // Gate flags: unchecked = exclude quests of that type (same pattern for all three).
       if (q.Hyper && !f.hyper) return false;
-
-      // SP narrowing filters: if either is checked, quest must match at least one checked filter.
-      if (type === "Special Permits" && (f.oneFaint || f.onSite)) {
-        if (!((q.OneFaint && f.oneFaint) || (q.OnSite && f.onSite))) return false;
-      }
+      if (q.OneFaint && !f.oneFaint) return false;
+      if (q.OnSite && !f.onSite) return false;
 
       if (q.LgMonster && q.Monster && anyFiltered && !inc.has(q.Monster.toLowerCase())) return false;
       return true;
