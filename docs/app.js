@@ -292,7 +292,8 @@
     }
     const byW = {};
     DATA.arts.forEach(a => { (byW[a.Weapon] = byW[a.Weapon] || {}); const b = baseName(a.HunterArtName); (byW[a.Weapon][b] = byW[a.Weapon][b] || []).push(a.HunterArtName); });
-    const weapons = Object.keys(byW).sort((x, y) => (y === "All") - (x === "All") || x.localeCompare(y));
+    const WPN_ORDER = ["Great Sword","Long Sword","Sword and Shield","Dual Blades","Hammer","Hunting Horn","Lance","Gunlance","Switch Axe","Charge Blade","Insect Glaive","Light Bowgun","Heavy Bowgun","Bow"];
+    const weapons = Object.keys(byW).sort((x, y) => x === "All" ? -1 : y === "All" ? 1 : WPN_ORDER.indexOf(x) - WPN_ORDER.indexOf(y));
     for (const w of weapons) {
       const wg = groupEl(w);
       const wLeaves = [];
