@@ -260,6 +260,7 @@
                                   HorizontalAlignment="Stretch"
                                   HorizontalContentAlignment="Stretch">
                             <StackPanel Padding="4,4,0,4" Spacing="4">
+                                <CheckBox x:Name="spArtsPill" IsChecked="True">SP Arts</CheckBox>
                                 <TextBlock Text="Uncheck to exclude (by weapon, art, or level)" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,0,0,2"/>
                                 <StackPanel Orientation="Horizontal" Spacing="4">
                                     <Button x:Name="expandArtsButton" Click="ExpandArts_Click" Padding="6,2" FontSize="11">Expand All</Button>
