@@ -284,12 +284,12 @@
                                 </Border>
                             </StackPanel>
                         </Expander>
-                        <!-- Blacklist -->
-                        <Expander Header="Blacklist"
+                        <!-- Restrictions -->
+                        <Expander Header="Restrictions"
                                   HorizontalAlignment="Stretch"
                                   HorizontalContentAlignment="Stretch">
                             <StackPanel Padding="4,4,0,4" Spacing="6">
-                                <TextBlock Text="Weapon + style combos to reroll automatically"
+                                <TextBlock Text="Weapon + style combos that will never be rolled together"
                                            Style="{StaticResource CaptionTextBlockStyle}"
                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                            Margin="0,0,0,2"/>
