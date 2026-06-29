@@ -48,12 +48,12 @@ body{
 .btn:hover{background:#ffffff24}
 .btn.block{width:100%}
 .btn.tiny{padding:3px 10px;font-size:12px}
-.btn.accent{background:var(--accent);border-color:var(--accent);color:#111;font-weight:600}
+.btn.accent{background:var(--accent);border-color:var(--accent);color:var(--text);font-weight:600}
 .btn.accent:hover{background:var(--accent-hover);border-color:var(--accent-hover)}
 .btn.accent:disabled{opacity:.45;cursor:not-allowed}
 
 /* Collapsible panels */
-.panel{border:1px solid var(--line);border-radius:8px;overflow:clip;background:var(--card)}
+.panel{border:1px solid var(--line);border-radius:8px;overflow:clip;background:var(--bg2)}
 .panel-head{
   width:100%;text-align:left;background:transparent;border:none;color:var(--text);
   padding:10px 12px;font-size:14px;font-weight:600;cursor:pointer;
