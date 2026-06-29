@@ -10,6 +10,7 @@
   --text:#f3f3f3; --text-dim:#b8b8b8; --line:#ffffff1f; --card:#ffffff0d;
 }
 *{box-sizing:border-box}
+input,select,button,textarea{font-family:inherit}
 html,body{margin:0;height:100%}
 body{
   font-family:'MHFU',"Segoe UI",system-ui,sans-serif;
@@ -110,7 +111,7 @@ body{
 .placeholder{color:var(--text-dim);text-align:center;margin-top:120px}
 .result{display:flex;flex-direction:column;gap:22px}
 .result-quest{display:flex;gap:16px;align-items:center}
-.target-wrap{position:relative;width:84px;height:84px;flex-shrink:0}
+.target-wrap{position:relative;width:84px;height:84px;flex-shrink:0;background:#1a1a1a}
 .target-icon{width:84px;height:84px;object-fit:contain}
 .hyper-overlay{position:absolute;top:-8px;left:-8px;width:100px;height:100px;object-fit:contain;pointer-events:none}
 .r-name-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
