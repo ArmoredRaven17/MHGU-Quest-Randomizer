@@ -549,7 +549,7 @@
     if (!styleHidden) lines.push(`${styleLabel}: ${style}`);
     if (artItems.length) lines.push(`Hunter Art(s): ${artItems.join(" / ")}`);
 
-    navigator.clipboard.writeText(lines.join("\n")).then(() => {
+    navigator.clipboard.writeText(lines.join(" |\n")).then(() => {
       const btn = $("copyResultBtn");
       const orig = btn.textContent;
       btn.textContent = "Copied!";
