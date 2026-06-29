@@ -140,7 +140,7 @@
   function renderBlacklist() {
     const el = $("blList"); el.innerHTML = "";
     if (!blacklist.length) {
-      el.innerHTML = '<p class="hint" style="margin:0">No combos blacklisted yet.</p>';
+      el.innerHTML = '<p class="hint" style="margin:0">No restrictions added yet.</p>';
       return;
     }
     blacklist.forEach((b, i) => {

@@ -532,7 +532,7 @@ namespace MHGU_Quest_Randomizer
             {
                 blacklistPanel.Children.Add(new TextBlock
                 {
-                    Text = "No combos blacklisted yet.",
+                    Text = "No restrictions added yet.",
                     Style = (Style)Application.Current.Resources["CaptionTextBlockStyle"],
                     Foreground = (Brush)Application.Current.Resources["TextFillColorSecondaryBrush"],
                 });
@@ -542,7 +542,7 @@ namespace MHGU_Quest_Randomizer
             {
                 var entry = _blacklist[i];
                 var idx = i; // capture for lambda
-                var row = new Grid { ColumnSpacing = 8 };
+                var row = new Grid { ColumnSpacing = 8, HorizontalAlignment = HorizontalAlignment.Stretch };
                 row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
                 row.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
                 var label = new TextBlock
@@ -1330,7 +1330,7 @@ namespace MHGU_Quest_Randomizer
             }
 
             Step("1. Pick a quest type & level.", "Choose a Quest Type, then the From / Up to Level range. (Arena uses a single All / Normal / Challenge picker instead of a range.)");
-            Step("2. Narrow the pool with the filters.", "Quest Filters add categories (large-monster quests are always in; check Hypers / Egg Delivery / Gathering / Small Monsters). Monsters, Weapons and Styles: uncheck to exclude. Hunter Arts: uncheck by weapon, named art, or level. Prowler: enable to allow Palico loadouts and Prowler-only quests, with biases for the roll.");
+            Step("2. Narrow the pool with the filters.", "Quest Filters add categories (large-monster quests are always in; check Hypers / Egg Delivery / Gathering / Small Monsters). Monsters, Weapons and Styles: uncheck to exclude. Hunter Arts: uncheck by weapon, named art, or level. Restrictions: add weapon + style combos that will never be rolled together. Prowler: enable to allow Palico loadouts and Prowler-only quests, with biases for the roll.");
             Step("3. Press Randomize!", "You get a quest plus a weapon, style, and Hunter Arts. Arena quests show which preset Set to bring; Prowler quests give a bias; Hyper quests show a yellow Hyper badge.");
             panel.Children.Add(new TextBlock
             {
