@@ -49,7 +49,7 @@ body{
 .btn:hover{background:#ffffff24}
 .btn.block{width:100%}
 .btn.tiny{padding:3px 10px;font-size:12px}
-.btn.accent{background:var(--accent);border-color:var(--accent);color:var(--text);font-weight:600}
+.btn.accent{background:var(--accent);border-color:var(--accent);color:var(--text);font-weight:600;text-shadow:-1px 0 rgba(0,0,0,0.55),1px 0 rgba(0,0,0,0.55),0 -1px rgba(0,0,0,0.55),0 1px rgba(0,0,0,0.55)}
 .btn.accent:hover{background:var(--accent-hover);border-color:var(--accent-hover)}
 .btn.accent:disabled{opacity:.45;cursor:not-allowed}
 
@@ -127,6 +127,7 @@ body{
 .r-style{font-size:22px;font-weight:700}
 .arts{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}
 .arts li{background:var(--bg2);border:1px solid var(--bg2);border-radius:6px;padding:6px 10px;font-size:14px}
+#copyResultBtn{background:var(--bg2);border-color:var(--bg2)}
 
 /* Theme modal */
 .modal{position:fixed;inset:0;background:#000000a8;display:flex;align-items:center;justify-content:center;z-index:10}
