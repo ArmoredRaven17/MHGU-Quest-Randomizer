@@ -126,7 +126,7 @@
     }
     return null;
   }
-  const maybeSP = (art) => !art ? "" : ($("f_spArts").checked && Math.random() < 1/3 ? art + " [SP]" : art);
+  const maybeSP = (art) => !art ? "" : ($("f_spArts").checked && Math.random() < 1/3 ? art + " SP" : art);
 
   // ── DOM build: weapons / styles / biases ─────────────────────────────────
   function buildChecklist(container, items, idPrefix, withIcon) {
