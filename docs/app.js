@@ -70,7 +70,7 @@
     ["Teostra","#922B21"],["Rathalos","#E74C3C"],["Akantor","#E67E22"],["Tigrex","#F39C12"],
     ["Rajang","#F1C40F"],["Najarala","#CDDC39"],["Deviljho","#33691E"],["Rathian","#2ECC71"],
     ["Zinogre","#1ABC9C"],["Lagiacrus","#3498DB"],["Brachydios","#2980B9"],["Gore Magala","#5C6BC0"],
-    ["Chameleos","#9B59B6"],["Nerscylla","#AD1457"],["Mizutsune","#D81B60"],["Duramboros","#6D4C41"],
+    ["Nerscylla","#673AB7"],["Chameleos","#9B59B6"],["Mizutsune","#D81B60"],["Duramboros","#6D4C41"],
     ["Amatsu","#FFFFFF"],["Kushala Daora","#BDC3C7"],["Ukanlos","#95A5A6"],["Nargacuga","#4A4A4A"],
   ];
 
