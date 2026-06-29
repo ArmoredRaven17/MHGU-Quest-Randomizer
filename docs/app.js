@@ -644,7 +644,7 @@
   $("helpClose").addEventListener("click", () => $("helpModal").classList.add("hidden"));
   $("helpModal").addEventListener("click", (e) => { if (e.target.id === "helpModal") $("helpModal").classList.add("hidden"); });
 
-  $("resetBtn").addEventListener("click", () => {
+  function doReset() {
     ["f_hyper","f_capture","f_egg","f_gathering","f_small","f_oneFaint","f_onSite","p_prowler","p_quests"].forEach(id => $(id).checked = false);
     $("f_spArts").checked = true;
     document.querySelectorAll("#weaponList input,#styleList input,#biasList input").forEach(i => i.checked = true);
@@ -654,7 +654,11 @@
     syncProwlerQuests();
     updateRollBtn();
     saveFilters();
-  });
+  }
+  $("resetBtn").addEventListener("click", () => $("resetConfirmModal").classList.remove("hidden"));
+  $("resetConfirmOk").addEventListener("click", () => { $("resetConfirmModal").classList.add("hidden"); doReset(); });
+  $("resetConfirmCancel").addEventListener("click", () => $("resetConfirmModal").classList.add("hidden"));
+  $("resetConfirmModal").addEventListener("click", (e) => { if (e.target.id === "resetConfirmModal") $("resetConfirmModal").classList.add("hidden"); });
 
   // ── Persist filter state (localStorage), like the theme ──────────────────
   const FILTER_KEY = "mhgu-filters";
