@@ -352,15 +352,6 @@ namespace MHGU_Quest_Randomizer
                 img.Source = new BitmapImage(new Uri(path));
         }
 
-        private static void SetBitmapIcon(BitmapIcon icon, string path, Color color)
-        {
-            if (File.Exists(path))
-            {
-                icon.UriSource = new Uri(path);
-                icon.Foreground = new SolidColorBrush(color);
-            }
-        }
-
         // ─── Populate monster tree ──────────────────────────────────────────────
 
         private void PopulateMonsterTree()
@@ -624,9 +615,7 @@ namespace MHGU_Quest_Randomizer
             bool hasStyle      = isArena || _stylePills.Any(p => p.Pill.IsChecked  == true);
             bool hasMonster    = monsterTreeView.SelectedNodes.Count > 0;
             bool biasOk        = prowlerPill.IsChecked != true
-                              || new[] { chrPill, fghtPill, proPill, assPill,
-                                         hlgPill, bmbPill, gthPill, bstPill }
-                                 .Any(p => p.IsChecked == true);
+                              || _biasPills.Any(p => p.Pill.IsChecked == true);
 
             submitButton.IsEnabled = hasQuestType && hasWeapon && hasStyle && hasMonster && biasOk;
         }
@@ -775,7 +764,7 @@ namespace MHGU_Quest_Randomizer
 
         // ─── Submit / Randomize ─────────────────────────────────────────────────
 
-        private async void SubmitButton_ClickAsync(object sender, RoutedEventArgs e)
+        private void SubmitButton_ClickAsync(object sender, RoutedEventArgs e)
         {
             if (questType.SelectedItem == null || questLevel.SelectedValue == null) return;
 
@@ -935,12 +924,7 @@ namespace MHGU_Quest_Randomizer
                 foreach (var (pill, name) in _weaponPills)
                     if (pill.IsChecked != true) excludedWeapons.Add(name);
 
-                var weapons = new List<string>
-                {
-                    "Great Sword","Long Sword","Sword & Shield","Dual Blades",
-                    "Hammer","Hunting Horn","Lance","Gunlance","Switch Axe",
-                    "Charge Blade","Insect Glaive","Light Bowgun","Heavy Bowgun","Bow"
-                };
+                var weapons = _allWeapons.ToList();
                 if (prowlerPill.IsChecked == true) weapons.Add("Prowler");
 
                 weapons.RemoveAll(w => excludedWeapons.Contains(w));
@@ -951,7 +935,7 @@ namespace MHGU_Quest_Randomizer
                 // Reroll weapon if the blacklist blocks every available style for it
                 if (_blacklist.Count > 0)
                 {
-                    var baseStyles = new List<string> { "Guild","Striker","Adept","Aerial","Valor","Alchemy" };
+                    var baseStyles = _allStyles.ToList();
                     foreach (var (pill, name) in _stylePills)
                         if (pill.IsChecked != true) baseStyles.Remove(name);
                     for (int t = 0; t < 50; t++)
@@ -993,14 +977,8 @@ namespace MHGU_Quest_Randomizer
                     ("Beast",      "FourthGen-Claw_Icon_Dark_Red.webp"),
                 };
 
-                if (chrPill.IsChecked  != true) biases.RemoveAll(b => b.Name == "Charisma");
-                if (fghtPill.IsChecked != true) biases.RemoveAll(b => b.Name == "Fighting");
-                if (proPill.IsChecked  != true) biases.RemoveAll(b => b.Name == "Protection");
-                if (assPill.IsChecked  != true) biases.RemoveAll(b => b.Name == "Assisting");
-                if (hlgPill.IsChecked  != true) biases.RemoveAll(b => b.Name == "Healing");
-                if (bmbPill.IsChecked  != true) biases.RemoveAll(b => b.Name == "Bombing");
-                if (gthPill.IsChecked  != true) biases.RemoveAll(b => b.Name == "Gathering");
-                if (bstPill.IsChecked  != true) biases.RemoveAll(b => b.Name == "Beast");
+                var excludedBiases = new HashSet<string>(_biasPills.Where(p => p.Pill.IsChecked != true).Select(p => p.Name));
+                biases.RemoveAll(b => excludedBiases.Contains(b.Name));
 
                 if (biases.Count == 0) biases.Add(("Charisma", "FourthGen-Palico_Icon_Blue.webp"));
 
@@ -1018,7 +996,7 @@ namespace MHGU_Quest_Randomizer
                 foreach (var (pill, name) in _stylePills)
                     if (pill.IsChecked != true) excludedStyles.Add(name);
 
-                var styles = new List<string> { "Guild","Striker","Adept","Aerial","Valor","Alchemy" };
+                var styles = _allStyles.ToList();
                 styles.RemoveAll(s => excludedStyles.Contains(s));
                 // Apply blacklist: remove styles paired with this weapon
                 var blStyles = new HashSet<string>(
@@ -1070,7 +1048,6 @@ namespace MHGU_Quest_Randomizer
                 hunterArt3.Text = MaybeSP(s3);
             }
 
-            await Task.CompletedTask;
         }
 
         // ─── Hunter art rolling ─────────────────────────────────────────────────
@@ -1330,14 +1307,7 @@ namespace MHGU_Quest_Randomizer
             prowlerQuestsPill.IsChecked = false;
 
             // Biases — all ON
-            chrPill.IsChecked  = true;
-            fghtPill.IsChecked = true;
-            proPill.IsChecked  = true;
-            assPill.IsChecked  = true;
-            hlgPill.IsChecked  = true;
-            bmbPill.IsChecked  = true;
-            gthPill.IsChecked  = true;
-            bstPill.IsChecked  = true;
+            foreach (var (pill, _) in _biasPills) pill.IsChecked = true;
 
             // Weapons — all ON
             foreach (var (pill, _) in _weaponPills)
@@ -1447,13 +1417,11 @@ namespace MHGU_Quest_Randomizer
             panel.Children.Add(scaleCombo);
 
             // ── Color ──────────────────────────────────────────────────────
-            var namedColors = _namedColors;
-
             var colorCombo = new ComboBox { Header = "Background Color", Width = 200 };
             ComboBoxItem? matchItem = null;
 
             string iconBase = AppContext.BaseDirectory;
-            foreach (var (name, color) in namedColors)
+            foreach (var (name, color) in _namedColors)
             {
                 var swatch = new Border
                 {

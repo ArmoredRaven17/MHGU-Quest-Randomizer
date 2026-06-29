@@ -266,7 +266,6 @@
   function setAllArts(v) { artLeaves.forEach(l => l.input.checked = v); refreshArtGroups(); saveFilters(); }
   (function buildArtTree() {
     const tree = $("artTree");
-    const baseName = (n) => n.replace(/ (III|II|I)$/, "");
     function leafEl(name) {
       const lbl = document.createElement("label"); lbl.className = "chk";
       lbl.innerHTML = `<input type="checkbox" checked>${escapeHtml(name)}`;
@@ -291,7 +290,7 @@
       return { wrap, input, kids };
     }
     const byW = {};
-    DATA.arts.forEach(a => { (byW[a.Weapon] = byW[a.Weapon] || {}); const b = baseName(a.HunterArtName); (byW[a.Weapon][b] = byW[a.Weapon][b] || []).push(a.HunterArtName); });
+    DATA.arts.forEach(a => { (byW[a.Weapon] = byW[a.Weapon] || {}); const b = artBase(a.HunterArtName); (byW[a.Weapon][b] = byW[a.Weapon][b] || []).push(a.HunterArtName); });
     const WPN_ORDER = ["Great Sword","Long Sword","Sword and Shield","Dual Blades","Hammer","Hunting Horn","Lance","Gunlance","Switch Axe","Charge Blade","Insect Glaive","Light Bowgun","Heavy Bowgun","Bow"];
     const weapons = Object.keys(byW).sort((x, y) => x === "All" ? -1 : y === "All" ? 1 : WPN_ORDER.indexOf(x) - WPN_ORDER.indexOf(y));
     for (const w of weapons) {
