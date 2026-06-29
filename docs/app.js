@@ -408,6 +408,7 @@
     $("placeholder").classList.add("hidden");
     $("result").classList.remove("hidden");
     $("r_name").textContent = quest.Name || "";
+    $("r_name").style.color = (type === "Special Permits" && / EX: /.test(quest.Name)) ? "#ff00ff" : "";
     $("r_main").textContent = quest.Main || "";
     $("r_capturePill").classList.toggle("hidden", !quest.Capture);
     $("r_hyperPill").classList.toggle("hidden", !quest.Hyper);
