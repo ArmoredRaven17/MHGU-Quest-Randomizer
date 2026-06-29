@@ -404,6 +404,20 @@
     renderResult(quest, type);
   }
 
+  function setWeaponStyle(el, name) {
+    const wHex = WEAPON_COLORS[name];
+    el.style.cssText = "";
+    if (wHex) {
+      el.style.color = document.documentElement.style.getPropertyValue("--text").trim() || "#fff";
+      el.style.background = wHex;
+      el.style.padding = "3px 14px";
+      el.style.borderRadius = "999px";
+      el.style.display = "inline-block";
+    } else {
+      el.style.color = "var(--text)";
+    }
+  }
+
   function renderResult(quest, type) {
     $("placeholder").classList.add("hidden");
     $("result").classList.remove("hidden");
@@ -429,7 +443,7 @@
       if (quest.ArenaBiases && quest.ArenaBiases.length) {
         const bias = pick(quest.ArenaBiases);
         $("r_weaponLabel").textContent = "Weapon";
-        w.textContent = "Prowler"; w.style.color = WEAPON_COLORS["Prowler"];
+        w.textContent = "Prowler"; setWeaponStyle(w, "Prowler");
         $("r_weaponIcon").classList.add("hidden");
         $("r_styleBlock").classList.remove("hidden");
         $("r_styleLabel").textContent = "Bias";
@@ -440,7 +454,7 @@
       } else if (quest.ArenaWeapons && quest.ArenaWeapons.length) {
         const weapon = pick(quest.ArenaWeapons);
         $("r_weaponLabel").textContent = "Weapon";
-        w.textContent = weapon; w.style.color = WEAPON_COLORS[weapon] || "var(--text)";
+        w.textContent = weapon; setWeaponStyle(w, weapon);
         const wi = $("r_weaponIcon");
         wi.classList.remove("hidden"); wi.src = weaponIcon(weapon);
         wi.onerror = () => { wi.onerror = null; wi.classList.add("hidden"); };
@@ -477,7 +491,7 @@
     }
     const wEl = $("r_weapon");
     wEl.textContent = weapon;
-    wEl.style.color = WEAPON_COLORS[weapon] || "var(--text)";
+    setWeaponStyle(wEl, weapon);
     const wIcon = $("r_weaponIcon");
     if (weapon === "Prowler") { wIcon.classList.add("hidden"); }
     else {
