@@ -524,6 +524,26 @@
     }
   }
 
+  $("copyResultBtn").addEventListener("click", () => {
+    const name   = $("r_name").textContent;
+    const weapon = $("r_weapon").textContent;
+    const styleHidden = $("r_styleBlock").classList.contains("hidden");
+    const styleLabel  = $("r_styleLabel").textContent;
+    const style       = $("r_style").textContent;
+    const artItems    = Array.from($("r_arts").children).map(li => li.textContent);
+
+    const lines = [`Quest: ${name}`, `Weapon: ${weapon}`];
+    if (!styleHidden) lines.push(`${styleLabel}: ${style}`);
+    if (artItems.length) lines.push(`Hunter Art(s): ${artItems.join(" / ")}`);
+
+    navigator.clipboard.writeText(lines.join("\n")).then(() => {
+      const btn = $("copyResultBtn");
+      const orig = btn.textContent;
+      btn.textContent = "Copied!";
+      setTimeout(() => { btn.textContent = orig; }, 1500);
+    });
+  });
+
   // ── Theme ────────────────────────────────────────────────────────────────
   const hexRgb = (h) => { h = h.replace("#",""); return [0,2,4].map(i => parseInt(h.substr(i,2),16)); };
   const clamp   = (n) => Math.max(0, Math.min(255, Math.round(n)));
