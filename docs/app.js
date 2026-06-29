@@ -124,7 +124,7 @@
     }
     return null;
   }
-  const maybeSP = (art) => !art ? "" : (Math.random() < 1/3 ? art + " [SP]" : art);
+  const maybeSP = (art) => !art ? "" : ($("f_spArts").checked && Math.random() < 1/3 ? art + " [SP]" : art);
 
   // ── DOM build: weapons / styles / biases ─────────────────────────────────
   function buildChecklist(container, items, idPrefix, withIcon) {
@@ -642,6 +642,7 @@
 
   $("resetBtn").addEventListener("click", () => {
     ["f_hyper","f_capture","f_egg","f_gathering","f_small","f_oneFaint","f_onSite","p_prowler","p_quests"].forEach(id => $(id).checked = false);
+    $("f_spArts").checked = true;
     document.querySelectorAll("#weaponList input,#styleList input,#biasList input").forEach(i => i.checked = true);
     setAllMonsters(true);
     setAllArts(true);
@@ -675,6 +676,7 @@
         hyper: $("f_hyper").checked, capture: $("f_capture").checked,
         egg: $("f_egg").checked, gathering: $("f_gathering").checked, small: $("f_small").checked,
         oneFaint: $("f_oneFaint").checked, onSite: $("f_onSite").checked,
+        spArts: $("f_spArts").checked,
         prowler: $("p_prowler").checked, pQuests: $("p_quests").checked,
       },
     };
@@ -693,6 +695,7 @@
       $("f_hyper").checked = !!d.t.hyper; $("f_capture").checked = !!d.t.capture;
       $("f_egg").checked = !!d.t.egg; $("f_gathering").checked = !!d.t.gathering; $("f_small").checked = !!d.t.small;
       $("f_oneFaint").checked = !!d.t.oneFaint; $("f_onSite").checked = !!d.t.onSite;
+      $("f_spArts").checked = d.t.spArts !== false;
       $("p_prowler").checked = !!d.t.prowler; $("p_quests").checked = !!d.t.pQuests;
     }
     if (Array.isArray(d.blacklist)) { blacklist = d.blacklist; renderBlacklist(); }

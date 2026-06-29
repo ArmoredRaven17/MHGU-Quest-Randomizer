@@ -53,6 +53,7 @@ namespace MHGU_Quest_Randomizer
             public bool SmMonsters { get; set; }
             public bool OneFaint { get; set; }
             public bool OnSite { get; set; }
+            public bool SpArts { get; set; } = true;
             public bool Prowler { get; set; }
             public bool ProwlerQuests { get; set; }
         }
@@ -255,6 +256,7 @@ namespace MHGU_Quest_Randomizer
             foreach (var (pill, _) in _biasPills)   Wire(pill, true);
             Wire(prowlerPill, true);
             foreach (var t in new[] { capturePill, hyperPill, eggPill, gatheringPill, smMonstersPill, oneFaintPill, onSitePill, prowlerQuestsPill }) Wire(t, false);
+            Wire(spArtsPill, true);
 
             // "Prowler Quests?" only makes sense when "Prowler?" is on — only Prowlers can
             // take Prowler quests. Disable + clear it whenever "Prowler?" is off.
@@ -1073,10 +1075,11 @@ namespace MHGU_Quest_Randomizer
 
         // ─── Hunter art rolling ─────────────────────────────────────────────────
 
-        private static string MaybeSP(string? art)
+        private string MaybeSP(string? art)
         {
             if (string.IsNullOrEmpty(art)) return "";
-            return Random.Shared.NextDouble() < 1.0 / 3.0 ? art + " [SP]" : art;
+            return spArtsPill.IsChecked == true && Random.Shared.NextDouble() < 1.0 / 3.0
+                ? art + " [SP]" : art;
         }
 
         // Strip a trailing level suffix (" I"/" II"/" III") so e.g. "Haste Rain I" and
@@ -1142,6 +1145,7 @@ namespace MHGU_Quest_Randomizer
                     SmMonsters = smMonstersPill.IsChecked == true,
                     OneFaint = oneFaintPill.IsChecked == true,
                     OnSite = onSitePill.IsChecked == true,
+                    SpArts = spArtsPill.IsChecked == true,
                     Prowler = prowlerPill.IsChecked == true,
                     ProwlerQuests = prowlerQuestsPill.IsChecked == true,
                 };
@@ -1194,6 +1198,7 @@ namespace MHGU_Quest_Randomizer
                 smMonstersPill.IsChecked = s.SmMonsters;
                 oneFaintPill.IsChecked   = s.OneFaint;
                 onSitePill.IsChecked     = s.OnSite;
+                spArtsPill.IsChecked     = s.SpArts;
                 prowlerPill.IsChecked    = s.Prowler;
                 prowlerQuestsPill.IsEnabled = s.Prowler;
                 prowlerQuestsPill.IsChecked = s.Prowler && s.ProwlerQuests;
@@ -1318,6 +1323,7 @@ namespace MHGU_Quest_Randomizer
             eggPill.IsChecked        = false;
             oneFaintPill.IsChecked   = false;
             onSitePill.IsChecked     = false;
+            spArtsPill.IsChecked     = true;
 
             // Prowler — OFF by default
             prowlerPill.IsChecked       = false;
