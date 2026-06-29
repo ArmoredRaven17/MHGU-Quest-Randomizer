@@ -369,6 +369,7 @@
     const f = {
       pQuests: $("p_quests").checked, hyper: $("f_hyper").checked, capture: $("f_capture").checked,
       egg: $("f_egg").checked, gathering: $("f_gathering").checked, small: $("f_small").checked,
+      oneFaint: $("f_oneFaint").checked, onSite: $("f_onSite").checked,
     };
 
     const pool = DATA.quests.filter(q => {
@@ -392,6 +393,11 @@
       // Hyper gate: most hyper quests are also large-monster quests (always included), so
       // without this they'd show regardless of the toggle. Hypers off → exclude hyper quests.
       if (q.Hyper && !f.hyper) return false;
+
+      // SP narrowing filters: if either is checked, quest must match at least one checked filter.
+      if (type === "Special Permits" && (f.oneFaint || f.onSite)) {
+        if (!((q.OneFaint && f.oneFaint) || (q.OnSite && f.onSite))) return false;
+      }
 
       if (q.LgMonster && q.Monster && anyFiltered && !inc.has(q.Monster.toLowerCase())) return false;
       return true;
@@ -603,7 +609,7 @@
   $("helpModal").addEventListener("click", (e) => { if (e.target.id === "helpModal") $("helpModal").classList.add("hidden"); });
 
   $("resetBtn").addEventListener("click", () => {
-    ["f_hyper","f_capture","f_egg","f_gathering","f_small","p_prowler","p_quests"].forEach(id => $(id).checked = false);
+    ["f_hyper","f_capture","f_egg","f_gathering","f_small","f_oneFaint","f_onSite","p_prowler","p_quests"].forEach(id => $(id).checked = false);
     document.querySelectorAll("#weaponList input,#styleList input,#biasList input").forEach(i => i.checked = true);
     setAllMonsters(true);
     setAllArts(true);
@@ -636,6 +642,7 @@
       t: {
         hyper: $("f_hyper").checked, capture: $("f_capture").checked,
         egg: $("f_egg").checked, gathering: $("f_gathering").checked, small: $("f_small").checked,
+        oneFaint: $("f_oneFaint").checked, onSite: $("f_onSite").checked,
         prowler: $("p_prowler").checked, pQuests: $("p_quests").checked,
       },
     };
@@ -653,6 +660,7 @@
     if (d.t) {
       $("f_hyper").checked = !!d.t.hyper; $("f_capture").checked = !!d.t.capture;
       $("f_egg").checked = !!d.t.egg; $("f_gathering").checked = !!d.t.gathering; $("f_small").checked = !!d.t.small;
+      $("f_oneFaint").checked = !!d.t.oneFaint; $("f_onSite").checked = !!d.t.onSite;
       $("p_prowler").checked = !!d.t.prowler; $("p_quests").checked = !!d.t.pQuests;
     }
     if (Array.isArray(d.blacklist)) { blacklist = d.blacklist; renderBlacklist(); }

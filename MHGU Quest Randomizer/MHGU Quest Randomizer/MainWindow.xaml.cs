@@ -51,6 +51,8 @@ namespace MHGU_Quest_Randomizer
             public bool Egg { get; set; }
             public bool Gathering { get; set; }
             public bool SmMonsters { get; set; }
+            public bool OneFaint { get; set; }
+            public bool OnSite { get; set; }
             public bool Prowler { get; set; }
             public bool ProwlerQuests { get; set; }
         }
@@ -159,6 +161,8 @@ namespace MHGU_Quest_Randomizer
             public int    Level     { get; set; }
             public bool   LgMonster { get; set; }
             public bool   Capture   { get; set; }
+            public bool   OnSite    { get; set; }
+            public bool   OneFaint  { get; set; }
             public bool   Prowler   { get; set; }
             public bool   Hyper     { get; set; }
             public bool   Egg       { get; set; }
@@ -250,7 +254,7 @@ namespace MHGU_Quest_Randomizer
             foreach (var (pill, _) in _stylePills)  Wire(pill, true);
             foreach (var (pill, _) in _biasPills)   Wire(pill, true);
             Wire(prowlerPill, true);
-            foreach (var t in new[] { capturePill, hyperPill, eggPill, gatheringPill, smMonstersPill, prowlerQuestsPill }) Wire(t, false);
+            foreach (var t in new[] { capturePill, hyperPill, eggPill, gatheringPill, smMonstersPill, oneFaintPill, onSitePill, prowlerQuestsPill }) Wire(t, false);
 
             // "Prowler Quests?" only makes sense when "Prowler?" is on — only Prowlers can
             // take Prowler quests. Disable + clear it whenever "Prowler?" is off.
@@ -827,6 +831,14 @@ namespace MHGU_Quest_Randomizer
                 // Hypers is off, exclude hyper quests entirely.
                 if (q.Hyper && hyperPill.IsChecked != true) continue;
 
+                // SP narrowing filters: if either is checked, quest must match at least one.
+                if (q.Type == "Special Permits" && (oneFaintPill.IsChecked == true || onSitePill.IsChecked == true))
+                {
+                    bool matches = (q.OneFaint && oneFaintPill.IsChecked == true)
+                                || (q.OnSite   && onSitePill.IsChecked   == true);
+                    if (!matches) continue;
+                }
+
                 if (q.LgMonster && !string.IsNullOrEmpty(q.Monster) && anyMonsterFiltered)
                 {
                     if (!includedMonsters.Contains(q.Monster)) continue;
@@ -1128,6 +1140,8 @@ namespace MHGU_Quest_Randomizer
                     Egg = eggPill.IsChecked == true,
                     Gathering = gatheringPill.IsChecked == true,
                     SmMonsters = smMonstersPill.IsChecked == true,
+                    OneFaint = oneFaintPill.IsChecked == true,
+                    OnSite = onSitePill.IsChecked == true,
                     Prowler = prowlerPill.IsChecked == true,
                     ProwlerQuests = prowlerQuestsPill.IsChecked == true,
                 };
@@ -1178,6 +1192,8 @@ namespace MHGU_Quest_Randomizer
                 eggPill.IsChecked        = s.Egg;
                 gatheringPill.IsChecked  = s.Gathering;
                 smMonstersPill.IsChecked = s.SmMonsters;
+                oneFaintPill.IsChecked   = s.OneFaint;
+                onSitePill.IsChecked     = s.OnSite;
                 prowlerPill.IsChecked    = s.Prowler;
                 prowlerQuestsPill.IsEnabled = s.Prowler;
                 prowlerQuestsPill.IsChecked = s.Prowler && s.ProwlerQuests;
@@ -1300,6 +1316,8 @@ namespace MHGU_Quest_Randomizer
             smMonstersPill.IsChecked = false;
             hyperPill.IsChecked      = false;
             eggPill.IsChecked        = false;
+            oneFaintPill.IsChecked   = false;
+            onSitePill.IsChecked     = false;
 
             // Prowler — OFF by default
             prowlerPill.IsChecked       = false;
