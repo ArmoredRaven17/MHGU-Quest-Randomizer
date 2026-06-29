@@ -426,6 +426,7 @@
     $("r_name").textContent = quest.Name || "";
     $("r_name").style.color = (type === "Special Permits" && / EX: /.test(quest.Name)) ? "#ff00ff" : "";
     $("r_main").textContent = quest.Main || "";
+    $("r_locale").textContent = quest.Locale || "—";
     $("r_capturePill").classList.toggle("hidden", !quest.Capture);
     $("r_hyperPill").classList.toggle("hidden", !quest.Hyper);
     $("r_hyperOverlay").classList.toggle("hidden", !quest.Hyper);
@@ -444,7 +445,6 @@
       $("r_arts").innerHTML = "";
       if (quest.ArenaBiases && quest.ArenaBiases.length) {
         const bias = pick(quest.ArenaBiases);
-        $("r_weaponLabel").textContent = "Weapon";
         w.textContent = "Prowler"; setWeaponStyle(w, "Prowler");
         $("r_weaponIcon").classList.add("hidden");
         $("r_styleBlock").classList.remove("hidden");
@@ -455,21 +455,18 @@
         else bi.classList.add("hidden");
       } else if (quest.ArenaWeapons && quest.ArenaWeapons.length) {
         const weapon = pick(quest.ArenaWeapons);
-        $("r_weaponLabel").textContent = "Weapon";
         w.textContent = weapon; setWeaponStyle(w, weapon);
         const wi = $("r_weaponIcon");
         wi.classList.remove("hidden"); wi.src = weaponIcon(weapon);
         wi.onerror = () => { wi.onerror = null; wi.classList.add("hidden"); };
         $("r_styleBlock").classList.add("hidden");
       } else {
-        $("r_weaponLabel").textContent = "Loadout";
         w.textContent = "Set " + (1 + rand(5)); w.style.color = "var(--text)";
         $("r_weaponIcon").classList.add("hidden");
         $("r_styleBlock").classList.add("hidden");
       }
       return;
     }
-    $("r_weaponLabel").textContent = "Weapon";
     $("r_styleBlock").classList.remove("hidden");
 
     // Weapon
@@ -548,7 +545,7 @@
     const style       = $("r_style").textContent;
     const artItems    = Array.from($("r_arts").children).map(li => li.textContent);
 
-    const lines = [`Quest: ${name}`, `Weapon: ${weapon}`];
+    const lines = [`Quest: ${name}`, `Locale: ${$("r_locale").textContent}`, `Weapon: ${weapon}`];
     if (!styleHidden) lines.push(`${styleLabel}: ${style}`);
     if (artItems.length) lines.push(`Hunter Art(s): ${artItems.join(" / ")}`);
 
