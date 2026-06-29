@@ -67,7 +67,7 @@
   // Theme colors named after MHGU monsters that evoke each hue. Label = monster (and its
   // icon filename); the hex values are unchanged so saved themes keep matching.
   const COLORS = [
-    ["Teostra","#701010"],["Rathalos","#C23D3D"],["Agnaktor","#FFA34D"],["Tigrex","#C49040"],
+    ["Teostra","#701010"],["Rathalos","#C23D3D"],["Agnaktor","#E84020"],["Tigrex","#C49040"],
     ["Rajang","#FFDD00"],["Najarala","#BBFF00"],["Deviljho","#217500"],["Rathian","#34CB34"],
     ["Zinogre","#1ABC9C"],["Lagiacrus","#0099FF"],["Brachydios","#1A3A6C"],["Gore Magala","#3E487E"],
     ["Nerscylla","#543091"],["Chameleos","#9C85B2"],["Mizutsune","#D86EA7"],["Duramboros","#987367"],
