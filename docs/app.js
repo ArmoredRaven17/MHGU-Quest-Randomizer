@@ -69,7 +69,7 @@
   const COLORS = [
     ["Teostra","#922B21"],["Rathalos","#E74C3C"],["Akantor","#E67E22"],["Tigrex","#F39C12"],
     ["Rajang","#F1C40F"],["Najarala","#CDDC39"],["Deviljho","#33691E"],["Rathian","#2ECC71"],
-    ["Zinogre","#1ABC9C"],["Lagiacrus","#3498DB"],["Brachydios","#2980B9"],["Gore Magala","#5C6BC0"],
+    ["Zinogre","#1ABC9C"],["Lagiacrus","#5DADE2"],["Brachydios","#1A3A6C"],["Gore Magala","#5C6BC0"],
     ["Nerscylla","#673AB7"],["Chameleos","#9B59B6"],["Mizutsune","#D81B60"],["Duramboros","#6D4C41"],
     ["Amatsu","#FFFFFF"],["Kushala Daora","#BDC3C7"],["Ukanlos","#95A5A6"],["Question Mark","#4A4A4A"],
   ];
@@ -534,8 +534,8 @@
   const css = (rgb) => `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
   function applyTheme(hex) {
     const c = hexRgb(hex), r = document.documentElement.style;
-    r.setProperty("--bg", css(darken(c,0.18)));
-    r.setProperty("--bg2", css(darken(c,0.13)));
+    r.setProperty("--bg", css(darken(c,0.92)));
+    r.setProperty("--bg2", css(darken(c,0.97)));
     r.setProperty("--hover", css(darken(c,0.24)));
     r.setProperty("--accent", css(lighten(c,0.20)));
     r.setProperty("--accent-hover", css(lighten(c,0.38)));
