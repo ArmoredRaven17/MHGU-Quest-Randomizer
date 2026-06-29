@@ -299,6 +299,9 @@ namespace MHGU_Quest_Randomizer
             InitPillColor();
             ApplyLoadedFilters();   // restore saved filter selections (theme handled by InitPillColor)
             SetAppIcon(baseDir);
+            // Title bar icon: match whichever theme color was loaded
+            string startName = _namedColors.FirstOrDefault(n => n.Value == _pillColor).Name ?? "Question Mark";
+            titleBarIcon.Source = LoadMonsterIcon(baseDir, startName);
         }
 
         // ─── Load icons into pill Image elements ────────────────────────────────
@@ -505,6 +508,20 @@ namespace MHGU_Quest_Randomizer
         };
         private static readonly string[] _allStyles =
             { "Guild","Striker","Adept","Aerial","Valor","Alchemy" };
+
+        private static readonly (string Name, Color Value)[] _namedColors =
+        {
+            ("Teostra",       Hex("#922B21")), ("Rathalos",      Hex("#E74C3C")),
+            ("Akantor",       Hex("#E67E22")), ("Tigrex",        Hex("#F39C12")),
+            ("Rajang",        Hex("#F1C40F")), ("Najarala",      Hex("#CDDC39")),
+            ("Deviljho",      Hex("#33691E")), ("Rathian",       Hex("#2ECC71")),
+            ("Zinogre",       Hex("#1ABC9C")), ("Lagiacrus",     Hex("#3498DB")),
+            ("Brachydios",    Hex("#2980B9")), ("Gore Magala",   Hex("#5C6BC0")),
+            ("Nerscylla",     Hex("#673AB7")), ("Chameleos",     Hex("#9B59B6")),
+            ("Mizutsune",     Hex("#D81B60")), ("Duramboros",    Hex("#6D4C41")),
+            ("Amatsu",        Hex("#FFFFFF")), ("Kushala Daora", Hex("#BDC3C7")),
+            ("Ukanlos",       Hex("#95A5A6")), ("Question Mark", Hex("#4A4A4A")),
+        };
 
         private static readonly Dictionary<string, string> _weaponAbbrev = new()
         {
@@ -1399,30 +1416,7 @@ namespace MHGU_Quest_Randomizer
             panel.Children.Add(scaleCombo);
 
             // ── Color ──────────────────────────────────────────────────────
-            // Named after MHGU monsters that evoke each hue (icon shown on each swatch).
-            var namedColors = new (string Name, Color Value)[]
-            {
-                ("Teostra",       Hex("#922B21")),
-                ("Rathalos",      Hex("#E74C3C")),
-                ("Akantor",       Hex("#E67E22")),
-                ("Tigrex",        Hex("#F39C12")),
-                ("Rajang",        Hex("#F1C40F")),
-                ("Najarala",      Hex("#CDDC39")),
-                ("Deviljho",      Hex("#33691E")),
-                ("Rathian",       Hex("#2ECC71")),
-                ("Zinogre",       Hex("#1ABC9C")),
-                ("Lagiacrus",     Hex("#3498DB")),
-                ("Brachydios",    Hex("#2980B9")),
-                ("Gore Magala",   Hex("#5C6BC0")),
-                ("Nerscylla",     Hex("#673AB7")),
-                ("Chameleos",     Hex("#9B59B6")),
-                ("Mizutsune",     Hex("#D81B60")),
-                ("Duramboros",    Hex("#6D4C41")),
-                ("Amatsu",        Hex("#FFFFFF")),
-                ("Kushala Daora", Hex("#BDC3C7")),
-                ("Ukanlos",       Hex("#95A5A6")),
-                ("Nargacuga",     Hex("#4A4A4A")),
-            };
+            var namedColors = _namedColors;
 
             var colorCombo = new ComboBox { Header = "Background Color", Width = 200 };
             ComboBoxItem? matchItem = null;
@@ -1480,6 +1474,8 @@ namespace MHGU_Quest_Randomizer
                 if (colorCombo.SelectedItem is ComboBoxItem ci && ci.Tag is Color chosenColor)
                 {
                     ApplyPillColor(chosenColor);
+                    string themeName = _namedColors.FirstOrDefault(n => n.Value == chosenColor).Name ?? "Question Mark";
+                    titleBarIcon.Source = LoadMonsterIcon(AppContext.BaseDirectory, themeName);
                     SaveSettings();
                 }
             }
