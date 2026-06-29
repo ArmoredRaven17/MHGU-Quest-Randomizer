@@ -46,6 +46,7 @@ namespace MHGU_Quest_Randomizer
             public List<string> ExMonsters { get; set; } = new();
             public List<string> ExArts     { get; set; } = new();
             public List<BlacklistEntry> Blacklist { get; set; } = new();
+            public bool Capture { get; set; }
             public bool Hyper { get; set; }
             public bool Egg { get; set; }
             public bool Gathering { get; set; }
@@ -157,6 +158,7 @@ namespace MHGU_Quest_Randomizer
             public string Monster   { get; set; } = "";
             public int    Level     { get; set; }
             public bool   LgMonster { get; set; }
+            public bool   Capture   { get; set; }
             public bool   Prowler   { get; set; }
             public bool   Hyper     { get; set; }
             public bool   Egg       { get; set; }
@@ -248,7 +250,7 @@ namespace MHGU_Quest_Randomizer
             foreach (var (pill, _) in _stylePills)  Wire(pill, true);
             foreach (var (pill, _) in _biasPills)   Wire(pill, true);
             Wire(prowlerPill, true);
-            foreach (var t in new[] { hyperPill, eggPill, gatheringPill, smMonstersPill, prowlerQuestsPill }) Wire(t, false);
+            foreach (var t in new[] { capturePill, hyperPill, eggPill, gatheringPill, smMonstersPill, prowlerQuestsPill }) Wire(t, false);
 
             // "Prowler Quests?" only makes sense when "Prowler?" is on — only Prowlers can
             // take Prowler quests. Disable + clear it whenever "Prowler?" is off.
@@ -810,7 +812,8 @@ namespace MHGU_Quest_Randomizer
                     if (q.Level < selectedFromLevel || q.Level > selectedLevel) continue;
                 }
 
-                bool include = q.LgMonster
+                bool include = (q.LgMonster && !q.Capture)
+                    || (q.Capture    && capturePill.IsChecked == true)
                     || (q.Prowler    && prowlerQuestsPill.IsChecked == true)
                     || (q.Hyper      && hyperPill.IsChecked == true)
                     || (q.Egg        && eggPill.IsChecked == true)
@@ -1119,6 +1122,7 @@ namespace MHGU_Quest_Randomizer
                     ExMonsters = CollectUncheckedMonsters(),
                     ExArts     = excArts.ToList(),
                     Blacklist  = _blacklist.ToList(),
+                    Capture = capturePill.IsChecked == true,
                     Hyper = hyperPill.IsChecked == true,
                     Egg = eggPill.IsChecked == true,
                     Gathering = gatheringPill.IsChecked == true,
@@ -1168,6 +1172,7 @@ namespace MHGU_Quest_Randomizer
                 ApplyPills(_stylePills,  s.ExStyles);
                 ApplyPills(_biasPills,   s.ExBiases);
 
+                capturePill.IsChecked    = s.Capture;
                 hyperPill.IsChecked      = s.Hyper;
                 eggPill.IsChecked        = s.Egg;
                 gatheringPill.IsChecked  = s.Gathering;
@@ -1289,6 +1294,7 @@ namespace MHGU_Quest_Randomizer
         private void ResetFilters_Click(object sender, RoutedEventArgs e)
         {
             // Quest filters — all OFF by default
+            capturePill.IsChecked    = false;
             gatheringPill.IsChecked  = false;
             smMonstersPill.IsChecked = false;
             hyperPill.IsChecked      = false;
@@ -1358,7 +1364,7 @@ namespace MHGU_Quest_Randomizer
             }
 
             Step("1. Pick a quest type & level.", "Choose a Quest Type, then the From / Up to Level range. (Arena uses a single All / Normal / Challenge picker instead of a range.)");
-            Step("2. Narrow the pool with the filters.", "Quest Filters add categories (large-monster quests are always in; check Hypers / Egg Delivery / Gathering / Small Monsters). Monsters, Weapons and Styles: uncheck to exclude. Hunter Arts: uncheck by weapon, named art, or level. Restrictions: add weapon + style combos that will never be rolled together. Prowler: enable to allow Palico loadouts and Prowler-only quests, with biases for the roll.");
+            Step("2. Narrow the pool with the filters.", "Quest Filters add categories (large-monster hunt quests are always in; check Capture / Hypers / Egg Delivery / Gathering / Small Monsters). Monsters, Weapons and Styles: uncheck to exclude. Hunter Arts: uncheck by weapon, named art, or level. Restrictions: add weapon + style combos that will never be rolled together. Prowler: enable to allow Palico loadouts and Prowler-only quests, with biases for the roll.");
             Step("3. Press Randomize!", "You get a quest plus a weapon, style, and Hunter Arts. Arena quests show which preset Set to bring; Prowler quests give a bias; Hyper quests show a yellow Hyper badge.");
             panel.Children.Add(new TextBlock
             {

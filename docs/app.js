@@ -367,7 +367,7 @@
     const anyFiltered = inc.size < DATA.monsters.length;
 
     const f = {
-      pQuests: $("p_quests").checked, hyper: $("f_hyper").checked,
+      pQuests: $("p_quests").checked, hyper: $("f_hyper").checked, capture: $("f_capture").checked,
       egg: $("f_egg").checked, gathering: $("f_gathering").checked, small: $("f_small").checked,
     };
 
@@ -383,7 +383,8 @@
         if (q.Level < fromLv || q.Level > toLv) return false;
       }
 
-      const include = q.LgMonster
+      const include = (q.LgMonster && !q.Capture)
+        || (q.Capture && f.capture)
         || (q.Prowler && f.pQuests) || (q.Hyper && f.hyper)
         || (q.Egg && f.egg) || (q.Gathering && f.gathering) || (q.SmMonsters && f.small);
       if (!include) return false;
@@ -601,7 +602,7 @@
   $("helpModal").addEventListener("click", (e) => { if (e.target.id === "helpModal") $("helpModal").classList.add("hidden"); });
 
   $("resetBtn").addEventListener("click", () => {
-    ["f_hyper","f_egg","f_gathering","f_small","p_prowler","p_quests"].forEach(id => $(id).checked = false);
+    ["f_hyper","f_capture","f_egg","f_gathering","f_small","p_prowler","p_quests"].forEach(id => $(id).checked = false);
     document.querySelectorAll("#weaponList input,#styleList input,#biasList input").forEach(i => i.checked = true);
     setAllMonsters(true);
     setAllArts(true);
@@ -632,8 +633,8 @@
       arts: artLeaves.filter(l => !l.input.checked).map(l => l.name),
       blacklist: blacklist.slice(),
       t: {
-        hyper: $("f_hyper").checked, egg: $("f_egg").checked,
-        gathering: $("f_gathering").checked, small: $("f_small").checked,
+        hyper: $("f_hyper").checked, capture: $("f_capture").checked,
+        egg: $("f_egg").checked, gathering: $("f_gathering").checked, small: $("f_small").checked,
         prowler: $("p_prowler").checked, pQuests: $("p_quests").checked,
       },
     };
@@ -649,8 +650,8 @@
     const ms = new Set(d.monsters || []); monsterChecks.forEach(m => { if (ms.has(m.name)) m.input.checked = false; });
     const as = new Set(d.arts || []);     artLeaves.forEach(l => { if (as.has(l.name)) l.input.checked = false; });
     if (d.t) {
-      $("f_hyper").checked = !!d.t.hyper; $("f_egg").checked = !!d.t.egg;
-      $("f_gathering").checked = !!d.t.gathering; $("f_small").checked = !!d.t.small;
+      $("f_hyper").checked = !!d.t.hyper; $("f_capture").checked = !!d.t.capture;
+      $("f_egg").checked = !!d.t.egg; $("f_gathering").checked = !!d.t.gathering; $("f_small").checked = !!d.t.small;
       $("p_prowler").checked = !!d.t.prowler; $("p_quests").checked = !!d.t.pQuests;
     }
     if (Array.isArray(d.blacklist)) { blacklist = d.blacklist; renderBlacklist(); }
