@@ -548,6 +548,7 @@
   const darken  = (rgb, f) => { const [h,s,l] = rgbToHsl(rgb); return hslToRgb([h, s, clamp01(l*f)]); };
   const lighten = (rgb, b) => { const [h,s,l] = rgbToHsl(rgb); return hslToRgb([h, s, clamp01(l+(1-l)*b)]); };
   const css = (rgb) => `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
+  const QM_BG = css(darken(hexRgb("#4A4A4A"), 0.45)); // fixed neutral main bg
   function applyTheme(hex) {
     const c = hexRgb(hex), r = document.documentElement.style;
     const bright = c[0]*0.299 + c[1]*0.587 + c[2]*0.114;
@@ -559,7 +560,7 @@
       r.setProperty("--accent",      css(darken(c,0.70)));
       r.setProperty("--accent-hover",css(darken(c,0.78)));
     } else {
-      r.setProperty("--bg",          css(darken(c,0.45)));
+      r.setProperty("--bg",          QM_BG);
       r.setProperty("--bg2",         css(darken(c,0.40)));
       r.setProperty("--hover",       css(darken(c,0.30)));
       r.setProperty("--accent",      css(darken(lighten(c,0.25),0.81)));
