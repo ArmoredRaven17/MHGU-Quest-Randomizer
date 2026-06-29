@@ -534,11 +534,11 @@
   const css = (rgb) => `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
   function applyTheme(hex) {
     const c = hexRgb(hex), r = document.documentElement.style;
-    r.setProperty("--bg",          css(c));
-    r.setProperty("--bg2",         css(darken(c,0.80)));
-    r.setProperty("--hover",       css(darken(c,0.70)));
-    r.setProperty("--accent",      css(lighten(c,0.35)));
-    r.setProperty("--accent-hover",css(lighten(c,0.50)));
+    r.setProperty("--bg",          css(darken(c,0.68)));       // swapped (was bg2=0.80), ×0.85
+    r.setProperty("--bg2",         css(darken(c,0.85)));       // swapped (was bg=1.00), ×0.85
+    r.setProperty("--hover",       css(darken(c,0.60)));       // 0.70 × 0.85
+    r.setProperty("--accent",      css(darken(lighten(c,0.35),0.85)));
+    r.setProperty("--accent-hover",css(darken(lighten(c,0.50),0.85)));
     try { localStorage.setItem("mhgu-theme", hex); } catch (e) {}
     document.querySelectorAll(".swatch").forEach(s => s.classList.toggle("sel", s.dataset.hex === hex));
     const titleIcon = document.querySelector(".title-icon");
