@@ -589,7 +589,7 @@
     r.setProperty("--text",     isLight ? "#111111" : "#f3f3f3");
     r.setProperty("--text-dim", isLight ? "#444444" : "#b8b8b8");
     r.setProperty("--line",     isLight ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.12)");
-    r.setProperty("--card",     isLight ? "rgba(0,0,0,0.05)" : "rgba(255,255,255,0.05)");
+    r.setProperty("--card",     isLight ? "rgba(0,0,0,0.12)" : "rgba(255,255,255,0.05)");
     try { localStorage.setItem("mhgu-theme", hex); } catch (e) {}
     document.querySelectorAll(".swatch").forEach(s => s.classList.toggle("sel", s.dataset.hex === hex));
     const titleIcon = document.querySelector(".title-icon");
