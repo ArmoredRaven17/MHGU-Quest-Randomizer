@@ -67,11 +67,11 @@
   // Theme colors named after MHGU monsters that evoke each hue. Label = monster (and its
   // icon filename); the hex values are unchanged so saved themes keep matching.
   const COLORS = [
-    ["Teostra","#922B21"],["Rathalos","#E74C3C"],["Akantor","#E67E22"],["Tigrex","#F39C12"],
+    ["Teostra","#922B21"],["Rathalos","#E74C3C"],["Agnaktor","#E67E22"],["Tigrex","#F39C12"],
     ["Rajang","#F1C40F"],["Najarala","#CDDC39"],["Deviljho","#33691E"],["Rathian","#2ECC71"],
     ["Zinogre","#1ABC9C"],["Lagiacrus","#5DADE2"],["Brachydios","#1A3A6C"],["Gore Magala","#5C6BC0"],
     ["Nerscylla","#673AB7"],["Chameleos","#9B59B6"],["Mizutsune","#D81B60"],["Duramboros","#6D4C41"],
-    ["Amatsu","#FFFFFF"],["Kushala Daora","#BDC3C7"],["Ukanlos","#95A5A6"],["Question Mark","#4A4A4A"],
+    ["Khezu","#FFFFFF"],["Kushala Daora","#BDC3C7"],["Basarios","#95A5A6"],["Question Mark","#4A4A4A"],
   ];
   const COLORS_HEX = Object.fromEntries(COLORS.map(([name, hex]) => [hex.toUpperCase(), name]));
 
@@ -534,11 +534,17 @@
   const css = (rgb) => `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
   function applyTheme(hex) {
     const c = hexRgb(hex), r = document.documentElement.style;
-    r.setProperty("--bg",          css(darken(c,0.68)));       // swapped (was bg2=0.80), ×0.85
-    r.setProperty("--bg2",         css(darken(c,0.85)));       // swapped (was bg=1.00), ×0.85
-    r.setProperty("--hover",       css(darken(c,0.60)));       // 0.70 × 0.85
-    r.setProperty("--accent",      css(darken(lighten(c,0.35),0.85)));
-    r.setProperty("--accent-hover",css(darken(lighten(c,0.50),0.85)));
+    r.setProperty("--bg",          css(darken(c,0.72)));
+    r.setProperty("--bg2",         css(darken(c,0.90)));
+    r.setProperty("--hover",       css(darken(c,0.63)));
+    r.setProperty("--accent",      css(darken(lighten(c,0.35),0.90)));
+    r.setProperty("--accent-hover",css(darken(lighten(c,0.50),0.90)));
+    const bright = c[0]*0.299 + c[1]*0.587 + c[2]*0.114;
+    const isLight = bright > 170;
+    r.setProperty("--text",     isLight ? "#111111" : "#f3f3f3");
+    r.setProperty("--text-dim", isLight ? "#444444" : "#b8b8b8");
+    r.setProperty("--line",     isLight ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.12)");
+    r.setProperty("--card",     isLight ? "rgba(0,0,0,0.05)" : "rgba(255,255,255,0.05)");
     try { localStorage.setItem("mhgu-theme", hex); } catch (e) {}
     document.querySelectorAll(".swatch").forEach(s => s.classList.toggle("sel", s.dataset.hex === hex));
     const titleIcon = document.querySelector(".title-icon");
