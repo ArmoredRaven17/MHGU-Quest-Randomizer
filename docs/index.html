@@ -7,7 +7,7 @@
 <title>MHGU Quest Randomizer</title>
 <link rel="icon" href="assets/MonsterIcons/MHGU-Question_Mark_Icon.webp">
 <!-- Bump ?v= on any styles/app/data change so browsers fetch fresh copies (no hard-refresh needed) -->
-<link rel="stylesheet" href="styles.css?v=21">
+<link rel="stylesheet" href="styles.css?v=22">
 </head>
 <body>
 <div id="app">
@@ -16,6 +16,7 @@
     <img class="title-icon" src="assets/MonsterIcons/MHGU-Question_Mark_Icon.webp" alt="">
     <h1>MHGU Quest Randomizer</h1>
     <button id="helpBtn" class="icon-btn" title="Help" aria-label="Help">?</button>
+    <button id="statsBtn" class="icon-btn" title="Possible Combinations" aria-label="Possible Combinations">&#8721;</button>
     <button id="aboutBtn" class="icon-btn" title="About / Attributions" aria-label="About">&#9432;</button>
     <button id="themeBtn" class="icon-btn" title="Theme" aria-label="Theme">&#9881;</button>
   </header>
@@ -185,6 +186,50 @@
   </div>
 </div>
 
+<!-- Combinations dialog -->
+<div id="statsModal" class="modal hidden">
+  <div class="modal-card">
+    <h2>Possible Combinations</h2>
+    <p><strong>Art pool per weapon:</strong> 10 "All" arts (no levels) + 4 weapon-specific bases × 3 levels = 22 entries</p>
+    <table class="math-table">
+      <thead><tr><th>Style</th><th>Slots</th></tr></thead>
+      <tbody>
+        <tr><td>Adept, Aerial, Valor</td><td>1</td></tr>
+        <tr><td>Guild</td><td>2</td></tr>
+        <tr><td>Striker, Alchemy</td><td>3</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Art combinations</strong> (unordered, no shared base, ×2 per art for [SP]):</p>
+    <table class="math-table">
+      <tbody>
+        <tr><td>1 slot</td><td>22 × 2</td><td>= 44</td></tr>
+        <tr><td>2 slots</td><td>(C(22,2) − 12) × 4</td><td>= 876</td></tr>
+        <tr><td>3 slots</td><td>(C(22,3) − 232) × 8</td><td>= 10,464</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Per weapon</strong> across 6 styles:</p>
+    <table class="math-table">
+      <tbody>
+        <tr><td>3 × 44</td><td>= 132</td><td class="muted">Adept, Aerial, Valor</td></tr>
+        <tr><td>1 × 876</td><td>= 876</td><td class="muted">Guild</td></tr>
+        <tr><td>2 × 10,464</td><td>= 20,928</td><td class="muted">Striker, Alchemy</td></tr>
+        <tr><td><strong>Total</strong></td><td><strong>21,936</strong></td><td></td></tr>
+      </tbody>
+    </table>
+    <p><strong>Grand total:</strong></p>
+    <table class="math-table">
+      <tbody>
+        <tr><td>14 weapons × 21,936</td><td>= 307,104</td></tr>
+        <tr><td>Prowler (8 biases, no arts)</td><td>= 8</td></tr>
+        <tr><td><strong>Total</strong></td><td><strong>307,112</strong></td></tr>
+      </tbody>
+    </table>
+    <div class="row end gap">
+      <button id="statsClose" class="btn">Close</button>
+    </div>
+  </div>
+</div>
+
 <!-- About / Attributions dialog -->
 <div id="aboutModal" class="modal hidden">
   <div class="modal-card">
@@ -212,6 +257,6 @@
 </div>
 
 <script src="data.js?v=21"></script>
-<script src="app.js?v=30"></script>
+<script src="app.js?v=31"></script>
 </body>
 </html>
