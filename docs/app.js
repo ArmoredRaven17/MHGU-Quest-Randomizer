@@ -71,8 +71,9 @@
     ["Rajang","#F1C40F"],["Najarala","#CDDC39"],["Deviljho","#33691E"],["Rathian","#2ECC71"],
     ["Zinogre","#1ABC9C"],["Lagiacrus","#3498DB"],["Brachydios","#2980B9"],["Gore Magala","#5C6BC0"],
     ["Nerscylla","#673AB7"],["Chameleos","#9B59B6"],["Mizutsune","#D81B60"],["Duramboros","#6D4C41"],
-    ["Amatsu","#FFFFFF"],["Kushala Daora","#BDC3C7"],["Ukanlos","#95A5A6"],["Nargacuga","#4A4A4A"],
+    ["Amatsu","#FFFFFF"],["Kushala Daora","#BDC3C7"],["Ukanlos","#95A5A6"],["Question Mark","#4A4A4A"],
   ];
+  const COLORS_HEX = Object.fromEntries(COLORS.map(([name, hex]) => [hex.toUpperCase(), name]));
 
   // ── Icon path helpers ────────────────────────────────────────────────────
   const monsterIcon = (name) => name
@@ -532,6 +533,11 @@
     r.setProperty("--accent-hover", css(lighten(c,0.38)));
     try { localStorage.setItem("mhgu-theme", hex); } catch (e) {}
     document.querySelectorAll(".swatch").forEach(s => s.classList.toggle("sel", s.dataset.hex === hex));
+    const titleIcon = document.querySelector(".title-icon");
+    if (titleIcon) {
+      const name = COLORS_HEX[hex.toUpperCase()];
+      titleIcon.src = name ? monsterIcon(name) : FALLBACK_ICON;
+    }
   }
   (function buildSwatches() {
     const wrap = $("swatches");
