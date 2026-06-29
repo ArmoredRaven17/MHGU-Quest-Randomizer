@@ -71,9 +71,11 @@
     ["Rajang","#FFDD00"],["Najarala","#BBFF00"],["Deviljho","#217500"],["Rathian","#34CB34"],
     ["Zinogre","#1ABC9C"],["Lagiacrus","#0099FF"],["Brachydios","#1A3A6C"],["Gore Magala","#3E487E"],
     ["Nerscylla","#543091"],["Chameleos","#9C85B2"],["Mizutsune","#D86EA7"],["Duramboros","#987367"],
-    ["Khezu","#FFFFFF"],["Kushala Daora","#BDC3C7"],["Basarios","#95A5A6"],["Question Mark","#4A4A4A"],
+    ["Khezu","#FFFFFF"],["K. Daora","#BDC3C7","Kushala Daora"],["Basarios","#95A5A6"],["Forbidden","#4A4A4A","Question Mark"],
   ];
   const COLORS_HEX = Object.fromEntries(COLORS.map(([name, hex]) => [hex.toUpperCase(), name]));
+  // Display name → icon name override (for swatches with shortened labels)
+  const COLORS_ICON = Object.fromEntries(COLORS.filter(c => c[2]).map(([name,,icon]) => [name, icon]));
 
   // ── Icon path helpers ────────────────────────────────────────────────────
   const monsterIcon = (name) => name
@@ -609,7 +611,7 @@
     const titleIcon = document.querySelector(".title-icon");
     if (titleIcon) {
       const name = COLORS_HEX[hex.toUpperCase()];
-      titleIcon.src = name ? monsterIcon(name) : FALLBACK_ICON;
+      titleIcon.src = name ? monsterIcon(COLORS_ICON[name] || name) : FALLBACK_ICON;
     }
   }
   (function buildSwatches() {
@@ -618,7 +620,7 @@
       const d = document.createElement("div");
       d.className = "swatch"; d.dataset.hex = hex; d.style.background = hex;
       d.title = name;
-      d.innerHTML = `<img class="swatch-icon" src="${monsterIcon(name)}" alt=""><span>${name}</span>`;
+      d.innerHTML = `<img class="swatch-icon" src="${monsterIcon(COLORS_ICON[name] || name)}" alt=""><span>${name}</span>`;
       d.addEventListener("click", () => applyTheme(hex));
       wrap.appendChild(d);
     });
