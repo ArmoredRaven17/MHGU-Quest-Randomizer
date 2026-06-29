@@ -518,15 +518,15 @@ namespace MHGU_Quest_Randomizer
         private static readonly (string Name, Color Value)[] _namedColors =
         {
             ("Teostra",       Hex("#922B21")), ("Rathalos",      Hex("#E74C3C")),
-            ("Akantor",       Hex("#E67E22")), ("Tigrex",        Hex("#F39C12")),
+            ("Agnaktor",      Hex("#E67E22")), ("Tigrex",        Hex("#F39C12")),
             ("Rajang",        Hex("#F1C40F")), ("Najarala",      Hex("#CDDC39")),
             ("Deviljho",      Hex("#33691E")), ("Rathian",       Hex("#2ECC71")),
             ("Zinogre",       Hex("#1ABC9C")), ("Lagiacrus",     Hex("#5DADE2")),
             ("Brachydios",    Hex("#1A3A6C")), ("Gore Magala",   Hex("#5C6BC0")),
             ("Nerscylla",     Hex("#673AB7")), ("Chameleos",     Hex("#9B59B6")),
             ("Mizutsune",     Hex("#D81B60")), ("Duramboros",    Hex("#6D4C41")),
-            ("Amatsu",        Hex("#FFFFFF")), ("Kushala Daora", Hex("#BDC3C7")),
-            ("Ukanlos",       Hex("#95A5A6")), ("Question Mark", Hex("#4A4A4A")),
+            ("Khezu",         Hex("#FFFFFF")), ("Kushala Daora", Hex("#BDC3C7")),
+            ("Basarios",      Hex("#95A5A6")), ("Question Mark", Hex("#4A4A4A")),
         };
 
         private static readonly Dictionary<string, string> _weaponAbbrev = new()
