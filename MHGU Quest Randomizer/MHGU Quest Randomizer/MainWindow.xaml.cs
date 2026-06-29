@@ -506,9 +506,19 @@ namespace MHGU_Quest_Randomizer
         private static readonly string[] _allStyles =
             { "Guild","Striker","Adept","Aerial","Valor","Alchemy" };
 
+        private static readonly Dictionary<string, string> _weaponAbbrev = new()
+        {
+            ["Great Sword"] = "GS",      ["Long Sword"]   = "LS",     ["Sword & Shield"] = "SnS",
+            ["Dual Blades"] = "DB",      ["Hammer"]       = "Hammer", ["Hunting Horn"]   = "HH",
+            ["Lance"]       = "Lance",   ["Gunlance"]     = "GL",     ["Switch Axe"]     = "SA",
+            ["Charge Blade"] = "CB",     ["Insect Glaive"] = "IG",    ["Light Bowgun"]   = "LBG",
+            ["Heavy Bowgun"] = "HBG",    ["Bow"]          = "Bow",
+        };
+
         private void InitBlacklistCombos()
         {
-            foreach (var w in _allWeapons) blWeaponCombo.Items.Add(w);
+            foreach (var w in _allWeapons)
+                blWeaponCombo.Items.Add(new ComboBoxItem { Content = _weaponAbbrev.GetValueOrDefault(w, w), Tag = w });
             foreach (var s in _allStyles)  blStyleCombo.Items.Add(s);
             blWeaponCombo.SelectedIndex = 0;
             blStyleCombo.SelectedIndex  = 0;
@@ -517,7 +527,8 @@ namespace MHGU_Quest_Randomizer
 
         private void BlacklistAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (blWeaponCombo.SelectedItem is not string w || blStyleCombo.SelectedItem is not string s) return;
+            if (blWeaponCombo.SelectedItem is not ComboBoxItem wItem || blStyleCombo.SelectedItem is not string s) return;
+            var w = (string)wItem.Tag;
             if (_blacklist.Any(b => b.Weapon.Equals(w, StringComparison.OrdinalIgnoreCase)
                                  && b.Style.Equals(s, StringComparison.OrdinalIgnoreCase))) return;
             _blacklist.Add(new BlacklistEntry { Weapon = w, Style = s });
@@ -547,7 +558,7 @@ namespace MHGU_Quest_Randomizer
                 row.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
                 var label = new TextBlock
                 {
-                    Text = $"{entry.Weapon} + {entry.Style}",
+                    Text = $"{_weaponAbbrev.GetValueOrDefault(entry.Weapon, entry.Weapon)} + {entry.Style}",
                     VerticalAlignment = VerticalAlignment.Center,
                     TextTrimming = TextTrimming.CharacterEllipsis,
                     FontSize = 12,
