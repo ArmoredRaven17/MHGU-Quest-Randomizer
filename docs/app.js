@@ -429,6 +429,7 @@
     $("r_locale").textContent = quest.Locale || "—";
     $("r_capturePill").classList.toggle("hidden", !quest.Capture);
     $("r_hyperPill").classList.toggle("hidden", !quest.Hyper);
+    $("r_prowlerPill").classList.toggle("hidden", !quest.Prowler);
     $("r_hyperOverlay").classList.toggle("hidden", !quest.Hyper);
 
     const iconMonster = (type === "Special Permits" && quest.Name)

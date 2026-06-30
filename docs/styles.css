@@ -50,7 +50,7 @@ body{
 .btn:hover{background:#ffffff24}
 .btn.block{width:100%}
 .btn.tiny{padding:3px 10px;font-size:12px}
-.btn.accent{background:var(--accent);border-color:var(--accent);color:var(--text);font-weight:600;text-shadow:-1px 0 rgba(0,0,0,0.55),1px 0 rgba(0,0,0,0.55),0 -1px rgba(0,0,0,0.55),0 1px rgba(0,0,0,0.55)}
+.btn.accent{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600;text-shadow:-1px 0 rgba(0,0,0,0.55),1px 0 rgba(0,0,0,0.55),0 -1px rgba(0,0,0,0.55),0 1px rgba(0,0,0,0.55)}
 .btn.accent:hover{background:var(--accent-hover);border-color:var(--accent-hover)}
 .btn.accent:disabled{opacity:.45;cursor:not-allowed}
 
@@ -127,6 +127,7 @@ body{
 }
 .r-name{font-size:2.8cqi;font-weight:700;color:#4D391F;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hyper-pill{background:#f5b400;color:#fff;font-size:2.4cqi;font-weight:700;padding:1px 7px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;text-shadow:0 1px 1px rgba(0,0,0,.35);flex-shrink:0}
+.prowler-pill{background:#7a4a1e;color:#fff;font-size:2.4cqi;font-weight:700;padding:1px 7px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;text-shadow:0 1px 1px rgba(0,0,0,.35);flex-shrink:0}
 .capture-pill{background:#4a4a4a;color:#fff;font-size:2.4cqi;font-weight:700;padding:1px 7px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;text-shadow:0 1px 1px rgba(0,0,0,.35);flex-shrink:0}
 /* Monster icon in the upper content area, over the dark square */
 .rc-icon{position:absolute;top:30%;left:43%;width:13%}

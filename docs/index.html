@@ -7,7 +7,7 @@
 <title>MHGU Quest Randomizer</title>
 <link rel="icon" href="assets/MonsterIcons/MHGU-Question_Mark_Icon.webp">
 <!-- Bump ?v= on any styles/app/data change so browsers fetch fresh copies (no hard-refresh needed) -->
-<link rel="stylesheet" href="styles.css?v=67">
+<link rel="stylesheet" href="styles.css?v=69">
 </head>
 <body>
 <div id="app">
@@ -132,6 +132,7 @@
             <span id="r_name" class="r-name"></span>
             <span id="r_capturePill" class="capture-pill hidden">Capture</span>
             <span id="r_hyperPill" class="hyper-pill hidden">Hyper</span>
+            <span id="r_prowlerPill" class="prowler-pill hidden">Prowler</span>
           </div>
           <div class="rc-locale">
             <div id="r_locale" class="r-locale-val"></div>
@@ -179,7 +180,7 @@
       <li><strong>Restrictions</strong> — add weapon + style combos that will never be rolled together (e.g. Bow + Aerial).</li>
       <li><strong>Prowler</strong> — turn on "Prowler?" to allow Palico loadouts, "Prowler Quests?" to include Prowler-only quests; the biases apply when a Prowler is rolled.</li>
     </ul>
-    <p><strong>3. Hit Randomize.</strong> You get a quest plus a weapon, style, and Hunter Arts. Arena quests show which preset Set to bring; Prowler quests give a bias instead; a <span class="capture-pill" style="position:static">Capture</span> badge marks capture quests and a yellow <span class="hyper-pill" style="position:static">Hyper</span> badge marks Hyper quests.</p>
+    <p><strong>3. Hit Randomize.</strong> You get a quest plus a weapon, style, and Hunter Arts. Arena quests show which preset Set to bring; Prowler quests give a bias instead; a <span class="capture-pill" style="position:static;font-size:11px">Capture</span> badge marks capture quests, a yellow <span class="hyper-pill" style="position:static;font-size:11px">Hyper</span> badge marks Hyper quests, and a brown <span class="prowler-pill" style="position:static;font-size:11px">Prowler</span> badge marks Prowler quests.</p>
     <p class="muted">Your filters and color theme are saved between visits. Use Reset Filters to start over.</p>
     <div class="row end gap">
       <button id="helpClose" class="btn">Close</button>
@@ -271,6 +272,6 @@
 </div>
 
 <script src="data.js?v=24"></script>
-<script src="app.js?v=56"></script>
+<script src="app.js?v=57"></script>
 </body>
 </html>
