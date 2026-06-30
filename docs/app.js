@@ -574,16 +574,24 @@
       styleEl.textContent = style;
 
       const excl = excludedArts();
-      let picks = [];
-      if (style === "Striker" || style === "Alchemy") {
+      let spPicks = [];
+      if (style === "Alchemy") {
         const a = rollArt(weapon, null, null, excl), b = rollArt(weapon, a, null, excl), c = rollArt(weapon, a, b, excl);
-        picks = [a, b, c];
+        spPicks = [a, b, c].map(maybeSP);
+      } else if (style === "Striker") {
+        const a = rollArt(weapon, null, null, excl), b = rollArt(weapon, a, null, excl), c = rollArt(weapon, a, b, excl);
+        const aSP = maybeSP(a);
+        const bSP = aSP.endsWith(" SP") ? b : maybeSP(b);
+        const cSP = (aSP.endsWith(" SP") || (bSP && bSP.endsWith(" SP"))) ? c : maybeSP(c);
+        spPicks = [aSP, bSP, cSP];
       } else if (style === "Guild") {
-        const a = rollArt(weapon, null, null, excl); picks = [a, rollArt(weapon, a, null, excl)];
+        const a = rollArt(weapon, null, null, excl), b = rollArt(weapon, a, null, excl);
+        const aSP = maybeSP(a);
+        spPicks = [aSP, aSP.endsWith(" SP") ? b : maybeSP(b)];
       } else {
-        picks = [rollArt(weapon, null, null, excl)];
+        spPicks = [maybeSP(rollArt(weapon, null, null, excl))];
       }
-      picks.map(maybeSP).filter(Boolean).forEach(t => {
+      spPicks.filter(Boolean).forEach(t => {
         const li = document.createElement("li"); li.textContent = t; arts.appendChild(li);
       });
     }
