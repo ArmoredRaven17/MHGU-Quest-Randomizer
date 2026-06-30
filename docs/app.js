@@ -56,6 +56,20 @@
   const SP_TIERS = {I:1,II:2,III:3,IV:4,V:5,VI:6,VII:7,VIII:8,IX:9,X:10,G1:11,G2:12,G3:13,G4:14,G5:15,EX:16};
 
   const LEVELS = {
+    "ALL": [
+      ["Village 1★",0],["Village 2★",1],["Village 3★",2],["Village 4★",3],
+      ["Village 5★",4],["Village 6★",5],["Village 7★",6],["Village 8★",7],
+      ["Village 9★",8],["Village 10★",9],["Village 10★ Adv.",10],
+      ["Hub 1★",11],["Hub 2★",12],["Hub 3★",13],["Hub 4★",14],
+      ["Hub 5★",15],["Hub 6★",16],["Hub 7★",17],["Hub 8★",18],
+      ["G1★",19],["G2★",20],["G3★",21],["G4★",22],["G4★ HR13+",23],
+      ["Deviant I",24],["Deviant II",25],["Deviant III",26],["Deviant IV",27],
+      ["Deviant V",28],["Deviant VI",29],["Deviant VII",30],["Deviant VIII",31],
+      ["Deviant IX",32],["Deviant X",33],["Deviant G1",34],["Deviant G2",35],
+      ["Deviant G3",36],["Deviant G4",37],["Deviant G5",38],["Deviant EX",39],
+      ["Event Low Rank",40],["Event High Rank",41],["Event G Rank",42],
+      ["Arena Normal",43],["Arena Challenge",44],
+    ],
     Village: [["1★",1],["2★",2],["3★",3],["4★",4],["5★",5],["6★",6],["7★",7],["8★",8],["9★",9],["10★",10],["10★ Advanced",11]],
     Hub:     [["1★",1],["2★",2],["3★",3],["4★",4],["5★",5],["6★",6],["7★",7],["8★",8]],
     Pub:     [["G1★",1],["G2★",2],["G3★",3],["G4★",4],["G4★ (HR13+)",5]],
@@ -104,6 +118,19 @@
       }
     }
     return monster || "";
+  }
+
+  // Maps each quest to its position in the unified 0-44 ALL range.
+  function allRank(q) {
+    switch (q.Type) {
+      case "Village":         return q.Level - 1;
+      case "Hub":             return 10 + q.Level;
+      case "Pub":             return 18 + q.Level;
+      case "Special Permits": return 23 + spTier(q.Name || "");
+      case "Events":          return 39 + q.Level;
+      case "Arena":           return 42 + q.Level;
+      default:                return -1;
+    }
   }
 
   // ── Hunter arts ──────────────────────────────────────────────────────────
@@ -372,18 +399,33 @@
       pQuests: $("p_quests").checked, hyper: $("f_hyper").checked, capture: $("f_capture").checked,
       egg: $("f_egg").checked, gathering: $("f_gathering").checked, small: $("f_small").checked,
       oneFaint: $("f_oneFaint").checked, onSite: $("f_onSite").checked,
+      allVillage: $("f_all_village").checked, allHub: $("f_all_hub").checked,
+      allPub: $("f_all_pub").checked, allSP: $("f_all_sp").checked,
+      allEvents: $("f_all_events").checked, allArena: $("f_all_arena").checked,
     };
 
     const pool = DATA.quests.filter(q => {
-      if ((q.Type || "").toLowerCase() !== type.toLowerCase()) return false;
+      const qType = q.Type || "";
 
-      if (type === "Special Permits") {
-        const t = spTier(q.Name || "");
-        if (t < fromLv || t > toLv) return false;
-      } else if (type === "Arena") {
-        if (toLv !== 0 && q.Level !== toLv) return false;
+      if (type === "ALL") {
+        if (!f.allVillage && qType === "Village") return false;
+        if (!f.allHub     && qType === "Hub")     return false;
+        if (!f.allPub     && qType === "Pub")     return false;
+        if (!f.allSP      && qType === "Special Permits") return false;
+        if (!f.allEvents  && qType === "Events")  return false;
+        if (!f.allArena   && qType === "Arena")   return false;
+        const rank = allRank(q);
+        if (rank < 0 || rank < fromLv || rank > toLv) return false;
       } else {
-        if (q.Level < fromLv || q.Level > toLv) return false;
+        if (qType.toLowerCase() !== type.toLowerCase()) return false;
+        if (type === "Special Permits") {
+          const t = spTier(q.Name || "");
+          if (t < fromLv || t > toLv) return false;
+        } else if (type === "Arena") {
+          if (toLv !== 0 && q.Level !== toLv) return false;
+        } else {
+          if (q.Level < fromLv || q.Level > toLv) return false;
+        }
       }
 
       const include = (q.LgMonster && !q.Capture)
@@ -424,7 +466,7 @@
     $("placeholder").classList.add("hidden");
     $("result").classList.remove("hidden");
     $("r_name").textContent = quest.Name || "";
-    $("r_name").style.color = (type === "Special Permits" && / EX: /.test(quest.Name)) ? "#ff00ff" : "";
+    $("r_name").style.color = (quest.Type === "Special Permits" && / EX: /.test(quest.Name)) ? "#ff00ff" : "";
     $("r_main").textContent = quest.Main || "";
     $("r_locale").textContent = quest.Locale || "—";
     $("r_capturePill").classList.toggle("hidden", !quest.Capture);
@@ -432,7 +474,7 @@
     $("r_prowlerPill").classList.toggle("hidden", !quest.Prowler);
     $("r_hyperOverlay").classList.toggle("hidden", !quest.Hyper);
 
-    const iconMonster = (type === "Special Permits" && quest.Name)
+    const iconMonster = (quest.Type === "Special Permits" && quest.Name)
       ? spDeviant(quest.Name, quest.Monster) : (quest.Monster || "");
     const img = $("r_target");
     img.src = monsterIcon(iconMonster);
@@ -441,7 +483,7 @@
     // Arena: preset equipment sets from the quest description. Hunter arenas offer a
     // fixed weapon list; Prowler arenas a fixed bias list. Roll within the set; style
     // and arts are part of the set, so we don't roll them.
-    if (type === "Arena") {
+    if (type === "Arena" || quest.Type === "Arena") {
       const w = $("r_weapon");
       $("r_arts").innerHTML = "";
       if (quest.ArenaBiases && quest.ArenaBiases.length) {
@@ -677,7 +719,8 @@
   $("helpModal").addEventListener("click", (e) => { if (e.target.id === "helpModal") $("helpModal").classList.add("hidden"); });
 
   function doReset() {
-    ["f_hyper","f_capture","f_egg","f_gathering","f_small","f_oneFaint","f_onSite","p_prowler","p_quests"].forEach(id => $(id).checked = false);
+    ["f_hyper","f_capture","f_egg","f_gathering","f_small","f_oneFaint","f_onSite","p_prowler","p_quests","f_all_arena"].forEach(id => $(id).checked = false);
+    ["f_all_village","f_all_hub","f_all_pub","f_all_sp","f_all_events"].forEach(id => $(id).checked = true);
     $("f_spArts").checked = true;
     document.querySelectorAll("#weaponList input,#styleList input,#biasList input").forEach(i => i.checked = true);
     setAllMonsters(true);
@@ -718,6 +761,9 @@
         oneFaint: $("f_oneFaint").checked, onSite: $("f_onSite").checked,
         spArts: $("f_spArts").checked,
         prowler: $("p_prowler").checked, pQuests: $("p_quests").checked,
+        allVillage: $("f_all_village").checked, allHub: $("f_all_hub").checked,
+        allPub: $("f_all_pub").checked, allSP: $("f_all_sp").checked,
+        allEvents: $("f_all_events").checked, allArena: $("f_all_arena").checked,
       },
     };
     try { localStorage.setItem(FILTER_KEY, JSON.stringify(d)); } catch (e) {}
@@ -737,6 +783,12 @@
       $("f_oneFaint").checked = !!d.t.oneFaint; $("f_onSite").checked = !!d.t.onSite;
       $("f_spArts").checked = d.t.spArts !== false;
       $("p_prowler").checked = !!d.t.prowler; $("p_quests").checked = !!d.t.pQuests;
+      $("f_all_village").checked = d.t.allVillage !== false;
+      $("f_all_hub").checked = d.t.allHub !== false;
+      $("f_all_pub").checked = d.t.allPub !== false;
+      $("f_all_sp").checked = d.t.allSP !== false;
+      $("f_all_events").checked = d.t.allEvents !== false;
+      $("f_all_arena").checked = !!d.t.allArena;
     }
     if (Array.isArray(d.blacklist)) { blacklist = d.blacklist; renderBlacklist(); }
     refreshMonsterGroups(); refreshArtGroups();
