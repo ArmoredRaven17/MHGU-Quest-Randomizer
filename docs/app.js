@@ -747,4 +747,13 @@
   loadFilters();
   syncProwlerQuests();
   updateRollBtn();
+
+  // Force a repaint after the MHFU custom font loads to prevent select text clipping.
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => {
+      document.querySelectorAll("select").forEach(s => {
+        s.style.display = "none"; s.offsetHeight; s.style.display = "";
+      });
+    });
+  }
 })();
