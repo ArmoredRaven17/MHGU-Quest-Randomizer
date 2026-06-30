@@ -141,7 +141,7 @@ body{
 .r-locale-val{font-size:2.6cqi;font-weight:700;color:#4D391F;line-height:1.3}
 .r-sub{font-size:1.4cqi;color:#4D391F;line-height:1.3;margin-top:4px}
 /* Main objective text in the "Main Objective" area */
-.rc-main{position:absolute;top:62%;left:34%;right:2%;color:#4D391F}
+.rc-main{position:absolute;top:64%;left:40%;right:2%;color:#4D391F}
 .rc-main .r-sub{font-size:2.9cqi;color:#4D391F;margin-top:0}
 /* Loadout in the lower-right "Main Objective" area */
 .rc-loadout{
@@ -154,7 +154,7 @@ body{
 .r-weapon{font-size:2.0cqi;font-weight:700;color:#4D391F}
 .r-style{font-size:2.0cqi;font-weight:700;color:#4D391F}
 .arts{list-style:none;margin:2px 0 0;padding:0;display:flex;flex-direction:column;gap:3px;align-items:flex-start}
-.arts li{font-size:2.2cqi;color:#4D391F;background:rgba(0,0,0,.08);border-radius:3px;padding:3px 6px}
+.arts li{font-size:2.6cqi;color:#4D391F;background:rgba(0,0,0,.08);border-radius:3px;padding:3px 6px}
 .rc-footer{position:absolute;bottom:1%;right:1.5%}
 #copyResultBtn{background:rgba(0,0,0,.15);color:#4D391F;border-color:rgba(0,0,0,.2)}
 
