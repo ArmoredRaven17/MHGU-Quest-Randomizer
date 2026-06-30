@@ -38,6 +38,13 @@
           <p class="hint" style="margin-top:6px">S. Permit Filters</p>
           <label class="chk"><input type="checkbox" id="f_oneFaint">S. Permit: One Faint</label>
           <label class="chk"><input type="checkbox" id="f_onSite">S. Permit: On-Site Items</label>
+          <p class="hint" style="margin-top:6px">ALL Mode — Quest Types</p>
+          <label class="chk"><input type="checkbox" id="f_all_village" checked>Village</label>
+          <label class="chk"><input type="checkbox" id="f_all_hub" checked>Hub</label>
+          <label class="chk"><input type="checkbox" id="f_all_pub" checked>G-Rank</label>
+          <label class="chk"><input type="checkbox" id="f_all_sp" checked>Special Permits</label>
+          <label class="chk"><input type="checkbox" id="f_all_events" checked>Events</label>
+          <label class="chk"><input type="checkbox" id="f_all_arena">Arena</label>
         </div>
       </section>
 
@@ -112,6 +119,7 @@
         <label class="field">Quest Type
           <select id="questType">
             <option value="" disabled selected>Select type</option>
+            <option>ALL</option>
             <option>Village</option><option>Hub</option><option>Pub</option>
             <option>Arena</option><option>Special Permits</option><option>Events</option>
           </select>
@@ -272,6 +280,6 @@
 </div>
 
 <script src="data.js?v=24"></script>
-<script src="app.js?v=58"></script>
+<script src="app.js?v=59"></script>
 </body>
 </html>
