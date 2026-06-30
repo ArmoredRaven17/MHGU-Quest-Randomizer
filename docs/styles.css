@@ -147,7 +147,7 @@ body{
 .rc-main .r-sub{font-size:2.9cqi;color:#4D391F;margin-top:0}
 /* Loadout in the lower-right "Main Objective" area */
 .rc-loadout{
-  position:absolute;top:67%;left:7%;right:1.5%;bottom:4%;
+  position:absolute;top:67%;left:6.5%;right:1.5%;bottom:4%;
   display:flex;flex-direction:column;gap:5px;
 }
 .r-label{font-size:1.4cqi;color:#4D391F;text-transform:uppercase;letter-spacing:.5px}
