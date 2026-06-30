@@ -479,6 +479,8 @@
     $("r_capturePill").classList.toggle("hidden", !quest.Capture);
     $("r_hyperPill").classList.toggle("hidden", !quest.Hyper);
     $("r_prowlerPill").classList.toggle("hidden", !quest.Prowler);
+    $("r_arenaPill").classList.toggle("hidden", quest.Type !== "Arena");
+    $("r_eventPill").classList.toggle("hidden", quest.Type !== "Events");
     $("r_hyperOverlay").classList.toggle("hidden", !quest.Hyper);
 
     const iconMonster = (quest.Type === "Special Permits" && quest.Name)
