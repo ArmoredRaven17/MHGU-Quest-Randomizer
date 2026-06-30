@@ -226,29 +226,31 @@
         <tr><td>Striker, Alchemy</td><td>3</td></tr>
       </tbody>
     </table>
-    <p><strong>Art combinations</strong> (unordered, no shared base; each art independently rolls [SP], so ×2<sup>n</sup>):</p>
+    <p><strong>Art combinations</strong> (unordered, no shared base). SP multiplier: Alchemy rolls SP independently per art (×2<sup>n</sup>); Guild and Striker allow at most one SP art per roll:</p>
     <table class="math-table">
       <tbody>
-        <tr><td>1 slot</td><td>22 × 2</td><td>= 44</td></tr>
-        <tr><td>2 slots</td><td>(C(22,2) − 12) × 4</td><td>= 876</td></tr>
-        <tr><td>3 slots</td><td>(C(22,3) − 232) × 8</td><td>= 10,464</td></tr>
+        <tr><td>1 slot (any)</td><td>22 × 2</td><td>= 44</td></tr>
+        <tr><td>2 slots — Guild</td><td>(C(22,2) − 12) × 3</td><td>= 657</td></tr>
+        <tr><td>3 slots — Striker</td><td>(C(22,3) − 232) × 4</td><td>= 5,232</td></tr>
+        <tr><td>3 slots — Alchemy</td><td>(C(22,3) − 232) × 8</td><td>= 10,464</td></tr>
       </tbody>
     </table>
     <p><strong>Per weapon</strong> across 6 styles:</p>
     <table class="math-table">
       <tbody>
         <tr><td>3 × 44</td><td>= 132</td><td class="muted">Adept, Aerial, Valor</td></tr>
-        <tr><td>1 × 876</td><td>= 876</td><td class="muted">Guild</td></tr>
-        <tr><td>2 × 10,464</td><td>= 20,928</td><td class="muted">Striker, Alchemy</td></tr>
-        <tr><td><strong>Total</strong></td><td><strong>21,936</strong></td><td></td></tr>
+        <tr><td>1 × 657</td><td>= 657</td><td class="muted">Guild</td></tr>
+        <tr><td>1 × 5,232</td><td>= 5,232</td><td class="muted">Striker</td></tr>
+        <tr><td>1 × 10,464</td><td>= 10,464</td><td class="muted">Alchemy</td></tr>
+        <tr><td><strong>Total</strong></td><td><strong>16,485</strong></td><td></td></tr>
       </tbody>
     </table>
     <p><strong>Grand total:</strong></p>
     <table class="math-table">
       <tbody>
-        <tr><td>14 weapons × 21,936</td><td>= 307,104</td></tr>
+        <tr><td>14 weapons × 16,485</td><td>= 230,790</td></tr>
         <tr><td>Prowler (8 biases, no arts)</td><td>= 8</td></tr>
-        <tr><td><strong>Total</strong></td><td><strong>307,112</strong></td></tr>
+        <tr><td><strong>Total</strong></td><td><strong>230,798</strong></td></tr>
       </tbody>
     </table>
     <div class="row end gap">
