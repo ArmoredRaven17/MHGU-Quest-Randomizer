@@ -354,9 +354,22 @@
   // ── Level dropdowns ──────────────────────────────────────────────────────
   function fillLevels() {
     const type = $("questType").value;
-    const opts = LEVELS[type] || [];
-    const from = $("fromLevel"), to = $("toLevel");
     const isArena = type === "Arena";
+    let opts = LEVELS[type] || [];
+    if (type === "ALL") {
+      const v = $("f_all_village").checked, h = $("f_all_hub").checked,
+            p = $("f_all_pub").checked, s = $("f_all_sp").checked,
+            e = $("f_all_events").checked, a = $("f_all_arena").checked;
+      opts = opts.filter(([, val]) => {
+        if (val <= 10) return v;
+        if (val <= 18) return h;
+        if (val <= 23) return p;
+        if (val <= 39) return s;
+        if (val <= 42) return e;
+        return a;
+      });
+    }
+    const from = $("fromLevel"), to = $("toLevel");
     from.innerHTML = ""; to.innerHTML = "";
     opts.forEach(([lbl, val]) => {
       from.add(new Option(lbl, val));
@@ -692,6 +705,8 @@
       const p = h.parentElement; p.dataset.open = p.dataset.open === "true" ? "false" : "true";
     }));
   $("questType").addEventListener("change", fillLevels);
+  ["f_all_village","f_all_hub","f_all_pub","f_all_sp","f_all_events","f_all_arena"].forEach(id =>
+    $(id).addEventListener("change", () => { if ($("questType").value === "ALL") fillLevels(); }));
   $("fromLevel").addEventListener("change", () => syncLevels("from"));
   $("toLevel").addEventListener("change", () => syncLevels("to"));
   document.querySelectorAll("#weaponList,#styleList,#biasList").forEach(c =>
