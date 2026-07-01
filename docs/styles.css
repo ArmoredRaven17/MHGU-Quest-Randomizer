@@ -7,7 +7,7 @@
 /* Theme variables are set at runtime from the chosen color (see app.js). */
 :root{
   --bg:#3e3e3e; --bg2:#333; --hover:#2f2f2f; --accent:#7a7a7a; --accent-hover:#9a9a9a;
-  --text:#f3f3f3; --text-dim:#b8b8b8; --line:#ffffff1f; --card:#ffffff0d;
+  --text:#f3f3f3; --text-dim:#ffffff; --line:#ffffff1f; --card:#ffffff0d;
 }
 *{box-sizing:border-box;scrollbar-color:var(--accent) var(--bg2);scrollbar-width:thin}
 ::-webkit-scrollbar{width:6px;height:6px}
