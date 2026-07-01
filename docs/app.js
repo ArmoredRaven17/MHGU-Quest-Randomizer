@@ -515,6 +515,7 @@
     $("r_name").style.color = (quest.Type === "Special Permits" && / EX: /.test(quest.Name)) ? "#ff00ff" : "";
     $("r_main").textContent = quest.Main || "";
     $("r_locale").textContent = quest.Locale || "—";
+    const isDeviant = quest.Type === "Special Permits";
     const isMultiMonster = quest.Monsters && quest.Monsters.length > 1;
     $("r_capturePill").classList.toggle("hidden", !quest.Capture);
     $("r_hyperPill").classList.toggle("hidden", !quest.Hyper);
