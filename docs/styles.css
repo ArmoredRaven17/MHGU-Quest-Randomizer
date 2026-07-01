@@ -108,6 +108,7 @@ body{
   background:var(--bg2);color:var(--text);border:1px solid var(--line);
   border-radius:7px;padding:8px 10px;font-size:14px;min-width:150px;line-height:1.4;
 }
+#artLvSel{background:var(--bg2);color:var(--text);border:1px solid var(--line);border-radius:6px;padding:3px 6px;font-size:12px;font-family:inherit;cursor:pointer}
 
 /* Result */
 .result-card{

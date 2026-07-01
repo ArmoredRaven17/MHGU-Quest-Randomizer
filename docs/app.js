@@ -162,7 +162,6 @@
   // the same art can't be equipped at two levels.
   const artBase = (n) => n.replace(/ (III|II|I)$/, "");
   function rollArt(weapon, ex1, ex2, excl) {
-    const lvI = $("f_artLvI").checked, lvII = $("f_artLvII").checked, lvIII = $("f_artLvIII").checked;
     const wn = normWeapon(weapon);
     const b1 = ex1 ? artBase(ex1) : null, b2 = ex2 ? artBase(ex2) : null;
     for (let i = 0; i < 1000; i++) {
@@ -170,12 +169,6 @@
       if (excl && excl.has(a.HunterArtName)) continue;
       const aw = a.Weapon.toLowerCase();
       if (aw !== "all" && aw !== wn) continue;
-      if (aw !== "all") {
-        const n = a.HunterArtName;
-        if (!lvI   && n.endsWith(" I"))   continue;
-        if (!lvII  && n.endsWith(" II"))  continue;
-        if (!lvIII && n.endsWith(" III")) continue;
-      }
       const b = artBase(a.HunterArtName);
       if (b === b1 || b === b2) continue;
       return a.HunterArtName;
@@ -819,6 +812,13 @@
   $("monCollapse").addEventListener("click", () => setMonstersOpen(false));
   $("artExpand").addEventListener("click", () => setArtsOpen(true));
   $("artCollapse").addEventListener("click", () => setArtsOpen(false));
+  function artLvBulk(checked) {
+    const suffix = " " + $("artLvSel").value;
+    artLeaves.forEach(l => { if (l.name.endsWith(suffix)) l.input.checked = checked; });
+    refreshArtGroups(); saveFilters();
+  }
+  $("artLvCheck").addEventListener("click", () => artLvBulk(true));
+  $("artLvUncheck").addEventListener("click", () => artLvBulk(false));
   $("allExpand").addEventListener("click", () => setAllTypesOpen(true));
   $("allCollapse").addEventListener("click", () => setAllTypesOpen(false));
   $("statsBtn").addEventListener("click", () => $("statsModal").classList.remove("hidden"));
@@ -848,7 +848,6 @@
     fillLevels();
     syncTypeOptions();
     $("f_spArts").checked = true;
-    $("f_artLvI").checked = true; $("f_artLvII").checked = true; $("f_artLvIII").checked = true;
     document.querySelectorAll("#weaponList input,#styleList input,#biasList input").forEach(i => i.checked = true);
     setAllMonsters(true);
     setAllArts(true);
@@ -888,7 +887,6 @@
         multi: $("f_multi").checked,
         oneFaint: $("f_oneFaint").checked, onSite: $("f_onSite").checked,
         spArts: $("f_spArts").checked,
-        artLvI: $("f_artLvI").checked, artLvII: $("f_artLvII").checked, artLvIII: $("f_artLvIII").checked,
         prowler: $("p_prowler").checked, pQuests: $("p_quests").checked,
         allLevels: Array.from({length:45},(_,i)=>i).filter(i=>{ const cb=$("f_all_lv_"+i); return cb&&!cb.checked; }),
       },
@@ -910,9 +908,6 @@
       $("f_multi").checked = !!d.t.multi;
       $("f_oneFaint").checked = !!d.t.oneFaint; $("f_onSite").checked = !!d.t.onSite;
       $("f_spArts").checked = d.t.spArts !== false;
-      $("f_artLvI").checked = d.t.artLvI !== false;
-      $("f_artLvII").checked = d.t.artLvII !== false;
-      $("f_artLvIII").checked = d.t.artLvIII !== false;
       $("p_prowler").checked = !!d.t.prowler; $("p_quests").checked = !!d.t.pQuests;
       if (Array.isArray(d.t.allLevels)) {
         const off = new Set(d.t.allLevels);
