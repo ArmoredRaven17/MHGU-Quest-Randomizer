@@ -83,16 +83,16 @@
   const COLORS = [
     ["Teostra","#570B0B"],["Rathalos","#C81919"],["Y. Kut-Ku","#ED7373","Yian Kut-Ku"],   // red ~0°
     ["Rajang","#57470B"],["Tigrex","#C8A319"],["Seregios","#EDD473"],                       // amber ~47°
-    ["Najarala","#BDD846"],["Gendrome","#E3EEAF"],["S. Queen","#8FD846","Seltas Queen"],    // yellow-green ~71-90°
-    ["Deviljho","#0B570F"],["Rathian","#19C822"],["G. Maccao","#73ED79","Great Maccao"],    // green ~124°
-    ["Zinogre","#19C890"],["Zamtrios","#19C8C8"],["Giadrome","#73EDED"],                    // teal→cyan ~162-180°
+    ["Najarala","#BDD846"],["S. Queen","#8FD846","Seltas Queen"],    // yellow-green ~71-90°
+    ["Deviljho","#0B570F"],["Rathian","#19C822"],    // green ~124°
+    ["Zinogre","#19C890"],["Zamtrios","#19C8C8"],                    // teal→cyan ~162-180°
     ["Plesioth","#1990C8"],["Velocidrome","#73C6ED"],                                        // sky blue ~204°
     ["Brachydios","#0B2757"],["Lagiacrus","#1959C8"],["S. Ceanataur","#73A0ED","Shogun Ceanataur"],  // cobalt ~222°
-    ["G. Magala","#1F0B57","Gore Magala"],["Nerscylla","#4719C8"],["Iodrome","#9373ED"],    // indigo ~256°
-    ["Y. Garuga","#D446D8","Yian Garuga"],["Chameleos","#ECAFEE"],                          // violet ~298°
+    ["G. Magala","#1F0B57","Gore Magala"],["Nerscylla","#4719C8"],    // indigo ~256°
+    ["Y. Garuga","#62008f","Yian Garuga"],["Chameleos","#d159f3"],                          // violet ~298°
     ["Mizutsune","#D84696"],["Congalala","#EEAFD2"],                                        // pink ~327°
     ["Duramboros","#8A4C2E"],["Diablos","#966A2C"],["Barroth","#B57C45"],["Cephadrome","#C46231"],["Bulldrome","#CFB66E"],  // earth tones
-    ["Forbidden","#1E2025","Question Mark"],["Akantor","#2E2E2E"],["Nargacuga","#4A4A4A"],["K. Daora","#505358","Kushala Daora"],["Ukanlos","#717784"],["Basarios","#878787"],["Valstrax","#81858E"],["Gammoth","#A9ACB1"],["Barioth","#DFE0E2"],  // neutrals dark→light
+    ["Forbidden","#1E2025","Question Mark"],["K. Daora","#505358","Kushala Daora"],["Valstrax","#81858E"],  // neutrals dark→light
     ["Khezu","#FFFFFF"],                                                                     // white
   ];
   const COLORS_HEX = Object.fromEntries(COLORS.map(([name, hex]) => [hex.toUpperCase(), name]));
@@ -699,7 +699,7 @@
       r.setProperty("--accent-hover",css(darken(lighten(c,0.36),0.81)));
     }
     r.setProperty("--text",     isLight ? "#111111" : "#f3f3f3");
-    r.setProperty("--text-dim", isLight ? "#444444" : "#b8b8b8");
+    r.setProperty("--text-dim", isLight ? "#000000" : "#ffffff");
     r.setProperty("--line",     isLight ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.12)");
     r.setProperty("--card",     isLight ? "rgba(0,0,0,0.12)" : "rgba(255,255,255,0.05)");
     try { localStorage.setItem("mhgu-theme", hex); } catch (e) {}
