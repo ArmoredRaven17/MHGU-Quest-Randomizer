@@ -498,12 +498,15 @@
     $("r_name").style.color = (quest.Type === "Special Permits" && / EX: /.test(quest.Name)) ? "#ff00ff" : "";
     $("r_main").textContent = quest.Main || "";
     $("r_locale").textContent = quest.Locale || "—";
+    const isDeviant = quest.Type === "Special Permits";
+    const main = quest.Main || "";
+    const isMultiMonster = / and /.test(main) || /Hunt [2-9]/.test(main) || / all /.test(main);
     $("r_capturePill").classList.toggle("hidden", !quest.Capture);
     $("r_hyperPill").classList.toggle("hidden", !quest.Hyper);
     $("r_prowlerPill").classList.toggle("hidden", !quest.Prowler);
     $("r_arenaPill").classList.toggle("hidden", quest.Type !== "Arena");
     $("r_eventPill").classList.toggle("hidden", quest.Type !== "Events");
-    $("r_hyperOverlay").classList.toggle("hidden", !quest.Hyper);
+    $("r_hyperOverlay").classList.toggle("hidden", !quest.Hyper || isDeviant || isMultiMonster);
 
     const iconMonster = (quest.Type === "Special Permits" && quest.Name)
       ? spDeviant(quest.Name, quest.Monster) : (quest.Monster || "");
