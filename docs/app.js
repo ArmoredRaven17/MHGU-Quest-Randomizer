@@ -81,17 +81,18 @@
   // Theme colors — each named after the monster assigned to that hue in the theme picker.
   // Ordered chromatically: hue 0°→360°, dark→light within each hue; earth tones; neutrals dark→light; white.
   const COLORS = [
-    ["Teostra","#570B0B"],["Rathalos","#C81919"],["Y. Kut-Ku","#ED7373","Yian Kut-Ku"],   // red ~0°
-    ["Rajang","#57470B"],["Tigrex","#C8A319"],["Seregios","#EDD473"],                       // amber ~47°
-    ["Najarala","#BDD846"],["S. Queen","#8FD846","Seltas Queen"],    // yellow-green ~71-90°
+    ["Teostra","#570B0B"],["Rathalos","#be2828"], // red ~0°
+    ["Tetsucabra","#c65900"], ["Agnaktor","#fd8b2f"],  // orange ~30°
+    ["Tigrex","#C8A319"],["Rajang","#EDD473"],                       // amber ~47°
     ["Deviljho","#0B570F"],["Rathian","#19C822"],    // green ~124°
-    ["Zinogre","#19C890"],["Zamtrios","#19C8C8"],                    // teal→cyan ~162-180°
-    ["Plesioth","#1990C8"],["Velocidrome","#73C6ED"],                                        // sky blue ~204°
-    ["Brachydios","#0B2757"],["Lagiacrus","#1959C8"],["S. Ceanataur","#73A0ED","Shogun Ceanataur"],  // cobalt ~222°
-    ["G. Magala","#1F0B57","Gore Magala"],["Nerscylla","#4719C8"],    // indigo ~256°
-    ["Y. Garuga","#62008f","Yian Garuga"],["Chameleos","#d159f3"],                          // violet ~298°
-    ["Mizutsune","#D84696"],["Congalala","#EEAFD2"],                                        // pink ~327°
-    ["Duramboros","#8A4C2E"],["Diablos","#966A2C"],["Barroth","#B57C45"],["Cephadrome","#C46231"],["Bulldrome","#CFB66E"],  // earth tones
+    ["Astalos","#14503d"], ["Zinogre","#19C890"],
+    ["Zamtrios","#159999"], ["Plesioth","#25cece"],                                        // sky blue ~204°
+    ["Brachydios","#0B2757"],["Lagiacrus","#1959C8"],  // cobalt ~222°
+    ["G. Magala","#1F0B57","Gore Magala"],["Nerscylla","#613fbe"],    // indigo ~256°
+    ["Y. Garuga","#62008f","Yian Garuga"],["Chameleos","#923db9"],                          // violet ~298°
+    ["Mizutsune","#D84696"],["Congalala","#d180ac"],                                        // pink ~327°
+    ["Duramboros","#5a411f"],["Diablos","#966A2C"],
+    ["Barroth","#B57C45"],["Bulldrome","#b59271"], 
     ["Forbidden","#1E2025","Question Mark"],["K. Daora","#505358","Kushala Daora"],["Valstrax","#81858E"],  // neutrals dark→light
     ["Khezu","#FFFFFF"],                                                                     // white
   ];
