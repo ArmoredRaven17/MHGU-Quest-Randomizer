@@ -436,6 +436,7 @@
     const f = {
       pQuests: $("p_quests").checked, hyper: $("f_hyper").checked, capture: $("f_capture").checked,
       egg: $("f_egg").checked, gathering: $("f_gathering").checked, small: $("f_small").checked,
+      multi: $("f_multi").checked,
       oneFaint: $("f_oneFaint").checked, onSite: $("f_onSite").checked,
       allLevels: new Set(Array.from({length:45},(_,i)=>i).filter(i=>{ const cb=$("f_all_lv_"+i); return cb&&cb.checked; })),
     };
@@ -465,10 +466,16 @@
 
       // Gate flags: unchecked = exclude quests of that type (same pattern for all three).
       if (q.Hyper && !f.hyper) return false;
+      const isMultiMonster = (q.Monsters && q.Monsters.length > 1) ||
+        (q.LgMonster && /\b[2-9]\b/.test(q.Main || ""));
+      if (isMultiMonster && !f.multi) return false;
       if (q.OneFaint && !f.oneFaint) return false;
       if (q.OnSite && !f.onSite) return false;
 
-      if (q.LgMonster && q.Monster && anyFiltered && !inc.has(q.Monster.toLowerCase())) return false;
+      if (q.LgMonster && anyFiltered) {
+        const qmons = (q.Monsters && q.Monsters.length) ? q.Monsters : (q.Monster ? [q.Monster] : []);
+        if (qmons.length > 0 && !qmons.every(m => inc.has(m.toLowerCase()))) return false;
+      }
       return true;
     });
 
@@ -498,9 +505,7 @@
     $("r_name").style.color = (quest.Type === "Special Permits" && / EX: /.test(quest.Name)) ? "#ff00ff" : "";
     $("r_main").textContent = quest.Main || "";
     $("r_locale").textContent = quest.Locale || "—";
-    const isDeviant = quest.Type === "Special Permits";
-    const main = quest.Main || "";
-    const isMultiMonster = / and /.test(main) || /Hunt [2-9]/.test(main) || / all /.test(main);
+    const isMultiMonster = quest.Monsters && quest.Monsters.length > 1;
     $("r_capturePill").classList.toggle("hidden", !quest.Capture);
     $("r_hyperPill").classList.toggle("hidden", !quest.Hyper);
     $("r_prowlerPill").classList.toggle("hidden", !quest.Prowler);
@@ -819,7 +824,7 @@
   $("helpModal").addEventListener("click", (e) => { if (e.target.id === "helpModal") $("helpModal").classList.add("hidden"); });
 
   function doReset() {
-    ["f_hyper","f_capture","f_egg","f_gathering","f_small","f_oneFaint","f_onSite","p_prowler","p_quests"].forEach(id => $(id).checked = false);
+    ["f_hyper","f_capture","f_egg","f_gathering","f_small","f_multi","f_oneFaint","f_onSite","p_prowler","p_quests"].forEach(id => $(id).checked = false);
     document.querySelectorAll("#allTypeTree .akids input").forEach(cb => {
       cb.checked = parseInt(cb.id.replace("f_all_lv_",""), 10) < 43; // Arena (43-44) off by default
     });
@@ -869,6 +874,7 @@
       t: {
         hyper: $("f_hyper").checked, capture: $("f_capture").checked,
         egg: $("f_egg").checked, gathering: $("f_gathering").checked, small: $("f_small").checked,
+        multi: $("f_multi").checked,
         oneFaint: $("f_oneFaint").checked, onSite: $("f_onSite").checked,
         spArts: $("f_spArts").checked,
         artLvI: $("f_artLvI").checked, artLvII: $("f_artLvII").checked, artLvIII: $("f_artLvIII").checked,
@@ -890,6 +896,7 @@
     if (d.t) {
       $("f_hyper").checked = !!d.t.hyper; $("f_capture").checked = !!d.t.capture;
       $("f_egg").checked = !!d.t.egg; $("f_gathering").checked = !!d.t.gathering; $("f_small").checked = !!d.t.small;
+      $("f_multi").checked = !!d.t.multi;
       $("f_oneFaint").checked = !!d.t.oneFaint; $("f_onSite").checked = !!d.t.onSite;
       $("f_spArts").checked = d.t.spArts !== false;
       $("f_artLvI").checked = d.t.artLvI !== false;
