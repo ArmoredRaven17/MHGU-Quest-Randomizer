@@ -7,7 +7,7 @@
 <title>MHGU Quest Randomizer</title>
 <link rel="icon" href="assets/MonsterIcons/MHGU-Question_Mark_Icon.webp">
 <!-- Bump ?v= on any styles/app/data change so browsers fetch fresh copies (no hard-refresh needed) -->
-<link rel="stylesheet" href="styles.css?v=80">
+<link rel="stylesheet" href="styles.css?v=81">
 </head>
 <body>
 <div id="app">
@@ -80,10 +80,16 @@
         <button class="panel-head">Hunter Arts <span class="chev">&#9662;</span></button>
         <div class="panel-body">
           <label class="chk"><input type="checkbox" id="f_spArts" checked>SP Arts</label>
-          <label class="chk"><input type="checkbox" id="f_artLvI" checked>Level I arts</label>
-          <label class="chk"><input type="checkbox" id="f_artLvII" checked>Level II arts</label>
-          <label class="chk"><input type="checkbox" id="f_artLvIII" checked>Level III arts</label>
-          <p class="hint">Uncheck to exclude from pool (by weapon, art, or level)</p>
+          <div class="row gap" style="margin:6px 0 4px">
+            <select id="artLvSel">
+              <option value="I">Level I</option>
+              <option value="II">Level II</option>
+              <option value="III">Level III</option>
+            </select>
+            <button id="artLvCheck" class="btn tiny">Check All</button>
+            <button id="artLvUncheck" class="btn tiny">Uncheck All</button>
+          </div>
+          <p class="hint">Uncheck to exclude from pool (by weapon or art)</p>
           <div class="row gap">
             <button id="artExpand" class="btn tiny">Expand All</button>
             <button id="artCollapse" class="btn tiny">Collapse All</button>
@@ -288,6 +294,6 @@
 </div>
 
 <script src="data.js?v=25"></script>
-<script src="app.js?v=90"></script>
+<script src="app.js?v=91"></script>
 </body>
 </html>
