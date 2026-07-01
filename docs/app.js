@@ -78,14 +78,22 @@
     Events:  [["Low Rank",1],["High Rank",2],["G Rank",3]],
   };
 
-  // Theme colors named after MHGU monsters that evoke each hue. Label = monster (and its
-  // icon filename); the hex values are unchanged so saved themes keep matching.
+  // Theme colors — each named after the monster assigned to that hue in the theme picker.
+  // Ordered chromatically: hue 0°→360°, dark→light within each hue; earth tones; neutrals dark→light; white.
   const COLORS = [
-    ["Teostra","#701010"],["Rathalos","#C23D3D"],["Agnaktor","#E86020"],["Tigrex","#C49040"],
-    ["Rajang","#FFDD00"],["Najarala","#BBFF00"],["Deviljho","#217500"],["Rathian","#34CB34"],
-    ["Zinogre","#1ABC9C"],["Lagiacrus","#0099FF"],["Brachydios","#1A3A6C"],["Gore Magala","#3E487E"],
-    ["Nerscylla","#543091"],["Chameleos","#9C85B2"],["Mizutsune","#D86EA7"],["Duramboros","#987367"],
-    ["Khezu","#FFFFFF"],["K. Daora","#BDC3C7","Kushala Daora"],["Basarios","#95A5A6"],["Forbidden","#4A4A4A","Question Mark"],
+    ["Teostra","#570B0B"],["Rathalos","#C81919"],["Y. Kut-Ku","#ED7373","Yian Kut-Ku"],   // red ~0°
+    ["Rajang","#57470B"],["Tigrex","#C8A319"],["Seregios","#EDD473"],                       // amber ~47°
+    ["Najarala","#BDD846"],["Gendrome","#E3EEAF"],["S. Queen","#8FD846","Seltas Queen"],    // yellow-green ~71-90°
+    ["Deviljho","#0B570F"],["Rathian","#19C822"],["G. Maccao","#73ED79","Great Maccao"],    // green ~124°
+    ["Zinogre","#19C890"],["Zamtrios","#19C8C8"],["Giadrome","#73EDED"],                    // teal→cyan ~162-180°
+    ["Plesioth","#1990C8"],["Velocidrome","#73C6ED"],                                        // sky blue ~204°
+    ["Brachydios","#0B2757"],["Lagiacrus","#1959C8"],["S. Ceanataur","#73A0ED","Shogun Ceanataur"],  // cobalt ~222°
+    ["G. Magala","#1F0B57","Gore Magala"],["Nerscylla","#4719C8"],["Iodrome","#9373ED"],    // indigo ~256°
+    ["Y. Garuga","#D446D8","Yian Garuga"],["Chameleos","#ECAFEE"],                          // violet ~298°
+    ["Mizutsune","#D84696"],["Congalala","#EEAFD2"],                                        // pink ~327°
+    ["Duramboros","#8A4C2E"],["Diablos","#966A2C"],["Barroth","#B57C45"],["Cephadrome","#C46231"],["Bulldrome","#CFB66E"],  // earth tones
+    ["Forbidden","#1E2025","Question Mark"],["Akantor","#2E2E2E"],["Nargacuga","#4A4A4A"],["K. Daora","#505358","Kushala Daora"],["Ukanlos","#717784"],["Basarios","#878787"],["Valstrax","#81858E"],["Gammoth","#A9ACB1"],["Barioth","#DFE0E2"],  // neutrals dark→light
+    ["Khezu","#FFFFFF"],                                                                     // white
   ];
   const COLORS_HEX = Object.fromEntries(COLORS.map(([name, hex]) => [hex.toUpperCase(), name]));
   // Display name → icon name override (for swatches with shortened labels)
