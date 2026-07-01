@@ -473,6 +473,7 @@
       if (!include) return false;
 
       // Gate flags: unchecked = exclude quests of that type (same pattern for all three).
+      if (q.Prowler && !f.pQuests) return false;
       if (q.Hyper && !f.hyper) return false;
       const isMultiMonster = (q.Monsters && q.Monsters.length > 1) ||
         (q.LgMonster && /\b[2-9]\b/.test(q.Main || ""));
