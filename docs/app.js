@@ -73,7 +73,7 @@
     Village: [["1★",1],["2★",2],["3★",3],["4★",4],["5★",5],["6★",6],["7★",7],["8★",8],["9★",9],["10★",10],["10★ Advanced",11]],
     Hub:     [["1★",1],["2★",2],["3★",3],["4★",4],["5★",5],["6★",6],["7★",7],["8★",8]],
     Pub:     [["G1★",1],["G2★",2],["G3★",3],["G4★",4],["G4★ (HR13+)",5]],
-    Arena:   [["All",0],["Normal",1],["Challenge",2]],
+    Arena:   [["Normal",1],["Challenge",2]],
     "Special Permits": [["I",1],["II",2],["III",3],["IV",4],["V",5],["VI",6],["VII",7],["VIII",8],["IX",9],["X",10],["G1",11],["G2",12],["G3",13],["G4",14],["G5",15],["EX",16]],
     Events:  [["Low Rank",1],["High Rank",2],["G Rank",3]],
   };
@@ -129,6 +129,19 @@
       case "Special Permits": return 23 + spTier(q.Name || "");
       case "Events":          return 39 + q.Level;
       case "Arena":           return 42 + q.Level;
+      default:                return -1;
+    }
+  }
+
+  function typeValToAllRank(type, val) {
+    switch (type) {
+      case "Village":         return val - 1;
+      case "Hub":             return 10 + val;
+      case "Pub":             return 18 + val;
+      case "Special Permits": return 23 + val;
+      case "Events":          return 39 + val;
+      case "Arena":           return 42 + val;
+      case "ALL":             return val;
       default:                return -1;
     }
   }
@@ -354,21 +367,13 @@
   // ── Level dropdowns ──────────────────────────────────────────────────────
   function fillLevels() {
     const type = $("questType").value;
-    const isArena = type === "Arena";
     let opts = LEVELS[type] || [];
-    if (type === "ALL") {
-      const v = $("f_all_village").checked, h = $("f_all_hub").checked,
-            p = $("f_all_pub").checked, s = $("f_all_sp").checked,
-            e = $("f_all_events").checked, a = $("f_all_arena").checked;
-      opts = opts.filter(([, val]) => {
-        if (val <= 10) return v;
-        if (val <= 18) return h;
-        if (val <= 23) return p;
-        if (val <= 39) return s;
-        if (val <= 42) return e;
-        return a;
-      });
-    }
+    opts = opts.filter(([, val]) => {
+      const rank = typeValToAllRank(type, val);
+      if (rank < 0) return true;
+      const cb = $("f_all_lv_" + rank);
+      return !cb || cb.checked;
+    });
     const from = $("fromLevel"), to = $("toLevel");
     from.innerHTML = ""; to.innerHTML = "";
     opts.forEach(([lbl, val]) => {
@@ -376,18 +381,31 @@
       to.add(new Option(lbl, val));
     });
     from.selectedIndex = 0;
-    // Arena is a single category pick (All/Normal/Challenge), not a range —
-    // hide the From field, relabel, and default the selector to "All".
-    $("fromField").classList.toggle("hidden", isArena);
-    $("toLabel").textContent = isArena ? "Arena Type" : "Up to Level";
-    to.selectedIndex = isArena ? 0 : Math.max(0, opts.length - 1);
+    $("fromField").classList.remove("hidden");
+    $("toLabel").textContent = "Up to Level";
+    to.selectedIndex = Math.max(0, opts.length - 1);
     updateRollBtn();
+  }
+
+  function syncTypeOptions() {
+    const qt = $("questType");
+    for (const opt of Array.from(qt.options)) {
+      if (!opt.value || opt.value === "ALL") continue;
+      const anyOn = (LEVELS[opt.value] || []).some(([, val]) => {
+        const rank = typeValToAllRank(opt.value, val);
+        if (rank < 0) return true;
+        const cb = $("f_all_lv_" + rank);
+        return cb && cb.checked;
+      });
+      opt.hidden = !anyOn;
+    }
+    const sel = qt.selectedIndex >= 0 ? qt.options[qt.selectedIndex] : null;
+    if (sel && sel.hidden) { qt.value = ""; fillLevels(); }
   }
 
   // Keep From ≤ To (compared by list position, same ordered options in both).
   function syncLevels(changed) {
     const from = $("fromLevel"), to = $("toLevel");
-    if ($("questType").value === "Arena") { updateRollBtn(); return; }
     if (from.selectedIndex < 0 || to.selectedIndex < 0) { updateRollBtn(); return; }
     if (changed === "from" && from.selectedIndex > to.selectedIndex) to.selectedIndex = from.selectedIndex;
     if (changed === "to" && to.selectedIndex < from.selectedIndex) from.selectedIndex = to.selectedIndex;
@@ -419,30 +437,21 @@
       pQuests: $("p_quests").checked, hyper: $("f_hyper").checked, capture: $("f_capture").checked,
       egg: $("f_egg").checked, gathering: $("f_gathering").checked, small: $("f_small").checked,
       oneFaint: $("f_oneFaint").checked, onSite: $("f_onSite").checked,
-      allVillage: $("f_all_village").checked, allHub: $("f_all_hub").checked,
-      allPub: $("f_all_pub").checked, allSP: $("f_all_sp").checked,
-      allEvents: $("f_all_events").checked, allArena: $("f_all_arena").checked,
+      allLevels: new Set(Array.from({length:45},(_,i)=>i).filter(i=>{ const cb=$("f_all_lv_"+i); return cb&&cb.checked; })),
     };
 
     const pool = DATA.quests.filter(q => {
       const qType = q.Type || "";
 
+      const rank = allRank(q);
+      if (rank < 0 || !f.allLevels.has(rank)) return false;
+
       if (type === "ALL") {
-        if (!f.allVillage && qType === "Village") return false;
-        if (!f.allHub     && qType === "Hub")     return false;
-        if (!f.allPub     && qType === "Pub")     return false;
-        if (!f.allSP      && qType === "Special Permits") return false;
-        if (!f.allEvents  && qType === "Events")  return false;
-        if (!f.allArena   && qType === "Arena")   return false;
-        const rank = allRank(q);
-        if (rank < 0 || rank < fromLv || rank > toLv) return false;
+        if (rank < fromLv || rank > toLv) return false;
       } else {
         if (qType.toLowerCase() !== type.toLowerCase()) return false;
-        if (type === "Special Permits") {
-          const t = spTier(q.Name || "");
-          if (t < fromLv || t > toLv) return false;
-        } else if (type === "Arena") {
-          if (toLv !== 0 && q.Level !== toLv) return false;
+        if (type === "Arena") {
+          if (q.Level < fromLv || q.Level > toLv) return false;
         } else {
           if (q.Level < fromLv || q.Level > toLv) return false;
         }
@@ -699,14 +708,62 @@
   try { saved = localStorage.getItem("mhgu-theme") || saved; } catch (e) {}
   applyTheme(saved);
 
+  // ── Quest type / level filter tree ──────────────────────────────────────
+  (function buildAllTypeTree() {
+    const tree = $("allTypeTree");
+    const ALL_GROUPS = [
+      { label:"Village",         id:"village", levels:LEVELS.ALL.filter(([,v])=>v<=10),           on:true  },
+      { label:"Hub",             id:"hub",     levels:LEVELS.ALL.filter(([,v])=>v>=11&&v<=18),     on:true  },
+      { label:"G-Rank",          id:"pub",     levels:LEVELS.ALL.filter(([,v])=>v>=19&&v<=23),     on:true  },
+      { label:"Special Permits", id:"sp",      levels:LEVELS.ALL.filter(([,v])=>v>=24&&v<=39),     on:true  },
+      { label:"Events",          id:"events",  levels:LEVELS.ALL.filter(([,v])=>v>=40&&v<=42),     on:true  },
+      { label:"Arena",           id:"arena",   levels:LEVELS.ALL.filter(([,v])=>v>=43),            on:false },
+    ];
+    for (const grp of ALL_GROUPS) {
+      const wrap = document.createElement("div"); wrap.className = "agrp";
+      const head = document.createElement("div"); head.className = "ahead";
+      const tw = document.createElement("span"); tw.className = "twist"; tw.textContent = "▸";
+      const grpInput = document.createElement("input"); grpInput.type = "checkbox";
+      grpInput.id = "f_all_grp_" + grp.id; grpInput.checked = grp.on;
+      const nameEl = document.createElement("span"); nameEl.className = "grp-name"; nameEl.textContent = grp.label;
+      const toggleOpen = () => { wrap.classList.toggle("open"); tw.textContent = wrap.classList.contains("open") ? "▾" : "▸"; };
+      tw.addEventListener("click", toggleOpen); nameEl.addEventListener("click", toggleOpen);
+      head.appendChild(tw); head.appendChild(grpInput); head.appendChild(nameEl);
+      const kids = document.createElement("div"); kids.className = "akids";
+      const leafInputs = [];
+      for (const [lbl, val] of grp.levels) {
+        const lf = document.createElement("label"); lf.className = "chk";
+        const input = document.createElement("input"); input.type = "checkbox";
+        input.id = "f_all_lv_" + val; input.checked = grp.on;
+        lf.appendChild(input); lf.appendChild(document.createTextNode(lbl));
+        leafInputs.push(input);
+        input.addEventListener("change", () => {
+          const n = leafInputs.filter(i => i.checked).length;
+          grpInput.checked = n === leafInputs.length;
+          grpInput.indeterminate = n > 0 && n < leafInputs.length;
+          fillLevels();
+          syncTypeOptions();
+        });
+        kids.appendChild(lf);
+      }
+      grpInput.addEventListener("change", () => {
+        leafInputs.forEach(i => i.checked = grpInput.checked);
+        grpInput.indeterminate = false;
+        fillLevels();
+        syncTypeOptions();
+      });
+      wrap.appendChild(head); wrap.appendChild(kids);
+      tree.appendChild(wrap);
+    }
+    syncTypeOptions();
+  })();
+
   // ── Wiring ───────────────────────────────────────────────────────────────
   document.querySelectorAll(".panel-head").forEach(h =>
     h.addEventListener("click", () => {
       const p = h.parentElement; p.dataset.open = p.dataset.open === "true" ? "false" : "true";
     }));
   $("questType").addEventListener("change", fillLevels);
-  ["f_all_village","f_all_hub","f_all_pub","f_all_sp","f_all_events","f_all_arena"].forEach(id =>
-    $(id).addEventListener("change", () => { if ($("questType").value === "ALL") fillLevels(); }));
   $("fromLevel").addEventListener("change", () => syncLevels("from"));
   $("toLevel").addEventListener("change", () => syncLevels("to"));
   document.querySelectorAll("#weaponList,#styleList,#biasList").forEach(c =>
@@ -733,10 +790,18 @@
       const tw = g.querySelector(":scope > .ahead > .twist"); if (tw) tw.textContent = open ? "▾" : "▸";
     });
   }
+  function setAllTypesOpen(open) {
+    document.querySelectorAll("#allTypeTree .agrp").forEach(g => {
+      g.classList.toggle("open", open);
+      const tw = g.querySelector(":scope > .ahead > .twist"); if (tw) tw.textContent = open ? "▾" : "▸";
+    });
+  }
   $("monExpand").addEventListener("click", () => setMonstersOpen(true));
   $("monCollapse").addEventListener("click", () => setMonstersOpen(false));
   $("artExpand").addEventListener("click", () => setArtsOpen(true));
   $("artCollapse").addEventListener("click", () => setArtsOpen(false));
+  $("allExpand").addEventListener("click", () => setAllTypesOpen(true));
+  $("allCollapse").addEventListener("click", () => setAllTypesOpen(false));
   $("statsBtn").addEventListener("click", () => $("statsModal").classList.remove("hidden"));
   $("statsClose").addEventListener("click", () => $("statsModal").classList.add("hidden"));
   $("statsModal").addEventListener("click", (e) => { if (e.target.id === "statsModal") $("statsModal").classList.add("hidden"); });
@@ -751,8 +816,18 @@
   $("helpModal").addEventListener("click", (e) => { if (e.target.id === "helpModal") $("helpModal").classList.add("hidden"); });
 
   function doReset() {
-    ["f_hyper","f_capture","f_egg","f_gathering","f_small","f_oneFaint","f_onSite","p_prowler","p_quests","f_all_arena"].forEach(id => $(id).checked = false);
-    ["f_all_village","f_all_hub","f_all_pub","f_all_sp","f_all_events"].forEach(id => $(id).checked = true);
+    ["f_hyper","f_capture","f_egg","f_gathering","f_small","f_oneFaint","f_onSite","p_prowler","p_quests"].forEach(id => $(id).checked = false);
+    document.querySelectorAll("#allTypeTree .akids input").forEach(cb => {
+      cb.checked = parseInt(cb.id.replace("f_all_lv_",""), 10) < 43; // Arena (43-44) off by default
+    });
+    document.querySelectorAll("#allTypeTree .agrp").forEach(g => {
+      const leaves = [...g.querySelectorAll(".akids input")];
+      const n = leaves.filter(i => i.checked).length;
+      const gc = g.querySelector(":scope>.ahead>input");
+      if (gc) { gc.checked = n === leaves.length; gc.indeterminate = n > 0 && n < leaves.length; }
+    });
+    fillLevels();
+    syncTypeOptions();
     $("f_spArts").checked = true;
     $("f_artLvI").checked = true; $("f_artLvII").checked = true; $("f_artLvIII").checked = true;
     document.querySelectorAll("#weaponList input,#styleList input,#biasList input").forEach(i => i.checked = true);
@@ -795,9 +870,7 @@
         spArts: $("f_spArts").checked,
         artLvI: $("f_artLvI").checked, artLvII: $("f_artLvII").checked, artLvIII: $("f_artLvIII").checked,
         prowler: $("p_prowler").checked, pQuests: $("p_quests").checked,
-        allVillage: $("f_all_village").checked, allHub: $("f_all_hub").checked,
-        allPub: $("f_all_pub").checked, allSP: $("f_all_sp").checked,
-        allEvents: $("f_all_events").checked, allArena: $("f_all_arena").checked,
+        allLevels: Array.from({length:45},(_,i)=>i).filter(i=>{ const cb=$("f_all_lv_"+i); return cb&&!cb.checked; }),
       },
     };
     try { localStorage.setItem(FILTER_KEY, JSON.stringify(d)); } catch (e) {}
@@ -820,13 +893,18 @@
       $("f_artLvII").checked = d.t.artLvII !== false;
       $("f_artLvIII").checked = d.t.artLvIII !== false;
       $("p_prowler").checked = !!d.t.prowler; $("p_quests").checked = !!d.t.pQuests;
-      $("f_all_village").checked = d.t.allVillage !== false;
-      $("f_all_hub").checked = d.t.allHub !== false;
-      $("f_all_pub").checked = d.t.allPub !== false;
-      $("f_all_sp").checked = d.t.allSP !== false;
-      $("f_all_events").checked = d.t.allEvents !== false;
-      $("f_all_arena").checked = !!d.t.allArena;
+      if (Array.isArray(d.t.allLevels)) {
+        const off = new Set(d.t.allLevels);
+        for (let i = 0; i < 45; i++) { const cb = $("f_all_lv_"+i); if (cb) cb.checked = !off.has(i); }
+        document.querySelectorAll("#allTypeTree .agrp").forEach(g => {
+          const leaves = [...g.querySelectorAll(".akids input")];
+          const n = leaves.filter(i => i.checked).length;
+          const gc = g.querySelector(":scope>.ahead>input");
+          if (gc) { gc.checked = n === leaves.length; gc.indeterminate = n > 0 && n < leaves.length; }
+        });
+      }
     }
+    syncTypeOptions();
     if (Array.isArray(d.blacklist)) { blacklist = d.blacklist; renderBlacklist(); }
     refreshMonsterGroups(); refreshArtGroups();
   }

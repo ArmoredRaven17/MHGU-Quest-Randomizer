@@ -38,13 +38,12 @@
           <p class="hint" style="margin-top:6px">S. Permit Filters</p>
           <label class="chk"><input type="checkbox" id="f_oneFaint">S. Permit: One Faint</label>
           <label class="chk"><input type="checkbox" id="f_onSite">S. Permit: On-Site Items</label>
-          <p class="hint" style="margin-top:6px">ALL Mode — Quest Types</p>
-          <label class="chk"><input type="checkbox" id="f_all_village" checked>Village</label>
-          <label class="chk"><input type="checkbox" id="f_all_hub" checked>Hub</label>
-          <label class="chk"><input type="checkbox" id="f_all_pub" checked>G-Rank</label>
-          <label class="chk"><input type="checkbox" id="f_all_sp" checked>Special Permits</label>
-          <label class="chk"><input type="checkbox" id="f_all_events" checked>Events</label>
-          <label class="chk"><input type="checkbox" id="f_all_arena">Arena</label>
+          <p class="hint" style="margin-top:6px">Quest Type Filters</p>
+          <div class="row gap">
+            <button id="allExpand" class="btn tiny">Expand All</button>
+            <button id="allCollapse" class="btn tiny">Collapse All</button>
+          </div>
+          <div id="allTypeTree" class="tree"></div>
         </div>
       </section>
 
@@ -184,7 +183,7 @@
 <div id="helpModal" class="modal hidden">
   <div class="modal-card">
     <h2>How to use</h2>
-    <p><strong>1. Pick a quest type &amp; level.</strong> Choose a Quest Type, then the From / Up to Level range. (Arena uses a single All / Normal / Challenge picker instead of a range.)</p>
+    <p><strong>1. Pick a quest type &amp; level.</strong> Choose a Quest Type, then the From / Up to Level range. (Arena uses a Normal / Challenge range picker.)</p>
     <p><strong>2. Narrow the pool with the filters</strong> on the left:</p>
     <ul>
       <li><strong>Quest Filters</strong> — large-monster hunt quests are always included; check Capture, Hypers, Egg Delivery, Gathering, or Small Monsters to add those categories.</li>
@@ -288,6 +287,6 @@
 </div>
 
 <script src="data.js?v=24"></script>
-<script src="app.js?v=64"></script>
+<script src="app.js?v=70"></script>
 </body>
 </html>
