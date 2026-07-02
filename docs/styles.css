@@ -51,6 +51,12 @@ body{
   width:300px;flex-shrink:0;padding:12px;overflow-y:scroll;scrollbar-gutter:stable;
   background:var(--bg);border-right:1px solid var(--line);
   display:flex;flex-direction:column;gap:8px;
+  background-image:
+    linear-gradient(color-mix(in srgb,var(--bg2) 50%,transparent),color-mix(in srgb,var(--bg2) 50%,transparent)),
+    url('assets/sidebar-background-texture1.png');
+  background-size:auto 100%;
+  background-position:left center;
+  background-repeat:repeat;
 }
 .content{flex:1;padding:18px;overflow-y:hidden;min-width:0;background-size:cover;background-position:center;background-repeat:no-repeat}
 
