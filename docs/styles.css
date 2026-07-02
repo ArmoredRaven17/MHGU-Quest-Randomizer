@@ -31,7 +31,7 @@ body{
 }
 .titlebar-header{
   background-image:
-    linear-gradient(color-mix(in srgb,var(--bg2) 90%,transparent) 0 100%),
+    linear-gradient(color-mix(in srgb,var(--bg2) 75%,transparent) 0 80%),
     url('assets/titlebar-background.png');
   background-size:auto 100%;
   background-position:left center;
