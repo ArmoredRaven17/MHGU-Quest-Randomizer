@@ -86,7 +86,7 @@
     ["Tigrex","#C8A319"],["Rajang","#f1d364"],                       // amber ~47°
     ["Deviljho","#0B570F"],["Rathian","#3a9b3f"],    // green ~124°
     ["Astalos","#14503d"], ["Zinogre","#2dae85"],
-    ["Zamtrios","#005984"], ["Plesioth","#007ebe"],                                        // sky blue ~204°
+    ["Zamtrios","#005984"], ["Plesioth","#0080c1"],                                        // sky blue ~204°
     ["Brachydios","#0B2757"],["Lagiacrus","#0b3f97"],  // cobalt ~222°
     ["G. Magala","#1F0B57","Gore Magala"],["Nerscylla","#4e2fa2"],    // indigo ~256°
     ["Y. Garuga","#62008f","Yian Garuga"],["Chameleos","#8e50ab"],                          // violet ~298°
@@ -679,23 +679,27 @@
   function applyTheme(hex) {
     const c = hexRgb(hex), r = document.documentElement.style;
     const bright = c[0]*0.299 + c[1]*0.587 + c[2]*0.114;
-    const isLight = bright > 230;
+    const isLight = bright > 120;
     if (isLight) {
       r.setProperty("--bg",          css(darken(c,0.95)));
-      r.setProperty("--bg2",         css(darken(c,0.90)));
+      r.setProperty("--bg1",          css(darken(c,.60)));
+      r.setProperty("--bg2",         css(darken(c,0.70)));
       r.setProperty("--hover",       css(darken(c,0.80)));
       r.setProperty("--accent",      css(darken(c,0.70)));
+      r.setProperty("--accent",      css(darken(c,0.90)));
       r.setProperty("--accent-hover",css(darken(c,0.78)));
     } else {
-      r.setProperty("--bg",          css(deriveBg(c)));
-      r.setProperty("--bg2",         css(darken(c,0.70)));
+      r.setProperty("--bg",          css(darken(c,0.80)));
+      r.setProperty("--bg1",          css(darken(c,.50)));
+      r.setProperty("--bg2",         css(darken(c,0.90)));
       r.setProperty("--hover",       css(darken(c,0.30)));
-      r.setProperty("--accent",      css(darken(lighten(c,0.25),0.81)));
+      r.setProperty("--accent",     css(darken(c,0.90)));
       r.setProperty("--accent-hover",css(darken(lighten(c,0.36),0.81)));
     }
-    r.setProperty("--text",     isLight ? "#111111" : "#f3f3f3");
-    r.setProperty("--text-dim", isLight ? "#000000" : "#ffffff");
-    r.setProperty("--line",     isLight ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.12)");
+    r.setProperty("--text",     isLight ? "#000000" : "#ffffff");
+    r.setProperty("--hint",     isLight ? "#000000" : "#ffffff");
+    r.setProperty("--text-dim", isLight ? "#000000" : "#fffffff5");
+    r.setProperty("--line",     isLight ? "rgba(0,0,0,0.15)" : "rgba(11, 8, 8, 0.12)");
     r.setProperty("--card",     isLight ? "rgba(0,0,0,0.12)" : "rgba(255,255,255,0.05)");
     try { localStorage.setItem("mhgu-theme", hex); } catch (e) {}
     document.querySelectorAll(".swatch").forEach(s => s.classList.toggle("sel", s.dataset.hex === hex));
