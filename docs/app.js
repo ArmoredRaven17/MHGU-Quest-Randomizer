@@ -672,29 +672,29 @@
     const [r,g,b] = hi===0?[c,x,0]:hi===1?[x,c,0]:hi===2?[0,c,x]:hi===3?[0,x,c]:hi===4?[x,0,c]:[c,0,x];
     return [r+m, g+m, b+m].map(v => clamp(v*255));
   };
-  const darken  = (rgb, f) => { const [h,s,l] = rgbToHsl(rgb); return hslToRgb([h, s, clamp01(l*f)]); };
-  const lighten = (rgb, b) => { const [h,s,l] = rgbToHsl(rgb); return hslToRgb([h, s, clamp01(l+(1-l)*b)]); };
+  const darken     = (rgb, f) => { const [h,s,l] = rgbToHsl(rgb); return hslToRgb([h, s, clamp01(l*f)]); };
+  const lighten    = (rgb, b) => { const [h,s,l] = rgbToHsl(rgb); return hslToRgb([h, s, clamp01(l+(1-l)*b)]); };
+  const desaturate = (rgb, f) => { const [h,s,l] = rgbToHsl(rgb); return hslToRgb([h, clamp01(s*f), l]); };
   const css = (rgb) => `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
   const deriveBg = (rgb) => { const [h,s,l] = rgbToHsl(rgb); return hslToRgb([h, clamp01(s*0.74), clamp01(l*0.35)]); };
   function applyTheme(hex) {
     const c = hexRgb(hex), r = document.documentElement.style;
     const bright = c[0]*0.299 + c[1]*0.587 + c[2]*0.114;
-    const isLight = bright > 120;
+    const isLight = bright > 230;
     if (isLight) {
       r.setProperty("--bg",          css(darken(c,0.95)));
-      r.setProperty("--bg1",          css(darken(c,.60)));
-      r.setProperty("--bg2",         css(darken(c,0.70)));
-      r.setProperty("--hover",       css(darken(c,0.80)));
-      r.setProperty("--accent",      css(darken(c,0.70)));
-      r.setProperty("--accent",      css(darken(c,0.90)));
-      r.setProperty("--accent-hover",css(darken(c,0.78)));
-    } else {
-      r.setProperty("--bg",          css(darken(c,0.80)));
-      r.setProperty("--bg1",          css(darken(c,.50)));
+      r.setProperty("--bg1",          css(darken(c,.80)));
       r.setProperty("--bg2",         css(darken(c,0.90)));
       r.setProperty("--hover",       css(darken(c,0.30)));
-      r.setProperty("--accent",     css(darken(c,0.90)));
-      r.setProperty("--accent-hover",css(darken(lighten(c,0.36),0.81)));
+      r.setProperty("--accent",     css(darken(c,0.7)));
+      r.setProperty("--accent-hover",css(lighten(c,0.9)));
+    } else {
+      r.setProperty("--bg",          css(darken(c,.70)));
+      r.setProperty("--bg1",         css(darken(c,.80)));
+      r.setProperty("--bg2",         css(darken(c,0.95)));
+      r.setProperty("--hover",       css(darken(c,0.30)));
+      r.setProperty("--accent",     css(lighten(c,0.7)));
+      r.setProperty("--accent-hover",css(darken(c,0.7)));
     }
     r.setProperty("--text",     isLight ? "#000000" : "#ffffff");
     r.setProperty("--hint",     isLight ? "#000000" : "#ffffff");
