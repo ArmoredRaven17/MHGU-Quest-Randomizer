@@ -7,12 +7,12 @@
 <title>MHGU Quest Randomizer</title>
 <link rel="icon" href="assets/MonsterIcons/MHGU-Question_Mark_Icon.webp">
 <!-- Bump ?v= on any styles/app/data change so browsers fetch fresh copies (no hard-refresh needed) -->
-<link rel="stylesheet" href="styles.css?v=81">
+<link rel="stylesheet" href="styles.css?v=83">
 </head>
 <body>
 <div id="app">
   <!-- Title bar -->
-  <header class="titlebar">
+  <header class="titlebar titlebar-header">
     <img class="title-icon" src="assets/MonsterIcons/MHGU-Question_Mark_Icon.webp" alt="">
     <h1>MHGU Quest Randomizer</h1>
     <button id="helpBtn" class="icon-btn" title="Help" aria-label="Help">?</button>
@@ -26,7 +26,7 @@
     <aside class="sidebar">
       <button id="resetBtn" class="btn block">Reset Filters</button>
 
-      <section class="panel" data-open="false">
+      <section class="panel" id="questFiltersPanel" data-open="false">
         <button class="panel-head">Quest Filters <span class="chev">&#9662;</span></button>
         <div class="panel-body">
           <p class="hint">Large-monster quests are always included — check these to add more</p>
@@ -274,6 +274,7 @@
     <p><strong>Icons:</strong> <a href="https://monsterhunter.fandom.com" target="_blank" rel="noopener">monsterhunter.fandom.com</a></p>
     <p><strong>Hyper UI icon:</strong> <a href="https://monsterhunterwiki.org" target="_blank" rel="noopener">monsterhunterwiki.org</a></p>
     <p><strong>Result card background:</strong> Edited from the developer's in-game screenshot using Sketchbook Pro.</p>
+    <p><strong>Content backgrounds:</strong> jtr3xx</p>
     <p><strong>Quest badges:</strong> <span class="capture-pill" style="position:static;font-size:11px">Capture</span> <span class="hyper-pill" style="position:static;font-size:11px">Hyper</span> <span class="prowler-pill" style="position:static;font-size:11px">Prowler</span> <span class="arena-pill" style="position:static;font-size:11px">Arena</span> <span class="event-pill" style="position:static;font-size:11px">Event</span></p>
     <p class="muted">Monster Hunter content is owned by Capcom. This tool is not affiliated with or endorsed by Capcom.</p>
     <div class="row end gap">
@@ -287,6 +288,9 @@
   <div class="modal-card">
     <h2>Theme</h2>
     <div id="swatches" class="swatches"></div>
+    <hr class="modal-divider">
+    <p style="margin:0 0 8px;font-size:13px;font-weight:600">Content Background</p>
+    <div id="bgGrid" class="bg-grid"></div>
     <div class="row end gap">
       <button id="themeClose" class="btn">Close</button>
     </div>
@@ -294,6 +298,6 @@
 </div>
 
 <script src="data.js?v=25"></script>
-<script src="app.js?v=91"></script>
+<script src="app.js?v=92"></script>
 </body>
 </html>

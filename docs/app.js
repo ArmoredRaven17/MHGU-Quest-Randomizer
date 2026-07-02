@@ -81,20 +81,20 @@
   // Theme colors — each named after the monster assigned to that hue in the theme picker.
   // Ordered chromatically: hue 0°→360°, dark→light within each hue; earth tones; neutrals dark→light; white.
   const COLORS = [
-    ["Teostra","#570B0B"],["Rathalos","#be2828"], // red ~0°
-    ["Tetsucabra","#c65900"], ["Agnaktor","#fd8b2f"],  // orange ~30°
-    ["Tigrex","#C8A319"],["Rajang","#EDD473"],                       // amber ~47°
-    ["Deviljho","#0B570F"],["Rathian","#19C822"],    // green ~124°
-    ["Astalos","#14503d"], ["Zinogre","#19C890"],
-    ["Zamtrios","#159999"], ["Plesioth","#25cece"],                                        // sky blue ~204°
-    ["Brachydios","#0B2757"],["Lagiacrus","#1959C8"],  // cobalt ~222°
-    ["G. Magala","#1F0B57","Gore Magala"],["Nerscylla","#613fbe"],    // indigo ~256°
-    ["Y. Garuga","#62008f","Yian Garuga"],["Chameleos","#923db9"],                          // violet ~298°
-    ["Mizutsune","#D84696"],["Congalala","#d180ac"],                                        // pink ~327°
-    ["Duramboros","#5a411f"],["Diablos","#966A2C"],
-    ["Barroth","#B57C45"],["Bulldrome","#b59271"], 
-    ["Forbidden","#1E2025","Question Mark"],["K. Daora","#505358","Kushala Daora"],["Valstrax","#81858E"],  // neutrals dark→light
-    ["Khezu","#FFFFFF"],                                                                     // white
+    ["Teostra","#570B0B"],["Rathalos","#b51717"], // red ~0°
+    ["Tetsucabra","#c65900"], ["Agnaktor","#fc933e"],  // orange ~30°
+    ["Tigrex","#C8A319"],["Rajang","#f1d364"],                       // amber ~47°
+    ["Deviljho","#0B570F"],["Rathian","#3a9b3f"],    // green ~124°
+    ["Astalos","#14503d"], ["Zinogre","#2dae85"],
+    ["Zamtrios","#159999"], ["Plesioth","#50ecec"],                                        // sky blue ~204°
+    ["Brachydios","#0B2757"],["Lagiacrus","#0b3f97"],  // cobalt ~222°
+    ["G. Magala","#1F0B57","Gore Magala"],["Nerscylla","#4e2fa2"],    // indigo ~256°
+    ["Y. Garuga","#62008f","Yian Garuga"],["Chameleos","#8e50ab"],                          // violet ~298°
+    ["Mizutsune","#D84696"],["Congalala","#ce79a8"],                                        // pink ~327°
+    ["Duramboros","#5a411f"],["Diablos","#997c54"],
+    ["Barroth","#B57C45"],["Bulldrome","#cfaa87"], 
+    ["K. Daora","#505358","Kushala Daora"],["Valstrax","#aeb5c1"],  // neutrals dark→light
+    ["Forbidden","#1E2025","Question Mark"],["Khezu","#FFFFFF"],                                                                     // white
   ];
   const COLORS_HEX = Object.fromEntries(COLORS.map(([name, hex]) => [hex.toUpperCase(), name]));
   // Display name → icon name override (for swatches with shortened labels)
@@ -719,6 +719,60 @@
   let saved = "#4A4A4A";
   try { saved = localStorage.getItem("mhgu-theme") || saved; } catch (e) {}
   applyTheme(saved);
+
+  // ── Guild card background picker ─────────────────────────────────────────
+  const GUILD_BG_FILES = [
+    "HD_ui_guild_01_ID.PNG","HD_ui_guild_02_ID.PNG","HD_ui_guild_03_ID.PNG",
+    "HD_ui_guild_04_ID.PNG","HD_ui_guild_05_ID.PNG","HD_ui_guild_06_ID.PNG",
+    "HD_ui_guild_07_ID.PNG","HD_ui_guild_08_ID.PNG","HD_ui_guild_09_ID.PNG",
+    "HD_ui_guild_10_ID.PNG","HD_ui_guild_11_ID.PNG","HD_ui_guild_12_ID.PNG",
+    "HD_ui_guild_13_ID.PNG","HD_ui_guild_14_ID.PNG","HD_ui_guild_15_ID.PNG",
+    "HD_ui_guild_16_ID.PNG","HD_ui_guild_17_ID.PNG","HD_ui_guild_18_ID.PNG",
+    "HD_ui_guild_19_ID.PNG","HD_ui_guild_20_ID.PNG","HD_ui_guild_21_ID.PNG",
+    "HD_ui_guild_22_ID.PNG","HD_ui_guild_23_ID.PNG","HD_ui_guild_24_ID.PNG",
+    "HD_ui_guild_25_ID.PNG","HD_ui_guild_26_ID.PNG","HD_ui_guild_27_ID.PNG",
+    "HD_ui_guild_28_ID.PNG","HD_ui_guild_29_ID.PNG","HD_ui_guild_30_ID.PNG",
+    "HD_ui_guild_31_ID.PNG","HD_ui_guild_32_ID.PNG","HD_ui_guild_33_ID.PNG",
+    "HD_ui_guild_34_ID.PNG","HD_ui_guild_35_ID.PNG","HD_ui_guild_36_ID.PNG",
+    "HD_ui_guild_37_ID.PNG","HD_ui_guild_38_ID.PNG","HD_ui_guild_39_ID.PNG",
+    "HD_ui_guild_40_ID.PNG","HD_ui_guild_41_ID.PNG","HD_ui_guild_42_ID.PNG",
+    "HD_ui_guild_43_ID.PNG","HD_ui_guild_44_ID.PNG","HD_ui_guild_45_ID.PNG",
+    "HD_ui_guild_46_ID.PNG","HD_ui_guild_47_ID.PNG","HD_ui_guild_48_ID.PNG",
+    "HD_ui_guild_49_ID.PNG","HD_ui_guild_50_ID.PNG","HD_ui_guild_51_ID.PNG",
+    "HD_ui_guild_52_ID.PNG","HD_ui_guild_53_ID.PNG","HD_ui_guild_54_ID.PNG",
+    "HD_ui_guild_55_ID.PNG","HD_ui_guild_57_ID.PNG","HD_ui_guild_58_ID.PNG",
+    "HD_ui_guild_64_ID.PNG","HD_ui_guild_68_ID.PNG",
+    "HD_ui_guild_95_ID.PNG","HD_ui_guild_96_ID.PNG","HD_ui_guild_97_ID.PNG",
+    "HD_ui_guild_98_ID.PNG","HD_ui_guild_99_ID.PNG","HD_ui_guild_100_ID.PNG",
+    "HD_ui_guild_102_ID.PNG","HD_ui_guild_103_ID.PNG","HD_ui_guild_104_ID.PNG",
+    "HD_ui_guild_105_ID.PNG","HD_ui_guild_106_ID.PNG","HD_ui_guild_107_ID.PNG",
+    "HD_ui_guild_108_ID.PNG","HD_ui_guild_109_ID.PNG","HD_ui_guild_110_ID.PNG",
+    "HD_ui_guild_111_ID.PNG","HD_ui_guild_112_ID.PNG","HD_ui_guild_113_ID.PNG",
+    "HD_ui_guild_114_ID.PNG","HD_ui_guild_115_ID.PNG",
+  ];
+  function applyBg(file) {
+    const el = document.querySelector(".content");
+    if (!el) return;
+    el.style.backgroundImage = file ? `url('assets/GuildCardBG/${encodeURIComponent(file)}')` : "";
+    try { localStorage.setItem("mhgu-bg", file || ""); } catch (e) {}
+    document.querySelectorAll(".bg-thumb").forEach(t => t.classList.toggle("sel", t.dataset.file === (file || "")));
+  }
+  (function buildBgGrid() {
+    const grid = $("bgGrid");
+    const none = document.createElement("div");
+    none.className = "bg-thumb none-thumb"; none.dataset.file = "";
+    none.textContent = "None";
+    none.addEventListener("click", () => applyBg(""));
+    grid.appendChild(none);
+    GUILD_BG_FILES.forEach(f => {
+      const d = document.createElement("div");
+      d.className = "bg-thumb"; d.dataset.file = f;
+      d.style.backgroundImage = `url('assets/GuildCardBG/${encodeURIComponent(f)}')`;
+      d.addEventListener("click", () => applyBg(f));
+      grid.appendChild(d);
+    });
+  })();
+  try { const savedBg = localStorage.getItem("mhgu-bg") || ""; if (savedBg) applyBg(savedBg); } catch (e) {}
 
   // ── Quest type / level filter tree ──────────────────────────────────────
   (function buildAllTypeTree() {
