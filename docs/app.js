@@ -86,7 +86,7 @@
     ["Tigrex","#C8A319"],["Rajang","#f1d364"],                       // amber ~47°
     ["Deviljho","#0B570F"],["Rathian","#3a9b3f"],    // green ~124°
     ["Astalos","#14503d"], ["Zinogre","#2dae85"],
-    ["Zamtrios","#159999"], ["Plesioth","#50ecec"],                                        // sky blue ~204°
+    ["Zamtrios","#005984"], ["Plesioth","#007ebe"],                                        // sky blue ~204°
     ["Brachydios","#0B2757"],["Lagiacrus","#0b3f97"],  // cobalt ~222°
     ["G. Magala","#1F0B57","Gore Magala"],["Nerscylla","#4e2fa2"],    // indigo ~256°
     ["Y. Garuga","#62008f","Yian Garuga"],["Chameleos","#8e50ab"],                          // violet ~298°
