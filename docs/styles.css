@@ -76,7 +76,7 @@ body{
 .panel-head:hover{background:#ffffff0d}
 .chev{transition:transform .15s;font-size:20px;font-weight:700;color:transparent;}
 .panel[data-open="true"] .chev{transform:rotate(180deg)}
-.panel-body{display:none;padding:6px 12px 12px;flex-direction:column;gap:4px;background:var(--bg)}
+.panel-body{display:none;padding:6px 12px 12px;flex-direction:column;gap:4px;}
 .panel[data-open="true"] .panel-body{display:flex}
 .panel-head{
   background-image:
@@ -88,9 +88,9 @@ body{
 }
 .panel-body{
   background-image:
-    linear-gradient(color-mix(in srgb,var(--bg1) 80%,transparent),color-mix(in srgb,var(--bg1) 80%,transparent)),
+    linear-gradient(color-mix(in srgb,var(--bg1) 60%,transparent),color-mix(in srgb,var(--bg1) 60%,transparent)),
     url('assets/panel-body-bg.png');
-  background-size:auto 100%;
+  background-size:contain 100%;
   background-position:left center;
   background-repeat:repeat;
 }
