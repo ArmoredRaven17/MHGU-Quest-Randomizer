@@ -7,7 +7,7 @@
 <title>MHGU Quest Randomizer</title>
 <link rel="icon" href="assets/MonsterIcons/MHGU-Question_Mark_Icon.webp">
 <!-- Bump ?v= on any styles/app/data change so browsers fetch fresh copies (no hard-refresh needed) -->
-<link rel="stylesheet" href="styles.css?v=84">
+<link rel="stylesheet" href="styles.css?v=90">
 </head>
 <body>
 <div id="app">
@@ -115,6 +115,24 @@
       </section>
 
       <section class="panel" data-open="false">
+        <button class="panel-head">Challenges <span class="chev">&#9662;</span></button>
+        <div class="panel-body">
+          <p class="hint">Custom conditions rolled with each quest</p>
+          <div class="ch-add">
+            <input type="text" id="chText" placeholder="Condition name" maxlength="21">
+            <input type="number" id="chChance" value="10" min="1" max="100" style="width:52px"> %
+            <button id="chAdd" class="btn tiny">Add</button>
+          </div>
+          <div class="row gap" style="margin-top:8px;align-items:center;font-size:12px">
+            <span>Roll up to</span>
+            <input type="number" id="challengeCount" value="1" min="1" max="8" style="width:40px">
+            <span>condition(s) per quest</span>
+          </div>
+          <div id="chList" class="bl-list"></div>
+        </div>
+      </section>
+
+      <section class="panel" data-open="false">
         <button class="panel-head">Prowler <span class="chev">&#9662;</span></button>
         <div class="panel-body">
           <label class="chk"><input type="checkbox" id="p_prowler">Prowler?</label>
@@ -184,6 +202,10 @@
               </div>
               <ul id="r_arts" class="arts"></ul>
             </div>
+          </div>
+          <div id="r_challenges" class="rc-challenges hidden">
+            <div class="r-challlabel">Challenges</div>
+            <ul id="r_challengeList" class="challenges-list"></ul>
           </div>
           <div class="rc-footer">
             <button id="copyResultBtn" class="btn tiny">Copy to Clipboard</button>
@@ -308,6 +330,6 @@
 </div>
 
 <script src="data.js?v=27"></script>
-<script src="app.js?v=98"></script>
+<script src="app.js?v=105"></script>
 </body>
 </html>

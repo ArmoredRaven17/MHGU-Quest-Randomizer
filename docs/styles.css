@@ -234,6 +234,19 @@ body{
 .bg-thumb.sel{border-color:#fff}
 .bg-thumb.none-thumb{background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text-dim)}
 
+/* Challenges */
+.ch-add{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:6px }
+.ch-add input[type="text"]{flex:1;min-width:0;border:1px solid var(--line);border-radius:7px;padding:5px 8px;font-size:13px;font-family:inherit}
+.ch-edit-text,.ch-edit-chance{border:1px solid transparent;border-radius:5px;padding:2px 5px;font-size:12px;font-family:inherit;transition:background .15s,border-color .15s}
+.ch-edit-text{flex:1;min-width:0}
+.ch-edit-chance{width:46px;text-align:center}
+.ch-edit-text:hover,.ch-edit-text:focus,.ch-edit-chance:hover,.ch-edit-chance:focus{outline:none}
+.ch-pct{font-size:12px;opacity:.7;flex-shrink:0}
+.r-challlabel{font-size:1.8cqi;color:#4D391F;text-transform:uppercase;letter-spacing:.5px}
+.rc-challenges{position:absolute;top:28%;left:63%;right:2%;max-height:32%;overflow:hidden}
+.challenges-list{margin:4px 0 0;padding-left:18px;list-style:disc;font-size:2.2cqi;color:#4D391F}
+.challenges-list li{margin-bottom:2px;white-space:nowrap}
+
 /* Blacklist */
 .bl-add{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
 .bl-add select{background:var(--bg2);color:var(--text);border:1px solid var(--line);border-radius:7px;padding:5px 8px;font-size:13px;flex:1;min-width:80px;font-family:inherit}
