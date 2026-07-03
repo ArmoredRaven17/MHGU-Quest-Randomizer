@@ -790,7 +790,18 @@
   function applyBg(file) {
     const el = document.querySelector(".content");
     if (!el) return;
-    el.style.backgroundImage = file ? `url('assets/GuildCardBG/${encodeURIComponent(file)}')` : "";
+    if (!file) {
+      el.style.backgroundImage = "";
+    } else {
+      const url = `assets/GuildCardBG/${encodeURIComponent(file)}`;
+      const img = new Image();
+      img.src = url;
+      if (img.complete) {
+        el.style.backgroundImage = `url('${url}')`;
+      } else {
+        img.onload = () => { el.style.backgroundImage = `url('${url}')`; };
+      }
+    }
     try { localStorage.setItem("mhgu-bg", file || ""); } catch (e) {}
     document.querySelectorAll(".bg-thumb").forEach(t => t.classList.toggle("sel", t.dataset.file === (file || "")));
   }
@@ -802,9 +813,11 @@
     none.addEventListener("click", () => applyBg(""));
     grid.appendChild(none);
     GUILD_BG_FILES.forEach(f => {
+      const url = `assets/GuildCardBG/${encodeURIComponent(f)}`;
       const d = document.createElement("div");
       d.className = "bg-thumb"; d.dataset.file = f;
-      d.style.backgroundImage = `url('assets/GuildCardBG/${encodeURIComponent(f)}')`;
+      d.style.backgroundImage = `url('${url}')`;
+      d.addEventListener("mouseenter", () => { const p = new Image(); p.src = url; });
       d.addEventListener("click", () => applyBg(f));
       grid.appendChild(d);
     });
