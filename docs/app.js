@@ -161,6 +161,32 @@
   // Strip a trailing level suffix so "Haste Rain I" and "Haste Rain III" compare equal —
   // the same art can't be equipped at two levels.
   const artBase = (n) => n.replace(/ (III|II|I)$/, "");
+  // Parse a small monster name from quest objective for icon lookup.
+  const smMonsterName = (main) => {
+    if (!main) return "";
+    const KEEP_S = new Set(["Cephalos"]);
+    const depl = (n) => KEEP_S.has(n) ? n : n.replace(/xes$/, "x").replace(/s$/, "");
+    // "Slay/Defeat a total of N MonsterA or/and MonsterB" → first monster
+    let m = main.match(/(?:Slay|Defeat) a total of \d+ ([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)/);
+    if (m) return depl(m[1]);
+    // "Slay N Name" — capital letter excludes "before time expires" etc.
+    m = main.match(/Slay \d+ ([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)/);
+    if (m) return depl(m[1]);
+    return "";
+  };
+  // Pick the quest-category icon for gathering/egg quests based on the delivered item keyword.
+  function gatheringIcon(main) {
+    const m = (main || "").toLowerCase();
+    if (m.includes("egg"))                                                                           return "assets/MonsterIcons/MHGU-Egg_Quest_Icon.webp";
+    if (m.includes("mushroom"))                                                                      return "assets/MonsterIcons/MHGU-Mushroom_Quest_Icon.webp";
+    if (m.includes("fish") || m.includes("sashimi") || m.includes("piscine"))                       return "assets/MonsterIcons/MHGU-Fish_Quest_Icon.webp";
+    if (m.includes("moth") || m.includes("cricket") || m.includes("rhino") || m.includes("honey")) return "assets/MonsterIcons/MHGU-Bug_Quest_Icon.webp";
+    if (m.includes("ore") || m.includes("coal") || m.includes("stone") || m.includes("chunk") || m.includes("rock")) return "assets/MonsterIcons/MHGU-Ore_Quest_Icon.webp";
+    if (m.includes("bone") || m.includes("fossil") || m.includes("amber") || m.includes("shell") ||
+        m.includes("horn") || m.includes("brain") || m.includes("husk") || m.includes("gut")  ||
+        m.includes("tongue") || m.includes("liver") || m.includes("oil") || m.includes("fur"))      return "assets/MonsterIcons/MHGU-Bone_Quest_Icon.webp";
+    return "assets/MonsterIcons/MHGU-Wycademy_Quest_Icon.png";
+  }
   function rollArt(weapon, ex1, ex2, excl) {
     const wn = normWeapon(weapon);
     const b1 = ex1 ? artBase(ex1) : null, b2 = ex2 ? artBase(ex2) : null;
@@ -521,9 +547,12 @@
     $("r_hyperOverlay").classList.toggle("hidden", !quest.Hyper || isDeviant || isMultiMonster);
 
     const iconMonster = (quest.Type === "Special Permits" && quest.Name)
-      ? spDeviant(quest.Name, quest.Monster) : (quest.Monster || "");
+      ? spDeviant(quest.Name, quest.Monster)
+      : (quest.Monster || (quest.SmMonsters ? smMonsterName(quest.Main) : ""));
     const img = $("r_target");
-    img.src = monsterIcon(iconMonster);
+    img.src = (quest.Egg || quest.Gathering)
+      ? gatheringIcon(quest.Main)
+      : monsterIcon(iconMonster);
     img.onerror = () => { img.onerror = null; img.src = FALLBACK_ICON; };
 
     // Arena: preset equipment sets from the quest description. Hunter arenas offer a
@@ -835,7 +864,10 @@
   // ── Wiring ───────────────────────────────────────────────────────────────
   document.querySelectorAll(".panel-head").forEach(h =>
     h.addEventListener("click", () => {
-      const p = h.parentElement; p.dataset.open = p.dataset.open === "true" ? "false" : "true";
+      const p = h.parentElement;
+      const opening = p.dataset.open !== "true";
+      document.querySelectorAll(".panel").forEach(panel => panel.dataset.open = "false");
+      p.dataset.open = opening ? "true" : "false";
     }));
   $("questType").addEventListener("change", fillLevels);
   $("fromLevel").addEventListener("change", () => syncLevels("from"));
