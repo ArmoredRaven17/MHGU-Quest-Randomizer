@@ -813,11 +813,12 @@
     none.addEventListener("click", () => applyBg(""));
     grid.appendChild(none);
     GUILD_BG_FILES.forEach(f => {
-      const url = `assets/GuildCardBG/${encodeURIComponent(f)}`;
+      const thumbUrl = `assets/GuildCardBG/thumbs/${encodeURIComponent(f.replace(/\.PNG$/i, ".webp"))}`;
+      const fullUrl  = `assets/GuildCardBG/${encodeURIComponent(f)}`;
       const d = document.createElement("div");
       d.className = "bg-thumb"; d.dataset.file = f;
-      d.style.backgroundImage = `url('${url}')`;
-      d.addEventListener("mouseenter", () => { const p = new Image(); p.src = url; });
+      d.style.backgroundImage = `url('${thumbUrl}')`;
+      d.addEventListener("mouseenter", () => { const p = new Image(); p.src = fullUrl; });
       d.addEventListener("click", () => applyBg(f));
       grid.appendChild(d);
     });
