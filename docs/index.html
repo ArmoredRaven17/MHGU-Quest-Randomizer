@@ -29,9 +29,12 @@
       <section class="panel" id="questFiltersPanel" data-open="false">
         <button class="panel-head">Quest Filters <span class="chev">&#9662;</span></button>
         <div class="panel-body">
-          <p class="hint">Large-monster quests are always included — check these to add more</p>
-          <label class="chk"><input type="checkbox" id="f_hyper">Hypers</label>
-          <label class="chk"><input type="checkbox" id="f_capture">Capture</label>
+          <p class="hint">Uncheck to exclude from pool</p>
+          <label class="chk"><input type="checkbox" id="f_large" checked>Large Monsters</label>
+          <div style="margin-left:18px;display:flex;flex-direction:column;gap:4px">
+            <label class="chk"><input type="checkbox" id="f_hyper">Hypers</label>
+            <label class="chk"><input type="checkbox" id="f_capture">Capture</label>
+          </div>
           <label class="chk"><input type="checkbox" id="f_egg">Egg Delivery</label>
           <label class="chk"><input type="checkbox" id="f_gathering">Gathering</label>
           <label class="chk"><input type="checkbox" id="f_small">Small Monsters</label>
@@ -298,6 +301,6 @@
 </div>
 
 <script src="data.js?v=25"></script>
-<script src="app.js?v=92"></script>
+<script src="app.js?v=93"></script>
 </body>
 </html>
