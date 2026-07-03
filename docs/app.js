@@ -1034,8 +1034,8 @@
   $("helpModal").addEventListener("click", (e) => { if (e.target.id === "helpModal") $("helpModal").classList.add("hidden"); });
 
   function doReset() {
-    $("f_large").checked = true;
-    ["f_hyper","f_capture","f_egg","f_gathering","f_small","f_multi","f_oneFaint","f_onSite","p_prowler","p_quests"].forEach(id => $(id).checked = false);
+    ["f_large","f_hyper","f_capture","f_egg","f_gathering","f_small","f_multi","f_oneFaint","f_onSite"].forEach(id => $(id).checked = true);
+    ["p_prowler","p_quests"].forEach(id => $(id).checked = false);
     document.querySelectorAll("#allTypeTree .akids input").forEach(cb => {
       cb.checked = parseInt(cb.id.replace("f_all_lv_",""), 10) < 43; // Arena (43-44) off by default
     });
