@@ -43,6 +43,13 @@
   // Each entry: {weapon, style}. When a weapon is rolled whose blacklisted styles
   // cover all available styles, the weapon itself is rerolled.
   let blacklist = [];
+  const DEFAULT_CHALLENGES = [
+    { text: "No Armor",         chance: 10, checked: false },
+    { text: "No Items",         chance: 10, checked: false },
+    { text: "No Active Skills", chance: 10, checked: false },
+    { text: "Use Joke Weapon",  chance: 10, checked: false },
+  ];
+  let challenges = DEFAULT_CHALLENGES.map(c => Object.assign({}, c));
 
   const DEVIANT_FULL = {
     redhelm:"Redhelm Arzuros", snowbaron:"Snowbaron Lagombi", stonefist:"Stonefist Hermitaur",
@@ -254,6 +261,73 @@
     });
     renderBlacklist();
   })();
+
+  // Challenges UI
+  function renderChallenges() {
+    const el = $("chList"); el.innerHTML = "";
+    if (!challenges.length) {
+      el.innerHTML = '<p class="hint" style="margin:0">No conditions added yet.</p>';
+      return;
+    }
+    challenges.forEach((c, i) => {
+      const row = document.createElement("div"); row.className = "bl-tag";
+
+      const chk = document.createElement("label"); chk.className = "chk"; chk.style.flexShrink = "0";
+      const cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = c.checked !== false;
+      chk.appendChild(cb);
+
+      const txt = document.createElement("input"); txt.type = "text"; txt.className = "ch-edit-text";
+      txt.value = c.text; txt.maxLength = 21;
+      if (c.checked === false) txt.style.opacity = ".45";
+
+      const num = document.createElement("input"); num.type = "number"; num.className = "ch-edit-chance";
+      num.value = c.chance; num.min = 1; num.max = 100;
+
+      const pct = document.createElement("span"); pct.className = "ch-pct"; pct.textContent = "%";
+
+      const btn = document.createElement("button"); btn.title = "Remove"; btn.setAttribute("aria-label", "Remove"); btn.textContent = "×";
+
+      cb.addEventListener("change", function() {
+        challenges[i].checked = this.checked; saveFilters();
+        txt.style.opacity = this.checked ? "" : ".45";
+      });
+      txt.addEventListener("change", function() {
+        const v = this.value.trim();
+        if (v) { challenges[i].text = v; saveFilters(); }
+        else this.value = challenges[i].text;
+      });
+      num.addEventListener("change", function() {
+        const v = Math.min(100, Math.max(1, parseInt(this.value) || 1));
+        this.value = v; challenges[i].chance = v; saveFilters();
+      });
+      btn.addEventListener("click", () => {
+        challenges.splice(i, 1); renderChallenges(); saveFilters();
+      });
+
+      row.append(chk, txt, num, pct, btn);
+      el.appendChild(row);
+    });
+  }
+  (function initChallenges() {
+    $("chAdd").addEventListener("click", () => {
+      const text = $("chText").value.trim();
+      const chance = Math.min(100, Math.max(1, parseInt($("chChance").value) || 10));
+      if (!text) return;
+      challenges.push({ checked: false, text, chance });
+      renderChallenges();
+      saveFilters();
+      $("chText").value = "";
+    });
+    $("chText").addEventListener("keydown", e => { if (e.key === "Enter") $("chAdd").click(); });
+    renderChallenges();
+  })();
+  function rollChallenges() {
+    if (!challenges.length) return [];
+    const count = Math.min(8, Math.max(1, parseInt($("challengeCount").value) || 1));
+    const eligible = challenges.filter(c => Math.random() * 100 < c.chance).filter(c => c.checked === true);
+    eligible.sort(() => Math.random() - 0.5);
+    return eligible.slice(0, count);
+  }
   // Biases (default ON)
   (function () {
     const c = $("biasList"); c.innerHTML = "";
@@ -666,6 +740,15 @@
         const li = document.createElement("li"); li.textContent = t; arts.appendChild(li);
       });
     }
+    // Roll challenges
+    const rolled = rollChallenges();
+    const chDiv  = $("r_challenges");
+    const chList = $("r_challengeList");
+    chList.innerHTML = "";
+    rolled.forEach(c => {
+      const li = document.createElement("li"); li.textContent = c.text; chList.appendChild(li);
+    });
+    chDiv.classList.toggle("hidden", rolled.length === 0);
   }
 
   $("copyResultBtn").addEventListener("click", () => {
@@ -676,9 +759,12 @@
     const style       = $("r_style").textContent;
     const artItems    = Array.from($("r_arts").children).map(li => li.textContent);
 
+    const chItems = Array.from($("r_challengeList").children).map(li => li.textContent);
+
     const lines = [`Quest: ${name}`, `Locale: ${$("r_locale").textContent}`, `Weapon: ${weapon}`];
     if (!styleHidden) lines.push(`${styleLabel}: ${style}`);
     if (artItems.length) lines.push(`Hunter Art(s): ${artItems.join(" / ")}`);
+    if (chItems.length) lines.push(`Challenges: ${chItems.join(", ")}`);
 
     navigator.clipboard.writeText(lines.join(" |\n")).then(() => {
       const btn = $("copyResultBtn");
@@ -995,6 +1081,8 @@
       monsters: monsterChecks.filter(m => !m.input.checked).map(m => m.name),
       arts: artLeaves.filter(l => !l.input.checked).map(l => l.name),
       blacklist: blacklist.slice(),
+      challenges: challenges.slice(),
+      challengeCount: parseInt($("challengeCount").value) || 1,
       t: {
         large: $("f_large").checked,
         hyper: $("f_hyper").checked, capture: $("f_capture").checked,
@@ -1038,6 +1126,9 @@
     }
     syncTypeOptions();
     if (Array.isArray(d.blacklist)) { blacklist = d.blacklist; renderBlacklist(); }
+    challenges = Array.isArray(d.challenges) ? d.challenges : DEFAULT_CHALLENGES.map(c => Object.assign({}, c));
+    renderChallenges();
+    if (d.challengeCount) $("challengeCount").value = d.challengeCount;
     refreshMonsterGroups(); refreshArtGroups();
   }
   // Save on any user-driven filter change (event delegation over the sidebar).
