@@ -25,6 +25,11 @@
     <!-- Sidebar: filters -->
     <aside class="sidebar">
       <button id="resetBtn" class="btn block">Reset Filters</button>
+      <div class="row gap">
+        <button id="exportBtn" class="btn tiny" style="flex:1">Export</button>
+        <button id="importBtn" class="btn tiny" style="flex:1">Import</button>
+        <input type="file" id="importFile" accept=".json" style="display:none">
+      </div>
 
       <section class="panel" id="questFiltersPanel" data-open="false">
         <button class="panel-head">Quest Filters <span class="chev">&#9662;</span></button>
@@ -330,6 +335,6 @@
 </div>
 
 <script src="data.js?v=27"></script>
-<script src="app.js?v=106"></script>
+<script src="app.js?v=107"></script>
 </body>
 </html>

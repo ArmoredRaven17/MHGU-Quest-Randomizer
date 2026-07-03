@@ -1134,6 +1134,42 @@
   // Save on any user-driven filter change (event delegation over the sidebar).
   document.querySelector(".sidebar").addEventListener("change", saveFilters);
 
+  // Export filters
+  $("exportBtn").addEventListener("click", () => {
+    saveFilters();
+    const data = localStorage.getItem(FILTER_KEY) || "{}";
+    const blob = new Blob([data], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = "mhgu-filters.json"; a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  // Import filters
+  $("importBtn").addEventListener("click", () => $("importFile").click());
+  $("importFile").addEventListener("change", function() {
+    const file = this.files[0]; if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const d = JSON.parse(e.target.result);
+        // Reset all to checked before applying the loaded unchecked sets
+        document.querySelectorAll("#weaponList input, #styleList input, #biasList input").forEach(i => i.checked = true);
+        monsterChecks.forEach(m => m.input.checked = true);
+        artLeaves.forEach(l => l.input.checked = true);
+        localStorage.setItem(FILTER_KEY, JSON.stringify(d));
+        loadFilters();
+      } catch (_) {
+        const btn = $("importBtn");
+        const orig = btn.textContent;
+        btn.textContent = "Invalid file!";
+        setTimeout(() => btn.textContent = orig, 2000);
+      }
+    };
+    reader.readAsText(file);
+    this.value = "";
+  });
+
   loadFilters();
   syncProwlerQuests();
   updateRollBtn();
