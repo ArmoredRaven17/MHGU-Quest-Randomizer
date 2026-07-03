@@ -686,14 +686,15 @@
       r.setProperty("--bg1",          css(darken(c,.80)));
       r.setProperty("--bg2",         css(darken(c,0.90)));
       r.setProperty("--hover",       css(darken(c,0.30)));
-      r.setProperty("--accent",     css(darken(c,0.7)));
-      r.setProperty("--accent-hover",css(lighten(c,0.9)));
+      r.setProperty("--accent",     css(darken(c,0.5)));
+      r.setProperty("--accent-hover",css(lighten(c,0.1)));
+      r.setProperty("--accent-color",css(darken(c,0.1)));
     } else {
       r.setProperty("--bg",          css(darken(c,.70)));
       r.setProperty("--bg1",         css(darken(c,.80)));
       r.setProperty("--bg2",         css(darken(c,0.95)));
       r.setProperty("--hover",       css(darken(c,0.30)));
-      r.setProperty("--accent",     css(lighten(c,0.7)));
+      r.setProperty("--accent",     css(darken(c,0.7)));
       r.setProperty("--accent-hover",css(darken(c,0.7)));
     }
     r.setProperty("--text",     isLight ? "#000000" : "#ffffff");
@@ -720,7 +721,7 @@
       wrap.appendChild(d);
     });
   })();
-  let saved = "#4A4A4A";
+  let saved = "#1E2025";
   try { saved = localStorage.getItem("mhgu-theme") || saved; } catch (e) {}
   applyTheme(saved);
 
