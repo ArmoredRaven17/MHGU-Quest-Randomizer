@@ -242,10 +242,10 @@ body{
 .ch-edit-chance{width:46px;text-align:center}
 .ch-edit-text:hover,.ch-edit-text:focus,.ch-edit-chance:hover,.ch-edit-chance:focus{outline:none}
 .ch-pct{font-size:12px;opacity:.7;flex-shrink:0}
-.r-challlabel{font-size:1.8cqi;color:#4D391F;text-transform:uppercase;letter-spacing:.5px}
-.rc-challenges{position:absolute;top:28%;left:63%;right:2%;max-height:32%;overflow:hidden}
-.challenges-list{margin:4px 0 0;padding-left:18px;list-style:disc;font-size:2.2cqi;color:#4D391F}
-.challenges-list li{margin-bottom:2px;white-space:nowrap}
+.r-challlabel{font-size:1.8cqi;color:#ffffff;text-transform:uppercase;letter-spacing:.5px}
+.rc-challenges{position:absolute;top:28%;left:63%;right:2%;max-height:32%;overflow:hidden;background-image:linear-gradient(rgba(84,72,63,0.82),rgba(84,72,63,0.82)),url('assets/challenge-bg.png');background-size:100% 100%;padding:4px 8px 14px;border-radius:6px}
+.challenges-list{margin:4px 0 0;padding-left:18px;list-style:disc;font-size:2.2cqi;color:#ffffff}
+.challenges-list li{margin-bottom:1px;white-space:nowrap}
 
 /* Blacklist */
 .bl-add{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
