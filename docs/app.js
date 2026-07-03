@@ -436,7 +436,8 @@
     const anyFiltered = inc.size < DATA.monsters.length;
 
     const f = {
-      pQuests: $("p_quests").checked, hyper: $("f_hyper").checked, capture: $("f_capture").checked,
+      pQuests: $("p_quests").checked, large: $("f_large").checked,
+      hyper: $("f_hyper").checked, capture: $("f_capture").checked,
       egg: $("f_egg").checked, gathering: $("f_gathering").checked, small: $("f_small").checked,
       multi: $("f_multi").checked,
       oneFaint: $("f_oneFaint").checked, onSite: $("f_onSite").checked,
@@ -459,6 +460,8 @@
           if (q.Level < fromLv || q.Level > toLv) return false;
         }
       }
+
+      if (q.LgMonster && !f.large) return false;
 
       const include = (q.LgMonster && !q.Capture)
         || (q.Capture && f.capture)
@@ -894,6 +897,7 @@
   $("helpModal").addEventListener("click", (e) => { if (e.target.id === "helpModal") $("helpModal").classList.add("hidden"); });
 
   function doReset() {
+    $("f_large").checked = true;
     ["f_hyper","f_capture","f_egg","f_gathering","f_small","f_multi","f_oneFaint","f_onSite","p_prowler","p_quests"].forEach(id => $(id).checked = false);
     document.querySelectorAll("#allTypeTree .akids input").forEach(cb => {
       cb.checked = parseInt(cb.id.replace("f_all_lv_",""), 10) < 43; // Arena (43-44) off by default
@@ -941,6 +945,7 @@
       arts: artLeaves.filter(l => !l.input.checked).map(l => l.name),
       blacklist: blacklist.slice(),
       t: {
+        large: $("f_large").checked,
         hyper: $("f_hyper").checked, capture: $("f_capture").checked,
         egg: $("f_egg").checked, gathering: $("f_gathering").checked, small: $("f_small").checked,
         multi: $("f_multi").checked,
@@ -962,6 +967,7 @@
     const ms = new Set(d.monsters || []); monsterChecks.forEach(m => { if (ms.has(m.name)) m.input.checked = false; });
     const as = new Set(d.arts || []);     artLeaves.forEach(l => { if (as.has(l.name)) l.input.checked = false; });
     if (d.t) {
+      $("f_large").checked = d.t.large !== false;
       $("f_hyper").checked = !!d.t.hyper; $("f_capture").checked = !!d.t.capture;
       $("f_egg").checked = !!d.t.egg; $("f_gathering").checked = !!d.t.gathering; $("f_small").checked = !!d.t.small;
       $("f_multi").checked = !!d.t.multi;
