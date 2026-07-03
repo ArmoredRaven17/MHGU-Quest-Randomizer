@@ -16,9 +16,11 @@ This document explains every part of the web app so you can make manual changes 
    - [DOM Builders](#dom-builders)
    - [Level System](#level-system)
    - [Randomize Flow](#randomize-flow)
+   - [Challenges](#challenges)
    - [Theme System](#theme-system)
    - [Background Picker](#background-picker)
    - [Filter Persistence](#filter-persistence)
+   - [Export / Import](#export--import)
 6. [localStorage Keys](#localstorage-keys)
 7. [Asset Naming Conventions](#asset-naming-conventions)
 8. [How to Add Things](#how-to-add-things)
@@ -47,7 +49,7 @@ Hunter Arts.json    ← Hunter Art names with weapon affinity
 
 **Cache busting:** Every time `styles.css`, `app.js`, or `data.js` changes, increment the `?v=N` query string on its `<link>`/`<script>` tag in `index.html`. GitHub Pages CDN caches by full URL — without the version bump, users see stale files until they hard-refresh.
 
-Currently: `styles.css?v=83`, `data.js?v=25`, `app.js?v=92`
+Currently: `styles.css?v=95`, `data.js?v=27`, `app.js?v=108`
 
 ---
 
@@ -130,16 +132,19 @@ An array of art objects:
 
 ### Sidebar panels
 
-Each panel is a `<section class="panel" data-open="false">` with a `<button class="panel-head">` toggle and a `<div class="panel-body">`. Opening/closing is driven by `data-open` — CSS shows `panel-body` only when `data-open="true"`.
+Each panel is a `<section class="panel" data-open="false">` with a `<button class="panel-head">` toggle and a `<div class="panel-body">`. Opening/closing is driven by `data-open` — CSS shows `panel-body` only when `data-open="true"`. The panels act as an **accordion**: the click handler in `app.js` closes every panel before opening the clicked one, so only one is ever open at a time.
+
+Above the panels is the **Reset Filters** button plus **Export** / **Import** buttons (with a hidden `#importFile` input).
 
 | Panel | Key IDs inside |
 |---|---|
-| Quest Filters | `f_hyper`, `f_capture`, `f_egg`, `f_gathering`, `f_small`, `f_multi`, `f_oneFaint`, `f_onSite`, `#allTypeTree` |
+| Quest Filters | `f_large`, `f_hyper`, `f_capture`, `f_multi`, `f_egg`, `f_gathering`, `f_small`, `f_oneFaint`, `f_onSite`, `#allTypeTree` |
 | Monsters | `#monsterTree`, `monExpand`, `monCollapse` |
 | Weapons | `#weaponList` (built by JS) |
 | Styles | `#styleList` (built by JS) |
 | Hunter Arts | `f_spArts`, `artLvSel`, `artLvCheck`, `artLvUncheck`, `#artTree`, `artExpand`, `artCollapse` |
 | Restrictions | `blWeapon`, `blStyle`, `blAdd`, `#blList` |
+| Challenges | `chText`, `chChance`, `chAdd`, `challengeCount`, `#chList` |
 | Prowler | `p_prowler`, `p_quests`, `#biasList` |
 
 ### Content area
@@ -159,6 +164,7 @@ section.content
         ├── div.rc-main → div#r_main
         ├── div.rc-icon → img#r_target + img#r_hyperOverlay
         ├── div.rc-loadout → weapon row + #r_styleBlock (style + arts)
+        ├── div#r_challenges.hidden → label + ul#r_challengeList (rolled challenges)
         └── div.rc-footer → button#copyResultBtn
 ```
 
@@ -344,9 +350,7 @@ LEVELS.Events  // ["Low Rank",1], ["High Rank",2], ["G Rank",3]
 | `hslToRgb([h,s,l])` | HSL → `[r,g,b]` (0–255) |
 | `darken(rgb, f)` | Multiplies lightness by `f` (0 = black, 1 = same) |
 | `lighten(rgb, b)` | Lightness += `(1 - l) * b` |
-| `desaturate(rgb, f)` | Multiplies saturation by `f` (0 = grey, 1 = same) |
 | `css([r,g,b])` | Returns `"rgb(r,g,b)"` string for CSS |
-| `deriveBg(rgb)` | Saturation × 0.74, lightness × 0.35 — used to compute `--bg` |
 
 **`clamp(n)`** — clamps to 0–255 (integer).  
 **`clamp01(n)`** — clamps to 0–1.
@@ -433,7 +437,21 @@ These functions run once at startup to build all dynamic UI from data.
 
 **`setWeaponStyle(el, name)`** — applies color chip styling to an element using `WEAPON_COLORS`. If no color found, just sets `color: var(--text)`.
 
-**`copyResultBtn` listener** — reads displayed result and formats it as `Quest: ... | Locale: ... | Weapon: ... | Style: ... | Hunter Art(s): ...` for clipboard.
+**`copyResultBtn` listener** — reads displayed result and formats it as `Quest: ... | Locale: ... | Weapon: ... | Style: ... | Hunter Art(s): ... | Challenges: ...` for clipboard. Lines only appear if they have content (e.g. no `Challenges:` line if none rolled).
+
+---
+
+### Challenges
+
+User-defined conditions (e.g. "No Armor") that roll alongside the quest. Each entry is `{ text, chance, checked }` where `chance` is a percentage (1–100) and `checked` toggles it on/off.
+
+**`DEFAULT_CHALLENGES`** — the four presets ("No Armor", "No Items", "No Active Skills", "Use Joke Weapon"), each at 10% and unchecked. `challenges` is initialized to a copy of these, so a first-time visitor sees them before any save exists. `loadFilters()` overwrites `challenges` only if the saved state actually contains a `challenges` array.
+
+**`renderChallenges()`** — rebuilds the `#chList` rows. Each row is an enable checkbox, an editable text input (`maxLength` 21), an editable chance number input, a `%` label, and a `×` remove button. Editing any field writes straight back into `challenges[i]` and calls `saveFilters()`.
+
+**`rollChallenges()`** — returns the challenges to display for a roll: keeps only enabled ones, rolls each against its own `chance`, shuffles, and slices to the "roll up to N" count (`#challengeCount`, capped at 8). Called at the end of `renderResult()`; the `#r_challenges` block is shown only when at least one rolled.
+
+**Presets and Reset:** `doReset()` deliberately does **not** touch `challenges` — user-authored content survives a filter reset, same as the blacklist.
 
 ---
 
@@ -449,8 +467,9 @@ Brightness is computed as: `r*0.299 + g*0.587 + b*0.114`. If `> 230`, uses the l
 | `--bg1` | `darken(c, 0.80)` | `darken(c, 0.80)` |
 | `--bg2` | `darken(c, 0.95)` | `darken(c, 0.90)` |
 | `--hover` | `darken(c, 0.30)` | `darken(c, 0.30)` |
-| `--accent` | `lighten(c, 0.7)` | `darken(c, 0.7)` |
+| `--accent` | `darken(c, 0.7)` | `darken(c, 0.5)` |
 | `--accent-hover` | `darken(c, 0.7)` | `lighten(c, 0.1)` |
+| `--accent-color` | *(not set)* | `darken(c, 0.1)` |
 | `--text` | `#ffffff` | `#000000` |
 | `--hint` | `#ffffff` | `#000000` |
 | `--text-dim` | `#fffffff5` | `#000000` |
@@ -480,15 +499,17 @@ The "None" tile passes `""` to `applyBg`, which clears the background image (jus
   monsters: [...unchecked monster names],
   arts: [...unchecked art names],
   blacklist: [{weapon, style}, ...],
+  challenges: [{text, chance, checked}, ...],
+  challengeCount: <number>,
   t: {
-    hyper, capture, egg, gathering, small, multi,
+    large, hyper, capture, egg, gathering, small, multi,
     oneFaint, onSite, spArts, prowler, pQuests,
     allLevels: [...rank indices that are unchecked]
   }
 }
 ```
 
-Saves unchecked names (not checked) so that newly added data defaults to included.
+Saves unchecked names (not checked) so that newly added data defaults to included. `challenges` is the full array (text/chance/checked), so the whole condition list travels with the save.
 
 **`loadFilters()`** — reads and applies the saved state. Called once at startup. Old saves without `allLevels` just skip that section and use defaults.
 
@@ -497,12 +518,23 @@ Saves unchecked names (not checked) so that newly added data defaults to include
 A single delegated `change` listener on `.sidebar` calls `saveFilters()` on any input change, so saves happen automatically.
 
 **`doReset()`** — restores all filters to defaults:
-- Unchecks all quest category flags.
+- Checks all quest category flags (Large Monsters, Hyper, Capture, Multi, Egg, Gathering, Small, One Faint, On-Site); turns Prowler options off.
 - Sets all level checkboxes: Village/Hub/Pub/SP/Events on, Arena off.
 - Re-checks all weapons, styles, biases.
 - Re-checks all monsters and arts.
 - Clears blacklist.
 - Enables SP Arts.
+- **Does not** clear challenges — user-authored conditions are preserved.
+
+---
+
+### Export / Import
+
+Sit above the sidebar panels as two `.btn.tiny` buttons plus a hidden `#importFile` input.
+
+**Export** (`exportBtn`) — calls `saveFilters()` to flush current state, then downloads `localStorage["mhgu-filters"]` verbatim as `mhgu-filters.json` via a temporary `Blob` + object URL.
+
+**Import** (`importBtn`) — clicking it opens the hidden file picker. On file selection, the JSON is parsed; all weapon/style/bias/monster/art checkboxes are reset to checked first (so the loaded "unchecked names" apply cleanly), the parsed object is written to `localStorage["mhgu-filters"]`, and `loadFilters()` re-applies everything. A malformed file briefly flashes "Invalid file!" on the button instead of throwing.
 
 ---
 
@@ -575,7 +607,7 @@ Add to the `WEAPONS` array (and `WEAPON_ABBREV`, `WEAPON_COLORS`). Add the icon 
 In `buildAllTypeTree()`, each group has `on: true/false`. Set `on: false` to disable that entire group by default. Individual levels can't have different defaults per-level in the current code — they all follow the group default.
 
 ### Change theme variable derivation
-Edit `applyTheme()` in `app.js`. Modify the `darken`/`lighten` factor for the relevant variable. To desaturate `--bg1`, wrap the result with `desaturate(darken(c, 0.80), 0.6)` (second argument is the saturation multiplier, 0 = full grey, 1 = no change).
+Edit `applyTheme()` in `app.js`. Modify the `darken`/`lighten` factor for the relevant variable — these only shift lightness, so hue and saturation stay tied to the chosen color. (If you need saturation control, add a small `desaturate` helper alongside `darken`/`lighten`: `[h, clamp01(s*f), l]` where `f` is the saturation multiplier, 0 = full grey, 1 = no change.)
 
 ### Modify panel textures
 Replace the PNG at `docs/assets/`. The filename is referenced in `styles.css`. If you change the filename, update the `url(...)` in `styles.css` and bump `styles.css?v=N`.

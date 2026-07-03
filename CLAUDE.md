@@ -66,15 +66,21 @@ Both apps follow the same logic:
 
 6. **Arena quests** — skip the weapon/style/art rolls; instead pick from `ArenaWeapons` or `ArenaBiases` arrays stored on the quest object itself (parsed from quest descriptions). Prowler arena quests get a bias instead.
 
+7. **Roll challenges** — user-defined conditions (each with its own chance % and on/off toggle) are rolled alongside the result. `rollChallenges` keeps the enabled ones that pass their chance roll, then slices to the "roll up to N" count. These are optional flavor and don't affect quest/weapon selection.
+
+## Challenges (Web)
+
+Custom conditions the user adds in the Challenges panel (`{ text, chance, checked }`). Four unchecked presets ship in `DEFAULT_CHALLENGES`. They persist inside the `mhgu-filters` save, are included in the clipboard copy, and survive Reset Filters (like the blacklist). The desktop app does **not** have this feature yet.
+
 ## Theme System (Web)
 
-`applyTheme(hex)` derives all CSS custom properties from a single chosen color:
+`applyTheme(hex)` derives all CSS custom properties from a single chosen color by shifting only its lightness (via `darken`/`lighten`), so every shade keeps the color's hue and saturation:
 
-- `--bg2` (sidebar/panels/titlebar): `darken(c, 0.70)` — lightness × 0.70
-- `--bg` (main background): `deriveBg(c)` — HSL with saturation × 0.74 and lightness × 0.35
+- `--bg` (main background): `darken(c, 0.70)`
+- `--bg2` (sidebar/panels/titlebar): `darken(c, 0.95)`
 - Only Khezu (`#FFFFFF`, brightness > 230) triggers the light theme branch
 
-Theme hex is persisted to `localStorage` (`mhgu-theme` key). Filter state (all checkboxes, blacklist) is also persisted (`mhgu-filters` key) and restored on load.
+Theme hex is persisted to `localStorage` (`mhgu-theme` key). Filter state (all checkboxes, blacklist, challenges) is also persisted (`mhgu-filters` key) and restored on load, and can be exported to / imported from a JSON file.
 
 ## Assets
 

@@ -321,10 +321,12 @@
     $("chText").addEventListener("keydown", e => { if (e.key === "Enter") $("chAdd").click(); });
     renderChallenges();
   })();
+  // Rolls each enabled challenge against its own chance %, then keeps a random subset
+  // capped at the user's "roll up to N" count. Disabled conditions never roll.
   function rollChallenges() {
     if (!challenges.length) return [];
     const count = Math.min(8, Math.max(1, parseInt($("challengeCount").value) || 1));
-    const eligible = challenges.filter(c => Math.random() * 100 < c.chance).filter(c => c.checked === true);
+    const eligible = challenges.filter(c => c.checked === true && Math.random() * 100 < c.chance);
     eligible.sort(() => Math.random() - 0.5);
     return eligible.slice(0, count);
   }
@@ -550,15 +552,13 @@
       const rank = allRank(q);
       if (rank < 0 || !f.allLevels.has(rank)) return false;
 
+      // ALL mode ranges over the unified 0–44 rank; a specific type ranges over that
+      // type's own 1-based Level (fromLv/toLv are read in whichever space applies).
       if (type === "ALL") {
         if (rank < fromLv || rank > toLv) return false;
       } else {
         if (qType.toLowerCase() !== type.toLowerCase()) return false;
-        if (type === "Arena") {
-          if (q.Level < fromLv || q.Level > toLv) return false;
-        } else {
-          if (q.Level < fromLv || q.Level > toLv) return false;
-        }
+        if (q.Level < fromLv || q.Level > toLv) return false;
       }
 
       if (q.LgMonster && !f.large) return false;
@@ -718,6 +718,10 @@
       styleLabel.textContent = "Style";
       styleEl.textContent = style;
 
+      // Slot count by style: Alchemy/Striker = 3, Guild = 2, everything else = 1.
+      // SP rule mirrors the game: Alchemy may SP every art independently, but Guild and
+      // Striker allow at most ONE SP art — so once an earlier art rolls SP, the rest skip
+      // the SP roll (pass the plain art through instead of calling maybeSP again).
       const excl = excludedArts();
       let spPicks = [];
       if (style === "Alchemy") {
@@ -795,11 +799,11 @@
     const [r,g,b] = hi===0?[c,x,0]:hi===1?[x,c,0]:hi===2?[0,c,x]:hi===3?[0,x,c]:hi===4?[x,0,c]:[c,0,x];
     return [r+m, g+m, b+m].map(v => clamp(v*255));
   };
+  // darken/lighten only nudge lightness in HSL space, so the hue and saturation of the
+  // chosen theme color are preserved — every derived shade stays "in family."
   const darken     = (rgb, f) => { const [h,s,l] = rgbToHsl(rgb); return hslToRgb([h, s, clamp01(l*f)]); };
   const lighten    = (rgb, b) => { const [h,s,l] = rgbToHsl(rgb); return hslToRgb([h, s, clamp01(l+(1-l)*b)]); };
-  const desaturate = (rgb, f) => { const [h,s,l] = rgbToHsl(rgb); return hslToRgb([h, clamp01(s*f), l]); };
   const css = (rgb) => `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
-  const deriveBg = (rgb) => { const [h,s,l] = rgbToHsl(rgb); return hslToRgb([h, clamp01(s*0.74), clamp01(l*0.35)]); };
   function applyTheme(hex) {
     const c = hexRgb(hex), r = document.documentElement.style;
     const bright = c[0]*0.299 + c[1]*0.587 + c[2]*0.114;
@@ -967,6 +971,7 @@
   })();
 
   // ── Wiring ───────────────────────────────────────────────────────────────
+  // Sidebar panels behave as an accordion: opening one closes all the others.
   document.querySelectorAll(".panel-head").forEach(h =>
     h.addEventListener("click", () => {
       const p = h.parentElement;
