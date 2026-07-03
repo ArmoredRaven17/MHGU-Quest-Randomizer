@@ -7,7 +7,7 @@
 <title>MHGU Quest Randomizer</title>
 <link rel="icon" href="assets/MonsterIcons/MHGU-Question_Mark_Icon.webp">
 <!-- Bump ?v= on any styles/app/data change so browsers fetch fresh copies (no hard-refresh needed) -->
-<link rel="stylesheet" href="styles.css?v=83">
+<link rel="stylesheet" href="styles.css?v=84">
 </head>
 <body>
 <div id="app">
@@ -150,6 +150,11 @@
         <div id="result" class="result hidden">
           <div class="rc-title">
             <span id="r_name" class="r-name"></span>
+            <span id="r_huntPill" class="hunt-pill hidden">Hunt</span>
+            <span id="r_smPill" class="sm-pill hidden">Small Monsters</span>
+            <span id="r_eggPill" class="egg-pill hidden">Egg Delivery</span>
+            <span id="r_gatheringPill" class="gathering-pill hidden">Gathering</span>
+            <span id="r_spPill" class="sp-pill hidden">Special Permit</span>
             <span id="r_capturePill" class="capture-pill hidden">Capture</span>
             <span id="r_hyperPill" class="hyper-pill hidden">Hyper</span>
             <span id="r_prowlerPill" class="prowler-pill hidden">Prowler</span>
@@ -193,17 +198,19 @@
 <div id="helpModal" class="modal hidden">
   <div class="modal-card">
     <h2>How to use</h2>
-    <p><strong>1. Pick a quest type &amp; level.</strong> Choose a Quest Type, then the From / Up to Level range. (Arena uses a Normal / Challenge range picker.)</p>
-    <p><strong>2. Narrow the pool with the filters</strong> on the left:</p>
+    <p><strong>1. Pick a quest type &amp; level.</strong> Choose a Quest Type (Village, Hub, G-Rank, Special Permits, Events, Arena, or ALL), then set a From / Up to Level range.</p>
+    <p><strong>2. Narrow the pool with the sidebar filters:</strong></p>
     <ul>
-      <li><strong>Quest Filters</strong> — large-monster hunt quests are always included; check Capture, Hypers, Egg Delivery, Gathering, or Small Monsters to add those categories.</li>
+      <li><strong>Quest Filters</strong> — uncheck categories to exclude them. Large Monsters is on by default; Hypers and Captures sit under it and are also excluded when Large Monsters is off. Quest Type Filters let you disable individual levels (e.g. turn off all G-Rank levels globally).</li>
       <li><strong>Monsters / Weapons / Styles</strong> — uncheck anything to exclude it from the roll.</li>
-      <li><strong>Hunter Arts</strong> — uncheck arts to exclude them, by weapon, by named art, or by individual level.</li>
+      <li><strong>Hunter Arts</strong> — uncheck arts to exclude them, by weapon, by named art, or by individual level (I / II / III).</li>
       <li><strong>Restrictions</strong> — add weapon + style combos that will never be rolled together (e.g. Bow + Aerial).</li>
-      <li><strong>Prowler</strong> — turn on "Prowler?" to allow Palico loadouts, "Prowler Quests?" to include Prowler-only quests; the biases apply when a Prowler is rolled.</li>
+      <li><strong>Prowler</strong> — enable "Prowler?" to allow Palico loadouts; "Prowler Quests?" to include Prowler-only quests. Biases apply when a Prowler is rolled.</li>
     </ul>
-    <p><strong>3. Hit Randomize.</strong> You get a quest plus a weapon, style, and Hunter Arts. Arena quests show which preset Set to bring; Prowler quests give a bias instead. Badges: <span class="capture-pill" style="position:static;font-size:11px">Capture</span> capture quests, <span class="hyper-pill" style="position:static;font-size:11px">Hyper</span> Hyper quests, <span class="prowler-pill" style="position:static;font-size:11px">Prowler</span> Prowler quests, <span class="arena-pill" style="position:static;font-size:11px">Arena</span> Arena quests, <span class="event-pill" style="position:static;font-size:11px">Event</span> Event quests.</p>
-    <p class="muted">Your filters and color theme are saved between visits. Use Reset Filters to start over.</p>
+    <p><strong>3. Hit Randomize.</strong> You get a quest, a weapon, style, and Hunter Arts. Arena quests show which weapon Set to bring; Prowler quests give a bias instead.</p>
+    <p>Quest badges: <span class="hunt-pill" style="position:static;font-size:11px">Hunt</span> <span class="sm-pill" style="position:static;font-size:11px">Small Monsters</span> <span class="egg-pill" style="position:static;font-size:11px">Egg Delivery</span> <span class="gathering-pill" style="position:static;font-size:11px">Gathering</span> <span class="sp-pill" style="position:static;font-size:11px">Special Permit</span> <span class="capture-pill" style="position:static;font-size:11px">Capture</span> <span class="hyper-pill" style="position:static;font-size:11px">Hyper</span> <span class="prowler-pill" style="position:static;font-size:11px">Prowler</span> <span class="arena-pill" style="position:static;font-size:11px">Arena</span> <span class="event-pill" style="position:static;font-size:11px">Event</span></p>
+    <p><strong>&#9881; Theme</strong> — change the color theme or pick a Guild Card background image.</p>
+    <p class="muted">Filters, theme, and background are saved between visits. Use Reset Filters to restore defaults.</p>
     <div class="row end gap">
       <button id="helpClose" class="btn">Close</button>
     </div>
@@ -278,8 +285,6 @@
     <p><strong>Quest category icons &amp; Hyper UI icon:</strong> <a href="https://monsterhunterwiki.org" target="_blank" rel="noopener">monsterhunterwiki.org</a> — licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a></p>
     <p><strong>Result Card and Menu Textures:</strong> Edited from the developer's in-game screenshots using Sketchbook Pro.</p>
     <p><strong>Guild Card Backgrounds:</strong> jtr3xx's Google Drive</p>
-    <p><strong>Quest badges:</strong>
-    <p> <span class="capture-pill" style="position:static;font-size:11px">Capture</span> <span class="hyper-pill" style="position:static;font-size:11px">Hyper</span> <span class="prowler-pill" style="position:static;font-size:11px">Prowler</span> <span class="arena-pill" style="position:static;font-size:11px">Arena</span> <span class="event-pill" style="position:static;font-size:11px">Event</span></p>
     <p class="muted">Monster Hunter content is owned by Capcom. This tool is not affiliated with or endorsed by Capcom.</p>
     
     <div class="row end gap">
@@ -303,6 +308,6 @@
 </div>
 
 <script src="data.js?v=27"></script>
-<script src="app.js?v=97"></script>
+<script src="app.js?v=98"></script>
 </body>
 </html>

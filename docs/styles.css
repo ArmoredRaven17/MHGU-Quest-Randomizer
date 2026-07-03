@@ -173,6 +173,11 @@ body{
   gap:5px;overflow:hidden;
 }
 .r-name{font-size:2.8cqi;font-weight:700;color:#4D391F;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hunt-pill{background:#e52222;color:#fff;font-size:2.4cqi;font-weight:700;padding:1px 7px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;text-shadow:0 1px 1px rgba(0,0,0,.35);flex-shrink:0}
+.sm-pill{background:#1a7eff;color:#fff;font-size:2.4cqi;font-weight:700;padding:1px 7px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;text-shadow:0 1px 1px rgba(0,0,0,.35);flex-shrink:0}
+.egg-pill{background:#c4a07a;color:#fff;font-size:2.4cqi;font-weight:700;padding:1px 7px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;text-shadow:0 1px 1px rgba(0,0,0,.35);flex-shrink:0}
+.gathering-pill{background:#22cc44;color:#fff;font-size:2.4cqi;font-weight:700;padding:1px 7px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;text-shadow:0 1px 1px rgba(0,0,0,.35);flex-shrink:0}
+.sp-pill{background:#c800ff;color:#fff;font-size:2.4cqi;font-weight:700;padding:1px 7px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;text-shadow:0 1px 1px rgba(0,0,0,.35);flex-shrink:0}
 .hyper-pill{background:#f5b400;color:#fff;font-size:2.4cqi;font-weight:700;padding:1px 7px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;text-shadow:0 1px 1px rgba(0,0,0,.35);flex-shrink:0}
 .event-pill{background:#6a1fa8;color:#fff;font-size:2.4cqi;font-weight:700;padding:1px 7px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;text-shadow:0 1px 1px rgba(0,0,0,.35);flex-shrink:0}
 .arena-pill{background:#1a5fa8;color:#fff;font-size:2.4cqi;font-weight:700;padding:1px 7px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;text-shadow:0 1px 1px rgba(0,0,0,.35);flex-shrink:0}
