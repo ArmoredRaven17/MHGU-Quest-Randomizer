@@ -539,6 +539,11 @@
     $("r_locale").textContent = quest.Locale || "—";
     const isDeviant = quest.Type === "Special Permits";
     const isMultiMonster = quest.Monsters && quest.Monsters.length > 1;
+    $("r_huntPill").classList.toggle("hidden", !quest.LgMonster || quest.Capture || quest.Type === "Special Permits");
+    $("r_smPill").classList.toggle("hidden", !quest.SmMonsters);
+    $("r_eggPill").classList.toggle("hidden", !quest.Egg);
+    $("r_gatheringPill").classList.toggle("hidden", !quest.Gathering);
+    $("r_spPill").classList.toggle("hidden", quest.Type !== "Special Permits");
     $("r_capturePill").classList.toggle("hidden", !quest.Capture);
     $("r_hyperPill").classList.toggle("hidden", !quest.Hyper);
     $("r_prowlerPill").classList.toggle("hidden", !quest.Prowler);
