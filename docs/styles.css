@@ -250,7 +250,7 @@ body{
 /* Blacklist */
 .bl-add{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
 .bl-add select{background:var(--bg2);color:var(--text);border:1px solid var(--line);border-radius:7px;padding:5px 8px;font-size:13px;flex:1;min-width:80px;font-family:inherit}
-.bl-list{display:flex;flex-direction:column;gap:4px}
+.bl-list{display:flex;flex-direction:column;gap:4px;background:var(--bg2);}
 .bl-tag{display:flex;align-items:center;justify-content:space-between;gap:6px;background:#ffffff0f;border:1px solid var(--line);border-radius:6px;padding:4px 10px;font-size:13px}
 .bl-tag button{background:transparent;border:none;color:var(--text-hint);cursor:pointer;font-size:16px;padding:0 2px;line-height:1;flex-shrink:0;font-family:inherit}
 .bl-tag button:hover{color:red}
