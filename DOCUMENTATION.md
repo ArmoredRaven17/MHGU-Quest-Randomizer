@@ -49,7 +49,7 @@ Hunter Arts.json    ← Hunter Art names with weapon affinity
 
 **Cache busting:** Every time `styles.css`, `app.js`, or `data.js` changes, increment the `?v=N` query string on its `<link>`/`<script>` tag in `index.html`. GitHub Pages CDN caches by full URL — without the version bump, users see stale files until they hard-refresh.
 
-Currently: `styles.css?v=95`, `data.js?v=27`, `app.js?v=108`
+Currently: `styles.css?v=95`, `data.js?v=27`, `app.js?v=109`
 
 ---
 
@@ -315,7 +315,7 @@ LEVELS.Events  // ["Low Rank",1], ["High Rank",2], ["G Rank",3]
 
 **`COLORS_ICON`** — display name → icon name override (for swatches with shortened labels like "G. Magala" → icon file uses "Gore Magala").
 
-**`GUILD_BG_FILES`** — array of 79 PNG filenames in `assets/GuildCardBG/`. Gaps in numbering (56, 59–63, etc.) are because those files don't exist.
+**`GUILD_BG_FILES`** — array of 79 PNG filenames in `assets/GuildCardBG/`, generated as `HD_ui_guild_01_ID.PNG` … `HD_ui_guild_79_ID.PNG` (sequential, no gaps). The order reflects the user's own curated groupings, not the original in-game asset IDs.
 
 ---
 
@@ -574,7 +574,7 @@ Filenames stored directly in the `BIASES` array (e.g. `"FourthGen-Palico_Icon_Bl
 ### Guild card backgrounds
 `assets/GuildCardBG/HD_ui_guild_##_ID.PNG`
 
-Numbered 01–115 with gaps. Full list in `GUILD_BG_FILES` array.
+Numbered sequentially 01–79, no gaps. `GUILD_BG_FILES` generates the list rather than hardcoding it. A matching WebP thumbnail (192×108, quality 72) lives in `assets/GuildCardBG/thumbs/` under the same base name — used by the picker grid, while the full PNG is preloaded on hover and applied on click. Renumbering the set means renaming both the PNG and its thumbnail to keep them paired.
 
 ---
 
