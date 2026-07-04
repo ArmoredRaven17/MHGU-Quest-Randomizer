@@ -856,13 +856,17 @@
   // Files are numbered sequentially 01-79 with no gaps (renumbered per the user's
   // curated Group1-6 ordering), so the list is generated rather than hardcoded.
   const GUILD_BG_FILES = Array.from({length: 79}, (_, i) => `HD_ui_guild_${String(i + 1).padStart(2, "0")}_ID.PNG`);
+  // Bump whenever GuildCardBG image *content* changes (e.g. renumbering/regenerating
+  // thumbnails) without the filenames themselves changing — otherwise browsers/CDN
+  // keep serving old cached bytes at the same "HD_ui_guild_NN_ID" URL.
+  const BG_ASSET_V = 2;
   function applyBg(file) {
     const el = document.querySelector(".content");
     if (!el) return;
     if (!file) {
       el.style.backgroundImage = "";
     } else {
-      const url = `assets/GuildCardBG/${encodeURIComponent(file)}`;
+      const url = `assets/GuildCardBG/${encodeURIComponent(file)}?v=${BG_ASSET_V}`;
       const img = new Image();
       img.src = url;
       if (img.complete) {
@@ -882,8 +886,8 @@
     none.addEventListener("click", () => applyBg(""));
     grid.appendChild(none);
     GUILD_BG_FILES.forEach(f => {
-      const thumbUrl = `assets/GuildCardBG/thumbs/${encodeURIComponent(f.replace(/\.PNG$/i, ".webp"))}`;
-      const fullUrl  = `assets/GuildCardBG/${encodeURIComponent(f)}`;
+      const thumbUrl = `assets/GuildCardBG/thumbs/${encodeURIComponent(f.replace(/\.PNG$/i, ".webp"))}?v=${BG_ASSET_V}`;
+      const fullUrl  = `assets/GuildCardBG/${encodeURIComponent(f)}?v=${BG_ASSET_V}`;
       const d = document.createElement("div");
       d.className = "bg-thumb"; d.dataset.file = f;
       d.style.backgroundImage = `url('${thumbUrl}')`;
