@@ -853,35 +853,9 @@
   applyTheme(saved);
 
   // ── Guild card background picker ─────────────────────────────────────────
-  const GUILD_BG_FILES = [
-    "HD_ui_guild_01_ID.PNG","HD_ui_guild_02_ID.PNG","HD_ui_guild_03_ID.PNG",
-    "HD_ui_guild_04_ID.PNG","HD_ui_guild_05_ID.PNG","HD_ui_guild_06_ID.PNG",
-    "HD_ui_guild_07_ID.PNG","HD_ui_guild_08_ID.PNG","HD_ui_guild_09_ID.PNG",
-    "HD_ui_guild_10_ID.PNG","HD_ui_guild_11_ID.PNG","HD_ui_guild_12_ID.PNG",
-    "HD_ui_guild_13_ID.PNG","HD_ui_guild_14_ID.PNG","HD_ui_guild_15_ID.PNG",
-    "HD_ui_guild_16_ID.PNG","HD_ui_guild_17_ID.PNG","HD_ui_guild_18_ID.PNG",
-    "HD_ui_guild_19_ID.PNG","HD_ui_guild_20_ID.PNG","HD_ui_guild_21_ID.PNG",
-    "HD_ui_guild_22_ID.PNG","HD_ui_guild_23_ID.PNG","HD_ui_guild_24_ID.PNG",
-    "HD_ui_guild_25_ID.PNG","HD_ui_guild_26_ID.PNG","HD_ui_guild_27_ID.PNG",
-    "HD_ui_guild_28_ID.PNG","HD_ui_guild_29_ID.PNG","HD_ui_guild_30_ID.PNG",
-    "HD_ui_guild_31_ID.PNG","HD_ui_guild_32_ID.PNG","HD_ui_guild_33_ID.PNG",
-    "HD_ui_guild_34_ID.PNG","HD_ui_guild_35_ID.PNG","HD_ui_guild_36_ID.PNG",
-    "HD_ui_guild_37_ID.PNG","HD_ui_guild_38_ID.PNG","HD_ui_guild_39_ID.PNG",
-    "HD_ui_guild_40_ID.PNG","HD_ui_guild_41_ID.PNG","HD_ui_guild_42_ID.PNG",
-    "HD_ui_guild_43_ID.PNG","HD_ui_guild_44_ID.PNG","HD_ui_guild_45_ID.PNG",
-    "HD_ui_guild_46_ID.PNG","HD_ui_guild_47_ID.PNG","HD_ui_guild_48_ID.PNG",
-    "HD_ui_guild_49_ID.PNG","HD_ui_guild_50_ID.PNG","HD_ui_guild_51_ID.PNG",
-    "HD_ui_guild_52_ID.PNG","HD_ui_guild_53_ID.PNG","HD_ui_guild_54_ID.PNG",
-    "HD_ui_guild_55_ID.PNG","HD_ui_guild_57_ID.PNG","HD_ui_guild_58_ID.PNG",
-    "HD_ui_guild_64_ID.PNG","HD_ui_guild_68_ID.PNG",
-    "HD_ui_guild_95_ID.PNG","HD_ui_guild_96_ID.PNG","HD_ui_guild_97_ID.PNG",
-    "HD_ui_guild_98_ID.PNG","HD_ui_guild_99_ID.PNG","HD_ui_guild_100_ID.PNG",
-    "HD_ui_guild_102_ID.PNG","HD_ui_guild_103_ID.PNG","HD_ui_guild_104_ID.PNG",
-    "HD_ui_guild_105_ID.PNG","HD_ui_guild_106_ID.PNG","HD_ui_guild_107_ID.PNG",
-    "HD_ui_guild_108_ID.PNG","HD_ui_guild_109_ID.PNG","HD_ui_guild_110_ID.PNG",
-    "HD_ui_guild_111_ID.PNG","HD_ui_guild_112_ID.PNG","HD_ui_guild_113_ID.PNG",
-    "HD_ui_guild_114_ID.PNG","HD_ui_guild_115_ID.PNG",
-  ];
+  // Files are numbered sequentially 01-79 with no gaps (renumbered per the user's
+  // curated Group1-6 ordering), so the list is generated rather than hardcoded.
+  const GUILD_BG_FILES = Array.from({length: 79}, (_, i) => `HD_ui_guild_${String(i + 1).padStart(2, "0")}_ID.PNG`);
   function applyBg(file) {
     const el = document.querySelector(".content");
     if (!el) return;
