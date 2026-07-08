@@ -1154,6 +1154,7 @@
   });
 
   loadFilters();
+  fillLevels();
   syncProwlerQuests();
   updateRollBtn();
 
