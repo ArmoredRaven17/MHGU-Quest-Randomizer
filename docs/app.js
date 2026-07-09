@@ -664,6 +664,10 @@
       ? gatheringIcon(quest.Main)
       : monsterIcon(iconMonster);
     img.onerror = () => { img.onerror = null; img.src = FALLBACK_ICON; };
+    // Stashed for Copy to Clipboard — lists every monster for multi-monster quests,
+    // else falls back to the single resolved name used for the icon (empty for
+    // gathering/egg quests, which have no target monster).
+    img.dataset.monsters = (quest.Monsters && quest.Monsters.length) ? quest.Monsters.join(", ") : iconMonster;
 
     // Arena: preset equipment sets from the quest description. Hunter arenas offer a
     // fixed weapon list; Prowler arenas a fixed bias list. Roll within the set; style
@@ -812,6 +816,7 @@
 
   $("copyResultBtn").addEventListener("click", () => {
     const name   = $("r_name").textContent;
+    const monsters = $("r_target").dataset.monsters || "";
     const weapon = $("r_weapon").textContent;
     const styleHidden = $("r_styleBlock").classList.contains("hidden");
     const styleLabel  = $("r_styleLabel").textContent;
@@ -820,7 +825,9 @@
 
     const chItems = Array.from($("r_challengeList").children).map(li => li.textContent);
 
-    const lines = [`Quest: ${name}`, `Locale: ${$("r_locale").textContent}`, `Weapon: ${weapon}`];
+    const lines = [`Quest: ${name}`];
+    if (monsters) lines.push(`Monster: ${monsters}`);
+    lines.push(`Locale: ${$("r_locale").textContent}`, `Weapon: ${weapon}`);
     if (!styleHidden) lines.push(`${styleLabel}: ${style}`);
     if (artItems.length) lines.push(`Hunter Art(s): ${artItems.join(" / ")}`);
     if (chItems.length) lines.push(`Challenges: ${chItems.join(", ")}`);

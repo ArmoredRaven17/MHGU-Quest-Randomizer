@@ -151,13 +151,12 @@ body{
 
 
 /* Result */
+.result-card-wrap{max-width:700px;margin:0 auto}
 .result-card{
   background-image:url('assets/result-card-bg.png');
   background-size:100% 100%;
   aspect-ratio:775/480;
   position:relative;overflow:hidden;
-  max-width:700px;
-  margin:0 auto;
   container-type:inline-size;
 }
 /* Placeholder sits on the divider line below "Random Hunting" */
@@ -201,17 +200,19 @@ body{
 /* Loadout in the lower-right "Main Objective" area */
 .rc-loadout{
   position:absolute;top:67%;left:6.5%;right:1.5%;bottom:4%;
-  display:flex;flex-direction:column;gap:5px;
+  display:flex;flex-direction:column;gap:3px;
 }
 .r-label{font-size:1.4cqi;color:#4D391F;text-transform:uppercase;letter-spacing:.5px}
 .r-weapon-row{display:flex;align-items:center;gap:5px}
 .weapon-icon{width:3.4cqi;height:3.4cqi;object-fit:contain}
 .r-weapon{font-size:2.0cqi;font-weight:700;color:#4D391F}
 .r-style{font-size:2.0cqi;font-weight:700;color:#4D391F}
-.arts{list-style:none;margin:2px 0 0;padding:0;display:flex;flex-direction:column;gap:3px;align-items:flex-start}
-.arts li{font-size:2.6cqi;color:#4D391F;background:rgba(0,0,0,.08);border-radius:3px;padding:3px 6px}
-.rc-footer{position:absolute;bottom:1%;right:1.5%}
-#copyResultBtn{background:rgba(0,0,0,.15);color:#4D391F;border-color:rgba(0,0,0,.2)}
+/* Tightened gap/padding (was 3px/3px) so a full 3-line Alchemy/Striker Hunter Arts
+   list keeps clear vertical space above the card's bottom edge — shrinking spacing
+   rather than repositioning the box, since .rc-main already crowds .rc-loadout's top. */
+.arts{list-style:none;margin:2px 0 0;padding:0;display:flex;flex-direction:column;gap:1px;align-items:flex-start}
+.arts li{font-size:2.6cqi;color:#4D391F;background:rgba(0,0,0,.08);border-radius:3px;padding:2px 6px}
+.rc-footer{display:flex;justify-content:flex-end;margin-top:8px}
 
 /* Theme modal */
 .modal{position:fixed;inset:0;background:#000000a8;display:flex;align-items:center;justify-content:center;z-index:10}
