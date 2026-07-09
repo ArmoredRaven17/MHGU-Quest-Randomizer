@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache">
+<title>MHGU Quest Randomizer — Stream View</title>
+<link rel="icon" href="assets/MonsterIcons/MHGU-Question_Mark_Icon.webp">
+<link rel="stylesheet" href="styles.css?v=96">
+<style>
+  /* Just enough page chrome to center the card — reuses .result-card's own CSS as-is.
+     Background is a standard chroma-key green so OBS/streaming software can key out
+     everything except the card itself. */
+  html,body{margin:0;height:100%;background:#00FF00}
+  body{display:flex;align-items:center;justify-content:center}
+  .result-card{width:100%}
+</style>
+</head>
+<body>
+
+<div class="result-card">
+  <p id="placeholder" class="placeholder">Waiting for a roll from the main app…</p>
+  <div id="result" class="result hidden">
+    <div class="rc-title">
+      <span id="r_name" class="r-name"></span>
+      <span id="r_huntPill" class="hunt-pill hidden">Hunt</span>
+      <span id="r_smPill" class="sm-pill hidden">Small Monsters</span>
+      <span id="r_eggPill" class="egg-pill hidden">Egg Delivery</span>
+      <span id="r_gatheringPill" class="gathering-pill hidden">Gathering</span>
+      <span id="r_spPill" class="sp-pill hidden">Special Permit</span>
+      <span id="r_capturePill" class="capture-pill hidden">Capture</span>
+      <span id="r_hyperPill" class="hyper-pill hidden">Hyper</span>
+      <span id="r_prowlerPill" class="prowler-pill hidden">Prowler</span>
+      <span id="r_arenaPill" class="arena-pill hidden">Arena</span>
+      <span id="r_eventPill" class="event-pill hidden">Event</span>
+    </div>
+    <div class="rc-locale">
+      <div id="r_locale" class="r-locale-val"></div>
+    </div>
+    <div class="rc-main">
+      <div id="r_main" class="r-sub"></div>
+    </div>
+    <div class="rc-icon">
+      <img id="r_target" class="target-icon" src="" alt="">
+      <img id="r_hyperOverlay" class="hyper-overlay hidden" src="assets/MonsterIcons/MHGU-Hyper_Monster_Icon.png" alt="">
+    </div>
+    <div class="rc-loadout">
+      <div class="r-weapon-row">
+        <img id="r_weaponIcon" class="weapon-icon" src="" alt="">
+        <span id="r_weapon" class="r-weapon"></span>
+      </div>
+      <div id="r_styleBlock">
+        <div class="r-label" id="r_styleLabel">Style</div>
+        <div class="r-weapon-row">
+          <img id="r_biasIcon" class="weapon-icon hidden" src="" alt="">
+          <span id="r_style" class="r-style"></span>
+        </div>
+        <ul id="r_arts" class="arts"></ul>
+      </div>
+    </div>
+    <div id="r_challenges" class="rc-challenges hidden">
+      <div class="r-challlabel">Challenges</div>
+      <ul id="r_challengeList" class="challenges-list"></ul>
+    </div>
+  </div>
+</div>
+
+<script src="stream-view.js?v=1"></script>
+</body>
+</html>
