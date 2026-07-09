@@ -50,6 +50,7 @@
     { text: "Use Joke Weapon",  chance: 10, checked: false },
   ];
   let challenges = DEFAULT_CHALLENGES.map(c => Object.assign({}, c));
+  let chaosMode = false;
 
   const DEVIANT_FULL = {
     redhelm:"Redhelm Arzuros", snowbaron:"Snowbaron Lagombi", stonefist:"Stonefist Hermitaur",
@@ -274,6 +275,7 @@
 
       const chk = document.createElement("label"); chk.className = "chk"; chk.style.flexShrink = "0";
       const cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = c.checked !== false;
+      cb.disabled = chaosMode;
       chk.appendChild(cb);
 
       const txt = document.createElement("input"); txt.type = "text"; txt.className = "ch-edit-text";
@@ -319,16 +321,45 @@
       $("chText").value = "";
     });
     $("chText").addEventListener("keydown", e => { if (e.key === "Enter") $("chAdd").click(); });
+    $("chChaosMode").addEventListener("change", function() {
+      chaosMode = this.checked;
+      renderChallenges();
+      saveFilters();
+    });
     renderChallenges();
   })();
   // Rolls each enabled challenge against its own chance %, then keeps a random subset
   // capped at the user's "roll up to N" count. Disabled conditions never roll.
+  // In Chaos Mode, a hidden 0-20% base roll is blended into each condition's own
+  // chance to decide its checked state for this roll instead of reading the manual
+  // checkbox; the condition still needs to pass its own chance-roll on top of that.
   function rollChallenges() {
     if (!challenges.length) return [];
     const count = Math.min(8, Math.max(1, parseInt($("challengeCount").value) || 1));
-    const eligible = challenges.filter(c => c.checked === true && Math.random() * 100 < c.chance);
+    let eligible;
+    if (chaosMode) {
+      const baseChaos = Math.random() * 20;
+      const chaosChecked = challenges.map(c => Math.random() * 100 < Math.min(100, baseChaos + c.chance));
+      syncChaosCheckboxes(chaosChecked);
+      eligible = challenges.filter((c, i) => chaosChecked[i] && Math.random() * 100 < c.chance);
+    } else {
+      eligible = challenges.filter(c => c.checked === true && Math.random() * 100 < c.chance);
+    }
     eligible.sort(() => Math.random() - 0.5);
     return eligible.slice(0, count);
+  }
+  // Chaos-mode-only visual preview: flips each row's checkbox/opacity to reflect this
+  // roll's RNG decision. Never writes to challenges[i].checked and never calls
+  // saveFilters() — the user's real saved preference is untouched underneath.
+  function syncChaosCheckboxes(chaosChecked) {
+    const rows = $("chList").querySelectorAll(".bl-tag");
+    rows.forEach((row, i) => {
+      if (i >= chaosChecked.length) return;
+      const cb = row.querySelector(".chk input");
+      const txt = row.querySelector(".ch-edit-text");
+      if (cb) cb.checked = chaosChecked[i];
+      if (txt) txt.style.opacity = chaosChecked[i] ? "" : ".45";
+    });
   }
   // Biases (default ON)
   (function () {
@@ -1035,6 +1066,7 @@
     setAllMonsters(true);
     setAllArts(true);
     blacklist = []; renderBlacklist();
+    chaosMode = false; $("chChaosMode").checked = false; renderChallenges();
     syncProwlerQuests();
     updateRollBtn();
     saveFilters();
@@ -1074,6 +1106,7 @@
         oneFaint: $("f_oneFaint").checked, onSite: $("f_onSite").checked,
         spArts: $("f_spArts").checked,
         prowler: $("p_prowler").checked, pQuests: $("p_quests").checked,
+        chaosMode: $("chChaosMode").checked,
         allLevels: Array.from({length:45},(_,i)=>i).filter(i=>{ const cb=$("f_all_lv_"+i); return cb&&!cb.checked; }),
       },
     };
@@ -1096,6 +1129,7 @@
       $("f_oneFaint").checked = !!d.t.oneFaint; $("f_onSite").checked = !!d.t.onSite;
       $("f_spArts").checked = d.t.spArts !== false;
       $("p_prowler").checked = !!d.t.prowler; $("p_quests").checked = !!d.t.pQuests;
+      chaosMode = !!d.t.chaosMode; $("chChaosMode").checked = chaosMode;
       if (Array.isArray(d.t.allLevels)) {
         const off = new Set(d.t.allLevels);
         for (let i = 0; i < 45; i++) { const cb = $("f_all_lv_"+i); if (cb) cb.checked = !off.has(i); }
