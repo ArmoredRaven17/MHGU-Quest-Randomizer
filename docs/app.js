@@ -970,14 +970,6 @@
     none.textContent = "None";
     none.addEventListener("click", () => applyBg(""));
     grid.appendChild(none);
-    SOLID_BG_COLORS.forEach(([name, hex]) => {
-      const d = document.createElement("div");
-      d.className = "bg-thumb"; d.dataset.file = hex;
-      d.style.background = hex;
-      d.title = name;
-      d.addEventListener("click", () => applyBg(hex));
-      grid.appendChild(d);
-    });
     GUILD_BG_FILES.forEach(f => {
       const thumbUrl = `assets/GuildCardBG/thumbs/${encodeURIComponent(f.replace(/\.PNG$/i, ".webp"))}?v=${BG_ASSET_V}`;
       const fullUrl  = `assets/GuildCardBG/${encodeURIComponent(f)}?v=${BG_ASSET_V}`;
@@ -986,6 +978,14 @@
       d.style.backgroundImage = `url('${thumbUrl}')`;
       d.addEventListener("mouseenter", () => { const p = new Image(); p.src = fullUrl; });
       d.addEventListener("click", () => applyBg(f));
+      grid.appendChild(d);
+    });
+    SOLID_BG_COLORS.forEach(([name, hex]) => {
+      const d = document.createElement("div");
+      d.className = "bg-thumb"; d.dataset.file = hex;
+      d.style.background = hex;
+      d.title = name;
+      d.addEventListener("click", () => applyBg(hex));
       grid.appendChild(d);
     });
   })();
