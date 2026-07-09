@@ -153,22 +153,22 @@ body{
 /* Result */
 .result-card-wrap{max-width:700px;margin:0 auto}
 .result-card{
-  background-image:url('assets/result-card-bg.png');
+  background-image:url('assets/result-card-bg.png?v=2');
   background-size:100% 100%;
-  aspect-ratio:775/480;
+  aspect-ratio:774/502;
   position:relative;overflow:hidden;
   container-type:inline-size;
 }
 /* Placeholder sits on the divider line below "Random Hunting" */
 .placeholder{
-  position:absolute;top:18%;left:5%;right:5%;height:10%;
+  position:absolute;top:17.43%;left:5%;right:5%;height:9.56%;
   display:flex;align-items:center;justify-content:center;
   text-align:center;margin:0;color:#4D391F;font-size:2.8cqi;
 }
 .result{position:absolute;inset:0}
 /* Quest name on the decorative line below "Random Hunting" */
 .rc-title{
-  position:absolute;top:18%;left:5%;right:5%;height:10%;
+  position:absolute;top:17.43%;left:5%;right:5%;height:9.56%;
   display:flex;align-items:center;justify-content:center;
   gap:5px;overflow:hidden;
 }
@@ -184,22 +184,25 @@ body{
 .prowler-pill{background:#7a4a1e;color:#fff;font-size:2.4cqi;font-weight:700;padding:1px 7px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;text-shadow:0 1px 1px rgba(0,0,0,.35);flex-shrink:0}
 .capture-pill{background:#4a4a4a;color:#fff;font-size:2.4cqi;font-weight:700;padding:1px 7px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;text-shadow:0 1px 1px rgba(0,0,0,.35);flex-shrink:0}
 /* Monster icon in the upper content area, over the dark square */
-.rc-icon{position:absolute;top:30%;left:43%;width:13%}
+.rc-icon{position:absolute;top:29.91%;left:43%;width:13%}
 .target-icon{width:100%;display:block;object-fit:contain}
 .hyper-overlay{position:absolute;top:-6%;left:-6%;width:112%;pointer-events:none}
 /* Locale value in the lower-left white box (below the decorative divider) */
 .rc-locale{
-  position:absolute;top:61%;left:7%;width:22%;bottom:4%;
+  position:absolute;top:59.55%;left:7%;width:22%;bottom:2.6%;
   display:flex;flex-direction:column;gap:3px;
 }
 .r-locale-val{font-size:2.6cqi;font-weight:700;color:#4D391F;line-height:1.3}
 .r-sub{font-size:1.4cqi;color:#4D391F;line-height:1.3;margin-top:4px}
 /* Main objective text in the "Main Objective" area */
-.rc-main{position:absolute;top:64%;left:40%;right:2%;color:#4D391F}
+.rc-main{position:absolute;top:62.42%;left:40%;right:2%;color:#4D391F}
 .rc-main .r-sub{font-size:2.9cqi;color:#4D391F;margin-top:0}
-/* Loadout in the lower-right "Main Objective" area */
+/* Loadout in the lower-right "Main Objective" area — top is rescaled to the new card
+   height like everything else (keeps it pixel-aligned with .rc-main above), but bottom
+   is deliberately left at the ORIGINAL 4% value (not rescaled) so this box alone claims
+   all the extra height added to the card art, giving Hunter Arts more room. */
 .rc-loadout{
-  position:absolute;top:67%;left:6.5%;right:1.5%;bottom:4%;
+  position:absolute;top:65.28%;left:6.5%;right:1.5%;bottom:2.78%;
   display:flex;flex-direction:column;gap:3px;
 }
 .r-label{font-size:1.4cqi;color:#4D391F;text-transform:uppercase;letter-spacing:.5px}
@@ -245,7 +248,7 @@ body{
 .ch-edit-text:hover,.ch-edit-text:focus,.ch-edit-chance:hover,.ch-edit-chance:focus{outline:none}
 .ch-pct{font-size:12px;opacity:.7;flex-shrink:0}
 .r-challlabel{font-size:1.8cqi;color:#ffffff;text-transform:uppercase;letter-spacing:.5px}
-.rc-challenges{position:absolute;top:28%;left:63%;right:2%;max-height:32%;overflow:hidden;background-image:linear-gradient(rgba(84,72,63,0.82),rgba(84,72,63,0.82)),url('assets/challenge-bg.png');background-size:100% 100%;padding:4px 8px 14px;border-radius:6px}
+.rc-challenges{position:absolute;top:27.99%;left:63%;right:2%;max-height:30.6%;overflow:hidden;background-image:linear-gradient(rgba(84,72,63,0.82),rgba(84,72,63,0.82)),url('assets/challenge-bg.png');background-size:100% 100%;padding:4px 8px 14px;border-radius:6px}
 .challenges-list{margin:4px 0 0;padding-left:18px;list-style:disc;font-size:2.2cqi;color:#ffffff}
 .challenges-list li{margin-bottom:1px;white-space:nowrap}
 
