@@ -123,6 +123,7 @@
         <button class="panel-head">Challenges <span class="chev">&#9662;</span></button>
         <div class="panel-body">
           <p class="hint">Custom conditions rolled with each quest</p>
+          <label class="chk"><input type="checkbox" id="chChaosMode">Chaos Mode</label>
           <div class="ch-add">
             <input type="text" id="chText" placeholder="Condition name" maxlength="21">
             <input type="number" id="chChance" value="10" min="1" max="100" style="width:52px"> %
@@ -232,7 +233,7 @@
       <li><strong>Monsters / Weapons / Styles</strong> — uncheck anything to exclude it from the roll.</li>
       <li><strong>Hunter Arts</strong> — uncheck arts to exclude them, by weapon, by named art, or by individual level (I / II / III).</li>
       <li><strong>Restrictions</strong> — add weapon + style combos that will never be rolled together (e.g. Bow + Aerial).</li>
-      <li><strong>Challenges</strong> — add your own conditions (e.g. "No Armor"), each with a chance %, that roll alongside the quest. Set how many can apply per quest, and toggle each one on/off. Names and chances are editable inline.</li>
+      <li><strong>Challenges</strong> — add your own conditions (e.g. "No Armor"), each with a chance %, that roll alongside the quest. Set how many can apply per quest, and toggle each one on/off. Names and chances are editable inline. <strong>Chaos Mode</strong> hands that decision over to the RNG instead — your on/off toggles lock, and the app decides what's active each roll.</li>
       <li><strong>Prowler</strong> — enable "Prowler?" to allow Palico loadouts; "Prowler Quests?" to include Prowler-only quests. Biases apply when a Prowler is rolled.</li>
     </ul>
     <p><strong>3. Hit Randomize.</strong> You get a quest, a weapon, style, and Hunter Arts (plus any rolled challenges). Arena quests show which weapon Set to bring; Prowler quests give a bias instead.</p>
@@ -337,6 +338,6 @@
 </div>
 
 <script src="data.js?v=27"></script>
-<script src="app.js?v=111"></script>
+<script src="app.js?v=112"></script>
 </body>
 </html>
