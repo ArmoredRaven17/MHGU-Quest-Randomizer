@@ -184,7 +184,7 @@ body{
 .prowler-pill{background:#7a4a1e;color:#fff;font-size:2.4cqi;font-weight:700;padding:1px 7px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;text-shadow:0 1px 1px rgba(0,0,0,.35);flex-shrink:0}
 .capture-pill{background:#4a4a4a;color:#fff;font-size:2.4cqi;font-weight:700;padding:1px 7px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;text-shadow:0 1px 1px rgba(0,0,0,.35);flex-shrink:0}
 /* Monster icon in the upper content area, over the dark square */
-.rc-icon{position:absolute;top:29.91%;left:43%;width:13%}
+.rc-icon{position:absolute;top:28.91%;left:43%;width:13%}
 .target-icon{width:100%;display:block;object-fit:contain}
 .hyper-overlay{position:absolute;top:-6%;left:-6%;width:112%;pointer-events:none}
 /* Locale value in the lower-left white box (below the decorative divider) */
