@@ -330,7 +330,7 @@
   })();
   // Rolls each enabled challenge against its own chance %, then keeps a random subset
   // capped at the user's "roll up to N" count. Disabled conditions never roll.
-  // In Chaos Mode, a hidden 0-20% base roll is blended into each condition's own
+  // In Chaos Mode, a hidden -20..+20% base roll is blended into each condition's own
   // chance to decide its checked state for this roll instead of reading the manual
   // checkbox; the condition still needs to pass its own chance-roll on top of that.
   function rollChallenges() {
@@ -338,8 +338,8 @@
     const count = Math.min(8, Math.max(1, parseInt($("challengeCount").value) || 1));
     let eligible;
     if (chaosMode) {
-      const baseChaos = Math.random() * 20;
-      const chaosChecked = challenges.map(c => Math.random() * 100 < Math.min(100, baseChaos + c.chance));
+      const baseChaos = (Math.random() * 40) - 20;
+      const chaosChecked = challenges.map(c => Math.random() * 100 < Math.max(0, Math.min(100, baseChaos + c.chance)));
       syncChaosCheckboxes(chaosChecked);
       eligible = challenges.filter((c, i) => chaosChecked[i] && Math.random() * 100 < c.chance);
     } else {
