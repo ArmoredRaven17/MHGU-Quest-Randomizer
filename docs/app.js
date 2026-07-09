@@ -693,6 +693,7 @@
         $("r_weaponIcon").classList.add("hidden");
         $("r_styleBlock").classList.add("hidden");
       }
+      broadcastResult();
       return;
     }
     $("r_styleBlock").classList.remove("hidden");
@@ -784,6 +785,29 @@
       const li = document.createElement("li"); li.textContent = c.text; chList.appendChild(li);
     });
     chDiv.classList.toggle("hidden", rolled.length === 0);
+    broadcastResult();
+  }
+  // Serializes the just-rendered #result DOM (not the quest object — the DOM already
+  // reflects every roll decision) so the stream-view popup can mirror it via localStorage
+  // and the "storage" event, which never fires back in this same window.
+  function broadcastResult() {
+    const pillIds = ["r_huntPill","r_smPill","r_eggPill","r_gatheringPill","r_spPill",
+      "r_capturePill","r_hyperPill","r_prowlerPill","r_arenaPill","r_eventPill"];
+    const data = {
+      name: $("r_name").textContent, nameColor: $("r_name").style.color,
+      main: $("r_main").textContent, locale: $("r_locale").textContent,
+      pills: Object.fromEntries(pillIds.map(id => [id, $(id).classList.contains("hidden")])),
+      targetSrc: $("r_target").src, hyperHidden: $("r_hyperOverlay").classList.contains("hidden"),
+      weapon: $("r_weapon").textContent, weaponCss: $("r_weapon").style.cssText,
+      weaponIconHidden: $("r_weaponIcon").classList.contains("hidden"), weaponIconSrc: $("r_weaponIcon").src,
+      styleBlockHidden: $("r_styleBlock").classList.contains("hidden"),
+      styleLabel: $("r_styleLabel").textContent, style: $("r_style").textContent,
+      biasIconHidden: $("r_biasIcon").classList.contains("hidden"), biasIconSrc: $("r_biasIcon").src,
+      arts: Array.from($("r_arts").children).map(li => li.textContent),
+      challengesHidden: $("r_challenges").classList.contains("hidden"),
+      challenges: Array.from($("r_challengeList").children).map(li => li.textContent),
+    };
+    try { localStorage.setItem("mhgu-last-result", JSON.stringify(data)); } catch (e) {}
   }
 
   $("copyResultBtn").addEventListener("click", () => {
@@ -1058,6 +1082,11 @@
   $("themeBtn").addEventListener("click", () => $("themeModal").classList.remove("hidden"));
   $("themeClose").addEventListener("click", () => $("themeModal").classList.add("hidden"));
   $("themeModal").addEventListener("click", (e) => { if (e.target.id === "themeModal") $("themeModal").classList.add("hidden"); });
+  // Fixed window name means clicking this again refocuses the existing popup instead
+  // of spawning a duplicate.
+  $("streamViewBtn").addEventListener("click", () => {
+    window.open("stream-view.html?v=2", "mhguStreamView", "width=775,height=520,menubar=no,toolbar=no,location=no,status=no");
+  });
   $("aboutBtn").addEventListener("click", () => $("aboutModal").classList.remove("hidden"));
   $("aboutClose").addEventListener("click", () => $("aboutModal").classList.add("hidden"));
   $("aboutModal").addEventListener("click", (e) => { if (e.target.id === "aboutModal") $("aboutModal").classList.add("hidden"); });
