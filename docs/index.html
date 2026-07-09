@@ -7,7 +7,7 @@
 <title>MHGU Quest Randomizer</title>
 <link rel="icon" href="assets/MonsterIcons/MHGU-Question_Mark_Icon.webp">
 <!-- Bump ?v= on any styles/app/data change so browsers fetch fresh copies (no hard-refresh needed) -->
-<link rel="stylesheet" href="styles.css?v=96">
+<link rel="stylesheet" href="styles.css?v=99">
 </head>
 <body>
 <div id="app">
@@ -170,6 +170,7 @@
         <button id="rollBtn" class="btn accent" disabled>Randomize!</button>
       </div>
 
+      <div class="result-card-wrap">
       <div class="result-card">
         <p id="placeholder" class="placeholder">Select a quest type and level, then press Randomize.</p>
         <div id="result" class="result hidden">
@@ -214,10 +215,11 @@
             <div class="r-challlabel">Challenges</div>
             <ul id="r_challengeList" class="challenges-list"></ul>
           </div>
-          <div class="rc-footer">
-            <button id="copyResultBtn" class="btn tiny">Copy to Clipboard</button>
-          </div>
         </div>
+      </div>
+      <div class="rc-footer">
+        <button id="copyResultBtn" class="btn accent tiny">Copy to Clipboard</button>
+      </div>
       </div>
     </section>
   </main>
@@ -339,6 +341,6 @@
 </div>
 
 <script src="data.js?v=27"></script>
-<script src="app.js?v=115"></script>
+<script src="app.js?v=116"></script>
 </body>
 </html>
