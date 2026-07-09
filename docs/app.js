@@ -891,13 +891,23 @@
   // thumbnails) without the filenames themselves changing — otherwise browsers/CDN
   // keep serving old cached bytes at the same "HD_ui_guild_NN_ID" URL.
   const BG_ASSET_V = 2;
-  function applyBg(file) {
+  // Flat colors for green-screen/chroma-key recording — requested by a user who wanted
+  // to composite themselves over the app. Values, not filenames, so applyBg() branches
+  // on a leading "#" to tell a solid color apart from a GuildCardBG image filename.
+  const SOLID_BG_COLORS = [
+    ["Chroma Green", "#00B140"],
+    ["Digital Green", "#00FF00"],
+  ];
+  function applyBg(value) {
     const el = document.querySelector(".content");
     if (!el) return;
-    if (!file) {
-      el.style.backgroundImage = "";
+    if (!value) {
+      el.style.backgroundImage = ""; el.style.backgroundColor = "";
+    } else if (value.startsWith("#")) {
+      el.style.backgroundImage = ""; el.style.backgroundColor = value;
     } else {
-      const url = `assets/GuildCardBG/${encodeURIComponent(file)}?v=${BG_ASSET_V}`;
+      el.style.backgroundColor = "";
+      const url = `assets/GuildCardBG/${encodeURIComponent(value)}?v=${BG_ASSET_V}`;
       const img = new Image();
       img.src = url;
       if (img.complete) {
@@ -906,8 +916,8 @@
         img.onload = () => { el.style.backgroundImage = `url('${url}')`; };
       }
     }
-    try { localStorage.setItem("mhgu-bg", file || ""); } catch (e) {}
-    document.querySelectorAll(".bg-thumb").forEach(t => t.classList.toggle("sel", t.dataset.file === (file || "")));
+    try { localStorage.setItem("mhgu-bg", value || ""); } catch (e) {}
+    document.querySelectorAll(".bg-thumb").forEach(t => t.classList.toggle("sel", t.dataset.file === (value || "")));
   }
   (function buildBgGrid() {
     const grid = $("bgGrid");
@@ -916,6 +926,14 @@
     none.textContent = "None";
     none.addEventListener("click", () => applyBg(""));
     grid.appendChild(none);
+    SOLID_BG_COLORS.forEach(([name, hex]) => {
+      const d = document.createElement("div");
+      d.className = "bg-thumb"; d.dataset.file = hex;
+      d.style.background = hex;
+      d.title = name;
+      d.addEventListener("click", () => applyBg(hex));
+      grid.appendChild(d);
+    });
     GUILD_BG_FILES.forEach(f => {
       const thumbUrl = `assets/GuildCardBG/thumbs/${encodeURIComponent(f.replace(/\.PNG$/i, ".webp"))}?v=${BG_ASSET_V}`;
       const fullUrl  = `assets/GuildCardBG/${encodeURIComponent(f)}?v=${BG_ASSET_V}`;
