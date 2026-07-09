@@ -6,8 +6,9 @@
 }
 /* Theme variables are set at runtime from the chosen color (see app.js). */
 :root{
-  --bg:#3e3e3e; --bg2:#333; --hover:#2f2f2f; --accent:#7a7a7a; --accent-hover:#9a9a9a;
+  --bg:#3e3e3e; --bg1:#000000; --bg2:#333; --hover:#2f2f2f; --accent:#7a7a7a; --accent-hover:#9a9a9a;
   --text:#f3f3f3; --text-dim:#ffffff; --line:#ffffff1f; --card:#ffffff0d;
+  --titlebar-overlay:rgba(0,0,0,0.18);
 }
 *{box-sizing:border-box;scrollbar-color:var(--accent) var(--bg2);scrollbar-width:thin}
 ::-webkit-scrollbar{width:6px;height:6px}
@@ -27,12 +28,10 @@ body{
 /* Title bar */
 .titlebar{
   display:flex;align-items:center;gap:10px;padding:8px 14px;
-  background:var(--bg2);border-bottom:1px solid var(--line);
 }
 .titlebar-header{
   background-image:
-    linear-gradient(rgba(0,0,0,0.18), rgba(0,0,0,0.18)),
-    linear-gradient(color-mix(in srgb,var(--bg2) 70%,transparent) 0 100%),
+    linear-gradient(color-mix(in srgb,var(--accent) 90%,transparent),color-mix(in srgb,var(--accent) 90%,transparent)),
     url('assets/titlebar-background.png');
   background-size:auto 100%;
   background-position:left center;
@@ -50,16 +49,15 @@ body{
 .layout{display:flex;flex:1;min-height:0}
 .sidebar{
   width:300px;flex-shrink:0;padding:12px;overflow-y:scroll;scrollbar-gutter:stable;
-  background:var(--bg);border-right:1px solid var(--line);
   display:flex;flex-direction:column;gap:8px;
   background-image:
-    linear-gradient(color-mix(in srgb,var(--bg2) 50%,transparent),color-mix(in srgb,var(--bg2) 50%,transparent)),
+    linear-gradient(color-mix(in srgb,var(--accent) 90%,transparent),color-mix(in srgb,var(--accent) 90%,transparent)),
     url('assets/sidebar-background-texture1.png');
   background-size:auto 100%;
   background-position:left center;
   background-repeat:repeat;
 }
-.content{flex:1;padding:18px;overflow-y:hidden;min-width:0;background-size:cover;background-position:center;background-repeat:no-repeat}
+.content{flex:1;padding:18px;overflow-y:hidden;min-width:0;background-size:cover;background-position:center;background-repeat:no-repeat;background-color: var(--bg1);}
 
 /* Buttons */
 .btn{
@@ -67,8 +65,16 @@ body{
   border-radius:7px;padding:8px 14px;cursor:pointer;font-size:14px;
 }
 .btn:hover{background:#ffffff24}
-.btn.block{width:100%}
-.btn.tiny{padding:3px 10px;font-size:12px}
+.btn.block{width:100%;}
+.btn.tiny{padding:3px 10px;font-size:12px;}
+.btn.block{  background-image:
+    linear-gradient(color-mix(in srgb,var(--bg2) 80%,transparent),color-mix(in srgb,var(--bg2) 80%,transparent)),
+    url('assets/banner-background.png');
+  background-position:right;}
+.btn.tiny{background-image:
+    linear-gradient(color-mix(in srgb,var(--bg2) 80%,transparent),color-mix(in srgb,var(--bg2) 80%,transparent)),
+    url('assets/banner-background.png');
+  background-position:right;}
 .btn.accent{background:var(--bg1);border-color:#000000;color:#fff;font-weight:600;text-shadow:-1px 0 rgba(0,0,0,0.55),1px 0 rgba(0,0,0,0.55),0 -1px rgba(0,0,0,0.55),0 1px rgba(0,0,0,0.55)}
 .btn.accent:hover{background:var(--bg2);border-color:var(#000000)}
 .btn.accent:disabled{opacity:.80;cursor:not-allowed}
@@ -184,7 +190,7 @@ body{
 .prowler-pill{background:#7a4a1e;color:#fff;font-size:2.4cqi;font-weight:700;padding:1px 7px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;text-shadow:0 1px 1px rgba(0,0,0,.35);flex-shrink:0}
 .capture-pill{background:#4a4a4a;color:#fff;font-size:2.4cqi;font-weight:700;padding:1px 7px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;text-shadow:0 1px 1px rgba(0,0,0,.35);flex-shrink:0}
 /* Monster icon in the upper content area, over the dark square */
-.rc-icon{position:absolute;top:28.91%;left:43%;width:13%}
+.rc-icon{position:absolute;top:28.5%;left:43%;width:13%}
 .target-icon{width:100%;display:block;object-fit:contain}
 .hyper-overlay{position:absolute;top:-6%;left:-6%;width:112%;pointer-events:none}
 /* Locale value in the lower-left white box (below the decorative divider) */
