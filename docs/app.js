@@ -102,7 +102,7 @@
     ["Duramboros","#5a411f"],["Diablos","#997c54"],
     ["Barroth","#B57C45"],["Bulldrome","#cfaa87"], 
     ["K. Daora","#505358","Kushala Daora"],["Valstrax","#aeb5c1"],  // neutrals dark→light
-    ["Forbidden","#1E2025","Question Mark"],["Khezu","#FFFFFF"],                                                                     // white
+    ["Forbidden","#1E2025","Question Mark"],["Gypceros","#FFFFFF"],                                                                  // white
   ];
   const COLORS_HEX = Object.fromEntries(COLORS.map(([name, hex]) => [hex.toUpperCase(), name]));
   // Display name → icon name override (for swatches with shortened labels)
@@ -871,13 +871,14 @@
     const bright = c[0]*0.299 + c[1]*0.587 + c[2]*0.114;
     const isLight = bright > 230;
     if (isLight) {
-      r.setProperty("--bg",          css(darken(c,0.95)));
-      r.setProperty("--bg1",          css(darken(c,.80)));
-      r.setProperty("--bg2",         css(darken(c,0.90)));
-      r.setProperty("--hover",       css(darken(c,0.30)));
-      r.setProperty("--accent",     css(darken(c,0.5)));
+      r.setProperty("--bg", css(darken(c, .99)));
+      r.setProperty("--bg1", css(darken(c, .99)));
+      r.setProperty("--bg2", css(darken(c, .99)));
+      r.setProperty("--hover", css(darken(c, .99)));
+      r.setProperty("--accent", css(darken(c, .99)));
       r.setProperty("--accent-hover",css(lighten(c,0.1)));
       r.setProperty("--accent-color",css(darken(c,0.1)));
+      r.setProperty("--titlebar-overlay", "rgba(0,0,0,0.02)");
     } else {
       r.setProperty("--bg",          css(darken(c,.70)));
       r.setProperty("--bg1",         css(darken(c,.80)));
@@ -885,6 +886,7 @@
       r.setProperty("--hover",       css(darken(c,0.30)));
       r.setProperty("--accent",     css(darken(c,0.7)));
       r.setProperty("--accent-hover",css(darken(c,0.7)));
+      r.setProperty("--titlebar-overlay", "rgba(0,0,0,0.18)");
     }
     r.setProperty("--text",     isLight ? "#000000" : "#ffffff");
     r.setProperty("--hint",     isLight ? "#000000" : "#ffffff");
@@ -906,7 +908,18 @@
       d.className = "swatch"; d.dataset.hex = hex; d.style.background = hex;
       d.title = name;
       d.innerHTML = `<img class="swatch-icon" src="${monsterIcon(COLORS_ICON[name] || name)}" alt=""><span>${name}</span>`;
-      d.addEventListener("click", () => applyTheme(hex));
+      d.addEventListener("click", () => {
+        applyTheme(hex);
+        // Gypceros (white theme) clears the guild card background and closes the
+        // Theme modal on active selection only — a busy background photo fights with
+        // the bright theme. Scoped to the click handler (not inside applyTheme itself)
+        // so restoring this theme on page load never silently wipes out a previously
+        // saved background choice or auto-closes a modal the user didn't just open.
+        if (hex.toUpperCase() === "#FFFFFF") {
+          applyBg("");
+          $("themeModal").classList.add("hidden");
+        }
+      });
       wrap.appendChild(d);
     });
   })();
@@ -926,7 +939,7 @@
   // to composite themselves over the app. Values, not filenames, so applyBg() branches
   // on a leading "#" to tell a solid color apart from a GuildCardBG image filename.
   const SOLID_BG_COLORS = [
-    ["Chroma Green", "#00B140"],
+    ["Digital Blue", "#0000FF"],
     ["Digital Green", "#00FF00"],
   ];
   function applyBg(value) {
