@@ -876,7 +876,7 @@
       r.setProperty("--bg2", css(darken(c, .99)));
       r.setProperty("--hover", css(darken(c, .99)));
       r.setProperty("--accent", css(darken(c, .99)));
-      r.setProperty("--accent-hover",css(lighten(c,0.1)));
+      r.setProperty("--accent-hover",css(darken(c,0.1)));
       r.setProperty("--accent-color",css(darken(c,0.1)));
       r.setProperty("--titlebar-overlay", "rgba(0,0,0,0.02)");
     } else {
@@ -885,7 +885,7 @@
       r.setProperty("--bg2",         css(darken(c,0.95)));
       r.setProperty("--hover",       css(darken(c,0.30)));
       r.setProperty("--accent",     css(darken(c,0.7)));
-      r.setProperty("--accent-hover",css(darken(c,0.7)));
+      r.setProperty("--accent-hover",css(lighten(c,0.4)));
       r.setProperty("--titlebar-overlay", "rgba(0,0,0,0.18)");
     }
     r.setProperty("--text",     isLight ? "#000000" : "#ffffff");
