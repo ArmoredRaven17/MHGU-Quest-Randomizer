@@ -51,6 +51,14 @@
   ];
   let challenges = DEFAULT_CHALLENGES.map(c => Object.assign({}, c));
   let chaosMode = false;
+  let jokeMode = false;
+  // Odds the white swatch shows as its old joke identity "Khezu" instead of Gypceros
+  // each time the Theme modal opens. Purely cosmetic/in-memory — never persisted.
+  const KHEZU_JOKE_CHANCE = 0.25;
+  function setJokeMode(on) {
+    jokeMode = on;
+    document.getElementById("app").classList.toggle("joke-mode", on);
+  }
 
   const DEVIANT_FULL = {
     redhelm:"Redhelm Arzuros", snowbaron:"Snowbaron Lagombi", stonefist:"Stonefist Hermitaur",
@@ -901,28 +909,56 @@
       titleIcon.src = name ? monsterIcon(COLORS_ICON[name] || name) : FALLBACK_ICON;
     }
   }
-  (function buildSwatches() {
-    const wrap = $("swatches");
+  // Rebuilt every time the Theme modal opens (not just once at startup) so the
+  // Gypceros/Khezu joke roll below happens fresh on each open.
+  function buildSwatches() {
+    const wrap = $("swatches"); wrap.innerHTML = "";
     COLORS.forEach(([name, hex]) => {
+      // Gypceros occasionally masquerades as its old identity "Khezu" — a hidden
+      // joke swatch with the same hex/click target, just a different name/icon.
+      let displayName = name, iconName = COLORS_ICON[name] || name;
+      if (name === "Gypceros" && Math.random() < KHEZU_JOKE_CHANCE) {
+        displayName = "Khezu"; iconName = "Khezu";
+      }
       const d = document.createElement("div");
       d.className = "swatch"; d.dataset.hex = hex; d.style.background = hex;
-      d.title = name;
-      d.innerHTML = `<img class="swatch-icon" src="${monsterIcon(COLORS_ICON[name] || name)}" alt=""><span>${name}</span>`;
+      d.title = displayName;
+      d.innerHTML = `<img class="swatch-icon" src="${monsterIcon(iconName)}" alt=""><span>${displayName}</span>`;
       d.addEventListener("click", () => {
+        const isWhite = hex.toUpperCase() === "#FFFFFF";
+        // Gypceros/Khezu are a temporary preview, never the real saved choice — back
+        // up whatever theme/background were actually persisted so they can be put
+        // back immediately after, surviving both a refresh and reopening this modal.
+        let prevTheme = null, prevBg = null;
+        if (isWhite) {
+          try { prevTheme = localStorage.getItem("mhgu-theme"); prevBg = localStorage.getItem("mhgu-bg"); } catch (e) {}
+        }
         applyTheme(hex);
         // Gypceros (white theme) clears the guild card background and closes the
         // Theme modal on active selection only — a busy background photo fights with
-        // the bright theme. Scoped to the click handler (not inside applyTheme itself)
-        // so restoring this theme on page load never silently wipes out a previously
-        // saved background choice or auto-closes a modal the user didn't just open.
-        if (hex.toUpperCase() === "#FFFFFF") {
+        // the bright theme.
+        if (isWhite) {
           applyBg("");
           $("themeModal").classList.add("hidden");
+          try {
+            if (prevTheme != null) localStorage.setItem("mhgu-theme", prevTheme); else localStorage.removeItem("mhgu-theme");
+            if (prevBg != null) localStorage.setItem("mhgu-bg", prevBg); else localStorage.removeItem("mhgu-bg");
+          } catch (e) {}
+        }
+        // Khezu is the joke trigger; clicking anything else (including Gypceros
+        // itself) is the escape hatch and clears the joke.
+        setJokeMode(displayName === "Khezu");
+        // Charcoal backdrop for the blank joke page, overriding the white theme's
+        // --bg. Not persisted (see above) — reopening the Theme modal or a page
+        // reload restores the real theme's --bg instead.
+        if (displayName === "Khezu") {
+          document.documentElement.style.setProperty("--bg", "#36454F");
         }
       });
       wrap.appendChild(d);
     });
-  })();
+  }
+  buildSwatches();
   let saved = "#1E2025";
   try { saved = localStorage.getItem("mhgu-theme") || saved; } catch (e) {}
   applyTheme(saved);
@@ -1099,7 +1135,21 @@
   $("statsBtn").addEventListener("click", () => $("statsModal").classList.remove("hidden"));
   $("statsClose").addEventListener("click", () => $("statsModal").classList.add("hidden"));
   $("statsModal").addEventListener("click", (e) => { if (e.target.id === "statsModal") $("statsModal").classList.add("hidden"); });
-  $("themeBtn").addEventListener("click", () => $("themeModal").classList.remove("hidden"));
+  $("themeBtn").addEventListener("click", () => {
+    // Undo any live Gypceros/Khezu preview (or lingering joke) before showing the
+    // modal again, restoring whatever theme/background are actually persisted.
+    let currentHex = "#1E2025", currentBg = "";
+    try {
+      currentHex = localStorage.getItem("mhgu-theme") || currentHex;
+      currentBg = localStorage.getItem("mhgu-bg") || "";
+    } catch (e) {}
+    setJokeMode(false);
+    applyTheme(currentHex);
+    applyBg(currentBg);
+    buildSwatches();
+    document.querySelectorAll(".swatch").forEach(s => s.classList.toggle("sel", s.dataset.hex === currentHex));
+    $("themeModal").classList.remove("hidden");
+  });
   $("themeClose").addEventListener("click", () => $("themeModal").classList.add("hidden"));
   $("themeModal").addEventListener("click", (e) => { if (e.target.id === "themeModal") $("themeModal").classList.add("hidden"); });
   // Fixed window name means clicking this again refocuses the existing popup instead
