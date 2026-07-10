@@ -45,6 +45,12 @@ body{
 }
 .icon-btn:hover{background:#ffffff1a}
 
+/* Khezu joke: hides everything except the Theme gear icon, which stays live as the
+   escape hatch (reopening the modal, which lives outside #app, is unaffected). */
+#app.joke-mode .layout{display:none}
+#app.joke-mode .titlebar-header{background-image:none}
+#app.joke-mode .titlebar>*:not(#themeBtn){display:none}
+
 /* Layout */
 .layout{display:flex;flex:1;min-height:0}
 .sidebar{
