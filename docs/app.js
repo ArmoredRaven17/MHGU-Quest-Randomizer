@@ -578,6 +578,7 @@
 
     const f = {
       pQuests: $("p_quests").checked, large: $("f_large").checked,
+      keysOnly: $("f_keysOnly").checked,
       hyper: $("f_hyper").checked, capture: $("f_capture").checked,
       egg: $("f_egg").checked, gathering: $("f_gathering").checked, small: $("f_small").checked,
       multi: $("f_multi").checked,
@@ -601,6 +602,7 @@
       }
 
       if (q.LgMonster && !f.large) return false;
+      if (f.keysOnly && !q.Key) return false;
 
       const include = (q.LgMonster && !q.Capture)
         || (q.Capture && f.capture)
@@ -652,6 +654,7 @@
     $("r_locale").textContent = quest.Locale || "—";
     const isDeviant = quest.Type === "Special Permits";
     const isMultiMonster = quest.Monsters && quest.Monsters.length > 1;
+    $("r_keyPill").classList.toggle("hidden", !quest.Key);
     $("r_huntPill").classList.toggle("hidden", !quest.LgMonster || quest.Capture || quest.Type === "Special Permits");
     $("r_smPill").classList.toggle("hidden", !quest.SmMonsters);
     $("r_eggPill").classList.toggle("hidden", !quest.Egg);
@@ -1166,7 +1169,7 @@
 
   function doReset() {
     ["f_large","f_hyper","f_capture","f_egg","f_gathering","f_small","f_multi","f_oneFaint","f_onSite"].forEach(id => $(id).checked = true);
-    ["p_prowler","p_quests"].forEach(id => $(id).checked = false);
+    ["p_prowler","p_quests","f_keysOnly"].forEach(id => $(id).checked = false);
     document.querySelectorAll("#allTypeTree .akids input").forEach(cb => {
       cb.checked = parseInt(cb.id.replace("f_all_lv_",""), 10) < 43; // Arena (43-44) off by default
     });
@@ -1216,6 +1219,7 @@
       challenges: challenges.slice(),
       challengeCount: parseInt($("challengeCount").value) || 1,
       t: {
+        keysOnly: $("f_keysOnly").checked,
         large: $("f_large").checked,
         hyper: $("f_hyper").checked, capture: $("f_capture").checked,
         egg: $("f_egg").checked, gathering: $("f_gathering").checked, small: $("f_small").checked,
@@ -1239,6 +1243,7 @@
     const ms = new Set(d.monsters || []); monsterChecks.forEach(m => { if (ms.has(m.name)) m.input.checked = false; });
     const as = new Set(d.arts || []);     artLeaves.forEach(l => { if (as.has(l.name)) l.input.checked = false; });
     if (d.t) {
+      $("f_keysOnly").checked = !!d.t.keysOnly;
       $("f_large").checked = d.t.large !== false;
       $("f_hyper").checked = !!d.t.hyper; $("f_capture").checked = !!d.t.capture;
       $("f_egg").checked = !!d.t.egg; $("f_gathering").checked = !!d.t.gathering; $("f_small").checked = !!d.t.small;
