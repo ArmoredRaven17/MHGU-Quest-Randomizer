@@ -7,7 +7,7 @@
 <title>MHGU Quest Randomizer</title>
 <link rel="icon" href="assets/MonsterIcons/MHGU-Question_Mark_Icon.webp">
 <!-- Bump ?v= on any styles/app/data change so browsers fetch fresh copies (no hard-refresh needed) -->
-<link rel="stylesheet" href="styles.css?v=109">
+<link rel="stylesheet" href="styles.css?v=110">
 </head>
 <body>
 <div id="app">
@@ -36,6 +36,7 @@
         <button class="panel-head">Quest Filters <span class="chev">&#9662;</span></button>
         <div class="panel-body">
           <p class="hint">Uncheck to exclude from pool</p>
+          <label class="chk"><input type="checkbox" id="f_keysOnly">Keys Only?</label>
           <label class="chk"><input type="checkbox" id="f_large" checked>Large Monsters</label>
           <div style="margin-left:18px;display:flex;flex-direction:column;gap:4px">
             <label class="chk"><input type="checkbox" id="f_hyper" checked>Hypers</label>
@@ -176,6 +177,7 @@
         <div id="result" class="result hidden">
           <div class="rc-title">
             <span id="r_name" class="r-name"></span>
+            <span id="r_keyPill" class="key-pill hidden">Key</span>
             <span id="r_huntPill" class="hunt-pill hidden">Hunt</span>
             <span id="r_smPill" class="sm-pill hidden">Small Monsters</span>
             <span id="r_eggPill" class="egg-pill hidden">Egg Delivery</span>
@@ -240,7 +242,7 @@
       <li><strong>Prowler</strong> — enable "Prowler?" to allow Palico loadouts; "Prowler Quests?" to include Prowler-only quests. Biases apply when a Prowler is rolled.</li>
     </ul>
     <p><strong>3. Hit Randomize.</strong> You get a quest, a weapon, style, and Hunter Arts (plus any rolled challenges). Arena quests show which weapon Set to bring; Prowler quests give a bias instead.</p>
-    <p>Quest badges: <span class="hunt-pill" style="position:static;font-size:11px">Hunt</span> <span class="sm-pill" style="position:static;font-size:11px">Small Monsters</span> <span class="egg-pill" style="position:static;font-size:11px">Egg Delivery</span> <span class="gathering-pill" style="position:static;font-size:11px">Gathering</span> <span class="sp-pill" style="position:static;font-size:11px">Special Permit</span> <span class="capture-pill" style="position:static;font-size:11px">Capture</span> <span class="hyper-pill" style="position:static;font-size:11px">Hyper</span> <span class="prowler-pill" style="position:static;font-size:11px">Prowler</span> <span class="arena-pill" style="position:static;font-size:11px">Arena</span> <span class="event-pill" style="position:static;font-size:11px">Event</span></p>
+    <p>Quest badges: <span class="key-pill" style="position:static;font-size:11px">Key</span> <span class="hunt-pill" style="position:static;font-size:11px">Hunt</span> <span class="sm-pill" style="position:static;font-size:11px">Small Monsters</span> <span class="egg-pill" style="position:static;font-size:11px">Egg Delivery</span> <span class="gathering-pill" style="position:static;font-size:11px">Gathering</span> <span class="sp-pill" style="position:static;font-size:11px">Special Permit</span> <span class="capture-pill" style="position:static;font-size:11px">Capture</span> <span class="hyper-pill" style="position:static;font-size:11px">Hyper</span> <span class="prowler-pill" style="position:static;font-size:11px">Prowler</span> <span class="arena-pill" style="position:static;font-size:11px">Arena</span> <span class="event-pill" style="position:static;font-size:11px">Event</span></p>
     <p><strong>&#9881; Theme</strong> — change the color theme or pick a Guild Card background image.</p>
     <p><strong>Export / Import</strong> — save all your filters and challenges to a file, or load them back later (handy for sharing a setup or moving between browsers).</p>
     <p class="muted">Filters, challenges, theme, and background are saved between visits. Use Reset Filters to restore filter defaults (your challenges are kept).</p>
@@ -340,7 +342,7 @@
   </div>
 </div>
 
-<script src="data.js?v=27"></script>
-<script src="app.js?v=127"></script>
+<script src="data.js?v=28"></script>
+<script src="app.js?v=129"></script>
 </body>
 </html>
