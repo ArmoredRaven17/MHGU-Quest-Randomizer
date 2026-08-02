@@ -245,6 +245,10 @@
     <p>Quest badges: <span class="key-pill" style="position:static;font-size:11px">Key</span> <span class="hunt-pill" style="position:static;font-size:11px">Hunt</span> <span class="sm-pill" style="position:static;font-size:11px">Small Monsters</span> <span class="egg-pill" style="position:static;font-size:11px">Egg Delivery</span> <span class="gathering-pill" style="position:static;font-size:11px">Gathering</span> <span class="sp-pill" style="position:static;font-size:11px">Special Permit</span> <span class="capture-pill" style="position:static;font-size:11px">Capture</span> <span class="hyper-pill" style="position:static;font-size:11px">Hyper</span> <span class="prowler-pill" style="position:static;font-size:11px">Prowler</span> <span class="arena-pill" style="position:static;font-size:11px">Arena</span> <span class="event-pill" style="position:static;font-size:11px">Event</span></p>
     <p><strong>&#9881; Theme</strong> — change the color theme or pick a Guild Card background image.</p>
     <p><strong>Export / Import</strong> — save all your filters and challenges to a file, or load them back later (handy for sharing a setup or moving between browsers).</p>
+    <p><strong>Twitch bot integration</strong> — a chat bot can pull a random quest result and post it straight into chat by fetching:</p>
+    <p class="muted" style="user-select:all">https://mhgu-bot-api.raven-mhgu.workers.dev/quest</p>
+    <p>The response is plain text in the same format as Copy to Clipboard, ready to post as-is. For Nightbot, a custom command response of <code>$(urlfetch https://mhgu-bot-api.raven-mhgu.workers.dev/quest)</code> works out of the box; other bots that can fetch a URL and post the result (StreamElements, custom bots, etc.) work the same way.</p>
+    <p class="muted"><strong>Note:</strong> this endpoint is not customizable yet — it always rolls from a fixed pool (Large Monster hunts, Hypers, and Captures, across all ranks) and never applies your sidebar filters, Hunter Arts, Restrictions, or Challenges. A more flexible, per-streamer version is planned; for now every streamer using it shares the same pool.</p>
     <p class="muted">Filters, challenges, theme, and background are saved between visits. Use Reset Filters to restore filter defaults (your challenges are kept).</p>
     <div class="row end gap">
       <button id="helpClose" class="btn">Close</button>
@@ -343,6 +347,6 @@
 </div>
 
 <script src="data.js?v=28"></script>
-<script src="app.js?v=129"></script>
+<script src="app.js?v=131"></script>
 </body>
 </html>
