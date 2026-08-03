@@ -19,42 +19,19 @@
 
 * { box-sizing: border-box; }
 
-/* Reserve the scrollbar's space at all times, so opening/closing an accordion section
-   (which changes total page height, and thus whether a scrollbar is needed) doesn't
-   shift the centered .wrap — and everything inside it, like the sticky side panels —
-   sideways by the scrollbar's width. */
-html { scrollbar-gutter: stable; }
-
-/* Opening/closing an accordion section resizes content above the fold, which triggers
-   the browser's automatic scroll-anchoring correction — a brief scroll-position jump
-   that reads as the sticky side panels twitching. Disable it; nothing here needs it. */
-html, body { overflow-anchor: none; }
-
 input[type="checkbox"] { accent-color: var(--accent); }
 
+/* Fixed-viewport app shell — the page itself never scrolls; only .main-scroll does.
+   This sidesteps the whole class of scroll-clamp/jump issues that come from opening
+   wildly different-height accordion sections on a normally-scrolling page. */
+html, body { height: 100%; margin: 0; overflow: hidden; }
 body {
-  margin: 0;
+  display: flex; flex-direction: column;
   background: var(--bg);
   color: var(--text);
   font-family: 'MHFU', system-ui, -apple-system, "Segoe UI", sans-serif;
   font-size: 14px;
   line-height: 1.4;
-}
-
-.wrap { max-width: 1240px; margin: 0 auto; padding: 20px 16px 60px; }
-
-.layout { display: flex; gap: 20px; align-items: flex-start; }
-.main-col { flex: 1; min-width: 0; order: 2; }
-.side-col { flex-shrink: 0; position: sticky; top: 92px; }
-.left-col { width: 260px; order: 1; }
-.right-col { width: 260px; order: 3; }
-.side-col .actions { flex-direction: column; align-items: stretch; margin: 0; }
-.side-col #resultBox { margin-top: 10px; max-height: 55vh; overflow-y: auto; }
-
-@media (max-width: 1080px) {
-  .layout { flex-direction: column; }
-  .main-col, .side-col { order: 0; }
-  .side-col { position: static; width: auto; top: auto; }
 }
 
 h1 { font-size: 20px; margin: 0 0 4px; }
@@ -64,7 +41,7 @@ p { margin: 0 0 10px; }
 .muted { color: var(--text-dim); font-size: 13px; }
 
 .topbar {
-  position: sticky; top: 0; z-index: 10;
+  flex-shrink: 0;
   border-bottom: 1px solid var(--line);
   background-image:
     linear-gradient(color-mix(in srgb, var(--bg2) 88%, transparent), color-mix(in srgb, var(--bg2) 88%, transparent)),
@@ -74,10 +51,11 @@ p { margin: 0 0 10px; }
   background-repeat: repeat;
 }
 .topbar-inner {
-  max-width: 1240px; margin: 0 auto;
+  max-width: 1000px; margin: 0 auto;
   display: flex; align-items: center; justify-content: space-between;
-  gap: 12px; padding: 10px 16px;
+  gap: 12px; padding: 10px 16px; flex-wrap: wrap;
 }
+.topbar-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
 .btn {
   background-color: var(--accent); color: #fff; border: none; border-radius: 6px;
@@ -99,14 +77,6 @@ p { margin: 0 0 10px; }
 .panel {
   background-color: var(--bg2); border: 1px solid var(--line); border-radius: 10px;
   padding: 14px 16px; margin-bottom: 14px;
-}
-
-/* Sticky side panels (bot commands, preview/save/export) get the sidebar texture;
-   accordion panels (Quest Filters etc.) stay flat, same as any other .panel. */
-.side-col .panel {
-  background-image:
-    linear-gradient(color-mix(in srgb, var(--bg2) 82%, transparent), color-mix(in srgb, var(--bg2) 82%, transparent)),
-    url('assets/sidebar-background-texture1.png');
 }
 
 .acc-head {
@@ -185,14 +155,40 @@ p { margin: 0 0 10px; }
 
 #resultBox {
   white-space: pre-wrap; background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
-  padding: 12px; font-family: ui-monospace, Consolas, monospace; font-size: 13px; min-height: 40px;
-  margin-top: 10px;
+  padding: 10px; font-family: ui-monospace, Consolas, monospace; font-size: 13px;
+  max-height: 110px; overflow-y: auto; margin-top: 8px;
 }
 
-.actions { display: flex; gap: 10px; align-items: center; margin: 18px 0; flex-wrap: wrap; }
+.actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
 .status { font-size: 13px; }
 .status.ok { color: #6fd88a; }
 .status.err { color: var(--danger); }
 
-#loginGate { text-align: center; padding: 60px 20px; }
+#loginGate { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; }
+
+/* App shell: a fixed action bar (Preview/Save/result) above a scrollable filters area,
+   inside the flex column body — the only thing on the page that ever scrolls. */
+.app-shell { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.action-bar {
+  flex-shrink: 0; border-bottom: 1px solid var(--line);
+  max-width: 1000px; margin: 0 auto; width: 100%; padding: 12px 16px;
+}
+.main-scroll { flex: 1; min-height: 0; overflow-y: auto; }
+.main-scroll-inner { max-width: 1000px; margin: 0 auto; padding: 16px; }
+
 .hidden { display: none !important; }
+
+/* Modals — bot commands / export-import / help — matching the main app's pattern. */
+.modal {
+  position: fixed; inset: 0; background: #000000a8;
+  display: flex; align-items: center; justify-content: center; z-index: 20;
+}
+.modal-card {
+  background: var(--bg2); border: 1px solid var(--line); border-radius: 12px;
+  padding: 22px; width: min(480px, 90vw); max-height: 85vh; overflow-y: auto;
+}
+.modal-card h2 { margin: 0 0 16px; font-size: 18px; }
+.modal-card .muted { margin-bottom: 10px; }
+.row { display: flex; align-items: center; }
+.row.gap { gap: 8px; }
+.row.end { justify-content: flex-end; }

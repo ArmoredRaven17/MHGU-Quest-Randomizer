@@ -13,63 +13,32 @@
       <h1>MHGU Quest Bot Settings</h1>
       <p class="muted" style="margin:0">Configure the quest pool your channel's chat bot rolls from.</p>
     </div>
-    <div id="authArea"></div>
+    <div class="topbar-actions">
+      <button id="helpBtn" class="btn secondary tiny">Help</button>
+      <button id="botCmdBtn" class="btn secondary tiny hidden">Bot Commands</button>
+      <button id="exportImportBtn" class="btn secondary tiny hidden">Export/Import</button>
+      <div id="authArea"></div>
+    </div>
   </div>
 </div>
-<div class="wrap">
-  <div id="loginGate">
-    <p>Log in with Twitch to configure and publish your channel's bot settings.</p>
-    <button id="loginBtn" class="btn">Login with Twitch</button>
+
+<div id="loginGate">
+  <p>Log in with Twitch to configure and publish your channel's bot settings.</p>
+  <button id="loginBtn" class="btn">Login with Twitch</button>
+</div>
+
+<div id="appArea" class="hidden app-shell">
+  <div class="action-bar">
+    <div class="actions">
+      <button id="previewBtn" class="btn secondary">Preview Roll</button>
+      <button id="saveBtn" class="btn">Save &amp; Publish</button>
+      <span id="statusMsg" class="status"></span>
+    </div>
+    <div id="resultBox"></div>
   </div>
 
-  <div id="appArea" class="hidden layout">
-
-    <aside class="side-col left-col">
-      <div class="panel">
-        <h2 style="font-size:13px">Your Bot Commands</h2>
-        <p class="muted">Three separate commands, in case you want e.g. a !quest and a !weapon command that do different things.</p>
-
-        <h3>Full Roll (quest + weapon)</h3>
-        <div class="cmd-row" data-path="/quest" data-format="nightbot">
-          <code class="muted botCmdCode"></code>
-          <button class="btn tiny secondary copy-snippet botCmdCopy">Copy</button>
-        </div>
-
-        <h3>Quest Only</h3>
-        <div class="cmd-row" data-path="/quest-only" data-format="nightbot">
-          <code class="muted botCmdCode"></code>
-          <button class="btn tiny secondary copy-snippet botCmdCopy">Copy</button>
-        </div>
-
-        <h3>Weapon Only</h3>
-        <div class="cmd-row" data-path="/weapon-only" data-format="nightbot">
-          <code class="muted botCmdCode"></code>
-          <button class="btn tiny secondary copy-snippet botCmdCopy">Copy</button>
-        </div>
-      </div>
-    </aside>
-
-    <aside class="side-col right-col">
-      <div class="panel">
-        <div class="actions">
-          <button id="previewBtn" class="btn secondary">Preview Roll</button>
-          <button id="saveBtn" class="btn">Save &amp; Publish</button>
-          <span id="statusMsg" class="status"></span>
-        </div>
-        <div id="resultBox"></div>
-      </div>
-      <div class="panel">
-        <h2 style="font-size:13px">Export / Import</h2>
-        <p class="muted">Export/Import filter settings. This file can be used to import settings to the Github app and vice versa</p>
-        <div class="actions">
-          <button id="exportBtn" class="btn secondary tiny">Export</button>
-          <button id="importBtn" class="btn secondary tiny">Import</button>
-          <input type="file" id="importFile" accept=".json" style="display:none">
-        </div>
-      </div>
-    </aside>
-
-    <div class="main-col">
+  <div class="main-scroll">
+    <div class="main-scroll-inner">
 
     <div class="panel accordion open" data-section="questFilters">
       <button class="acc-head"><h2>Quest Filters</h2><span class="acc-chevron">▾</span></button>
@@ -164,7 +133,67 @@
     </div>
 
     </div>
+  </div>
+</div>
 
+<!-- Bot Commands modal -->
+<div id="botCmdModal" class="modal hidden">
+  <div class="modal-card">
+    <h2>Your Bot Commands</h2>
+    <p class="muted">Three separate commands, in case you want e.g. a !quest and a !weapon command that do different things.</p>
+
+    <h3>Full Roll (quest + weapon)</h3>
+    <div class="cmd-row" data-path="/quest" data-format="nightbot">
+      <code class="muted botCmdCode"></code>
+      <button class="btn tiny secondary copy-snippet botCmdCopy">Copy</button>
+    </div>
+
+    <h3>Quest Only</h3>
+    <div class="cmd-row" data-path="/quest-only" data-format="nightbot">
+      <code class="muted botCmdCode"></code>
+      <button class="btn tiny secondary copy-snippet botCmdCopy">Copy</button>
+    </div>
+
+    <h3>Weapon Only</h3>
+    <div class="cmd-row" data-path="/weapon-only" data-format="nightbot">
+      <code class="muted botCmdCode"></code>
+      <button class="btn tiny secondary copy-snippet botCmdCopy">Copy</button>
+    </div>
+    <div class="row end gap">
+      <button id="botCmdClose" class="btn">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Export/Import modal -->
+<div id="exportImportModal" class="modal hidden">
+  <div class="modal-card">
+    <h2>Export / Import</h2>
+    <p class="muted">Export/Import filter settings. This file can be used to import settings to the Github app and vice versa.</p>
+    <div class="actions">
+      <button id="exportBtn" class="btn secondary tiny">Export</button>
+      <button id="importBtn" class="btn secondary tiny">Import</button>
+      <input type="file" id="importFile" accept=".json" style="display:none">
+    </div>
+    <div class="row end gap">
+      <button id="exportImportClose" class="btn">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Help modal -->
+<div id="helpModal" class="modal hidden">
+  <div class="modal-card">
+    <h2>How this works</h2>
+    <p>This page lets you configure the quest pool your Twitch chat bot rolls from — instead of every streamer sharing one fixed pool, you get your own, saved under your Twitch login.</p>
+    <p><strong>1. Configure filters below.</strong> Quest Filters, Monsters, Weapons, Styles, Hunter Arts, Restrictions, and Prowler work the same way as the main site's checkboxes — uncheck anything to exclude it from your pool.</p>
+    <p><strong>2. Preview, then Save &amp; Publish.</strong> Preview Roll shows what a roll looks like with your current settings without saving anything. Save &amp; Publish is what actually updates your channel's live bot commands.</p>
+    <p><strong>3. Grab your bot commands.</strong> Click "Bot Commands" above for the exact strings to paste into your chat bot — a full-roll command, plus quest-only and weapon-only variants in case you want separate commands for each.</p>
+    <p><strong>Export/Import</strong> saves your filters to a file, or loads one back — including files exported from the main GitHub Pages site, since both use the same format.</p>
+    <p class="muted">Your settings are tied to your Twitch login, not this browser — log in again from any device and they'll be there.</p>
+    <div class="row end gap">
+      <button id="helpClose" class="btn">Close</button>
+    </div>
   </div>
 </div>
 

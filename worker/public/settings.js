@@ -360,15 +360,14 @@
   // Accordion: only one section panel expanded at a time, to cut down on scrolling
   // through e.g. the Monsters/Hunter Arts lists to reach the other sections. Sections
   // vary hugely in height (Hunter Arts open is ~4x Prowler open), so swapping which one
-  // is open can shrink or grow the page by thousands of pixels in a single synchronous
-  // DOM update — enough that the browser immediately clamps an out-of-range scroll
-  // position, which happens *before* any deferred (rAF/timeout) scroll adjustment gets a
-  // chance to run. The fix is to reorder it: scroll the clicked header to the top of the
-  // viewport FIRST — while the page still has its old (pre-toggle) height to scroll
-  // within — and only apply the open/close toggle once that settles, so the height
-  // change happens while already sitting at a sensible position instead of one that's
-  // about to become invalid.
+  // is open can shrink or grow .main-scroll's content by thousands of pixels in a single
+  // synchronous DOM update — enough that the browser immediately clamps an out-of-range
+  // scroll position, which happens *before* any deferred (rAF/timeout) scroll adjustment
+  // gets a chance to run. The fix is to reorder it: scroll the clicked header to the top
+  // of .main-scroll FIRST — while it still has its old (pre-toggle) height to scroll
+  // within — and only apply the open/close toggle once that settles.
   function wireAccordion() {
+    const scrollEl = document.querySelector(".main-scroll");
     const panels = [...document.querySelectorAll(".panel.accordion")];
     panels.forEach((panel) => {
       const head = panel.querySelector(".acc-head");
@@ -379,18 +378,18 @@
           if (!wasOpen) panel.classList.add("open");
         };
 
-        // Already near the top of the viewport — no scroll needed, toggle instantly.
-        const top = head.getBoundingClientRect().top;
+        // Already near the top of the scroll area — no scroll needed, toggle instantly.
+        const top = head.getBoundingClientRect().top - scrollEl.getBoundingClientRect().top;
         if (top >= 0 && top <= 100) { toggle(); return; }
 
         let done = false;
         const finish = () => {
           if (done) return;
           done = true;
-          window.removeEventListener("scrollend", finish);
+          scrollEl.removeEventListener("scrollend", finish);
           toggle();
         };
-        window.addEventListener("scrollend", finish, { once: true });
+        scrollEl.addEventListener("scrollend", finish, { once: true });
         setTimeout(finish, 500); // fallback for browsers without the scrollend event
         head.scrollIntoView({ behavior: "smooth", block: "start" });
       });
@@ -482,6 +481,21 @@
     });
   }
 
+  // Modals — Bot Commands / Export-Import / Help — opened from the top bar rather than
+  // permanently docked, since once a streamer has copied their URLs they don't need to
+  // keep looking at them.
+  function wireModal(modalId, openBtnId, closeBtnId) {
+    const modal = $(modalId);
+    $(openBtnId).addEventListener("click", () => modal.classList.remove("hidden"));
+    $(closeBtnId).addEventListener("click", () => modal.classList.add("hidden"));
+    modal.addEventListener("click", (e) => { if (e.target === modal) modal.classList.add("hidden"); });
+  }
+  function wireModals() {
+    wireModal("botCmdModal", "botCmdBtn", "botCmdClose");
+    wireModal("exportImportModal", "exportImportBtn", "exportImportClose");
+    wireModal("helpModal", "helpBtn", "helpClose");
+  }
+
   async function init() {
     buildChecklist($("weaponList"), WEAPONS, "wpn");
     buildChecklist($("styleList"), STYLES, "sty");
@@ -494,6 +508,7 @@
     renderBlacklist();
     wireActions();
     wireAccordion();
+    wireModals();
 
     const authArea = $("authArea");
     const meRes = await fetch("/api/me");
@@ -505,6 +520,8 @@
     const me = await meRes.json();
     $("loginGate").classList.add("hidden");
     $("appArea").classList.remove("hidden");
+    $("botCmdBtn").classList.remove("hidden");
+    $("exportImportBtn").classList.remove("hidden");
     authArea.innerHTML = `<span class="muted">Configuring settings for <strong>${me.login}</strong></span> `
       + `<button id="logoutBtn" class="btn secondary tiny">Logout</button>`;
     $("logoutBtn").addEventListener("click", async () => {
