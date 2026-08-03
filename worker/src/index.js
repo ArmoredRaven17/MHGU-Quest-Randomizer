@@ -21,19 +21,35 @@ let cachedData = null;
 let cachedAt = 0;
 const DATA_TTL_MS = 5 * 60 * 1000;
 
+// A hung/slow fetch here would otherwise stall the whole response — chat bots (Nightbot,
+// Moobot) time out their own urlfetch after a few seconds and silently show nothing if we
+// take too long, so fail fast and let the caller return a clear "try again" message instead.
+const DATA_FETCH_TIMEOUT_MS = 4000;
+
 async function getData() {
   const now = Date.now();
   if (cachedData && now - cachedAt < DATA_TTL_MS) return cachedData;
-  const res = await fetch(DATA_JS_URL, { cf: { cacheTtl: 300, cacheEverything: true } });
-  if (!res.ok) throw new Error(`Failed to fetch data.js: ${res.status}`);
-  const text = await res.text();
-  cachedData = parseDataJs(text);
-  cachedAt = now;
-  return cachedData;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), DATA_FETCH_TIMEOUT_MS);
+  try {
+    const res = await fetch(DATA_JS_URL, { cf: { cacheTtl: 300, cacheEverything: true }, signal: controller.signal });
+    if (!res.ok) throw new Error(`Failed to fetch data.js: ${res.status}`);
+    const text = await res.text();
+    cachedData = parseDataJs(text);
+    cachedAt = now;
+    return cachedData;
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
+// Explicit no-store on every roll/error response below — each call is meant to be a
+// fresh random result, so nothing between us and the calling bot (an intermediate proxy,
+// the bot's own urlfetch client) should ever have a reason to serve a cached one instead.
+const NO_STORE = { "Cache-Control": "no-store" };
+
 function dataUnavailableResponse() {
-  return new Response("Could not load quest data right now — try again shortly.", { status: 502, headers: { "Content-Type": "text/plain" } });
+  return new Response("Could not load quest data right now — try again shortly.", { status: 502, headers: { "Content-Type": "text/plain", ...NO_STORE } });
 }
 
 // Resolves a request's saved filters: no ?channel= means the shared default pool
@@ -57,16 +73,16 @@ async function resolveChannelFilters(url, env) {
 function notConfiguredResponse(channelRaw) {
   return new Response(
     `No filters published yet for channel "${channelRaw}". Visit the settings page, configure filters, and Save.`,
-    { status: 200, headers: { "Content-Type": "text/plain" } }
+    { status: 200, headers: { "Content-Type": "text/plain", ...NO_STORE } }
   );
 }
 
 function corruptedResponse() {
-  return new Response("Stored filters are corrupted — please republish.", { status: 500, headers: { "Content-Type": "text/plain" } });
+  return new Response("Stored filters are corrupted — please republish.", { status: 500, headers: { "Content-Type": "text/plain", ...NO_STORE } });
 }
 
 function textResponse(text) {
-  return new Response(text, { status: 200, headers: { "Content-Type": "text/plain; charset=utf-8" } });
+  return new Response(text, { status: 200, headers: { "Content-Type": "text/plain; charset=utf-8", ...NO_STORE } });
 }
 
 async function handleQuest(url, env) {

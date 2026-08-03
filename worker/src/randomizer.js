@@ -72,19 +72,28 @@ const smMonsterName = (main) => {
   return "";
 };
 
+// Rolls a Hunter Art in two stages: first pick a distinct base art uniformly (so an
+// "All"-weapon art like Castle Walls has the same odds as a weapon-specific art like
+// Moonbreaker, regardless of how many levels either has), then roll a level uniformly
+// among that base's remaining levels. Uniformly sampling raw data rows instead (the old
+// approach) skewed toward leveled arts 3:1, since each level is its own row.
 function rollArt(DATA, weapon, ex1, ex2, excl) {
   const wn = normWeapon(weapon);
   const b1 = ex1 ? artBase(ex1) : null, b2 = ex2 ? artBase(ex2) : null;
-  for (let i = 0; i < 1000; i++) {
-    const a = DATA.arts[rand(DATA.arts.length)];
-    if (excl && excl.has(a.HunterArtName)) continue;
+  const byBase = new Map();
+  for (const a of DATA.arts) {
     const aw = a.Weapon.toLowerCase();
     if (aw !== "all" && aw !== wn) continue;
+    if (excl && excl.has(a.HunterArtName)) continue;
     const b = artBase(a.HunterArtName);
     if (b === b1 || b === b2) continue;
-    return a.HunterArtName;
+    if (!byBase.has(b)) byBase.set(b, []);
+    byBase.get(b).push(a.HunterArtName);
   }
-  return null;
+  const bases = [...byBase.keys()];
+  if (!bases.length) return null;
+  const levels = byBase.get(pick(bases));
+  return pick(levels);
 }
 
 const maybeSP = (art, spArtsEnabled) => !art ? "" : (spArtsEnabled && Math.random() < 1/3 ? art + " SP" : art);
