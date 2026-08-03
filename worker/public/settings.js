@@ -358,14 +358,41 @@
   }
 
   // Accordion: only one section panel expanded at a time, to cut down on scrolling
-  // through e.g. the Monsters/Hunter Arts lists to reach the other sections.
+  // through e.g. the Monsters/Hunter Arts lists to reach the other sections. Sections
+  // vary hugely in height (Hunter Arts open is ~4x Prowler open), so swapping which one
+  // is open can shrink or grow the page by thousands of pixels in a single synchronous
+  // DOM update — enough that the browser immediately clamps an out-of-range scroll
+  // position, which happens *before* any deferred (rAF/timeout) scroll adjustment gets a
+  // chance to run. The fix is to reorder it: scroll the clicked header to the top of the
+  // viewport FIRST — while the page still has its old (pre-toggle) height to scroll
+  // within — and only apply the open/close toggle once that settles, so the height
+  // change happens while already sitting at a sensible position instead of one that's
+  // about to become invalid.
   function wireAccordion() {
     const panels = [...document.querySelectorAll(".panel.accordion")];
     panels.forEach((panel) => {
-      panel.querySelector(".acc-head").addEventListener("click", () => {
-        const wasOpen = panel.classList.contains("open");
-        panels.forEach((p) => p.classList.remove("open"));
-        if (!wasOpen) panel.classList.add("open");
+      const head = panel.querySelector(".acc-head");
+      head.addEventListener("click", () => {
+        const toggle = () => {
+          const wasOpen = panel.classList.contains("open");
+          panels.forEach((p) => p.classList.remove("open"));
+          if (!wasOpen) panel.classList.add("open");
+        };
+
+        // Already near the top of the viewport — no scroll needed, toggle instantly.
+        const top = head.getBoundingClientRect().top;
+        if (top >= 0 && top <= 100) { toggle(); return; }
+
+        let done = false;
+        const finish = () => {
+          if (done) return;
+          done = true;
+          window.removeEventListener("scrollend", finish);
+          toggle();
+        };
+        window.addEventListener("scrollend", finish, { once: true });
+        setTimeout(finish, 500); // fallback for browsers without the scrollend event
+        head.scrollIntoView({ behavior: "smooth", block: "start" });
       });
     });
   }
