@@ -91,28 +91,21 @@ p { margin: 0 0 10px; }
 }
 
 /* Sticky side panels (bot commands, preview/save/export) get the sidebar texture;
-   accordion panels (Quest Filters etc.) get the panel-body texture — mirroring the
-   main app's sidebar-vs-content-panel distinction. */
+   accordion panels (Quest Filters etc.) stay flat, same as any other .panel. */
 .side-col .panel {
   background-image:
     linear-gradient(color-mix(in srgb, var(--bg2) 82%, transparent), color-mix(in srgb, var(--bg2) 82%, transparent)),
     url('assets/sidebar-background-texture1.png');
 }
-.panel.accordion {
-  background-image:
-    linear-gradient(color-mix(in srgb, var(--bg2) 82%, transparent), color-mix(in srgb, var(--bg2) 82%, transparent)),
-    url('assets/panel-body-bg.png');
-  background-size: contain 100%;
-  background-position: left center;
-  background-repeat: repeat;
-}
 
 .acc-head {
   display: flex; align-items: center; justify-content: space-between;
-  border: none; border-radius: 10px 10px 0 0; color: inherit; cursor: pointer;
+  border: none; border-radius: 10px 10px 0 0; color: #fff; cursor: pointer;
   padding: 10px 16px; margin: -14px -16px 0; font: inherit; text-align: left;
   width: calc(100% + 32px);
+  background-color: var(--accent);
 }
+.acc-head:hover { background-color: var(--accent-hover); }
 .acc-head h2 { margin: 0; }
 .acc-chevron { color: var(--text-dim); transition: transform .15s; flex-shrink: 0; margin-left: 8px; }
 .panel.accordion.open .acc-chevron { transform: rotate(180deg); }
