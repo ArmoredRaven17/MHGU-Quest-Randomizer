@@ -48,8 +48,24 @@ async function getData() {
 // the bot's own urlfetch client) should ever have a reason to serve a cached one instead.
 const NO_STORE = { "Cache-Control": "no-store" };
 
+// Twitch silently drops a chat message that's byte-identical to the bot's own immediately
+// preceding message (its ~30s anti-spam duplicate filter — no error shown, especially when
+// the bot isn't a moderator). This bites hardest on small/static output spaces — e.g.
+// "No challenges rolled this time." repeats constantly whenever nothing rolls, so back-to-
+// back calls often look like the command silently stopped working. Appending a short random
+// run of invisible zero-width characters makes consecutive responses near-certain to differ
+// at the byte level (1/256 chance of an accidental repeat) without changing anything visible.
+function antiDupeTag() {
+  const ZWSP = String.fromCharCode(0x200b); // zero-width space
+  const ZWNJ = String.fromCharCode(0x200c); // zero-width non-joiner
+  const chars = [ZWSP, ZWNJ];
+  let s = "";
+  for (let i = 0; i < 8; i++) s += chars[Math.floor(Math.random() * chars.length)];
+  return s;
+}
+
 function dataUnavailableResponse() {
-  return new Response("Could not load quest data right now — try again shortly.", { status: 502, headers: { "Content-Type": "text/plain", ...NO_STORE } });
+  return new Response("Could not load quest data right now — try again shortly." + antiDupeTag(), { status: 502, headers: { "Content-Type": "text/plain", ...NO_STORE } });
 }
 
 // Resolves a request's saved filters: no ?channel= means the shared default pool
@@ -72,17 +88,17 @@ async function resolveChannelFilters(url, env) {
 
 function notConfiguredResponse(channelRaw) {
   return new Response(
-    `No filters published yet for channel "${channelRaw}". Visit the settings page, configure filters, and Save.`,
+    `No filters published yet for channel "${channelRaw}". Visit the settings page, configure filters, and Save.` + antiDupeTag(),
     { status: 200, headers: { "Content-Type": "text/plain", ...NO_STORE } }
   );
 }
 
 function corruptedResponse() {
-  return new Response("Stored filters are corrupted — please republish.", { status: 500, headers: { "Content-Type": "text/plain", ...NO_STORE } });
+  return new Response("Stored filters are corrupted — please republish." + antiDupeTag(), { status: 500, headers: { "Content-Type": "text/plain", ...NO_STORE } });
 }
 
 function textResponse(text) {
-  return new Response(text, { status: 200, headers: { "Content-Type": "text/plain; charset=utf-8", ...NO_STORE } });
+  return new Response(text + antiDupeTag(), { status: 200, headers: { "Content-Type": "text/plain; charset=utf-8", ...NO_STORE } });
 }
 
 async function handleQuest(url, env) {
