@@ -307,6 +307,13 @@ export function rollWeaponOnly(DATA, filters) {
   return { weapon, ...rollLoadoutForWeapon(DATA, weapon, nf) };
 }
 
+// Challenge only — no quest DATA is needed at all, since challenges live entirely in
+// filters; unlike rollQuestOnly/rollWeaponOnly this takes just filters, no DATA param.
+export function rollChallengeOnly(filters) {
+  const nf = normalizeFilters(filters);
+  return { challenges: rollChallenges(nf) };
+}
+
 // The Worker's original fixed pool (Large Monster hunts + Hyper + Capture, every rank,
 // SP Arts on, no Prowler, no Key-only) — kept as an explicit filters object so bare
 // GET /quest (no channel) is byte-for-byte unchanged from before per-channel filters
@@ -352,4 +359,9 @@ export function formatWeaponOnly(result) {
   const lines = [`Weapon: ${result.weapon}`, `${result.styleLabel}: ${result.style}`];
   if (result.arts.length) lines.push(`Hunter Art(s): ${result.arts.join(" / ")}`);
   return lines.join(" |\n");
+}
+
+export function formatChallengeOnly(result) {
+  if (!result.challenges.length) return "No challenges rolled this time.";
+  return `Challenges: ${result.challenges.join(", ")}`;
 }

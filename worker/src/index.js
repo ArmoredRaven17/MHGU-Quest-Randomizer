@@ -1,4 +1,4 @@
-import { rollQuest, rollQuestOnly, rollWeaponOnly, rollDefaultQuest, defaultFilters, formatForChat, formatQuestOnly, formatWeaponOnly } from "./randomizer.js";
+import { rollQuest, rollQuestOnly, rollWeaponOnly, rollChallengeOnly, rollDefaultQuest, defaultFilters, formatForChat, formatQuestOnly, formatWeaponOnly, formatChallengeOnly } from "./randomizer.js";
 import { handleLogin, handleCallback, handleLogout } from "./auth.js";
 import { handleMe, handleGetFilters, handlePreview, handlePublish, handleCorsPreflight } from "./api.js";
 
@@ -107,6 +107,17 @@ async function handleWeaponOnly(url, env) {
   return textResponse(formatWeaponOnly(result));
 }
 
+// No getData()/DATA needed at all — challenges live entirely in filters, not the quest
+// pool, so this is the only roll endpoint that doesn't depend on data.js being reachable.
+async function handleChallengeOnly(url, env) {
+  const { channelRaw, filters, corrupted } = await resolveChannelFilters(url, env);
+  if (corrupted) return corruptedResponse();
+  if (filters === NOT_CONFIGURED) return notConfiguredResponse(channelRaw);
+
+  const result = rollChallengeOnly(channelRaw ? filters : defaultFilters());
+  return textResponse(formatChallengeOnly(result));
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -116,6 +127,7 @@ export default {
     if (pathname === "/quest" && method === "GET") return handleQuest(url, env);
     if (pathname === "/quest-only" && method === "GET") return handleQuestOnly(url, env);
     if (pathname === "/weapon-only" && method === "GET") return handleWeaponOnly(url, env);
+    if (pathname === "/challenge-only" && method === "GET") return handleChallengeOnly(url, env);
 
     if (pathname === "/auth/login" && method === "GET") return handleLogin(request, env);
     if (pathname === "/auth/callback" && method === "GET") return handleCallback(request, env);

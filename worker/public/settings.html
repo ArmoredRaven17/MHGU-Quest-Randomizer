@@ -167,22 +167,52 @@
 <div id="botCmdModal" class="modal hidden">
   <div class="modal-card">
     <h2>Your Bot Commands</h2>
-    <p class="muted">Three separate commands, in case you want e.g. a !quest and a !weapon command that do different things.</p>
+    <p class="muted">Four separate commands, in case you want e.g. a !quest and a !weapon command that do different things. Nightbot pastes the whole line below as the command; Moobot (and most others) need the plain URL pasted into their own URL-fetch response tag instead — not as the command text itself.</p>
 
     <h3>Full Roll (quest + weapon)</h3>
+    <p class="cmd-desc">Nightbot</p>
     <div class="cmd-row" data-path="/quest" data-format="nightbot">
+      <code class="muted botCmdCode"></code>
+      <button class="btn tiny secondary copy-snippet botCmdCopy">Copy</button>
+    </div>
+    <p class="cmd-desc">Moobot / plain URL</p>
+    <div class="cmd-row" data-path="/quest" data-format="plain">
       <code class="muted botCmdCode"></code>
       <button class="btn tiny secondary copy-snippet botCmdCopy">Copy</button>
     </div>
 
     <h3>Quest Only</h3>
+    <p class="cmd-desc">Nightbot</p>
     <div class="cmd-row" data-path="/quest-only" data-format="nightbot">
+      <code class="muted botCmdCode"></code>
+      <button class="btn tiny secondary copy-snippet botCmdCopy">Copy</button>
+    </div>
+    <p class="cmd-desc">Moobot / plain URL</p>
+    <div class="cmd-row" data-path="/quest-only" data-format="plain">
       <code class="muted botCmdCode"></code>
       <button class="btn tiny secondary copy-snippet botCmdCopy">Copy</button>
     </div>
 
     <h3>Weapon Only</h3>
+    <p class="cmd-desc">Nightbot</p>
     <div class="cmd-row" data-path="/weapon-only" data-format="nightbot">
+      <code class="muted botCmdCode"></code>
+      <button class="btn tiny secondary copy-snippet botCmdCopy">Copy</button>
+    </div>
+    <p class="cmd-desc">Moobot / plain URL</p>
+    <div class="cmd-row" data-path="/weapon-only" data-format="plain">
+      <code class="muted botCmdCode"></code>
+      <button class="btn tiny secondary copy-snippet botCmdCopy">Copy</button>
+    </div>
+
+    <h3>Challenge Roll</h3>
+    <p class="cmd-desc">Nightbot</p>
+    <div class="cmd-row" data-path="/challenge-only" data-format="nightbot">
+      <code class="muted botCmdCode"></code>
+      <button class="btn tiny secondary copy-snippet botCmdCopy">Copy</button>
+    </div>
+    <p class="cmd-desc">Moobot / plain URL</p>
+    <div class="cmd-row" data-path="/challenge-only" data-format="plain">
       <code class="muted botCmdCode"></code>
       <button class="btn tiny secondary copy-snippet botCmdCopy">Copy</button>
     </div>
