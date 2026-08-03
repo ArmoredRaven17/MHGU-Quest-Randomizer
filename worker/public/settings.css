@@ -19,6 +19,12 @@
 
 * { box-sizing: border-box; }
 
+/* Reserve the scrollbar's space at all times, so opening/closing an accordion section
+   (which changes total page height, and thus whether a scrollbar is needed) doesn't
+   shift the centered .wrap — and everything inside it, like the sticky side panels —
+   sideways by the scrollbar's width. */
+html { scrollbar-gutter: stable; }
+
 input[type="checkbox"] { accent-color: var(--accent); }
 
 body {
@@ -34,7 +40,7 @@ body {
 
 .layout { display: flex; gap: 20px; align-items: flex-start; }
 .main-col { flex: 1; min-width: 0; order: 2; }
-.side-col { flex-shrink: 0; position: sticky; top: 108px; }
+.side-col { flex-shrink: 0; position: sticky; top: 92px; }
 .left-col { width: 260px; order: 1; }
 .right-col { width: 260px; order: 3; }
 .side-col .actions { flex-direction: column; align-items: stretch; margin: 0; }
