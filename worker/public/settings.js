@@ -186,39 +186,56 @@
       const { head, input: wGroupInput } = makeGroupHead(weaponKey);
       wrap.appendChild(head);
 
+      // One row per base art — single-level arts are just a plain checkbox; leveled
+      // arts (I/II/III) lay their levels out horizontally in the same row instead of
+      // wrapping in a grid, so a weapon with an odd count of arts never leaves a lone
+      // item stranded on its own row.
       const kids = document.createElement("div");
-      kids.className = "grid";
+      kids.className = "art-rows";
       const wLeaves = [];
 
       Array.from(baseMap.keys()).sort().forEach((base) => {
         const fulls = baseMap.get(base).slice().sort();
+        const row = document.createElement("div");
+        row.className = "art-row";
+
         if (fulls.length === 1) {
           const { label, input } = makeLeaf(fulls[0], `art_${i++}`);
-          kids.appendChild(label);
+          row.appendChild(label);
           wLeaves.push(input);
         } else {
-          // Base art with multiple levels (I/II/III) — its own group toggle lets a
-          // streamer drop the whole tiered art in one click instead of per-level.
-          const subWrap = document.createElement("div");
-          subWrap.className = "subgrp";
-          const { head: subHead, input: bGroupInput } = makeGroupHead(base, "sub");
-          subWrap.appendChild(subHead);
-          const subKids = document.createElement("div");
-          subKids.className = "grid sub-grid";
+          // Base art with multiple levels — its own group toggle lets a streamer drop
+          // the whole tiered art in one click instead of per-level.
+          const { head: rowHead, input: bGroupInput } = makeGroupHead(base, "sub");
+          row.appendChild(rowHead);
+          const levelsWrap = document.createElement("div");
+          levelsWrap.className = "art-row-levels";
           const bLeaves = [];
           fulls.forEach((name) => {
-            const { label, input } = makeLeaf(name, `art_${i++}`);
-            subKids.appendChild(label);
+            const suffix = name.slice(base.length).trim();
+            const label = document.createElement("label");
+            label.className = "chk";
+            const input = document.createElement("input");
+            input.type = "checkbox";
+            input.checked = true;
+            input.className = "leaf";
+            input.dataset.name = name;
+            input.id = `art_${i++}`;
+            input.addEventListener("change", onLeafChanged);
+            label.appendChild(input);
+            label.appendChild(document.createTextNode(suffix));
+            levelsWrap.appendChild(label);
             bLeaves.push(input);
             wLeaves.push(input);
           });
-          subWrap.appendChild(subKids);
-          kids.appendChild(subWrap);
+          row.appendChild(levelsWrap);
 
           const bGroup = { input: bGroupInput, leaves: bLeaves };
           groupRegistry.push(bGroup);
           bGroupInput.addEventListener("change", () => onGroupToggled(bGroup));
         }
+
+        kids.appendChild(row);
       });
 
       wrap.appendChild(kids);

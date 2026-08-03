@@ -129,10 +129,18 @@ p { margin: 0 0 10px; }
   font-weight: 600; font-size: 13px; margin-bottom: 4px;
 }
 .grphead input { margin: 0; }
-.grphead.sub { font-weight: 500; font-size: 12.5px; color: var(--text-dim); margin: 6px 0 3px; }
-.grp > .grid, .grp > .grid.kids { padding-left: 22px; }
-.subgrp { margin: 2px 0 2px 4px; padding-left: 10px; border-left: 2px solid var(--line); }
-.sub-grid { margin-bottom: 2px; padding-left: 12px; }
+.grphead.sub { font-weight: 500; font-size: 12.5px; color: var(--text-dim); margin: 0; }
+.grp > .grid, .grp > .grid.kids, .grp > .art-rows { padding-left: 22px; }
+
+/* Hunter Arts: one row per base art. Single-level arts are a plain checkbox; leveled
+   arts (I/II/III) lay their levels out horizontally in the same row, so a weapon with
+   an odd count of arts never leaves a lone item stranded on its own row like a
+   wrapping grid would. */
+.art-rows { display: flex; flex-direction: column; }
+.art-row { display: flex; align-items: center; gap: 14px; padding: 3px 0; flex-wrap: wrap; }
+.art-row .grphead.sub { flex: 0 0 auto; min-width: 150px; }
+.art-row-levels { display: flex; gap: 12px; align-items: center; }
+.art-row-levels .chk { padding: 0; }
 
 #rankGroups { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
 
