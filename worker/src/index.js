@@ -1,4 +1,4 @@
-import { rollQuest, rollDefaultQuest, formatForChat } from "./randomizer.js";
+import { rollQuest, rollQuestOnly, rollWeaponOnly, rollDefaultQuest, defaultFilters, formatForChat, formatQuestOnly, formatWeaponOnly } from "./randomizer.js";
 import { handleLogin, handleCallback, handleLogout } from "./auth.js";
 import { handleMe, handleGetFilters, handlePreview, handlePublish } from "./api.js";
 
@@ -32,40 +32,79 @@ async function getData() {
   return cachedData;
 }
 
+function dataUnavailableResponse() {
+  return new Response("Could not load quest data right now — try again shortly.", { status: 502, headers: { "Content-Type": "text/plain" } });
+}
+
+// Resolves a request's saved filters: no ?channel= means the shared default pool
+// (rollDefaultQuest-style callers pass null through); a channel present but never
+// published returns a sentinel string the caller turns into a friendly message.
+const NOT_CONFIGURED = Symbol("not-configured");
+
+async function resolveChannelFilters(url, env) {
+  const channelRaw = url.searchParams.get("channel");
+  if (!channelRaw) return { channelRaw: null, filters: null };
+  const channel = channelRaw.trim().toLowerCase();
+  const stored = await env.MHGU_BOT_PROFILES.get(channel);
+  if (!stored) return { channelRaw, filters: NOT_CONFIGURED };
+  try {
+    return { channelRaw, filters: JSON.parse(stored) };
+  } catch (e) {
+    return { channelRaw, filters: null, corrupted: true };
+  }
+}
+
+function notConfiguredResponse(channelRaw) {
+  return new Response(
+    `No filters published yet for channel "${channelRaw}". Visit the settings page, configure filters, and Save.`,
+    { status: 200, headers: { "Content-Type": "text/plain" } }
+  );
+}
+
+function corruptedResponse() {
+  return new Response("Stored filters are corrupted — please republish.", { status: 500, headers: { "Content-Type": "text/plain" } });
+}
+
+function textResponse(text) {
+  return new Response(text, { status: 200, headers: { "Content-Type": "text/plain; charset=utf-8" } });
+}
+
 async function handleQuest(url, env) {
   let DATA;
-  try {
-    DATA = await getData();
-  } catch (e) {
-    return new Response("Could not load quest data right now — try again shortly.", { status: 502, headers: { "Content-Type": "text/plain" } });
-  }
+  try { DATA = await getData(); } catch (e) { return dataUnavailableResponse(); }
 
-  const channelRaw = url.searchParams.get("channel");
-  let result;
-  if (!channelRaw) {
-    result = rollDefaultQuest(DATA);
-  } else {
-    const channel = channelRaw.trim().toLowerCase();
-    const stored = await env.MHGU_BOT_PROFILES.get(channel);
-    if (!stored) {
-      return new Response(
-        `No filters published yet for channel "${channelRaw}". Visit the settings page, configure filters, and Save.`,
-        { status: 200, headers: { "Content-Type": "text/plain" } }
-      );
-    }
-    let filters;
-    try {
-      filters = JSON.parse(stored);
-    } catch (e) {
-      return new Response("Stored filters are corrupted — please republish.", { status: 500, headers: { "Content-Type": "text/plain" } });
-    }
-    result = rollQuest(DATA, filters);
-  }
+  const { channelRaw, filters, corrupted } = await resolveChannelFilters(url, env);
+  if (corrupted) return corruptedResponse();
+  if (filters === NOT_CONFIGURED) return notConfiguredResponse(channelRaw);
 
-  if (!result) {
-    return new Response("No quests match the current filters.", { status: 200, headers: { "Content-Type": "text/plain" } });
-  }
-  return new Response(formatForChat(result), { status: 200, headers: { "Content-Type": "text/plain; charset=utf-8" } });
+  const result = channelRaw ? rollQuest(DATA, filters) : rollDefaultQuest(DATA);
+  if (!result) return textResponse("No quests match the current filters.");
+  return textResponse(formatForChat(result));
+}
+
+async function handleQuestOnly(url, env) {
+  let DATA;
+  try { DATA = await getData(); } catch (e) { return dataUnavailableResponse(); }
+
+  const { channelRaw, filters, corrupted } = await resolveChannelFilters(url, env);
+  if (corrupted) return corruptedResponse();
+  if (filters === NOT_CONFIGURED) return notConfiguredResponse(channelRaw);
+
+  const result = rollQuestOnly(DATA, channelRaw ? filters : defaultFilters());
+  if (!result) return textResponse("No quests match the current filters.");
+  return textResponse(formatQuestOnly(result));
+}
+
+async function handleWeaponOnly(url, env) {
+  let DATA;
+  try { DATA = await getData(); } catch (e) { return dataUnavailableResponse(); }
+
+  const { channelRaw, filters, corrupted } = await resolveChannelFilters(url, env);
+  if (corrupted) return corruptedResponse();
+  if (filters === NOT_CONFIGURED) return notConfiguredResponse(channelRaw);
+
+  const result = rollWeaponOnly(DATA, channelRaw ? filters : defaultFilters());
+  return textResponse(formatWeaponOnly(result));
 }
 
 export default {
@@ -75,6 +114,8 @@ export default {
     const method = request.method;
 
     if (pathname === "/quest" && method === "GET") return handleQuest(url, env);
+    if (pathname === "/quest-only" && method === "GET") return handleQuestOnly(url, env);
+    if (pathname === "/weapon-only" && method === "GET") return handleWeaponOnly(url, env);
 
     if (pathname === "/auth/login" && method === "GET") return handleLogin(request, env);
     if (pathname === "/auth/callback" && method === "GET") return handleCallback(request, env);
@@ -87,7 +128,7 @@ export default {
       try {
         DATA = await getData();
       } catch (e) {
-        return new Response("Could not load quest data right now — try again shortly.", { status: 502, headers: { "Content-Type": "text/plain" } });
+        return dataUnavailableResponse();
       }
       return handlePreview(request, env, DATA);
     }

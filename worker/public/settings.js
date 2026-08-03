@@ -459,12 +459,12 @@
       window.location.reload();
     });
 
-    const questUrl = `${location.origin}/quest?channel=${encodeURIComponent(me.login)}`;
-    const nightbotCmd = `$(urlfetch ${questUrl})`;
-    $("botCmdText").textContent = questUrl;
-    $("botCmdNightbot").textContent = nightbotCmd;
-    $("botCmdCopy").dataset.copy = questUrl;
-    $("botCmdNightbotCopy").dataset.copy = nightbotCmd;
+    document.querySelectorAll(".cmd-row[data-path]").forEach((row) => {
+      const url = `${location.origin}${row.dataset.path}?channel=${encodeURIComponent(me.login)}`;
+      const value = row.dataset.format === "nightbot" ? `$(urlfetch ${url})` : url;
+      row.querySelector(".botCmdCode").textContent = value;
+      row.querySelector(".botCmdCopy").dataset.copy = value;
+    });
     document.querySelectorAll(".copy-snippet").forEach((btn) => {
       btn.addEventListener("click", () => {
         navigator.clipboard.writeText(btn.dataset.copy).then(() => {

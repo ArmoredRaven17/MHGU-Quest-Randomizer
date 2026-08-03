@@ -89,20 +89,25 @@ function rollArt(DATA, weapon, ex1, ex2, excl) {
 
 const maybeSP = (art, spArtsEnabled) => !art ? "" : (spArtsEnabled && Math.random() < 1/3 ? art + " SP" : art);
 
-// filters: the exact JSON shape produced by docs/app.js's saveFilters() (minus the
-// challenges/challengeCount/chaosMode fields, which this Worker never rolls). Returns
-// null if no quest matches the pool (caller should show a "no quests match" message).
-export function rollQuest(DATA, filters) {
+function normalizeFilters(filters) {
   const f2 = filters || {};
   const t = f2.t || {};
-  const uncheckedWeapons = new Set(f2.weapons || []);
-  const uncheckedStyles = new Set(f2.styles || []);
-  const uncheckedBiases = new Set(f2.biases || []);
-  const uncheckedMonsters = new Set(f2.monsters || []);
-  const excludedArtNames = new Set(f2.arts || []);
-  const blacklist = f2.blacklist || [];
-  const spArtsEnabled = t.spArts !== false;
+  return {
+    t,
+    uncheckedWeapons: new Set(f2.weapons || []),
+    uncheckedStyles: new Set(f2.styles || []),
+    uncheckedBiases: new Set(f2.biases || []),
+    uncheckedMonsters: new Set(f2.monsters || []),
+    excludedArtNames: new Set(f2.arts || []),
+    blacklist: f2.blacklist || [],
+    spArtsEnabled: t.spArts !== false,
+  };
+}
 
+// Picks a single quest from DATA.quests respecting every quest-pool filter. Returns null
+// if nothing matches (caller shows a "no quests match" message).
+function pickFilteredQuest(DATA, nf) {
+  const { t, uncheckedMonsters } = nf;
   const inc = new Set(DATA.monsters.filter(m => !uncheckedMonsters.has(m.MonsterName)).map(m => m.MonsterName.toLowerCase()));
   const anyFiltered = inc.size < DATA.monsters.length;
 
@@ -146,17 +151,95 @@ export function rollQuest(DATA, filters) {
     return true;
   });
 
-  const quest = pool.length ? pick(pool) : null;
-  if (!quest) return null;
+  return pool.length ? pick(pool) : null;
+}
 
+function questInfo(quest) {
   const iconMonster = (quest.Type === "Special Permits" && quest.Name)
     ? spDeviant(quest.Name, quest.Monster)
     : (quest.Monster || (quest.SmMonsters ? smMonsterName(quest.Main) : ""));
   const monsters = (quest.Monsters && quest.Monsters.length) ? quest.Monsters.join(", ") : iconMonster;
+  return { name: quest.Name || "", main: quest.Main || "", locale: quest.Locale || "—", monsters };
+}
+
+// Decides a weapon (forced Prowler quests aside — this never returns anything but a
+// normal roll, since it has no quest to force Prowler from).
+function rollWeapon(nf) {
+  const { t, uncheckedWeapons, uncheckedStyles, blacklist } = nf;
+  const chosen = WEAPONS.filter(w => !uncheckedWeapons.has(w));
+  if (t.prowler) chosen.push("Prowler");
+  let weapon = chosen.length ? pick(chosen) : "Great Sword";
+  // Reroll weapon if the blacklist blocks all available styles for it
+  if (weapon !== "Prowler" && blacklist.length) {
+    const baseStyles = STYLES.filter(s => !uncheckedStyles.has(s));
+    for (let i = 0; i < 50; i++) {
+      const blS = new Set(blacklist.filter(b => b.weapon === weapon).map(b => b.style));
+      if (baseStyles.some(s => !blS.has(s))) break;
+      weapon = chosen.length ? pick(chosen) : "Great Sword";
+    }
+  }
+  return weapon;
+}
+
+// Given a weapon (already decided — forced by a Prowler quest, or freely rolled), rolls
+// the bias (if Prowler) or style + Hunter Arts. Returns {styleLabel, style, arts}.
+function rollLoadoutForWeapon(DATA, weapon, nf) {
+  const { uncheckedBiases, uncheckedStyles, blacklist, excludedArtNames, spArtsEnabled } = nf;
+
+  if (weapon === "Prowler") {
+    let avail = BIAS_NAMES.filter(name => !uncheckedBiases.has(name));
+    if (!avail.length) avail = [BIAS_NAMES[0]];
+    return { styleLabel: "Bias", style: pick(avail), arts: [] };
+  }
+
+  let styles = STYLES.filter(s => !uncheckedStyles.has(s));
+  const blS = new Set(blacklist.filter(b => b.weapon === weapon).map(b => b.style));
+  const filteredStyles = styles.filter(s => !blS.has(s));
+  if (filteredStyles.length) styles = filteredStyles;
+  if (!styles.length) styles = ["Guild"];
+  const style = pick(styles);
+
+  // Slot count by style: Alchemy/Striker = 3, Guild = 2, everything else = 1.
+  // SP rule mirrors the game: Alchemy may SP every art independently, but Guild and
+  // Striker allow at most ONE SP art — once an earlier art rolls SP, the rest skip
+  // the SP roll (pass the plain art through instead of calling maybeSP again).
+  let spPicks = [];
+  if (style === "Alchemy") {
+    const a = rollArt(DATA, weapon, null, null, excludedArtNames);
+    const b = rollArt(DATA, weapon, a, null, excludedArtNames);
+    const c = rollArt(DATA, weapon, a, b, excludedArtNames);
+    spPicks = [a, b, c].map(x => maybeSP(x, spArtsEnabled));
+  } else if (style === "Striker") {
+    const a = rollArt(DATA, weapon, null, null, excludedArtNames);
+    const b = rollArt(DATA, weapon, a, null, excludedArtNames);
+    const c = rollArt(DATA, weapon, a, b, excludedArtNames);
+    const aSP = maybeSP(a, spArtsEnabled);
+    const bSP = aSP.endsWith(" SP") ? b : maybeSP(b, spArtsEnabled);
+    const cSP = (aSP.endsWith(" SP") || (bSP && bSP.endsWith(" SP"))) ? c : maybeSP(c, spArtsEnabled);
+    spPicks = [aSP, bSP, cSP];
+  } else if (style === "Guild") {
+    const a = rollArt(DATA, weapon, null, null, excludedArtNames);
+    const b = rollArt(DATA, weapon, a, null, excludedArtNames);
+    const aSP = maybeSP(a, spArtsEnabled);
+    spPicks = [aSP, aSP.endsWith(" SP") ? b : maybeSP(b, spArtsEnabled)];
+  } else {
+    spPicks = [maybeSP(rollArt(DATA, weapon, null, null, excludedArtNames), spArtsEnabled)];
+  }
+
+  return { styleLabel: "Style", style, arts: spPicks.filter(Boolean) };
+}
+
+// filters: the exact JSON shape produced by docs/app.js's saveFilters() (minus the
+// challenges/challengeCount/chaosMode fields, which this Worker never rolls). Returns
+// null if no quest matches the pool (caller should show a "no quests match" message).
+export function rollQuest(DATA, filters) {
+  const nf = normalizeFilters(filters);
+  const quest = pickFilteredQuest(DATA, nf);
+  if (!quest) return null;
 
   const result = {
-    name: quest.Name || "", main: quest.Main || "", locale: quest.Locale || "—",
-    monsters, styleHidden: false, styleLabel: "Style", style: "", weapon: "", arts: [],
+    ...questInfo(quest),
+    styleHidden: false, styleLabel: "Style", style: "", weapon: "", arts: [],
   };
 
   // Arena: preset equipment/bias sets from the quest description — style/arts aren't rolled.
@@ -174,71 +257,26 @@ export function rollQuest(DATA, filters) {
     return result;
   }
 
-  // Weapon
-  let weapon;
-  if (quest.Prowler) {
-    weapon = "Prowler";
-  } else {
-    const chosen = WEAPONS.filter(w => !uncheckedWeapons.has(w));
-    if (t.prowler) chosen.push("Prowler");
-    weapon = chosen.length ? pick(chosen) : "Great Sword";
-    // Reroll weapon if the blacklist blocks all available styles for it
-    if (weapon !== "Prowler" && blacklist.length) {
-      const baseStyles = STYLES.filter(s => !uncheckedStyles.has(s));
-      for (let i = 0; i < 50; i++) {
-        const blS = new Set(blacklist.filter(b => b.weapon === weapon).map(b => b.style));
-        if (baseStyles.some(s => !blS.has(s))) break;
-        weapon = chosen.length ? pick(chosen) : "Great Sword";
-      }
-    }
-  }
+  const weapon = quest.Prowler ? "Prowler" : rollWeapon(nf);
   result.weapon = weapon;
-
-  if (weapon === "Prowler") {
-    let avail = BIAS_NAMES.filter(name => !uncheckedBiases.has(name));
-    if (!avail.length) avail = [BIAS_NAMES[0]];
-    result.styleLabel = "Bias";
-    result.style = pick(avail);
-  } else {
-    let styles = STYLES.filter(s => !uncheckedStyles.has(s));
-    const blS = new Set(blacklist.filter(b => b.weapon === weapon).map(b => b.style));
-    const filteredStyles = styles.filter(s => !blS.has(s));
-    if (filteredStyles.length) styles = filteredStyles;
-    if (!styles.length) styles = ["Guild"];
-    const style = pick(styles);
-    result.styleLabel = "Style";
-    result.style = style;
-
-    // Slot count by style: Alchemy/Striker = 3, Guild = 2, everything else = 1.
-    // SP rule mirrors the game: Alchemy may SP every art independently, but Guild and
-    // Striker allow at most ONE SP art — once an earlier art rolls SP, the rest skip
-    // the SP roll (pass the plain art through instead of calling maybeSP again).
-    let spPicks = [];
-    if (style === "Alchemy") {
-      const a = rollArt(DATA, weapon, null, null, excludedArtNames);
-      const b = rollArt(DATA, weapon, a, null, excludedArtNames);
-      const c = rollArt(DATA, weapon, a, b, excludedArtNames);
-      spPicks = [a, b, c].map(x => maybeSP(x, spArtsEnabled));
-    } else if (style === "Striker") {
-      const a = rollArt(DATA, weapon, null, null, excludedArtNames);
-      const b = rollArt(DATA, weapon, a, null, excludedArtNames);
-      const c = rollArt(DATA, weapon, a, b, excludedArtNames);
-      const aSP = maybeSP(a, spArtsEnabled);
-      const bSP = aSP.endsWith(" SP") ? b : maybeSP(b, spArtsEnabled);
-      const cSP = (aSP.endsWith(" SP") || (bSP && bSP.endsWith(" SP"))) ? c : maybeSP(c, spArtsEnabled);
-      spPicks = [aSP, bSP, cSP];
-    } else if (style === "Guild") {
-      const a = rollArt(DATA, weapon, null, null, excludedArtNames);
-      const b = rollArt(DATA, weapon, a, null, excludedArtNames);
-      const aSP = maybeSP(a, spArtsEnabled);
-      spPicks = [aSP, aSP.endsWith(" SP") ? b : maybeSP(b, spArtsEnabled)];
-    } else {
-      spPicks = [maybeSP(rollArt(DATA, weapon, null, null, excludedArtNames), spArtsEnabled)];
-    }
-    result.arts = spPicks.filter(Boolean);
-  }
-
+  Object.assign(result, rollLoadoutForWeapon(DATA, weapon, nf));
   return result;
+}
+
+// Quest only — no weapon/style/arts rolled or shown at all.
+export function rollQuestOnly(DATA, filters) {
+  const nf = normalizeFilters(filters);
+  const quest = pickFilteredQuest(DATA, nf);
+  if (!quest) return null;
+  return questInfo(quest);
+}
+
+// Weapon only — no quest involved, so there's no Arena/Prowler-quest special-casing to
+// apply; it's always a normal weapon+style/bias+arts roll.
+export function rollWeaponOnly(DATA, filters) {
+  const nf = normalizeFilters(filters);
+  const weapon = rollWeapon(nf);
+  return { weapon, ...rollLoadoutForWeapon(DATA, weapon, nf) };
 }
 
 // The Worker's original fixed pool (Large Monster hunts + Hyper + Capture, every rank,
@@ -259,6 +297,10 @@ export function rollDefaultQuest(DATA) {
   return rollQuest(DATA, DEFAULT_FILTERS);
 }
 
+export function defaultFilters() {
+  return DEFAULT_FILTERS;
+}
+
 // Mirrors the exact copyResultBtn format in docs/app.js (the " |\n" join separator and
 // conditional Monster:/Style:/Hunter Art(s): lines).
 export function formatForChat(result) {
@@ -266,6 +308,19 @@ export function formatForChat(result) {
   if (result.monsters) lines.push(`Monster: ${result.monsters}`);
   lines.push(`Locale: ${result.locale}`, `Weapon: ${result.weapon}`);
   if (!result.styleHidden) lines.push(`${result.styleLabel}: ${result.style}`);
+  if (result.arts.length) lines.push(`Hunter Art(s): ${result.arts.join(" / ")}`);
+  return lines.join(" |\n");
+}
+
+export function formatQuestOnly(result) {
+  const lines = [`Quest: ${result.name}`];
+  if (result.monsters) lines.push(`Monster: ${result.monsters}`);
+  lines.push(`Locale: ${result.locale}`);
+  return lines.join(" |\n");
+}
+
+export function formatWeaponOnly(result) {
+  const lines = [`Weapon: ${result.weapon}`, `${result.styleLabel}: ${result.style}`];
   if (result.arts.length) lines.push(`Hunter Art(s): ${result.arts.join(" / ")}`);
   return lines.join(" |\n");
 }
