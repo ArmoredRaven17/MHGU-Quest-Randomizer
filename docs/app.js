@@ -1166,15 +1166,6 @@
   $("helpBtn").addEventListener("click", () => $("helpModal").classList.remove("hidden"));
   $("helpClose").addEventListener("click", () => $("helpModal").classList.add("hidden"));
   $("helpModal").addEventListener("click", (e) => { if (e.target.id === "helpModal") $("helpModal").classList.add("hidden"); });
-  document.querySelectorAll(".copy-snippet").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      navigator.clipboard.writeText(btn.dataset.copy).then(() => {
-        const orig = btn.textContent;
-        btn.textContent = "Copied!";
-        setTimeout(() => { btn.textContent = orig; }, 1500);
-      });
-    });
-  });
 
   function doReset() {
     ["f_large","f_hyper","f_capture","f_egg","f_gathering","f_small","f_multi","f_oneFaint","f_onSite"].forEach(id => $(id).checked = true);

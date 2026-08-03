@@ -398,6 +398,35 @@
         setStatus("Save failed.", "err");
       }
     });
+
+    // Export/Import use the exact same JSON shape as the main site's Export/Import (this
+    // page just never reads/writes the challenges/challengeCount/chaosMode fields), so a
+    // file from either side loads cleanly into the other.
+    $("exportBtn").addEventListener("click", () => {
+      const blob = new Blob([JSON.stringify(assembleFilters())], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url; a.download = "mhgu-filters.json"; a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    $("importBtn").addEventListener("click", () => $("importFile").click());
+    $("importFile").addEventListener("change", function () {
+      const file = this.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const d = JSON.parse(e.target.result);
+          applyFilters(d);
+          setStatus("Imported! Click Save & Publish to keep it.", "ok");
+        } catch (err) {
+          setStatus("Invalid file!", "err");
+        }
+      };
+      reader.readAsText(file);
+      this.value = "";
+    });
   }
 
   async function init() {
