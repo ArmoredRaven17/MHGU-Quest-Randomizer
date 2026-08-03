@@ -1,3 +1,10 @@
+/* MHFU game font (falls back to sans-serif for glyphs it lacks) */
+@font-face {
+  font-family: 'MHFU';
+  src: url('fonts/mhfu_font.ttf') format('truetype');
+  font-display: swap;
+}
+
 :root {
   color-scheme: dark;
   --bg: #16181d;
@@ -18,7 +25,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-family: 'MHFU', system-ui, -apple-system, "Segoe UI", sans-serif;
   font-size: 14px;
   line-height: 1.4;
 }
@@ -47,27 +54,56 @@ p { margin: 0 0 10px; }
 
 .topbar {
   display: flex; align-items: center; justify-content: space-between;
-  gap: 12px; padding-bottom: 14px; margin-bottom: 16px; border-bottom: 1px solid var(--line);
+  gap: 12px; padding: 10px 14px; margin: -20px -16px 16px; border-bottom: 1px solid var(--line);
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--bg2) 88%, transparent), color-mix(in srgb, var(--bg2) 88%, transparent)),
+    url('assets/titlebar-background.png');
+  background-size: auto 100%;
+  background-position: left center;
+  background-repeat: repeat;
 }
 
 .btn {
-  background: var(--accent); color: #fff; border: none; border-radius: 6px;
+  background-color: var(--accent); color: #fff; border: none; border-radius: 6px;
   padding: 7px 14px; font-size: 13px; cursor: pointer;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--accent) 85%, transparent), color-mix(in srgb, var(--accent) 85%, transparent)),
+    url('assets/banner-background.png');
+  background-position: right; background-repeat: repeat;
 }
-.btn:hover { background: var(--accent-hover); }
+.btn:hover { background-color: var(--accent-hover); }
 .btn.secondary { background: transparent; border: 1px solid var(--line); color: var(--text); }
 .btn.secondary:hover { border-color: var(--accent); }
 .btn.tiny { padding: 4px 10px; font-size: 12px; }
 .btn:disabled { opacity: .5; cursor: default; }
 
 .panel {
-  background: var(--bg2); border: 1px solid var(--line); border-radius: 10px;
+  background-color: var(--bg2); border: 1px solid var(--line); border-radius: 10px;
   padding: 14px 16px; margin-bottom: 14px;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--bg2) 82%, transparent), color-mix(in srgb, var(--bg2) 82%, transparent)),
+    url('assets/panel-body-bg.png');
+  background-size: contain 100%;
+  background-position: left center;
+  background-repeat: repeat;
+}
+
+/* Sticky side panels (bot commands, preview/save/export) get the sidebar texture
+   instead, mirroring the main app's sidebar-vs-content-panel distinction. */
+.side-col .panel {
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--bg2) 82%, transparent), color-mix(in srgb, var(--bg2) 82%, transparent)),
+    url('assets/sidebar-background-texture1.png');
 }
 
 .acc-head {
   display: flex; align-items: center; justify-content: space-between; width: 100%;
-  background: none; border: none; color: inherit; cursor: pointer; padding: 0; font: inherit; text-align: left;
+  border: none; border-radius: 6px; color: inherit; cursor: pointer;
+  padding: 8px 10px; margin: -8px -10px; font: inherit; text-align: left;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--bg2) 78%, transparent), color-mix(in srgb, var(--bg2) 78%, transparent)),
+    url('assets/banner-background.png');
+  background-size: auto 100%; background-position: left center; background-repeat: repeat;
 }
 .acc-head h2 { margin: 0; }
 .acc-chevron { color: var(--text-dim); transition: transform .15s; flex-shrink: 0; margin-left: 8px; }
