@@ -82,17 +82,29 @@ p { margin: 0 0 10px; }
 .btn.tiny { padding: 4px 10px; font-size: 12px; }
 .btn:disabled { opacity: .5; cursor: default; }
 
+#saveBtn { background-color: color-mix(in srgb, var(--accent) 78%, black 22%); }
+#saveBtn:hover { background-color: color-mix(in srgb, var(--accent-hover) 78%, black 22%); }
+
 .panel {
   background-color: var(--bg2); border: 1px solid var(--line); border-radius: 10px;
   padding: 14px 16px; margin-bottom: 14px;
 }
 
-/* Sticky side panels (bot commands, preview/save/export) get the sidebar texture
-   instead, mirroring the main app's sidebar-vs-content-panel distinction. */
+/* Sticky side panels (bot commands, preview/save/export) get the sidebar texture;
+   accordion panels (Quest Filters etc.) get the panel-body texture — mirroring the
+   main app's sidebar-vs-content-panel distinction. */
 .side-col .panel {
   background-image:
     linear-gradient(color-mix(in srgb, var(--bg2) 82%, transparent), color-mix(in srgb, var(--bg2) 82%, transparent)),
     url('assets/sidebar-background-texture1.png');
+}
+.panel.accordion {
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--bg2) 82%, transparent), color-mix(in srgb, var(--bg2) 82%, transparent)),
+    url('assets/panel-body-bg.png');
+  background-size: contain 100%;
+  background-position: left center;
+  background-repeat: repeat;
 }
 
 .acc-head {
@@ -100,10 +112,6 @@ p { margin: 0 0 10px; }
   border: none; border-radius: 10px 10px 0 0; color: inherit; cursor: pointer;
   padding: 10px 16px; margin: -14px -16px 0; font: inherit; text-align: left;
   width: calc(100% + 32px);
-  background-image:
-    linear-gradient(color-mix(in srgb, var(--bg2) 78%, transparent), color-mix(in srgb, var(--bg2) 78%, transparent)),
-    url('assets/banner-background.png');
-  background-size: auto 100%; background-position: left center; background-repeat: repeat;
 }
 .acc-head h2 { margin: 0; }
 .acc-chevron { color: var(--text-dim); transition: transform .15s; flex-shrink: 0; margin-left: 8px; }
