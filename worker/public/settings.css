@@ -51,7 +51,6 @@ p { margin: 0 0 10px; }
   background-repeat: repeat;
 }
 .topbar-inner {
-  max-width: 1000px; margin: 0 auto;
   display: flex; align-items: center; justify-content: space-between;
   gap: 12px; padding: 10px 16px; flex-wrap: wrap;
 }
@@ -173,7 +172,10 @@ p { margin: 0 0 10px; }
    that ever scrolls. Since the page itself never scrolls, .action-col needs no sticky
    positioning at all — it simply isn't in a scrolling context to begin with. */
 .app-shell { flex: 1; min-height: 0; display: flex; flex-direction: column; }
-.app-body { flex: 1; min-height: 0; display: flex; align-items: flex-start; gap: 16px; padding: 16px; }
+.app-body {
+  flex: 1; min-height: 0; display: flex; align-items: flex-start; gap: 16px; padding: 16px;
+  max-width: 1200px; margin: 0 auto; width: 100%;
+}
 .main-scroll { flex: 1; min-height: 0; overflow-y: auto; }
 .main-scroll-inner { max-width: 900px; margin: 0 auto; }
 .action-col { width: 260px; flex-shrink: 0; max-height: 100%; overflow-y: auto; }
