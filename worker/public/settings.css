@@ -105,9 +105,9 @@ p { margin: 0 0 10px; }
   width: calc(100% + 32px);
   background-color: var(--accent);
   background-image:
-    linear-gradient(color-mix(in srgb, black 25%, transparent), color-mix(in srgb, black 25%, transparent)),
-    url('assets/banner-background.png');
-  background-size: auto 100%; background-position: left center; background-repeat: repeat;
+    linear-gradient(color-mix(in srgb, var(--accent) 65%, black 35%), color-mix(in srgb, var(--accent) 65%, black 35%)),
+    url('assets/panel-body-bg.png');
+  background-size: contain 100%; background-position: left center; background-repeat: repeat;
 }
 .acc-head:hover { background-color: var(--accent-hover); }
 .acc-head h2 { margin: 0; }
