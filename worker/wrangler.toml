@@ -1,3 +1,20 @@
 name = "mhgu-bot-api"
 main = "src/index.js"
 compatibility_date = "2026-01-01"
+
+# KV namespace for per-Twitch-channel saved filter profiles, keyed by the streamer's
+# OAuth-verified Twitch login. Created via `wrangler kv namespace create MHGU_BOT_PROFILES`
+# — fill in the id below with the value that command prints before deploying.
+[[kv_namespaces]]
+binding = "MHGU_BOT_PROFILES"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+# The settings page (settings.html/.js/.css) — served directly by the platform; requests
+# that don't match a file here fall through to this Worker's fetch handler as usual.
+[assets]
+directory = "./public"
+
+# Public — safe to commit. TWITCH_CLIENT_SECRET and SESSION_SECRET are set via
+# `wrangler secret put` instead (see worker/.dev.vars for local dev).
+[vars]
+TWITCH_CLIENT_ID = "c9tk4geolyjvuozvgu6crr5of9prd6"

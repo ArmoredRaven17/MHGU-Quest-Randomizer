@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MHGU Quest Bot — Settings</title>
+<link rel="stylesheet" href="settings.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div>
+      <h1>MHGU Quest Bot Settings</h1>
+      <p class="muted" style="margin:0">Configure the quest pool your channel's chat bot rolls from.</p>
+    </div>
+    <div id="authArea"></div>
+  </div>
+
+  <div id="loginGate">
+    <p>Log in with Twitch to configure and publish your channel's bot settings.</p>
+    <button id="loginBtn" class="btn">Login with Twitch</button>
+  </div>
+
+  <div id="appArea" class="hidden layout">
+
+    <aside class="side-col">
+      <div class="panel">
+        <div class="actions">
+          <button id="previewBtn" class="btn secondary">Preview Roll</button>
+          <button id="saveBtn" class="btn">Save &amp; Publish</button>
+          <span id="statusMsg" class="status"></span>
+        </div>
+        <div id="resultBox"></div>
+      </div>
+    </aside>
+
+    <div class="main-col">
+
+    <div class="panel accordion open" data-section="questFilters">
+      <button class="acc-head"><h2>Quest Filters</h2><span class="acc-chevron">▾</span></button>
+      <div class="acc-body">
+      <p class="muted">Uncheck to exclude from the pool.</p>
+      <div class="grid">
+        <label class="chk"><input type="checkbox" id="qf_keysOnly">Keys Only?</label>
+        <label class="chk"><input type="checkbox" id="qf_large" checked>Large Monsters</label>
+        <label class="chk"><input type="checkbox" id="qf_hyper" checked>Hypers</label>
+        <label class="chk"><input type="checkbox" id="qf_capture" checked>Capture</label>
+        <label class="chk"><input type="checkbox" id="qf_multi" checked>Multi Monster</label>
+        <label class="chk"><input type="checkbox" id="qf_egg" checked>Egg Delivery</label>
+        <label class="chk"><input type="checkbox" id="qf_gathering" checked>Gathering</label>
+        <label class="chk"><input type="checkbox" id="qf_small" checked>Small Monsters</label>
+        <label class="chk"><input type="checkbox" id="qf_oneFaint" checked>S. Permit: One Faint</label>
+        <label class="chk"><input type="checkbox" id="qf_onSite" checked>S. Permit: On-Site Items</label>
+      </div>
+      <div id="rankGroups"></div>
+      </div>
+    </div>
+
+    <div class="panel accordion" data-section="monsters">
+      <button class="acc-head"><h2>Monsters</h2><span class="acc-chevron">▾</span></button>
+      <div class="acc-body">
+      <p class="muted">Uncheck to exclude a monster from the pool.
+        <button class="btn tiny secondary" id="monCheckAll">Check All</button>
+        <button class="btn tiny secondary" id="monUncheckAll">Uncheck All</button>
+      </p>
+      <div id="monsterList"></div>
+      </div>
+    </div>
+
+    <div class="panel accordion" data-section="weapons">
+      <button class="acc-head"><h2>Weapons</h2><span class="acc-chevron">▾</span></button>
+      <div class="acc-body">
+      <div class="grid" id="weaponList"></div>
+      </div>
+    </div>
+
+    <div class="panel accordion" data-section="styles">
+      <button class="acc-head"><h2>Styles</h2><span class="acc-chevron">▾</span></button>
+      <div class="acc-body">
+      <div class="grid" id="styleList"></div>
+      </div>
+    </div>
+
+    <div class="panel accordion" data-section="arts">
+      <button class="acc-head"><h2>Hunter Arts</h2><span class="acc-chevron">▾</span></button>
+      <div class="acc-body">
+      <p class="muted">Uncheck to exclude a specific art from the pool.
+        <label class="chk" style="display:inline-flex;margin-left:10px"><input type="checkbox" id="qf_spArts" checked>SP Arts enabled</label>
+        <button class="btn tiny secondary" id="artCheckAll">Check All</button>
+        <button class="btn tiny secondary" id="artUncheckAll">Uncheck All</button>
+      </p>
+      <div id="artList"></div>
+      </div>
+    </div>
+
+    <div class="panel accordion" data-section="restrictions">
+      <button class="acc-head"><h2>Restrictions</h2><span class="acc-chevron">▾</span></button>
+      <div class="acc-body">
+      <p class="muted">Weapon + style combos that will never be rolled together.</p>
+      <div class="bl-row">
+        <select id="blWeapon"></select>
+        <select id="blStyle"></select>
+        <button class="btn tiny" id="blAdd">Add</button>
+      </div>
+      <div id="blList" class="bl-list"></div>
+      </div>
+    </div>
+
+    <div class="panel accordion" data-section="prowler">
+      <button class="acc-head"><h2>Prowler</h2><span class="acc-chevron">▾</span></button>
+      <div class="acc-body">
+      <label class="chk"><input type="checkbox" id="qf_prowler">Allow Prowler as a rolled weapon</label>
+      <label class="chk"><input type="checkbox" id="qf_pQuests">Include Prowler-only quests</label>
+      <h3>Biases</h3>
+      <div class="grid" id="biasList"></div>
+      </div>
+    </div>
+
+    </div>
+
+  </div>
+</div>
+
+<script src="https://armoredraven17.github.io/MHGU-Quest-Randomizer/data.js"></script>
+<script src="settings.js"></script>
+</body>
+</html>
