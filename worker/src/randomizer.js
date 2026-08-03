@@ -101,7 +101,35 @@ function normalizeFilters(filters) {
     excludedArtNames: new Set(f2.arts || []),
     blacklist: f2.blacklist || [],
     spArtsEnabled: t.spArts !== false,
+    challenges: Array.isArray(f2.challenges) ? f2.challenges : [],
+    challengeCount: f2.challengeCount || 1,
+    chaosMode: !!t.chaosMode,
   };
+}
+
+// Mirrors docs/app.js's rollChallenges(): rolls each enabled challenge against its own
+// chance %, then keeps a random subset capped at the "roll up to N" count. Disabled
+// conditions never roll. In Chaos Mode, a hidden -20..+20% base roll is blended into
+// each condition's own chance to decide its checked state for this roll instead of
+// reading the manual checkbox; the condition still needs to pass its own chance-roll
+// on top of that. There's no live UI here to sync back to (unlike the main app's
+// chaos-mode checkbox preview), since this just runs headless on each request.
+function rollChallenges(nf) {
+  const { challenges, challengeCount, chaosMode } = nf;
+  if (!challenges.length) return [];
+  const count = Math.min(8, Math.max(1, challengeCount || 1));
+  let eligible;
+  if (chaosMode) {
+    const baseChaos = (Math.random() * 40) - 20;
+    eligible = challenges.filter((c) => {
+      const chaosChecked = Math.random() * 100 < Math.max(0, Math.min(100, baseChaos + c.chance));
+      return chaosChecked && Math.random() * 100 < c.chance;
+    });
+  } else {
+    eligible = challenges.filter((c) => c.checked === true && Math.random() * 100 < c.chance);
+  }
+  eligible.sort(() => Math.random() - 0.5);
+  return eligible.slice(0, count).map((c) => c.text);
 }
 
 // Picks a single quest from DATA.quests respecting every quest-pool filter. Returns null
@@ -229,8 +257,7 @@ function rollLoadoutForWeapon(DATA, weapon, nf) {
   return { styleLabel: "Style", style, arts: spPicks.filter(Boolean) };
 }
 
-// filters: the exact JSON shape produced by docs/app.js's saveFilters() (minus the
-// challenges/challengeCount/chaosMode fields, which this Worker never rolls). Returns
+// filters: the exact JSON shape produced by docs/app.js's saveFilters(). Returns
 // null if no quest matches the pool (caller should show a "no quests match" message).
 export function rollQuest(DATA, filters) {
   const nf = normalizeFilters(filters);
@@ -240,6 +267,7 @@ export function rollQuest(DATA, filters) {
   const result = {
     ...questInfo(quest),
     styleHidden: false, styleLabel: "Style", style: "", weapon: "", arts: [],
+    challenges: rollChallenges(nf),
   };
 
   // Arena: preset equipment/bias sets from the quest description — style/arts aren't rolled.
@@ -309,6 +337,7 @@ export function formatForChat(result) {
   lines.push(`Locale: ${result.locale}`, `Weapon: ${result.weapon}`);
   if (!result.styleHidden) lines.push(`${result.styleLabel}: ${result.style}`);
   if (result.arts.length) lines.push(`Hunter Art(s): ${result.arts.join(" / ")}`);
+  if (result.challenges && result.challenges.length) lines.push(`Challenges: ${result.challenges.join(", ")}`);
   return lines.join(" |\n");
 }
 

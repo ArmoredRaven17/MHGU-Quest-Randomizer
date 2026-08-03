@@ -1198,6 +1198,114 @@
 
   // ── Persist filter state (localStorage), like the theme ──────────────────
   const FILTER_KEY = "mhgu-filters";
+
+  // ── Optional Twitch-login sync with the bot's settings page (Worker) ─────
+  const BOT_API_ORIGIN = "https://mhgu-bot-api.raven-mhgu.workers.dev";
+  const SYNC_TOKEN_KEY = "mhgu-sync-token";
+
+  // The session token is a self-contained signed {login,exp} string (see
+  // worker/src/session.js) — decoding the payload here is just for display, never for
+  // trust: the signature is what actually protects its use as read/write credentials,
+  // and that's verified server-side on every request, not here.
+  function decodeTokenLogin(token) {
+    try {
+      let b64 = token.split(".")[0].replace(/-/g, "+").replace(/_/g, "/");
+      while (b64.length % 4) b64 += "=";
+      const payload = JSON.parse(atob(b64));
+      if (payload.exp && payload.exp > Date.now()) return payload.login;
+    } catch (e) {}
+    return null;
+  }
+
+  function captureSyncTokenFromHash() {
+    const m = location.hash.match(/(?:^#|&)mhgu_bot_token=([^&]+)/);
+    if (!m) return;
+    try { localStorage.setItem(SYNC_TOKEN_KEY, decodeURIComponent(m[1])); } catch (e) {}
+    history.replaceState(null, "", location.pathname + location.search);
+  }
+
+  // One titlebar button doubles as login/logout/status — "Login" when logged out, the
+  // Twitch login name once logged in (click to logout). Sync feedback is a transient
+  // flash of the label text, matching the "Copied!" pattern already used elsewhere in
+  // this file (copyResultBtn, Export), rather than a separate persistent status line.
+  function updateSyncUI(login) {
+    const btn = $("twitchSyncBtn"), label = $("twitchSyncLabel");
+    if (!btn || !label) return;
+    if (login) {
+      label.textContent = login;
+      btn.title = `Logged in as ${login} — click to logout`;
+    } else {
+      label.textContent = "Login";
+      btn.title = "Login with Twitch to sync filters";
+    }
+  }
+
+  function flashSyncLabel(text) {
+    const label = $("twitchSyncLabel");
+    if (!label) return;
+    const orig = label.textContent;
+    label.textContent = text;
+    setTimeout(() => { label.textContent = orig; }, 1500);
+  }
+
+  function clearSync() {
+    try { localStorage.removeItem(SYNC_TOKEN_KEY); } catch (e) {}
+    updateSyncUI(null);
+  }
+
+  // Debounced so toggling a dozen checkboxes in a row fires one publish, not a dozen.
+  // A true no-op (no timer, no fetch) for anyone who's never logged in.
+  let syncPushTimer = null;
+  function scheduleSyncPush(d) {
+    let token; try { token = localStorage.getItem(SYNC_TOKEN_KEY); } catch (e) { token = null; }
+    if (!token) return;
+    clearTimeout(syncPushTimer);
+    syncPushTimer = setTimeout(() => {
+      fetch(BOT_API_ORIGIN + "/api/publish", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
+        body: JSON.stringify(d),
+      }).then((res) => {
+        if (res.status === 401) { clearSync(); return; }
+        flashSyncLabel(res.ok ? "Synced!" : "Sync failed");
+      }).catch(() => flashSyncLabel("Sync failed"));
+    }, 800);
+  }
+
+  // Pulled filters overwrite local state (server wins on load) — matches how a manual
+  // Import already works, just sourced from the bot profile instead of a picked file.
+  // Silent on failure (no flash) — this runs on every page load, not from a user action,
+  // so it just leaves the last-known local state in place rather than being noisy.
+  async function pullAndApplySyncedFilters(token) {
+    try {
+      const res = await fetch(BOT_API_ORIGIN + "/api/filters", { headers: { "Authorization": "Bearer " + token } });
+      if (res.status === 401) { clearSync(); return; }
+      if (!res.ok) return;
+      const filters = await res.json();
+      localStorage.setItem(FILTER_KEY, JSON.stringify(filters));
+      loadFilters();
+      fillLevels();
+      syncProwlerQuests();
+      updateRollBtn();
+    } catch (e) {}
+  }
+
+  function initTwitchSync() {
+    captureSyncTokenFromHash();
+    let token; try { token = localStorage.getItem(SYNC_TOKEN_KEY); } catch (e) { token = null; }
+    const login = token ? decodeTokenLogin(token) : null;
+    if (token && !login) { clearSync(); token = null; }
+    updateSyncUI(login);
+    if (token) pullAndApplySyncedFilters(token);
+
+    const btn = $("twitchSyncBtn");
+    if (btn) btn.addEventListener("click", () => {
+      let current; try { current = localStorage.getItem(SYNC_TOKEN_KEY); } catch (e) { current = null; }
+      if (current) clearSync();
+      else window.location.href = BOT_API_ORIGIN + "/auth/login?return=main";
+    });
+  }
+
   function refreshMonsterGroups() {
     document.querySelectorAll("#monsterTree .species").forEach(sp => {
       const spIn = sp.querySelector("input.sp");
@@ -1232,6 +1340,7 @@
       },
     };
     try { localStorage.setItem(FILTER_KEY, JSON.stringify(d)); } catch (e) {}
+    scheduleSyncPush(d);
   }
   function loadFilters() {
     let d; try { d = JSON.parse(localStorage.getItem(FILTER_KEY) || "null"); } catch (e) {}
@@ -1313,6 +1422,7 @@
   fillLevels();
   syncProwlerQuests();
   updateRollBtn();
+  initTwitchSync();
 
   // Force a repaint after the MHFU custom font loads to prevent select text clipping.
   if (document.fonts && document.fonts.ready) {

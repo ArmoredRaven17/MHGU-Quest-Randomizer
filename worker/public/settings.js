@@ -25,6 +25,8 @@
   const artBase = (n) => n.replace(/ (III|II|I)$/, "");
 
   let blacklist = [];
+  let challenges = [];
+  let chaosMode = false;
 
   // ── Group (parent) checkboxes: a "select all" toggle over a set of leaf checkboxes,
   // tri-state (checked / unchecked / indeterminate) to reflect partial selection. Every
@@ -274,6 +276,92 @@
     });
   }
 
+  // Challenges: mirrors docs/app.js's renderChallenges()/rollChallenges() UI exactly
+  // (add/edit/remove rows, Chaos Mode disabling the manual checkboxes) — this page has
+  // no auto-save-to-localStorage, so edits just mutate the in-memory array until the
+  // streamer clicks Save & Publish, same as the Restrictions blacklist above.
+  function renderChallenges() {
+    const el = $("chList");
+    el.innerHTML = "";
+    if (!challenges.length) {
+      el.innerHTML = '<p class="muted" style="margin:0">No conditions added yet.</p>';
+      return;
+    }
+    challenges.forEach((c, i) => {
+      const row = document.createElement("div");
+      row.className = "bl-tag";
+
+      const chk = document.createElement("label");
+      chk.className = "chk";
+      chk.style.flexShrink = "0";
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.checked = c.checked !== false;
+      cb.disabled = chaosMode;
+      chk.appendChild(cb);
+
+      const txt = document.createElement("input");
+      txt.type = "text";
+      txt.className = "ch-edit-text";
+      txt.value = c.text;
+      txt.maxLength = 21;
+      if (c.checked === false) txt.style.opacity = ".45";
+
+      const num = document.createElement("input");
+      num.type = "number";
+      num.className = "ch-edit-chance";
+      num.value = c.chance;
+      num.min = 1; num.max = 100;
+
+      const pct = document.createElement("span");
+      pct.className = "ch-pct";
+      pct.textContent = "%";
+
+      const btn = document.createElement("button");
+      btn.title = "Remove";
+      btn.setAttribute("aria-label", "Remove");
+      btn.textContent = "×";
+
+      cb.addEventListener("change", function () {
+        challenges[i].checked = this.checked;
+        txt.style.opacity = this.checked ? "" : ".45";
+      });
+      txt.addEventListener("change", function () {
+        const v = this.value.trim();
+        if (v) challenges[i].text = v;
+        else this.value = challenges[i].text;
+      });
+      num.addEventListener("change", function () {
+        const v = Math.min(100, Math.max(1, parseInt(this.value) || 1));
+        this.value = v;
+        challenges[i].chance = v;
+      });
+      btn.addEventListener("click", () => {
+        challenges.splice(i, 1);
+        renderChallenges();
+      });
+
+      row.append(chk, txt, num, pct, btn);
+      el.appendChild(row);
+    });
+  }
+
+  function wireChallenges() {
+    $("chAdd").addEventListener("click", () => {
+      const text = $("chText").value.trim();
+      const chance = Math.min(100, Math.max(1, parseInt($("chChance").value) || 10));
+      if (!text) return;
+      challenges.push({ checked: false, text, chance });
+      renderChallenges();
+      $("chText").value = "";
+    });
+    $("chText").addEventListener("keydown", (e) => { if (e.key === "Enter") $("chAdd").click(); });
+    $("chChaosMode").addEventListener("change", function () {
+      chaosMode = this.checked;
+      renderChallenges();
+    });
+  }
+
   const uncheckedNames = (sel) => [...document.querySelectorAll(sel)].filter(i => !i.checked).map(i => i.dataset.name);
 
   function assembleFilters() {
@@ -288,6 +376,8 @@
       monsters: uncheckedNames("#monsterList input.leaf"),
       arts: uncheckedNames("#artList input.leaf"),
       blacklist: blacklist.slice(),
+      challenges: challenges.slice(),
+      challengeCount: Math.min(8, Math.max(1, parseInt($("challengeCount").value, 10) || 1)),
       t: {
         keysOnly: $("qf_keysOnly").checked,
         large: $("qf_large").checked,
@@ -302,6 +392,7 @@
         spArts: $("qf_spArts").checked,
         prowler: $("qf_prowler").checked,
         pQuests: $("qf_pQuests").checked,
+        chaosMode: $("chChaosMode").checked,
         allLevels: disabledRanks,
       },
     };
@@ -340,6 +431,13 @@
 
     blacklist = Array.isArray(filters.blacklist) ? filters.blacklist.slice() : [];
     renderBlacklist();
+
+    challenges = Array.isArray(filters.challenges) ? filters.challenges.map((c) => ({ ...c })) : [];
+    chaosMode = !!t.chaosMode;
+    $("chChaosMode").checked = chaosMode;
+    if (filters.challengeCount) $("challengeCount").value = filters.challengeCount;
+    renderChallenges();
+
     refreshAllGroups();
   }
 
@@ -506,6 +604,8 @@
     refreshAllGroups();
     initBlacklistSelects();
     renderBlacklist();
+    wireChallenges();
+    renderChallenges();
     wireActions();
     wireAccordion();
     wireModals();

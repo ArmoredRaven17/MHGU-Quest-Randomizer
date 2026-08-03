@@ -97,6 +97,11 @@ p { margin: 0 0 10px; }
 .acc-chevron { color: var(--text-dim); transition: transform .15s; flex-shrink: 0; margin-left: 8px; }
 .panel.accordion.open .acc-chevron { transform: rotate(180deg); }
 .acc-body { display: none; margin-top: 10px; }
+/* Collapsed: no .acc-body below to fill the panel's own bottom padding, so acc-head
+   would otherwise leave a sliver of the panel's plain background showing beneath it.
+   Zero out that padding and round acc-head's bottom corners to match the panel's. */
+.panel.accordion:not(.open) { padding-bottom: 0; }
+.panel.accordion:not(.open) .acc-head { border-radius: 10px; }
 .panel.accordion.open .acc-body { display: block; }
 
 .grid {
@@ -154,6 +159,33 @@ p { margin: 0 0 10px; }
   padding: 4px 8px; margin-bottom: 4px; font-size: 13px;
 }
 .bl-item button { background: transparent; border: none; color: var(--danger); cursor: pointer; font-size: 13px; }
+
+/* Challenges: an editable version of the same tag-row pattern (inline text/number
+   instead of a static label), matching the main site's .bl-tag/.ch-edit-* look. */
+.ch-add { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-bottom: 6px; }
+.ch-add input[type="text"] {
+  flex: 1; min-width: 120px; background: var(--bg); color: var(--text);
+  border: 1px solid var(--line); border-radius: 7px; padding: 5px 8px; font-size: 13px; font-family: inherit;
+}
+.ch-add input[type="number"], #challengeCount {
+  background: var(--bg); color: var(--text); border: 1px solid var(--line);
+  border-radius: 4px; padding: 4px 6px; font-size: 13px;
+}
+.bl-tag {
+  display: flex; align-items: center; justify-content: space-between; gap: 6px;
+  background: var(--bg); border: 1px solid var(--line); border-radius: 6px;
+  padding: 4px 10px; margin-bottom: 4px; font-size: 13px;
+}
+.bl-tag button { background: transparent; border: none; color: var(--text-dim); cursor: pointer; font-size: 16px; padding: 0 2px; line-height: 1; flex-shrink: 0; font-family: inherit; }
+.bl-tag button:hover { color: var(--danger); }
+.ch-edit-text, .ch-edit-chance {
+  border: 1px solid transparent; border-radius: 5px; padding: 2px 5px; font-size: 12px;
+  font-family: inherit; background: transparent; color: var(--text);
+}
+.ch-edit-text { flex: 1; min-width: 0; }
+.ch-edit-chance { width: 46px; text-align: center; }
+.ch-edit-text:hover, .ch-edit-text:focus, .ch-edit-chance:hover, .ch-edit-chance:focus { outline: none; border-color: var(--line); }
+.ch-pct { font-size: 12px; opacity: .7; flex-shrink: 0; }
 
 #resultBox {
   white-space: pre-wrap; background: var(--bg); border: 1px solid var(--line); border-radius: 8px;

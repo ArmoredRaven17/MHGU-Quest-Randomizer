@@ -1,6 +1,6 @@
 import { rollQuest, rollQuestOnly, rollWeaponOnly, rollDefaultQuest, defaultFilters, formatForChat, formatQuestOnly, formatWeaponOnly } from "./randomizer.js";
 import { handleLogin, handleCallback, handleLogout } from "./auth.js";
-import { handleMe, handleGetFilters, handlePreview, handlePublish } from "./api.js";
+import { handleMe, handleGetFilters, handlePreview, handlePublish, handleCorsPreflight } from "./api.js";
 
 // The web app's already-public data.js — reused as-is rather than bundling a second
 // copy of the quest data that could drift out of sync. It's a JS file that assigns
@@ -120,6 +120,9 @@ export default {
     if (pathname === "/auth/login" && method === "GET") return handleLogin(request, env);
     if (pathname === "/auth/callback" && method === "GET") return handleCallback(request, env);
     if (pathname === "/auth/logout" && method === "POST") return handleLogout();
+
+    if ((pathname === "/api/me" || pathname === "/api/filters" || pathname === "/api/publish")
+        && method === "OPTIONS") return handleCorsPreflight();
 
     if (pathname === "/api/me" && method === "GET") return handleMe(request, env);
     if (pathname === "/api/filters" && method === "GET") return handleGetFilters(request, env);

@@ -117,6 +117,25 @@
       </div>
     </div>
 
+    <div class="panel accordion" data-section="challenges">
+      <button class="acc-head"><h2>Challenges</h2><span class="acc-chevron">▾</span></button>
+      <div class="acc-body">
+      <p class="muted">Custom conditions rolled with each quest. Applies to the full-roll bot command only.</p>
+      <label class="chk"><input type="checkbox" id="chChaosMode">Chaos Mode</label>
+      <div class="ch-add">
+        <input type="text" id="chText" placeholder="Condition name" maxlength="21">
+        <input type="number" id="chChance" value="10" min="1" max="100" style="width:52px"> %
+        <button id="chAdd" class="btn tiny">Add</button>
+      </div>
+      <div class="row gap" style="margin-top:8px;align-items:center;font-size:12px">
+        <span>Roll up to</span>
+        <input type="number" id="challengeCount" value="1" min="1" max="8">
+        <span>condition(s) per quest</span>
+      </div>
+      <div id="chList" class="bl-list"></div>
+      </div>
+    </div>
+
     <div class="panel accordion" data-section="prowler">
       <button class="acc-head"><h2>Prowler</h2><span class="acc-chevron">▾</span></button>
       <div class="acc-body">
@@ -194,7 +213,7 @@
   <div class="modal-card">
     <h2>How this works</h2>
     <p>This page lets you configure the quest pool your Twitch chat bot rolls from — instead of every streamer sharing one fixed pool, you get your own, saved under your Twitch login.</p>
-    <p><strong>1. Configure filters below.</strong> Quest Filters, Monsters, Weapons, Styles, Hunter Arts, Restrictions, and Prowler work the same way as the main site's checkboxes — uncheck anything to exclude it from your pool.</p>
+    <p><strong>1. Configure filters below.</strong> Quest Filters, Monsters, Weapons, Styles, Hunter Arts, Restrictions, Challenges, and Prowler work the same way as the main site's checkboxes — uncheck anything to exclude it from your pool.</p>
     <p><strong>2. Preview, then Save &amp; Publish.</strong> Preview Roll shows what a roll looks like with your current settings without saving anything. Save &amp; Publish is what actually updates your channel's live bot commands.</p>
     <p><strong>3. Grab your bot commands.</strong> Click "Bot Commands" above for the exact strings to paste into your chat bot — a full-roll command, plus quest-only and weapon-only variants in case you want separate commands for each.</p>
     <p><strong>Export/Import</strong> saves your filters to a file, or loads one back — including files exported from the main GitHub Pages site, since both use the same format.</p>
