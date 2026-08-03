@@ -53,14 +53,19 @@ p { margin: 0 0 10px; }
 .muted { color: var(--text-dim); font-size: 13px; }
 
 .topbar {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 12px; padding: 10px 14px; margin: -20px -16px 16px; border-bottom: 1px solid var(--line);
+  position: sticky; top: 0; z-index: 10;
+  border-bottom: 1px solid var(--line);
   background-image:
     linear-gradient(color-mix(in srgb, var(--bg2) 88%, transparent), color-mix(in srgb, var(--bg2) 88%, transparent)),
     url('assets/titlebar-background.png');
   background-size: auto 100%;
   background-position: left center;
   background-repeat: repeat;
+}
+.topbar-inner {
+  max-width: 1240px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; padding: 10px 16px;
 }
 
 .btn {
@@ -72,20 +77,14 @@ p { margin: 0 0 10px; }
   background-position: right; background-repeat: repeat;
 }
 .btn:hover { background-color: var(--accent-hover); }
-.btn.secondary { background: transparent; border: 1px solid var(--line); color: var(--text); }
-.btn.secondary:hover { border-color: var(--accent); }
+.btn.secondary { background-color: var(--bg); border: 1px solid var(--line); color: var(--text); }
+.btn.secondary:hover { background-color: color-mix(in srgb, var(--bg) 75%, var(--accent) 25%); border-color: var(--accent); }
 .btn.tiny { padding: 4px 10px; font-size: 12px; }
 .btn:disabled { opacity: .5; cursor: default; }
 
 .panel {
   background-color: var(--bg2); border: 1px solid var(--line); border-radius: 10px;
   padding: 14px 16px; margin-bottom: 14px;
-  background-image:
-    linear-gradient(color-mix(in srgb, var(--bg2) 82%, transparent), color-mix(in srgb, var(--bg2) 82%, transparent)),
-    url('assets/panel-body-bg.png');
-  background-size: contain 100%;
-  background-position: left center;
-  background-repeat: repeat;
 }
 
 /* Sticky side panels (bot commands, preview/save/export) get the sidebar texture
@@ -97,9 +96,10 @@ p { margin: 0 0 10px; }
 }
 
 .acc-head {
-  display: flex; align-items: center; justify-content: space-between; width: 100%;
-  border: none; border-radius: 6px; color: inherit; cursor: pointer;
-  padding: 8px 10px; margin: -8px -10px; font: inherit; text-align: left;
+  display: flex; align-items: center; justify-content: space-between;
+  border: none; border-radius: 10px 10px 0 0; color: inherit; cursor: pointer;
+  padding: 10px 16px; margin: -14px -16px 0; font: inherit; text-align: left;
+  width: calc(100% + 32px);
   background-image:
     linear-gradient(color-mix(in srgb, var(--bg2) 78%, transparent), color-mix(in srgb, var(--bg2) 78%, transparent)),
     url('assets/banner-background.png');
