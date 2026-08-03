@@ -25,6 +25,11 @@
    sideways by the scrollbar's width. */
 html { scrollbar-gutter: stable; }
 
+/* Opening/closing an accordion section resizes content above the fold, which triggers
+   the browser's automatic scroll-anchoring correction — a brief scroll-position jump
+   that reads as the sticky side panels twitching. Disable it; nothing here needs it. */
+html, body { overflow-anchor: none; }
+
 input[type="checkbox"] { accent-color: var(--accent); }
 
 body {
