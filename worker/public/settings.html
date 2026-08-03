@@ -14,9 +14,11 @@
       <p class="muted" style="margin:0">Configure the quest pool your channel's chat bot rolls from.</p>
     </div>
     <div class="topbar-actions">
-      <button id="helpBtn" class="btn secondary tiny">Help</button>
-      <button id="botCmdBtn" class="btn secondary tiny hidden">Bot Commands</button>
-      <button id="exportImportBtn" class="btn secondary tiny hidden">Export/Import</button>
+      <div class="topbar-modal-btns">
+        <button id="helpBtn" class="btn secondary tiny">Help</button>
+        <button id="botCmdBtn" class="btn secondary tiny hidden">Bot Commands</button>
+        <button id="exportImportBtn" class="btn secondary tiny hidden">Export/Import</button>
+      </div>
       <div id="authArea"></div>
     </div>
   </div>
@@ -28,14 +30,7 @@
 </div>
 
 <div id="appArea" class="hidden app-shell">
-  <div class="action-bar">
-    <div class="actions">
-      <button id="previewBtn" class="btn secondary">Preview Roll</button>
-      <button id="saveBtn" class="btn">Save &amp; Publish</button>
-      <span id="statusMsg" class="status"></span>
-    </div>
-    <div id="resultBox"></div>
-  </div>
+  <div class="app-body">
 
   <div class="main-scroll">
     <div class="main-scroll-inner">
@@ -133,6 +128,19 @@
     </div>
 
     </div>
+  </div>
+
+  <aside class="action-col">
+    <div class="panel">
+      <div class="actions">
+        <button id="previewBtn" class="btn secondary">Preview Roll</button>
+        <button id="saveBtn" class="btn">Save &amp; Publish</button>
+        <span id="statusMsg" class="status"></span>
+      </div>
+      <div id="resultBox"></div>
+    </div>
+  </aside>
+
   </div>
 </div>
 
