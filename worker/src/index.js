@@ -139,6 +139,34 @@ async function handleWeaponOnly(url, env) {
   return textResponse(formatWeaponOnly(result));
 }
 
+// The invisible-character trick (antiDupeTag) didn't survive whatever sanitizing some
+// urlfetch proxies (e.g. StreamElements') apply before posting to chat, so it never
+// reached Twitch intact — meaning back-to-back "no challenge" rolls still looked
+// byte-identical to Twitch and got silently dropped by its duplicate-message filter.
+// This is the dominant case for /challenge-only specifically, since a channel with no
+// (or low-chance) challenges configured returns this exact static line most of the time.
+// A persistent per-channel call counter lets us alternate between two *visibly* distinct
+// phrasings, guaranteeing consecutive calls from the same channel are never identical,
+// rather than hoping an invisible/random trick happens to differ and survives untouched.
+const NO_CHALLENGE_MESSAGES = [
+  "No challenges rolled this time.",
+  "No challenges this time — try again!",
+];
+
+async function nextTallyParity(env, key) {
+  const tallyKey = `__tally__challenge__${key}`;
+  let n = 0;
+  try {
+    const stored = await env.MHGU_BOT_PROFILES.get(tallyKey);
+    n = stored ? (parseInt(stored, 10) || 0) : 0;
+  } catch (e) {}
+  const next = (n + 1) % 1000000;
+  try {
+    await env.MHGU_BOT_PROFILES.put(tallyKey, String(next));
+  } catch (e) {}
+  return next % 2;
+}
+
 // No getData()/DATA needed at all — challenges live entirely in filters, not the quest
 // pool, so this is the only roll endpoint that doesn't depend on data.js being reachable.
 async function handleChallengeOnly(url, env) {
@@ -147,6 +175,10 @@ async function handleChallengeOnly(url, env) {
   if (filters === NOT_CONFIGURED) return notConfiguredResponse(channelRaw);
 
   const result = rollChallengeOnly(channelRaw ? filters : defaultFilters());
+  if (!result.challenges.length) {
+    const parity = await nextTallyParity(env, channelRaw || "__default__");
+    return textResponse(NO_CHALLENGE_MESSAGES[parity]);
+  }
   return textResponse(formatChallengeOnly(result));
 }
 
