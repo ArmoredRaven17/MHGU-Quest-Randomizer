@@ -370,6 +370,15 @@
       document.querySelectorAll("#artList input.leaf").forEach(i => i.checked = false);
       refreshAllGroups();
     });
+    function artLvBulk(checked) {
+      const suffix = " " + $("artLvSel").value;
+      document.querySelectorAll("#artList input.leaf").forEach((i) => {
+        if (i.dataset.name.endsWith(suffix)) i.checked = checked;
+      });
+      refreshAllGroups();
+    }
+    $("artLvCheck").addEventListener("click", () => artLvBulk(true));
+    $("artLvUncheck").addEventListener("click", () => artLvBulk(false));
 
     $("previewBtn").addEventListener("click", async () => {
       $("resultBox").textContent = "Rolling…";

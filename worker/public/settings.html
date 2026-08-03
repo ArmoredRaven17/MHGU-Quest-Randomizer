@@ -120,9 +120,21 @@
       <div class="acc-body">
       <p class="muted">Uncheck to exclude a specific art from the pool.
         <label class="chk" style="display:inline-flex;margin-left:10px"><input type="checkbox" id="qf_spArts" checked>SP Arts enabled</label>
+      </p>
+      <div class="row-gap-wrap">
+        <select id="artLvSel">
+          <option value="I">Level I</option>
+          <option value="II">Level II</option>
+          <option value="III">Level III</option>
+        </select>
+        <button class="btn tiny secondary" id="artLvCheck">Check All</button>
+        <button class="btn tiny secondary" id="artLvUncheck">Uncheck All</button>
+      </div>
+      <p class="muted" style="margin-top:6px">or reset everything:</p>
+      <div class="row-gap-wrap">
         <button class="btn tiny secondary" id="artCheckAll">Check All</button>
         <button class="btn tiny secondary" id="artUncheckAll">Uncheck All</button>
-      </p>
+      </div>
       <div id="artList"></div>
       </div>
     </div>
