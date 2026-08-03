@@ -430,6 +430,22 @@
       window.location.reload();
     });
 
+    const questUrl = `${location.origin}/quest?channel=${encodeURIComponent(me.login)}`;
+    const nightbotCmd = `$(urlfetch ${questUrl})`;
+    $("botCmdText").textContent = questUrl;
+    $("botCmdNightbot").textContent = nightbotCmd;
+    $("botCmdCopy").dataset.copy = questUrl;
+    $("botCmdNightbotCopy").dataset.copy = nightbotCmd;
+    document.querySelectorAll(".copy-snippet").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        navigator.clipboard.writeText(btn.dataset.copy).then(() => {
+          const orig = btn.textContent;
+          btn.textContent = "Copied!";
+          setTimeout(() => { btn.textContent = orig; }, 1500);
+        });
+      });
+    });
+
     await loadFiltersFromServer();
   }
 

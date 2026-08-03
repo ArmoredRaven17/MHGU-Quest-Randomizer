@@ -23,7 +23,26 @@
 
   <div id="appArea" class="hidden layout">
 
-    <aside class="side-col">
+    <aside class="side-col left-col">
+      <div class="panel">
+        <h2 style="font-size:13px">Your Bot Command</h2>
+        <p class="muted">Use whichever matches how your bot posts a URL's response:</p>
+
+        <div class="cmd-row">
+          <code id="botCmdText" class="muted"></code>
+          <button class="btn tiny secondary copy-snippet" id="botCmdCopy">Copy</button>
+        </div>
+        <p class="cmd-desc">The plain address, used for any bot that needs the URL</p>
+
+        <div class="cmd-row">
+          <code id="botCmdNightbot" class="muted"></code>
+          <button class="btn tiny secondary copy-snippet" id="botCmdNightbotCopy">Copy</button>
+        </div>
+        <p class="cmd-desc">Response formatted string, used for custom command responses to display the Result string</p>
+      </div>
+    </aside>
+
+    <aside class="side-col right-col">
       <div class="panel">
         <div class="actions">
           <button id="previewBtn" class="btn secondary">Preview Roll</button>
