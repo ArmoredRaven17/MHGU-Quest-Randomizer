@@ -7,7 +7,7 @@
 <title>MHGU Quest Randomizer</title>
 <link rel="icon" href="assets/MonsterIcons/MHGU-Question_Mark_Icon.webp">
 <!-- Bump ?v= on any styles/app/data change so browsers fetch fresh copies (no hard-refresh needed) -->
-<link rel="stylesheet" href="styles.css?v=113">
+<link rel="stylesheet" href="styles.css?v=114">
 </head>
 <body>
 <div id="app">
@@ -20,13 +20,10 @@
     <button id="aboutBtn" class="icon-btn" title="About / Attributions" aria-label="About">&#9432;</button>
     <button id="themeBtn" class="icon-btn" title="Theme" aria-label="Theme">&#9881;</button>
     <button id="streamViewBtn" class="icon-btn" title="Pop Out Result Card for Stream" aria-label="Pop Out for Stream">&#8599;</button>
-    <button id="twitchSyncBtn" class="icon-btn twitch-sync-btn" title="Login with Twitch to sync filters" aria-label="Login with Twitch to sync filters">
+    <button id="twitchSyncBtn" class="icon-btn twitch-sync-btn" title="Twitch Bot" aria-label="Twitch Bot">
       <svg viewBox="0 0 24 24" width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="#9146FF" aria-hidden="true"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0Zm14.571 11.143-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/></svg>
       <span id="twitchSyncLabel">Login</span>
     </button>
-    <a id="twitchBotBtn" class="icon-btn" href="https://mhgu-bot-api.raven-mhgu.workers.dev/settings" target="_blank" rel="noopener" title="Twitch Bot Settings" aria-label="Twitch Bot Settings" style="display:inline-flex;align-items:center;justify-content:center">
-      <svg viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg" fill="#9146FF" aria-hidden="true"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0Zm14.571 11.143-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/></svg>
-    </a>
   </header>
 
   <main class="layout">
@@ -350,7 +347,85 @@
   </div>
 </div>
 
+<!-- Twitch Bot modal -->
+<div id="twitchModal" class="modal hidden">
+  <div class="modal-card">
+    <h2>Twitch Bot</h2>
+
+    <div id="twitchModalLoggedOut">
+      <p class="muted">Log in with Twitch to sync these filters with your channel's bot commands automatically — no separate save step, changes publish as you make them.</p>
+      <button id="twitchModalLoginBtn" class="btn">Login with Twitch</button>
+    </div>
+
+    <div id="twitchModalLoggedIn" class="hidden">
+      <p class="muted">Synced as <strong id="twitchModalLoginName"></strong></p>
+      <button id="twitchModalLogoutBtn" class="btn secondary tiny">Logout</button>
+
+      <hr class="modal-divider">
+
+      <h3 style="margin-top:0">Your Bot Commands</h3>
+      <p class="muted">Four separate commands, in case you want e.g. a !quest and a !weapon command that do different things. Nightbot pastes the whole line below as the command; Moobot (and most others) need the plain URL pasted into their own URL-fetch response tag instead — not as the command text itself.</p>
+
+      <p style="margin:0 0 4px;font-size:13px;font-weight:600">Full Roll (quest + weapon)</p>
+      <p class="cmd-desc">Nightbot</p>
+      <div class="cmd-row" data-path="/quest" data-format="nightbot">
+        <code class="muted botCmdCode"></code>
+        <button class="btn tiny secondary copy-snippet botCmdCopy">Copy</button>
+      </div>
+      <p class="cmd-desc">Moobot / plain URL</p>
+      <div class="cmd-row" data-path="/quest" data-format="plain">
+        <code class="muted botCmdCode"></code>
+        <button class="btn tiny secondary copy-snippet botCmdCopy">Copy</button>
+      </div>
+
+      <p style="margin:0 0 4px;font-size:13px;font-weight:600">Quest Only</p>
+      <p class="cmd-desc">Nightbot</p>
+      <div class="cmd-row" data-path="/quest-only" data-format="nightbot">
+        <code class="muted botCmdCode"></code>
+        <button class="btn tiny secondary copy-snippet botCmdCopy">Copy</button>
+      </div>
+      <p class="cmd-desc">Moobot / plain URL</p>
+      <div class="cmd-row" data-path="/quest-only" data-format="plain">
+        <code class="muted botCmdCode"></code>
+        <button class="btn tiny secondary copy-snippet botCmdCopy">Copy</button>
+      </div>
+
+      <p style="margin:0 0 4px;font-size:13px;font-weight:600">Weapon Only</p>
+      <p class="cmd-desc">Nightbot</p>
+      <div class="cmd-row" data-path="/weapon-only" data-format="nightbot">
+        <code class="muted botCmdCode"></code>
+        <button class="btn tiny secondary copy-snippet botCmdCopy">Copy</button>
+      </div>
+      <p class="cmd-desc">Moobot / plain URL</p>
+      <div class="cmd-row" data-path="/weapon-only" data-format="plain">
+        <code class="muted botCmdCode"></code>
+        <button class="btn tiny secondary copy-snippet botCmdCopy">Copy</button>
+      </div>
+
+      <p style="margin:0 0 4px;font-size:13px;font-weight:600">Challenge Roll</p>
+      <p class="cmd-desc">Nightbot</p>
+      <div class="cmd-row" data-path="/challenge-only" data-format="nightbot">
+        <code class="muted botCmdCode"></code>
+        <button class="btn tiny secondary copy-snippet botCmdCopy">Copy</button>
+      </div>
+      <p class="cmd-desc">Moobot / plain URL</p>
+      <div class="cmd-row" data-path="/challenge-only" data-format="plain">
+        <code class="muted botCmdCode"></code>
+        <button class="btn tiny secondary copy-snippet botCmdCopy">Copy</button>
+      </div>
+    </div>
+
+    <hr class="modal-divider">
+    <p class="muted">Want more control (or don't want to log in here at all)? Everything above, plus the full filter editor, also lives on the bot's own settings page.</p>
+    <a href="https://mhgu-bot-api.raven-mhgu.workers.dev/settings" target="_blank" rel="noopener" class="btn secondary tiny">Open Bot Settings Page</a>
+
+    <div class="row end gap">
+      <button id="twitchModalClose" class="btn">Close</button>
+    </div>
+  </div>
+</div>
+
 <script src="data.js?v=29"></script>
-<script src="app.js?v=136"></script>
+<script src="app.js?v=137"></script>
 </body>
 </html>

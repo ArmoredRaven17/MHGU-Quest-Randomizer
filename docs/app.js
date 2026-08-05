@@ -1233,20 +1233,62 @@
     history.replaceState(null, "", location.pathname + location.search);
   }
 
-  // One titlebar button doubles as login/logout/status — "Login" when logged out, the
-  // Twitch login name once logged in (click to logout). Sync feedback is a transient
-  // flash of the label text, matching the "Copied!" pattern already used elsewhere in
-  // this file (copyResultBtn, Export), rather than a separate persistent status line.
+  // The titlebar button shows "Login" when logged out, the Twitch login name once
+  // logged in — clicking it always opens the Twitch Bot modal (see wireTwitchModal),
+  // which holds the actual login/logout controls and the bot command URLs. Sync feedback
+  // after a publish is still a transient flash of the label text, matching the "Copied!"
+  // pattern already used elsewhere in this file (copyResultBtn, Export).
   function updateSyncUI(login) {
     const btn = $("twitchSyncBtn"), label = $("twitchSyncLabel");
-    if (!btn || !label) return;
-    if (login) {
-      label.textContent = login;
-      btn.title = `Logged in as ${login} — click to logout`;
-    } else {
-      label.textContent = "Login";
-      btn.title = "Login with Twitch to sync filters";
+    if (btn && label) {
+      if (login) { label.textContent = login; btn.title = `Logged in as ${login} — click for bot commands`; }
+      else       { label.textContent = "Login"; btn.title = "Twitch Bot"; }
     }
+    const out = $("twitchModalLoggedOut"), inn = $("twitchModalLoggedIn");
+    if (!out || !inn) return;
+    if (login) {
+      out.classList.add("hidden"); inn.classList.remove("hidden");
+      $("twitchModalLoginName").textContent = login;
+      populateBotCommands(login);
+    } else {
+      out.classList.remove("hidden"); inn.classList.add("hidden");
+    }
+  }
+
+  // Bot command rows live inside the modal, but the URLs point at the Worker's own
+  // origin (not location.origin — this page and the bot API are different origins).
+  function populateBotCommands(login) {
+    document.querySelectorAll("#twitchModalLoggedIn .cmd-row[data-path]").forEach((row) => {
+      const url = `${BOT_API_ORIGIN}${row.dataset.path}?channel=${encodeURIComponent(login)}`;
+      const value = row.dataset.format === "nightbot" ? `$(urlfetch ${url})` : url;
+      row.querySelector(".botCmdCode").textContent = value;
+      row.querySelector(".botCmdCopy").dataset.copy = value;
+    });
+  }
+
+  function wireTwitchModal() {
+    const modal = $("twitchModal");
+    $("twitchSyncBtn").addEventListener("click", () => modal.classList.remove("hidden"));
+    $("twitchModalClose").addEventListener("click", () => modal.classList.add("hidden"));
+    modal.addEventListener("click", (e) => { if (e.target === modal) modal.classList.add("hidden"); });
+
+    $("twitchModalLoginBtn").addEventListener("click", () => {
+      window.location.href = BOT_API_ORIGIN + "/auth/login?return=main";
+    });
+    $("twitchModalLogoutBtn").addEventListener("click", () => {
+      clearSync();
+      modal.classList.add("hidden");
+    });
+
+    modal.querySelectorAll(".copy-snippet").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        navigator.clipboard.writeText(btn.dataset.copy || "").then(() => {
+          const orig = btn.textContent;
+          btn.textContent = "Copied!";
+          setTimeout(() => { btn.textContent = orig; }, 1500);
+        });
+      });
+    });
   }
 
   function flashSyncLabel(text) {
@@ -1307,12 +1349,7 @@
     updateSyncUI(login);
     if (token) pullAndApplySyncedFilters(token);
 
-    const btn = $("twitchSyncBtn");
-    if (btn) btn.addEventListener("click", () => {
-      let current; try { current = localStorage.getItem(SYNC_TOKEN_KEY); } catch (e) { current = null; }
-      if (current) clearSync();
-      else window.location.href = BOT_API_ORIGIN + "/auth/login?return=main";
-    });
+    wireTwitchModal();
   }
 
   function refreshMonsterGroups() {
