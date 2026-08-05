@@ -1211,6 +1211,16 @@
   // ── Optional Twitch-login sync with the bot's settings page (Worker) ─────
   const BOT_API_ORIGIN = "https://mhgu-bot-api.raven-mhgu.workers.dev";
   const SYNC_TOKEN_KEY = "mhgu-sync-token";
+  // Lets someone stay logged in (e.g. just to view their bot commands) without this
+  // app's filter changes overwriting a separately-configured bot — defaults to true so
+  // logging in behaves the same as before this toggle existed, unless turned off.
+  const SYNC_ENABLED_KEY = "mhgu-sync-enabled";
+  function isSyncEnabled() {
+    try {
+      const v = localStorage.getItem(SYNC_ENABLED_KEY);
+      return v === null ? true : v === "true";
+    } catch (e) { return true; }
+  }
 
   // The session token is a self-contained signed {login,exp} string (see
   // worker/src/session.js) — decoding the payload here is just for display, never for
@@ -1249,6 +1259,8 @@
     if (login) {
       out.classList.add("hidden"); inn.classList.remove("hidden");
       $("twitchModalLoginName").textContent = login;
+      const toggle = $("twitchSyncToggle");
+      if (toggle) toggle.checked = isSyncEnabled();
       populateBotCommands(login);
     } else {
       out.classList.remove("hidden"); inn.classList.add("hidden");
@@ -1279,6 +1291,9 @@
       clearSync();
       modal.classList.add("hidden");
     });
+    $("twitchSyncToggle").addEventListener("change", function () {
+      try { localStorage.setItem(SYNC_ENABLED_KEY, this.checked ? "true" : "false"); } catch (e) {}
+    });
 
     modal.querySelectorAll(".copy-snippet").forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -1305,11 +1320,12 @@
   }
 
   // Debounced so toggling a dozen checkboxes in a row fires one publish, not a dozen.
-  // A true no-op (no timer, no fetch) for anyone who's never logged in.
+  // A true no-op (no timer, no fetch) for anyone who's never logged in, or who's logged
+  // in but has turned the sync toggle off (personal filters, separate bot config).
   let syncPushTimer = null;
   function scheduleSyncPush(d) {
     let token; try { token = localStorage.getItem(SYNC_TOKEN_KEY); } catch (e) { token = null; }
-    if (!token) return;
+    if (!token || !isSyncEnabled()) return;
     clearTimeout(syncPushTimer);
     syncPushTimer = setTimeout(() => {
       fetch(BOT_API_ORIGIN + "/api/publish", {
@@ -1347,7 +1363,7 @@
     const login = token ? decodeTokenLogin(token) : null;
     if (token && !login) { clearSync(); token = null; }
     updateSyncUI(login);
-    if (token) pullAndApplySyncedFilters(token);
+    if (token && isSyncEnabled()) pullAndApplySyncedFilters(token);
 
     wireTwitchModal();
   }
