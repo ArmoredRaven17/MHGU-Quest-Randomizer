@@ -31,11 +31,11 @@ function channelKey(raw) {
   return /^[a-z0-9_]{1,25}$/.test(c) ? "ch:" + c : null;
 }
 
-// Bounds chosen so a legitimate 5x5 card (25 cells, longest real quest name ~45 chars)
-// fits with room to spare, while an unauthenticated write can't store anything large.
-const MAX_BODY_BYTES = 16 * 1024;
+// Bounds sized for the largest legitimate card: 10x10 is 100 cells at roughly 200 bytes
+// each, so 16 KB (fine for a 5x5) would have rejected it outright.
+const MAX_BODY_BYTES = 96 * 1024;
 const MAX_TEXT = 120;
-const SIZES = [3, 4, 5];
+const SIZES = [3, 4, 5, 6, 7, 8, 9, 10];
 
 // Crockford base32, matching the app's own seed alphabet.
 const B32 = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";

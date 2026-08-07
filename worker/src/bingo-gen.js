@@ -27,6 +27,20 @@ const WEAPON_COLORS = {
 
 const STYLES = ["Guild","Striker","Adept","Aerial","Valor","Alchemy"];
 
+// Prowler biases. Order is load-bearing: the goal list must come out identical to the app's.
+const BIASES = [
+  ["Charisma",  "FourthGen-Palico_Icon_Blue.webp"],
+  ["Fighting",  "Palico_Weapon_Cutting_Icon_Red.webp"],
+  ["Protection","FourthGen-Down_Arrow_Icon_Blue.webp"],
+  ["Assisting", "MH4G-Trap_Icon_Purple.webp"],
+  ["Healing",   "MH4G-Horn_Icon_Green.webp"],
+  ["Bombing",   "MH4G-Barrel_Icon_Brown.webp"],
+  ["Gathering", "MH4G-Boomerang_Icon_Blue.webp"],
+  ["Beast",     "FourthGen-Claw_Icon_Dark_Red.webp"],
+];
+const BIAS_NAMES = BIASES.map(b => b[0]);
+const prowlerIcon = (f) => "assets/ProwlerIcons/" + f;
+
 const RANK_COLORS = { Low: "#4aa3df", High: "#f5b400", G: "#e0523f", "": "#8a8f98" };
 const CAT_COLORS  = { objective: "#9b8cff", custom: "#5ec9a0", free: "#8a8f98" };
 
@@ -115,7 +129,8 @@ function fingerprint(DATA, f, customPool) {
     "R" + [...f.ranks].sort().join("."),
     "M" + [...f.includedMonsters].sort().join("."),
     "W" + f.weapons.slice().sort().join("."),
-    "S" + f.styles.slice().sort().join("."),
+    "S" + f.styles.slice().sort().join(".") ,
+    "P" + f.biases.slice().sort().join("."),
     "F" + FLAG_ORDER.map(k => f[k] ? 1 : 0).join(""),
     "C" + customPool.filter(c => c.checked).map(c => c.text + "@" + c.weight).sort().join("."),
   ].join("|");
@@ -228,6 +243,13 @@ function weaponGoals(pool, f) {
       }
     }
   }
+  if (f.pQuests && pool.some(q => q.Prowler)) {
+    for (const [name, file] of BIASES) {
+      if (!f.biases.includes(name)) continue;
+      out.push({ key: "w:Prowler|" + name, cat: "weapon", text: "Clear as a Prowler",
+                 sub: name, icon: prowlerIcon(file), tint: WEAPON_COLORS.Prowler });
+    }
+  }
   return out;
 }
 
@@ -307,6 +329,7 @@ export function generateCard(DATA, token) {
     monsterFilterActive: false,
     weapons: WEAPONS,
     styles: STYLES,
+    biases: BIAS_NAMES,
   };
   const pool = buildQuestPool(DATA, f);
   const tok = token || newToken();
