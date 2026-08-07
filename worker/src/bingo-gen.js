@@ -63,16 +63,16 @@ const weaponIcon = (w) => "assets/WeaponIcons/icon_" +
 const DEFAULT_CFG = { size: 5, free: true, cats: { monster: 4, weapon: 3, objective: 2, custom: 3 } };
 
 const DEFAULT_POOL = [
-  "Cart to a monster you already hunted",
+  "Get carted by a large monster",
   "Moxie saved you, then you died anyway",
   "Get carted by a small monster",
-  "Clear with under 5 minutes left",
+  "Clear quest in under 5 minutes",
   "Sharpen mid-combo and get hit for it",
   "Trip another hunter with your own attack",
-  "Finish a quest without eating first",
-  "Run out of Whetstones",
-  "Capture a monster by accident",
-  "Faint in the first two minutes",
+  "Forget to eat before departing",
+  "Forget Whetstones or Ammo",
+  "Slay the capture target by mistake",
+  "Faint in the first five minutes",
 ].map(text => ({ text, weight: 5, checked: true }));
 
 // What the app's controls read as on a first visit (see doReset in docs/app.js): every
