@@ -184,6 +184,8 @@ function buildQuestPool(DATA, f) {
     // Two independent gates — see docs/app.js for the reasoning.
     const cat = questCategory(q);
     if ((cat === "SP" || cat === "Event" || cat === "Arena") && !f.ranks.has(cat)) return false;
+    // Deviant-bearing Arena quests answer to the Special Permits box too — see docs/app.js.
+    if (!f.ranks.has("SP") && (q.Monsters || []).some(m => DEVIANTS.has(m))) return false;
     const rank = baseRank(q);
     if (rank && !f.ranks.has(rank)) return false;
 
