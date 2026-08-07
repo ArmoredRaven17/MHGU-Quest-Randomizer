@@ -9,6 +9,14 @@ compatibility_date = "2026-01-01"
 binding = "MHGU_BOT_PROFILES"
 id = "e63eaa0c9e224ec9bc66fcdc919b74d3"
 
+# Shared MHGU Bingo cards, keyed by a 6-char code the Worker mints. Separate from the
+# profiles namespace above: different lifecycle (every entry is written with a 30-day
+# expirationTtl) and no login involved. Create with
+# `wrangler kv namespace create MHGU_BINGO_CARDS` and paste the printed id below.
+[[kv_namespaces]]
+binding = "MHGU_BINGO_CARDS"
+id = "e25a7336e4b84ef7b830f1f89d4b9aae"
+
 # The settings page (settings.html/.js/.css) — served directly by the platform; requests
 # that don't match a file here fall through to this Worker's fetch handler as usual.
 [assets]

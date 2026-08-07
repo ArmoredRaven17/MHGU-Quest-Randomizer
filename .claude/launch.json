@@ -6,6 +6,12 @@
       "runtimeExecutable": "python",
       "runtimeArgs": ["-m", "http.server", "5577", "--directory", "docs"],
       "port": 5577
+    },
+    {
+      "name": "mhgu-bingo",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "5578", "--directory", "C:/Coding Repos/MHGU Bingo/docs"],
+      "port": 5578
     }
   ]
 }

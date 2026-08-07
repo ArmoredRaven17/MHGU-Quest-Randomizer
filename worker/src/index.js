@@ -1,6 +1,7 @@
 import { rollQuest, rollQuestOnly, rollWeaponOnly, rollChallengeOnly, rollDefaultQuest, defaultFilters, formatForChat, formatQuestOnly, formatWeaponOnly, formatChallengeOnly } from "./randomizer.js";
 import { handleLogin, handleCallback, handleLogout } from "./auth.js";
 import { handleMe, handleGetFilters, handlePreview, handlePublish, handleCorsPreflight } from "./api.js";
+import { handleBingoPublish, handleBingoGet, handleBingoLink, handleBingoRoll, handleBingoCorsPreflight } from "./bingo.js";
 
 // The web app's already-public data.js — reused as-is rather than bundling a second
 // copy of the quest data that could drift out of sync. It's a JS file that assigns
@@ -38,6 +39,31 @@ async function getData() {
     cachedData = parseDataJs(text);
     cachedAt = now;
     return cachedData;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+// MHGU Bingo publishes its own trimmed data.js (window.MHGU_BINGO_DATA), carrying a
+// dataVersion that feeds the seed fingerprint. The bot reads THAT file rather than the
+// randomizer's above, so a card rolled here and the same seed pasted into the app are
+// built from byte-identical data — otherwise the two could drift apart and the seed
+// would quietly stop reproducing the card.
+const BINGO_DATA_JS_URL = "https://armoredraven17.github.io/MHGU-Bingo/data.js";
+let cachedBingoData = null;
+let cachedBingoAt = 0;
+
+async function getBingoData() {
+  const now = Date.now();
+  if (cachedBingoData && now - cachedBingoAt < DATA_TTL_MS) return cachedBingoData;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), DATA_FETCH_TIMEOUT_MS);
+  try {
+    const res = await fetch(BINGO_DATA_JS_URL, { cf: { cacheTtl: 300, cacheEverything: true }, signal: controller.signal });
+    if (!res.ok) throw new Error(`Failed to fetch bingo data.js: ${res.status}`);
+    cachedBingoData = parseDataJs(await res.text());
+    cachedBingoAt = now;
+    return cachedBingoData;
   } finally {
     clearTimeout(timeout);
   }
@@ -212,6 +238,28 @@ export default {
       return handlePreview(request, env, DATA);
     }
     if (pathname === "/api/publish" && method === "POST") return handlePublish(request, env);
+
+    // MHGU Bingo share codes. Independent of the OAuth routes above — a bingo card has
+    // no identity, just a write key minted on first publish. See bingo.js.
+    if (pathname === "/bingo-link" && method === "GET") return handleBingoLink(url, env);
+    if (pathname === "/bingo" || pathname.startsWith("/bingo/")) {
+      const code = pathname === "/bingo" ? "" : pathname.slice("/bingo/".length).toUpperCase();
+      if (code && !/^[0-9A-Z]{6}$/.test(code)) return new Response("Not found", { status: 404 });
+      if (method === "OPTIONS") return handleBingoCorsPreflight();
+      if (method === "POST") return handleBingoPublish(request, env, code);
+      if (method === "GET" && code) return handleBingoGet(env, code);
+      // GET /bingo with no code is the chat command: roll a fresh card.
+      if (method === "GET") {
+        let BINGO_DATA;
+        try {
+          BINGO_DATA = await getBingoData();
+        } catch (e) {
+          return new Response("Bingo data is unavailable right now — try again in a moment.",
+            { status: 200, headers: { "Content-Type": "text/plain; charset=utf-8", ...NO_STORE } });
+        }
+        return handleBingoRoll(env, BINGO_DATA);
+      }
+    }
 
     // Anything else (including /settings.html, /settings.js, /settings.css) falls
     // through to Workers Static Assets automatically via the [assets] binding in
