@@ -156,7 +156,9 @@ function baseRank(q) {
 function rankLabel(q) {
   const r = baseRank(q);
   if (!r) return "";
-  return (q.Type === "Events" ? "Event · " : "") + r + " Rank";
+  const prefix = q.Type === "Events" ? "Event · "
+    : q.Type === "Special Permits" ? "Permit · " : "";
+  return prefix + r + " Rank";
 }
 
 // What the quest filters switch on. Village / Hub / Pub / Events are just delivery
@@ -201,7 +203,8 @@ function buildQuestPool(DATA, f) {
 
 // ── Goal pools (mirrors docs/app.js) ─────────────────────────────────────────
 const RANK_ORDER = ["Low Rank", "High Rank", "G Rank",
-  "Event · Low Rank", "Event · High Rank", "Event · G Rank", ""];
+  "Event · Low Rank", "Event · High Rank", "Event · G Rank",
+  "Permit · Low Rank", "Permit · High Rank", "Permit · G Rank", ""];
 function monsterGoals(pool) {
   const seen = new Map();
   for (const q of pool) {
