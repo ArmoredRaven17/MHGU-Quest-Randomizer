@@ -1,7 +1,8 @@
 import { rollQuest, rollQuestOnly, rollWeaponOnly, rollChallengeOnly, rollDefaultQuest, defaultFilters, formatForChat, formatQuestOnly, formatWeaponOnly, formatChallengeOnly } from "./randomizer.js";
 import { handleLogin, handleCallback, handleLogout } from "./auth.js";
 import { handleMe, handleGetFilters, handlePreview, handlePublish, handleCorsPreflight } from "./api.js";
-import { handleBingoPublish, handleBingoGet, handleBingoLink, handleBingoRoll, handleBingoSet, handleBingoCorsPreflight } from "./bingo.js";
+import { handleBingoPublish, handleBingoGet, handleBingoLink, handleBingoRoll, handleBingoSet,
+         handleBingoChannelGet, handleBingoChannelPut, handleBingoCorsPreflight } from "./bingo.js";
 
 // The web app's already-public data.js — reused as-is rather than bundling a second
 // copy of the quest data that could drift out of sync. It's a JS file that assigns
@@ -242,6 +243,11 @@ export default {
     // MHGU Bingo share codes. Independent of the OAuth routes above — a bingo card has
     // no identity, just a write key minted on first publish. See bingo.js.
     if (pathname === "/bingo-link" && method === "GET") return handleBingoLink(url, env);
+    if (pathname === "/bingo-channel") {
+      if (method === "OPTIONS") return handleBingoCorsPreflight();
+      if (method === "GET") return handleBingoChannelGet(url, env);
+      if (method === "POST") return handleBingoChannelPut(request, url, env);
+    }
     if (pathname === "/bingo-set" && method === "GET") {
       let BINGO_DATA;
       try {

@@ -18,6 +18,19 @@ const BINGO_APP_URL = MAIN_SITE_ORIGIN + "/MHGU-Bingo/";
 // abandoned cards would accumulate in KV forever.
 const CARD_TTL_SECONDS = 30 * 24 * 3600;
 
+// A channel's current card outlives any individual card. The whole point of keying on the
+// channel is that a streamer sets their bot up once and never touches it again, so this
+// must not quietly expire mid-season. Refreshed on every write.
+const CHANNEL_TTL_SECONDS = 365 * 24 * 3600;
+
+// Channel keys follow the quest bot's existing convention (resolveChannelFilters in
+// index.js): trimmed and lowercased, so it makes no difference whether a bot substitutes
+// the login or the display name, or includes a leading #.
+function channelKey(raw) {
+  const c = String(raw || "").trim().toLowerCase().replace(/^#/, "");
+  return /^[a-z0-9_]{1,25}$/.test(c) ? "ch:" + c : null;
+}
+
 // Bounds chosen so a legitimate 5x5 card (25 cells, longest real quest name ~45 chars)
 // fits with room to spare, while an unauthenticated write can't store anything large.
 const MAX_BODY_BYTES = 16 * 1024;
@@ -186,40 +199,64 @@ export async function handleBingoRoll(env, DATA) {
   return text("New bingo card: " + BINGO_APP_URL + "?c=" + code + " — Seed: " + card.seed);
 }
 
-// GET /bingo-set?c=slot&key=... → !setcurrentcard. Rolls a fresh card straight INTO the
-// streamer's existing slot, so the command URL never changes and neither does the
-// !currentcard URL pointing at it. That's the whole point: a card code baked into a bot
-// command would go stale the moment a new card was made.
+// GET /bingo-set?channel=NAME → !setcurrentcard. Rolls a fresh card and makes it the
+// channel's current one.
 //
-// The key lives in the command's URL, so this must be mod-restricted in the bot —
-// anyone who can read the command definition can reroll the stream's card.
+// Keyed on the CHANNEL, never on a card id or a minted key, because a bot command has to
+// be set up once and then left alone forever. Bots substitute the channel themselves —
+// Nightbot's $(channel) — so the command is byte-identical for every streamer, with
+// nothing to copy, nothing to claim, and nothing that can go stale.
+//
+// There is deliberately no secret here: a secret would have to live in the command's URL,
+// which is exactly the hardcoding this avoids. Restricting the command to moderators in
+// the bot is the real control. Worst case someone re-rolls a stream's bingo card, and the
+// streamer runs the command again.
 export async function handleBingoSet(url, env, DATA) {
-  const slot = (url.searchParams.get("c") || "").trim().toUpperCase();
-  const key = (url.searchParams.get("key") || "").trim();
-  if (!/^[0-9A-Z]{6}$/.test(slot)) {
-    return text("This command isn't set up yet — publish a card in the MHGU Bingo app to get its URL.");
-  }
-  const rec = await env.MHGU_BINGO_CARDS.get(slot, "json");
-  if (!rec) return text("That card slot has expired — publish again in the app to set it back up.");
-  // Bot-rolled cards store an empty keyHash and can never be claimed as a slot.
-  if (!rec.keyHash || !timingSafeEqual(await sha256Hex(key), rec.keyHash)) {
-    return text("Not allowed.");
-  }
+  const key = channelKey(url.searchParams.get("channel"));
+  if (!key) return text("This command needs a channel — check it passes ?channel= (Nightbot: $(channel)).");
   const card = generateCard(DATA);
   await env.MHGU_BINGO_CARDS.put(
-    slot,
-    JSON.stringify({ keyHash: rec.keyHash, card, updated: Date.now() }),
-    { expirationTtl: CARD_TTL_SECONDS },
+    key,
+    JSON.stringify({ card, updated: Date.now() }),
+    { expirationTtl: CHANNEL_TTL_SECONDS },
   );
-  return text("New stream card: " + BINGO_APP_URL + "?c=" + slot + " — Seed: " + card.seed);
+  return text("New stream card: " + BINGO_APP_URL + "?channel=" + key.slice(3) + " — Seed: " + card.seed);
+}
+
+// GET /bingo-channel?channel=NAME → the channel's current card as JSON, for the app to
+// render when someone opens ?channel=NAME.
+export async function handleBingoChannelGet(url, env) {
+  const key = channelKey(url.searchParams.get("channel"));
+  if (!key) return json({ error: "bad_channel" }, 400);
+  const stored = await env.MHGU_BINGO_CARDS.get(key, "json");
+  if (!stored || !stored.card) return json({ error: "not_found" }, 404);
+  return json(stored.card);
+}
+
+// POST /bingo-channel?channel=NAME → the app pushing the card on screen to the channel,
+// for when a streamer wants chat looking at a board they built with their own pools.
+// Same open-write reasoning as handleBingoSet above.
+export async function handleBingoChannelPut(request, url, env) {
+  const key = channelKey(url.searchParams.get("channel"));
+  if (!key) return json({ error: "bad_channel" }, 400);
+  const { body, error } = await readBody(request);
+  if (error) return json({ error }, error === "too_large" ? 413 : 400);
+  const card = sanitizeCard(body);
+  if (!card) return json({ error: "invalid_card" }, 400);
+  await env.MHGU_BINGO_CARDS.put(
+    key,
+    JSON.stringify({ card, updated: Date.now() }),
+    { expirationTtl: CHANNEL_TTL_SECONDS },
+  );
+  return json({ channel: key.slice(3) });
 }
 
 // GET /bingo-link?c=code → plain text for a chat bot's urlfetch. Kept deliberately short:
 // Nightbot/Moobot paste the response verbatim into chat.
 export async function handleBingoLink(url, env) {
-  const code = (url.searchParams.get("c") || "").trim().toUpperCase();
-  if (!/^[0-9A-Z]{6}$/.test(code)) return text("Usage: !bingo needs a card code.");
-  const stored = await env.MHGU_BINGO_CARDS.get(code, "json");
-  if (!stored) return text("That bingo card has expired or doesn't exist.");
-  return text("Current bingo card: " + BINGO_APP_URL + "?c=" + code);
+  const key = channelKey(url.searchParams.get("channel"));
+  if (!key) return text("This command needs a channel — check it passes ?channel= (Nightbot: $(channel)).");
+  const stored = await env.MHGU_BINGO_CARDS.get(key, "json");
+  if (!stored) return text("No bingo card set for this stream yet — a mod can run !setcurrentcard.");
+  return text("Current bingo card: " + BINGO_APP_URL + "?channel=" + key.slice(3));
 }
