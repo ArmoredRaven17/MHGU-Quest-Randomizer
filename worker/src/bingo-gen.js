@@ -77,10 +77,10 @@ const DEFAULT_POOL = [
 
 // What the app's controls read as on a first visit (see doReset in docs/app.js): every
 // rank category enabled.
-const FLAG_ORDER = ["large","keysOnly","hyper","capture","egg","gathering","small",
+const FLAG_ORDER = ["large","hyper","capture","egg","gathering","small",
   "multi","oneFaint","onSite","pQuests"];
 const DEFAULT_FLAGS = {
-  large: true, keysOnly: false, hyper: true, capture: true, egg: true, gathering: true,
+  large: true, hyper: true, capture: true, egg: true, gathering: true,
   small: true, multi: true, oneFaint: true, onSite: true, pQuests: false,
 };
 
@@ -184,7 +184,6 @@ function buildQuestPool(DATA, f) {
     if (!f.ranks.has(questCategory(q))) return false;
 
     if (q.LgMonster && !f.large) return false;
-    if (f.keysOnly && !q.Key) return false;
 
     const include = (q.LgMonster && !q.Capture)
       || (q.Capture && f.capture)
