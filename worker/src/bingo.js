@@ -186,6 +186,34 @@ export async function handleBingoRoll(env, DATA) {
   return text("New bingo card: " + BINGO_APP_URL + "?c=" + code + " — Seed: " + card.seed);
 }
 
+// GET /bingo-set?c=slot&key=... → !setcurrentcard. Rolls a fresh card straight INTO the
+// streamer's existing slot, so the command URL never changes and neither does the
+// !currentcard URL pointing at it. That's the whole point: a card code baked into a bot
+// command would go stale the moment a new card was made.
+//
+// The key lives in the command's URL, so this must be mod-restricted in the bot —
+// anyone who can read the command definition can reroll the stream's card.
+export async function handleBingoSet(url, env, DATA) {
+  const slot = (url.searchParams.get("c") || "").trim().toUpperCase();
+  const key = (url.searchParams.get("key") || "").trim();
+  if (!/^[0-9A-Z]{6}$/.test(slot)) {
+    return text("This command isn't set up yet — publish a card in the MHGU Bingo app to get its URL.");
+  }
+  const rec = await env.MHGU_BINGO_CARDS.get(slot, "json");
+  if (!rec) return text("That card slot has expired — publish again in the app to set it back up.");
+  // Bot-rolled cards store an empty keyHash and can never be claimed as a slot.
+  if (!rec.keyHash || !timingSafeEqual(await sha256Hex(key), rec.keyHash)) {
+    return text("Not allowed.");
+  }
+  const card = generateCard(DATA);
+  await env.MHGU_BINGO_CARDS.put(
+    slot,
+    JSON.stringify({ keyHash: rec.keyHash, card, updated: Date.now() }),
+    { expirationTtl: CARD_TTL_SECONDS },
+  );
+  return text("New stream card: " + BINGO_APP_URL + "?c=" + slot + " — Seed: " + card.seed);
+}
+
 // GET /bingo-link?c=code → plain text for a chat bot's urlfetch. Kept deliberately short:
 // Nightbot/Moobot paste the response verbatim into chat.
 export async function handleBingoLink(url, env) {
