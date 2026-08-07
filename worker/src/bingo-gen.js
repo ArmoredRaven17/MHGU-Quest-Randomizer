@@ -181,7 +181,11 @@ const ALL_RANKS = ["Low", "High", "G", "SP", "Event", "Arena"];
 
 function buildQuestPool(DATA, f) {
   return DATA.quests.filter(q => {
-    if (!f.ranks.has(questCategory(q))) return false;
+    // Two independent gates — see docs/app.js for the reasoning.
+    const cat = questCategory(q);
+    if ((cat === "SP" || cat === "Event" || cat === "Arena") && !f.ranks.has(cat)) return false;
+    const rank = baseRank(q);
+    if (rank && !f.ranks.has(rank)) return false;
 
     if (q.LgMonster && !f.large) return false;
 
