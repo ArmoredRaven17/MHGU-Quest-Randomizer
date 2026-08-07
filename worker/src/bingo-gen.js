@@ -54,9 +54,8 @@ const DEFAULT_POOL = [
   "Faint in the first two minutes",
 ].map(text => ({ text, weight: 5, checked: true }));
 
-// What the app's controls read as on a first visit (see doReset in docs/app.js). Quest
-// type "ALL" spans the full 0-45 unified rank range.
-const DEFAULT_RANGE = { type: "ALL", fromLv: 0, toLv: 45 };
+// What the app's controls read as on a first visit (see doReset in docs/app.js): every
+// rank category enabled.
 const FLAG_ORDER = ["large","keysOnly","hyper","capture","egg","gathering","small",
   "multi","oneFaint","onSite","pQuests"];
 const DEFAULT_FLAGS = {
@@ -110,11 +109,10 @@ function seedBody(c, token) {
   return "MHGU-" + c.size + (effFree(c) ? "F" : "N") + "-" + cats + "-" + token;
 }
 
-function fingerprint(DATA, f, range, customPool) {
+function fingerprint(DATA, f, customPool) {
   return [
     "d" + DATA.dataVersion,
-    "T" + range.type + ":" + range.fromLv + "-" + range.toLv,
-    "L" + (f.allLevels ? [...f.allLevels].sort((a, b) => a - b).join(".") : "*"),
+    "R" + [...f.ranks].sort().join("."),
     "M" + [...f.includedMonsters].sort().join("."),
     "W" + f.weapons.slice().sort().join("."),
     "S" + f.styles.slice().sort().join("."),
@@ -129,18 +127,7 @@ function spTier(name) {
   const s = name.lastIndexOf(" ", c - 1); if (s < 0) return 0;
   return SP_TIERS[name.slice(s + 1, c)] || 0;
 }
-function allRank(q) {
-  switch (q.Type) {
-    case "Village":         return q.Level - 1;
-    case "Hub":             return 10 + q.Level;
-    case "Pub":             return 18 + q.Level;
-    case "Special Permits": return 23 + spTier(q.Name || "");
-    case "Events":          return 39 + q.Level;
-    case "Arena":           return 42 + q.Level;
-    default:                return -1;
-  }
-}
-function questRank(q) {
+function baseRank(q) {
   switch (q.Type) {
     case "Village":         return "Low";
     case "Hub":             return q.Level <= 3 ? "Low" : "High";
@@ -151,19 +138,26 @@ function questRank(q) {
   }
 }
 
-function buildQuestPool(DATA, f, range) {
-  return DATA.quests.filter(q => {
-    const qType = q.Type || "";
-    const rank = allRank(q);
-    if (rank < 0) return false;
-    if (f.allLevels && !f.allLevels.has(rank)) return false;
+function rankLabel(q) {
+  const r = baseRank(q);
+  if (!r) return "";
+  return (q.Type === "Events" ? "Event · " : "") + r + " Rank";
+}
 
-    if (range.type === "ALL") {
-      if (rank < range.fromLv || rank > range.toLv) return false;
-    } else {
-      if (qType.toLowerCase() !== range.type.toLowerCase()) return false;
-      if (q.Level < range.fromLv || q.Level > range.toLv) return false;
-    }
+// What the quest filters switch on. Village / Hub / Pub / Events are just delivery
+// mechanisms for a rank, so they collapse into Low / High / G; Special Permits and Arena
+// stay separate. rankLabel above remains the *display* rank.
+function questCategory(q) {
+  if (q.Type === "Special Permits") return "SP";
+  if (q.Type === "Arena") return "Arena";
+  if (q.Type === "Events") return "Event";
+  return baseRank(q);
+}
+const ALL_RANKS = ["Low", "High", "G", "SP", "Event", "Arena"];
+
+function buildQuestPool(DATA, f) {
+  return DATA.quests.filter(q => {
+    if (!f.ranks.has(questCategory(q))) return false;
 
     if (q.LgMonster && !f.large) return false;
     if (f.keysOnly && !q.Key) return false;
@@ -191,31 +185,32 @@ function buildQuestPool(DATA, f, range) {
 }
 
 // ── Goal pools (mirrors docs/app.js) ─────────────────────────────────────────
-const RANK_ORDER = ["Low", "High", "G", ""];
+const RANK_ORDER = ["Low Rank", "High Rank", "G Rank",
+  "Event · Low Rank", "Event · High Rank", "Event · G Rank", ""];
 function monsterGoals(pool) {
-  const ranks = new Map();
+  const seen = new Map();
   for (const q of pool) {
     if (!q.LgMonster) continue;
-    const rank = questRank(q);
+    const label = rankLabel(q), base = baseRank(q);
     const list = (q.Monsters && q.Monsters.length) ? q.Monsters : (q.Monster ? [q.Monster] : []);
     for (const m of list) {
       if (!m) continue;
-      if (!ranks.has(m)) ranks.set(m, new Set());
-      if (rank) ranks.get(m).add(rank);
+      if (!seen.has(m)) seen.set(m, new Map());
+      if (label) seen.get(m).set(label, base);
     }
   }
   const out = [];
-  for (const [name, set] of ranks) {
-    const have = set.size ? set : new Set([""]);
-    for (const rank of RANK_ORDER) {
-      if (!have.has(rank)) continue;
+  for (const [name, labels] of seen) {
+    const have = labels.size ? labels : new Map([["", ""]]);
+    for (const label of RANK_ORDER) {
+      if (!have.has(label)) continue;
       out.push({
-        key: "m:" + name + ":" + rank,
+        key: "m:" + name + ":" + label,
         cat: "monster",
         text: "Hunt " + name,
-        sub: rank ? rank + " Rank" : "",
+        sub: label,
         icon: monsterIcon(name),
-        tint: RANK_COLORS[rank],
+        tint: RANK_COLORS[have.get(label)],
       });
     }
   }
@@ -306,17 +301,17 @@ export function generateCard(DATA, token) {
   const customPool = DEFAULT_POOL;
   const f = {
     ...DEFAULT_FLAGS,
-    allLevels: null,
+    ranks: new Set(ALL_RANKS),
     includedMonsters: new Set(DATA.monsters.map(m => m.MonsterName.toLowerCase())),
     // Every monster is checked by default, so the per-monster gate is inactive.
     monsterFilterActive: false,
     weapons: WEAPONS,
     styles: STYLES,
   };
-  const pool = buildQuestPool(DATA, f, DEFAULT_RANGE);
+  const pool = buildQuestPool(DATA, f);
   const tok = token || newToken();
   const body = seedBody(cfg, tok);
-  const fp = b32(hashStr(fingerprint(DATA, f, DEFAULT_RANGE, customPool)), 4);
+  const fp = b32(hashStr(fingerprint(DATA, f, customPool)), 4);
   // Seeded on the body only — never the fingerprint. See docs/app.js's generate().
   const built = buildCells(makeRng(body), cfg, pool, f, customPool);
 
