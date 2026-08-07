@@ -2,15 +2,25 @@ import { createSessionCookie, getCookie } from "./session.js";
 
 const STATE_COOKIE = "mhgu_oauth_state";
 const SESSION_COOKIE = "mhgu_session";
-// Set only when /auth/login?return=main is requested — a fixed literal, never the query
-// value itself, so handleCallback's redirect destination is always a hardcoded constant
-// rather than anything attacker-influenced.
-const RETURN_COOKIE = "mhgu_return_main";
+// Set only for a recognised /auth/login?return= value, and always to a fixed literal from
+// RETURN_DESTINATIONS below — never the query value itself, so handleCallback's redirect
+// destination is always a hardcoded constant rather than anything attacker-influenced.
+const RETURN_COOKIE = "mhgu_return_app";
 
 // The main GitHub Pages site — a separate origin from this Worker. Exported for api.js's
-// CORS headers (an exact origin match, no path/trailing slash).
+// CORS headers (an exact origin match, no path/trailing slash). Both apps sit on this one
+// origin, so the same CORS allowance covers them.
 export const MAIN_SITE_ORIGIN = "https://armoredraven17.github.io";
 export const MAIN_SITE_URL = MAIN_SITE_ORIGIN + "/MHGU-Quest-Randomizer/";
+export const BINGO_APP_URL = MAIN_SITE_ORIGIN + "/MHGU-Bingo/";
+
+// Allowlist of where a login may return to. The KEY is what a caller may ask for; the
+// VALUE is a constant defined here. Adding an app means adding a line here, never
+// widening this into "redirect to whatever URL was passed".
+const RETURN_DESTINATIONS = {
+  main: MAIN_SITE_URL,
+  bingo: BINGO_APP_URL,
+};
 
 // A short, unpredictable value tying the redirect back to the /auth/login that started
 // it — its own unguessability is the protection, so it doesn't need signing.
@@ -32,10 +42,12 @@ export function handleLogin(request, env) {
     ["Location", authorizeUrl.toString()],
     ["Set-Cookie", `${STATE_COOKIE}=${state}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=600`],
   ];
-  // Optional: the main site (a different origin) sends people through this same login,
-  // then wants to land back on itself instead of /settings — see handleCallback below.
-  if (url.searchParams.get("return") === "main") {
-    headers.push(["Set-Cookie", `${RETURN_COOKIE}=main; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=600`]);
+  // Optional: the sites on the GitHub Pages origin (Quest Randomizer, Bingo) send people
+  // through this same login, then want to land back on themselves instead of /settings —
+  // see handleCallback below. Only a key present in RETURN_DESTINATIONS is ever stored.
+  const returnTo = url.searchParams.get("return");
+  if (Object.prototype.hasOwnProperty.call(RETURN_DESTINATIONS, returnTo)) {
+    headers.push(["Set-Cookie", `${RETURN_COOKIE}=${returnTo}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=600`]);
   }
 
   return new Response(null, { status: 302, headers });
@@ -83,21 +95,23 @@ export async function handleCallback(request, env) {
     return new Response("Login failed: Twitch didn't return a user login.", { status: 502, headers: { "Content-Type": "text/plain" } });
   }
 
-  const returnMain = getCookie(request, RETURN_COOKIE) === "main";
+  // Cookie value is only ever a key this file wrote; anything else falls through to
+  // /settings rather than being treated as a destination.
+  const returnApp = RETURN_DESTINATIONS[getCookie(request, RETURN_COOKIE)] || null;
 
   const sessionCookie = await createSessionCookie(login, env.SESSION_SECRET);
   const clearState = `${STATE_COOKIE}=; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=0`;
   const clearReturn = `${RETURN_COOKIE}=; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=0`;
   const setSession = `${SESSION_COOKIE}=${sessionCookie}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=${7 * 24 * 3600}`;
 
-  // The only two possible destinations are these hardcoded strings — returnMain is a
-  // boolean derived from a fixed cookie value, never a URL built from user input. The
-  // main-site path carries the session token in the URL *fragment* (never sent to any
-  // server, never in a Referer header) for the main site's JS to pick up and use as a
-  // bearer token — see docs/app.js's initTwitchSync(). The httponly cookie is still set
-  // either way, so the settings page's own same-origin cookie flow is unaffected.
-  const location = returnMain
-    ? `${MAIN_SITE_URL}#mhgu_bot_token=${encodeURIComponent(sessionCookie)}`
+  // Every possible destination is a constant from RETURN_DESTINATIONS — returnApp is
+  // looked up by a fixed cookie value, never a URL built from user input. Those paths
+  // carry the session token in the URL *fragment* (never sent to any server, never in a
+  // Referer header) for the site's JS to pick up and use as a bearer token — see
+  // docs/app.js's initTwitchSync(). The httponly cookie is still set either way, so the
+  // settings page's own same-origin cookie flow is unaffected.
+  const location = returnApp
+    ? `${returnApp}#mhgu_bot_token=${encodeURIComponent(sessionCookie)}`
     : "/settings";
 
   return new Response(null, {
