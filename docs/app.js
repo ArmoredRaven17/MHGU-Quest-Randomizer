@@ -1169,6 +1169,9 @@
   $("streamViewBtn").addEventListener("click", () => {
     window.open("stream-view.html?v=2", "mhguStreamView", "width=775,height=520,menubar=no,toolbar=no,location=no,status=no");
   });
+  $("linksBtn").addEventListener("click", () => $("linksModal").classList.remove("hidden"));
+  $("linksClose").addEventListener("click", () => $("linksModal").classList.add("hidden"));
+  $("linksModal").addEventListener("click", (e) => { if (e.target.id === "linksModal") $("linksModal").classList.add("hidden"); });
   $("aboutBtn").addEventListener("click", () => $("aboutModal").classList.remove("hidden"));
   $("aboutClose").addEventListener("click", () => $("aboutModal").classList.add("hidden"));
   $("aboutModal").addEventListener("click", (e) => { if (e.target.id === "aboutModal") $("aboutModal").classList.add("hidden"); });
