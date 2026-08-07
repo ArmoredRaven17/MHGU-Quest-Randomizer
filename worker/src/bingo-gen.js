@@ -41,8 +41,15 @@ const BIASES = [
 const BIAS_NAMES = BIASES.map(b => b[0]);
 const prowlerIcon = (f) => "assets/ProwlerIcons/" + f;
 
-const RANK_COLORS = { Low: "#4aa3df", High: "#f5b400", G: "#e0523f", "": "#8a8f98" };
-const CAT_COLORS  = { objective: "#9b8cff", custom: "#5ec9a0", free: "#8a8f98" };
+// Border colour is keyed on the filter category a square came from — the same axis as
+// questCategory and the Quest Filters checkboxes — so the colour always matches the
+// filter that put it on the card. Ranks run warm and escalating (yellow to red);
+// the categories on their own filter axis get their own hues.
+const CATEGORY_COLORS = {
+  Low: "#f2c53d", High: "#f5851f", G: "#e5383b",
+  SP: "#8b31d9", Event: "#2456c7", Arena: "#8a8f98", "": "#8a8f98",
+};
+const POOL_COLORS = { objective: "#9b8cff", custom: "#5ec9a0", free: "#8a8f98" };
 
 const SP_TIERS = {I:1,II:2,III:3,IV:4,V:5,VI:6,VII:7,VIII:8,IX:9,X:10,G1:11,G2:12,G3:13,G4:14,G5:15,EX:16};
 
@@ -209,17 +216,17 @@ function monsterGoals(pool) {
   const seen = new Map();
   for (const q of pool) {
     if (!q.LgMonster) continue;
-    const label = rankLabel(q), base = baseRank(q);
+    const label = rankLabel(q), cat = questCategory(q);
     const list = (q.Monsters && q.Monsters.length) ? q.Monsters : (q.Monster ? [q.Monster] : []);
     for (const m of list) {
       if (!m) continue;
       if (!seen.has(m)) seen.set(m, new Map());
-      if (label) seen.get(m).set(label, base);
+      if (label) seen.get(m).set(label, cat);
     }
   }
   const out = [];
   for (const [name, labels] of seen) {
-    const have = labels.size ? labels : new Map([["", ""]]);
+    const have = labels.size ? labels : new Map([["", "Arena"]]);
     for (const label of RANK_ORDER) {
       if (!have.has(label)) continue;
       out.push({
@@ -228,7 +235,7 @@ function monsterGoals(pool) {
         text: "Hunt " + name,
         sub: label,
         icon: monsterIcon(name),
-        tint: RANK_COLORS[have.get(label)],
+        tint: CATEGORY_COLORS[have.get(label)],
       });
     }
   }
@@ -273,11 +280,11 @@ const OBJECTIVES = [
   { id:"nofaint",  text:"Clear a quest without fainting",icon:"", ok:() => true },
 ];
 const objectiveGoals = (pool) => OBJECTIVES.filter(o => o.ok(pool))
-  .map(o => ({ key: "o:" + o.id, cat: "objective", text: o.text, sub: "", icon: o.icon, tint: CAT_COLORS.objective }));
+  .map(o => ({ key: "o:" + o.id, cat: "objective", text: o.text, sub: "", icon: o.icon, tint: POOL_COLORS.objective }));
 
 const customGoals = (customPool) => customPool.filter(c => c.checked && c.text.trim())
   .map(c => ({ key: "c:" + c.text, cat: "custom", text: c.text, sub: "", icon: "",
-               tint: CAT_COLORS.custom, w: c.weight || 1 }));
+               tint: POOL_COLORS.custom, w: c.weight || 1 }));
 
 const CATS = [
   { id:"monster",   items:(pool)       => monsterGoals(pool) },
@@ -312,7 +319,7 @@ function buildCells(rng, c, pool, f, customPool) {
   const cells = [];
   let di = 0;
   for (let i = 0; i < n; i++) {
-    if (i === freeIdx) cells.push({ key: "free", cat: "free", text: "FREE", sub: "", icon: "", tint: CAT_COLORS.free });
+    if (i === freeIdx) cells.push({ key: "free", cat: "free", text: "FREE", sub: "", icon: "", tint: POOL_COLORS.free });
     else if (di < drawn.length) cells.push(drawn[di++]);
     else cells.push({ key: "empty:" + i, cat: "empty", text: "—", sub: "", icon: "", tint: "" });
   }
