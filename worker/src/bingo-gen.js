@@ -78,10 +78,13 @@ const DEFAULT_POOL = [
 // What the app's controls read as on a first visit (see doReset in docs/app.js): every
 // rank category enabled.
 const FLAG_ORDER = ["large","hyper","capture","egg","gathering","small",
-  "multi","oneFaint","onSite","pQuests"];
+  "multi","oneFaint","onSite","pQuests","prowler"];
 const DEFAULT_FLAGS = {
   large: true, hyper: true, capture: true, egg: true, gathering: true,
-  small: true, multi: true, oneFaint: true, onSite: true, pQuests: false,
+  small: true, multi: true, oneFaint: true, onSite: true,
+  // pQuests = Prowler-only quests in the pool; prowler = "Clear as a Prowler" squares.
+  // Two controls, both off by default.
+  pQuests: false, prowler: false,
 };
 
 // ── Seeded RNG (mirrors docs/app.js) ─────────────────────────────────────────
@@ -271,7 +274,8 @@ function weaponGoals(pool, f) {
       }
     }
   }
-  if (f.pQuests && pool.some(q => q.Prowler)) {
+  // Gated on "Include Prowler", not on Prowler-only quests — see docs/app.js.
+  if (f.prowler) {
     for (const [name, file] of BIASES) {
       if (!f.biases.includes(name)) continue;
       out.push({ key: "w:Prowler|" + name, cat: "weapon", text: "Clear as a Prowler",
@@ -291,13 +295,13 @@ const OBJECTIVES = [
   { id:"sp",       text:"Clear a Special Permit",        icon:"", ok:p => p.some(q => q.Type === "Special Permits") },
   { id:"arena",    text:"Clear an Arena quest",          icon:"", ok:p => p.some(q => q.Type === "Arena") },
   { id:"event",    text:"Clear an Event quest",          icon:"", ok:p => p.some(q => q.Type === "Events") },
-  { id:"prowler",  text:"Clear a quest as a Prowler",    icon:"", ok:p => p.some(q => q.Prowler) },
+  { id:"prowler",  text:"Clear a quest as a Prowler",    icon:"", ok:(p, f) => f.prowler },
   { id:"onefaint", text:"Clear a One-Faint quest",       icon:"", ok:p => p.some(q => q.OneFaint) },
   { id:"onsite",   text:"Clear an On-Site Items quest",  icon:"", ok:p => p.some(q => q.OnSite) },
   { id:"multi",    text:"Clear a Multi-Monster quest",   icon:"", ok:p => p.some(q => q.Monsters && q.Monsters.length > 1) },
   { id:"nofaint",  text:"Clear a quest without fainting",icon:"", ok:() => true },
 ];
-const objectiveGoals = (pool) => OBJECTIVES.filter(o => o.ok(pool))
+const objectiveGoals = (pool, f) => OBJECTIVES.filter(o => o.ok(pool, f))
   .map(o => ({ key: "o:" + o.id, cat: "objective", text: o.text, sub: "", icon: o.icon, tint: POOL_COLORS.objective }));
 
 const customGoals = (customPool) => customPool.filter(c => c.checked && c.text.trim())
@@ -307,7 +311,7 @@ const customGoals = (customPool) => customPool.filter(c => c.checked && c.text.t
 const CATS = [
   { id:"monster",   items:(pool)       => monsterGoals(pool) },
   { id:"weapon",    items:(pool, f)    => weaponGoals(pool, f) },
-  { id:"objective", items:(pool)       => objectiveGoals(pool) },
+  { id:"objective", items:(pool, f)    => objectiveGoals(pool, f) },
   { id:"custom",    items:(pool, f, cp) => customGoals(cp) },
 ];
 
