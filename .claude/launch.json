@@ -18,6 +18,12 @@
       "runtimeExecutable": "python",
       "runtimeArgs": ["-m", "http.server", "5579", "--directory", "C:/Coding Repos/MHGU Hunting Log/docs"],
       "port": 5579
+    },
+    {
+      "name": "mhgu-nuzlocke",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "5580", "--directory", "C:/Coding Repos/MHGU Nuzlocke Tracker/docs"],
+      "port": 5580
     }
   ]
 }
