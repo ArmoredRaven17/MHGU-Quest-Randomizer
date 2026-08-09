@@ -20,7 +20,7 @@
       "port": 5579
     },
     {
-      "name": "mhgu-nuzlocke",
+      "name": "mhgu-zenny-gauntlet",
       "runtimeExecutable": "python",
       "runtimeArgs": ["-m", "http.server", "5580", "--directory", "C:/Coding Repos/MHGU Nuzlocke Tracker/docs"],
       "port": 5580
