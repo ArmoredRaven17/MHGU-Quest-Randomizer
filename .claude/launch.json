@@ -22,7 +22,7 @@
     {
       "name": "mhgu-zenny-gauntlet",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "5580", "--directory", "C:/Coding Repos/MHGU Nuzlocke Tracker/docs"],
+      "runtimeArgs": ["-m", "http.server", "5580", "--directory", "C:/Coding Repos/MHGU Zenny Gauntlet/docs"],
       "port": 5580
     }
   ]
