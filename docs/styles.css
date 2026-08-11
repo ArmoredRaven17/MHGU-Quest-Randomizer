@@ -245,7 +245,7 @@ body{
 .modal-card h2{margin:0 0 16px;font-size:18px}
 .modal-card p{margin:0 0 10px;line-height:1.45}
 .modal-card a{color:var(--accent-hover)}
-.modal-card .muted{color:var(--text-dim);font-size:13px}
+.modal-card .muted{color:var(--text-dim);font-size:13px;opacity:.75}
 .modal-card ul{margin:0 0 10px;padding-left:18px}
 .modal-card li{margin-bottom:5px;line-height:1.4}
 #themeModal .modal-card{width:min(420px,90vw)}
