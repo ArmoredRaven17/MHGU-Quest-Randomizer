@@ -573,7 +573,7 @@
     const hasWeapon = isArena || anyChecked("#weaponList input");
     const hasStyle = isArena || anyChecked("#styleList input");
     const hasMonster = monsterChecks.some(m => m.input.checked);
-    const biasOk = !$("p_prowler").checked || anyChecked("#biasList input");
+    const biasOk = !$("p_prowler").checked || !$("p_rollBias").checked || anyChecked("#biasList input");
     $("rollBtn").disabled = !(hasType && hasLevel && hasWeapon && hasStyle && hasMonster && biasOk);
   }
 
@@ -756,13 +756,18 @@
     arts.innerHTML = "";
 
     if (weapon === "Prowler") {
-      let avail = BIASES.filter((_, i) => $("b_" + i).checked);
-      if (!avail.length) avail = [BIASES[0]];
-      const [name, file] = pick(avail);
       styleLabel.textContent = "Bias";
-      styleEl.textContent = name;
-      biasIcon.src = prowlerIcon(file);
-      biasIcon.classList.remove("hidden");
+      if ($("p_rollBias").checked) {
+        let avail = BIASES.filter((_, i) => $("b_" + i).checked);
+        if (!avail.length) avail = [BIASES[0]];
+        const [name, file] = pick(avail);
+        styleEl.textContent = name;
+        biasIcon.src = prowlerIcon(file);
+        biasIcon.classList.remove("hidden");
+      } else {
+        styleEl.textContent = "Any";
+        biasIcon.classList.add("hidden");
+      }
     } else {
       biasIcon.classList.add("hidden");
       let styles = STYLES.filter((_, i) => $("s_" + i).checked);
@@ -1103,13 +1108,17 @@
   $("toLevel").addEventListener("change", () => syncLevels("to"));
   document.querySelectorAll("#weaponList,#styleList,#biasList").forEach(c =>
     c.addEventListener("change", updateRollBtn));
-  // "Prowler Quests?" only applies when "Prowler?" is on — only Prowlers can take them.
+  // "Prowler Quests?" and "Roll Bias?" only matter when "Prowler?" is on. Roll Bias
+  // keeps its checked value while disabled (it's just a remembered preference), unlike
+  // Prowler Quests which gets force-unchecked since it can't be true without Prowler.
   function syncProwlerQuests() {
     const on = $("p_prowler").checked;
     $("p_quests").disabled = !on;
     if (!on) $("p_quests").checked = false;
+    $("p_rollBias").disabled = !on;
   }
   $("p_prowler").addEventListener("change", () => { syncProwlerQuests(); updateRollBtn(); });
+  $("p_rollBias").addEventListener("change", updateRollBtn);
   $("rollBtn").addEventListener("click", randomize);
   // Expand/Collapse all groups (selection is managed by the checkboxes; at least one
   // monster and one art should stay selected, so there are no All/None shortcuts).
@@ -1180,7 +1189,7 @@
   $("helpModal").addEventListener("click", (e) => { if (e.target.id === "helpModal") $("helpModal").classList.add("hidden"); });
 
   function doReset() {
-    ["f_large","f_hyper","f_capture","f_egg","f_gathering","f_small","f_multi","f_oneFaint","f_onSite"].forEach(id => $(id).checked = true);
+    ["f_large","f_hyper","f_capture","f_egg","f_gathering","f_small","f_multi","f_oneFaint","f_onSite","p_rollBias"].forEach(id => $(id).checked = true);
     ["p_prowler","p_quests","f_keysOnly"].forEach(id => $(id).checked = false);
     document.querySelectorAll("#allTypeTree .akids input").forEach(cb => {
       cb.checked = parseInt(cb.id.replace("f_all_lv_",""), 10) < 43; // Arena (43-44) off by default
@@ -1400,6 +1409,7 @@
         oneFaint: $("f_oneFaint").checked, onSite: $("f_onSite").checked,
         spArts: $("f_spArts").checked,
         prowler: $("p_prowler").checked, pQuests: $("p_quests").checked,
+        rollBias: $("p_rollBias").checked,
         chaosMode: $("chChaosMode").checked,
         allLevels: Array.from({length:45},(_,i)=>i).filter(i=>{ const cb=$("f_all_lv_"+i); return cb&&!cb.checked; }),
       },
@@ -1425,6 +1435,7 @@
       $("f_oneFaint").checked = !!d.t.oneFaint; $("f_onSite").checked = !!d.t.onSite;
       $("f_spArts").checked = d.t.spArts !== false;
       $("p_prowler").checked = !!d.t.prowler; $("p_quests").checked = !!d.t.pQuests;
+      $("p_rollBias").checked = d.t.rollBias !== false;
       chaosMode = !!d.t.chaosMode; $("chChaosMode").checked = chaosMode;
       if (Array.isArray(d.t.allLevels)) {
         const off = new Set(d.t.allLevels);

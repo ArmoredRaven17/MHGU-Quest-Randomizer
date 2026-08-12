@@ -110,6 +110,7 @@ function normalizeFilters(filters) {
     excludedArtNames: new Set(f2.arts || []),
     blacklist: f2.blacklist || [],
     spArtsEnabled: t.spArts !== false,
+    rollBiasEnabled: t.rollBias !== false,
     challenges: Array.isArray(f2.challenges) ? f2.challenges : [],
     challengeCount: f2.challengeCount || 1,
     chaosMode: !!t.chaosMode,
@@ -221,9 +222,10 @@ function rollWeapon(nf) {
 // Given a weapon (already decided — forced by a Prowler quest, or freely rolled), rolls
 // the bias (if Prowler) or style + Hunter Arts. Returns {styleLabel, style, arts}.
 function rollLoadoutForWeapon(DATA, weapon, nf) {
-  const { uncheckedBiases, uncheckedStyles, blacklist, excludedArtNames, spArtsEnabled } = nf;
+  const { uncheckedBiases, uncheckedStyles, blacklist, excludedArtNames, spArtsEnabled, rollBiasEnabled } = nf;
 
   if (weapon === "Prowler") {
+    if (!rollBiasEnabled) return { styleLabel: "Bias", style: "Any", arts: [] };
     let avail = BIAS_NAMES.filter(name => !uncheckedBiases.has(name));
     if (!avail.length) avail = [BIAS_NAMES[0]];
     return { styleLabel: "Bias", style: pick(avail), arts: [] };

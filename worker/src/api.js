@@ -59,7 +59,7 @@ const DEFAULT_SETTINGS_FILTERS = {
     keysOnly: false, large: true, hyper: true, capture: true,
     egg: true, gathering: true, small: true, multi: true,
     oneFaint: true, onSite: true, spArts: true,
-    prowler: false, pQuests: false, chaosMode: false, allLevels: [],
+    prowler: false, pQuests: false, rollBias: true, chaosMode: false, allLevels: [],
   },
 };
 
@@ -80,7 +80,7 @@ export async function handleGetFilters(request, env) {
 // "channel" override, or stale "challenges" from an old exported file) into stored KV
 // data, regardless of what the request body happens to contain.
 const T_KEYS = ["keysOnly", "large", "hyper", "capture", "egg", "gathering", "small",
-  "multi", "oneFaint", "onSite", "spArts", "prowler", "pQuests", "chaosMode", "allLevels"];
+  "multi", "oneFaint", "onSite", "spArts", "prowler", "pQuests", "rollBias", "chaosMode", "allLevels"];
 
 function sanitizeFilters(filters) {
   const f = filters || {};

@@ -392,6 +392,7 @@
         spArts: $("qf_spArts").checked,
         prowler: $("qf_prowler").checked,
         pQuests: $("qf_pQuests").checked,
+        rollBias: $("qf_rollBias").checked,
         chaosMode: $("chChaosMode").checked,
         allLevels: disabledRanks,
       },
@@ -423,6 +424,7 @@
     $("qf_spArts").checked = t.spArts !== false;
     $("qf_prowler").checked = !!t.prowler;
     $("qf_pQuests").checked = !!t.pQuests;
+    $("qf_rollBias").checked = t.rollBias !== false;
 
     const disabled = new Set(t.allLevels || []);
     document.querySelectorAll("#rankGroups input.leaf").forEach((cb) => {

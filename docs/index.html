@@ -150,7 +150,9 @@
         <div class="panel-body">
           <label class="chk"><input type="checkbox" id="p_prowler">Prowler?</label>
           <label class="chk"><input type="checkbox" id="p_quests">Prowler Quests?</label>
-          <p class="hint">Biases — uncheck to exclude (used when a Prowler is rolled)</p>
+          <label class="chk"><input type="checkbox" id="p_rollBias" checked>Roll Bias?</label>
+          <p class="hint">Unchecked = Any — a Prowler roll won't specify a bias, in case you'd rather pick your own build.</p>
+          <p class="hint">Biases — uncheck to exclude (used when a Prowler is rolled and Roll Bias is on)</p>
           <div id="biasList"></div>
         </div>
       </section>
@@ -473,6 +475,6 @@
 </div>
 
 <script src="data.js?v=29"></script>
-<script src="app.js?v=139"></script>
+<script src="app.js?v=140"></script>
 </body>
 </html>
