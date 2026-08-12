@@ -570,7 +570,7 @@
     const hasType = !!$("questType").value;
     const hasLevel = $("toLevel").value !== "";
     const isArena = $("questType").value === "Arena";
-    const hasWeapon = isArena || anyChecked("#weaponList input");
+    const hasWeapon = isArena || anyChecked("#weaponList input") || $("p_prowler").checked;
     const hasStyle = isArena || anyChecked("#styleList input");
     const hasMonster = monsterChecks.some(m => m.input.checked);
     const biasOk = !$("p_prowler").checked || !$("p_rollBias").checked || anyChecked("#biasList input");
