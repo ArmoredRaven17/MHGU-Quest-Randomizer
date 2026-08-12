@@ -83,6 +83,11 @@ body{
   background-position:right;}
 .btn.accent{background:var(--bg1);border-color:#000000;color:#fff;font-weight:600;text-shadow:-1px 0 rgba(0,0,0,0.55),1px 0 rgba(0,0,0,0.55),0 -1px rgba(0,0,0,0.55),0 1px rgba(0,0,0,0.55)}
 .btn.accent:hover{background:var(--bg2);border-color:var(#000000)}
+/* var(--text) flips to black on the light/Khezu theme, which would clash badly
+   against --bg1 (always dark regardless of hue) — hardcode white like .btn.accent
+   does, so this stays readable in every theme instead of just the default one. */
+.btn.secondary{background:var(--bg1);border:1px solid var(--line);color:#fff}
+.btn.secondary:hover{background:var(--hover)}
 .btn.accent:disabled{opacity:.80;cursor:not-allowed}
 
 /* Collapsible panels */
