@@ -285,21 +285,22 @@ function weaponGoals(pool, f) {
   return out;
 }
 
+// One objective per Objective Filters checkbox, in the panel's own order — see docs/app.js.
+// Ordering is load-bearing.
 const OBJECTIVES = [
-  { id:"capture",  text:"Capture a monster",             icon:"", ok:p => p.some(q => q.Capture) },
+  { id:"sp",       text:"Clear a Special Permit",        icon:"", ok:p => p.some(q => q.Type === "Special Permits") },
+  { id:"event",    text:"Clear an Event quest",          icon:"", ok:p => p.some(q => q.Type === "Events") },
+  { id:"arena",    text:"Clear an Arena quest",          icon:"", ok:p => p.some(q => q.Type === "Arena") },
+  { id:"large",    text:"Clear a Large Monster quest",   icon:"", ok:p => p.some(q => q.LgMonster) },
   { id:"hyper",    text:"Clear a Hyper quest",           icon:"assets/MonsterIcons/MHGU-Hyper_Monster_Icon.png", ok:p => p.some(q => q.Hyper) },
+  { id:"capture",  text:"Capture a monster",             icon:"", ok:p => p.some(q => q.Capture) },
   { id:"egg",      text:"Clear an Egg Delivery",         icon:"assets/MonsterIcons/MHGU-Egg_Quest_Icon.webp", ok:p => p.some(q => q.Egg) },
   { id:"gather",   text:"Clear a Gathering quest",       icon:"assets/MonsterIcons/MHGU-Wycademy_Quest_Icon.png", ok:p => p.some(q => q.Gathering) },
   { id:"small",    text:"Clear a Small Monster quest",   icon:"", ok:p => p.some(q => q.SmMonsters) },
-  { id:"key",      text:"Clear a Key quest",             icon:"", ok:p => p.some(q => q.Key) },
-  { id:"sp",       text:"Clear a Special Permit",        icon:"", ok:p => p.some(q => q.Type === "Special Permits") },
-  { id:"arena",    text:"Clear an Arena quest",          icon:"", ok:p => p.some(q => q.Type === "Arena") },
-  { id:"event",    text:"Clear an Event quest",          icon:"", ok:p => p.some(q => q.Type === "Events") },
-  { id:"prowler",  text:"Clear a quest as a Prowler",    icon:"", ok:(p, f) => f.prowler },
+  { id:"multi",    text:"Clear a Multi-Monster quest",   icon:"", ok:p => p.some(q => q.Monsters && q.Monsters.length > 1) },
   { id:"onefaint", text:"Clear a One-Faint quest",       icon:"", ok:p => p.some(q => q.OneFaint) },
   { id:"onsite",   text:"Clear an On-Site Items quest",  icon:"", ok:p => p.some(q => q.OnSite) },
-  { id:"multi",    text:"Clear a Multi-Monster quest",   icon:"", ok:p => p.some(q => q.Monsters && q.Monsters.length > 1) },
-  { id:"nofaint",  text:"Clear a quest without fainting",icon:"", ok:() => true },
+  { id:"prowler",  text:"Clear a quest as a Prowler",    icon:"", ok:(p, f) => f.prowler },
 ];
 const objectiveGoals = (pool, f) => OBJECTIVES.filter(o => o.ok(pool, f))
   .map(o => ({ key: "o:" + o.id, cat: "objective", text: o.text, sub: "", icon: o.icon, tint: POOL_COLORS.objective }));
