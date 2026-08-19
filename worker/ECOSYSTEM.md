@@ -173,6 +173,45 @@ If yes, send the small thing.
 
 ---
 
+## Settings pages
+
+The Quest Randomizer's settings page is `worker/public/settings.html` + `.js` + `.css`, served by
+the `[assets]` binding at `/settings.html` — **hosted by the Worker, not by the app's Pages site**.
+
+That detail carries a free win: because the page is same-origin with the API, `settings.js` uses
+bare relative fetches (`/api/me`, `/api/filters`) with **no Authorization header** — the session
+**cookie** carries automatically. `requireSession` accepts a cookie or a bearer token for exactly
+this reason: cookie for Worker-hosted pages, bearer for the cross-origin Pages apps.
+
+**One login covers every settings page**, since they all share the Worker's origin and cookie.
+
+### ⚠️ `/api/*` is only half generic
+
+The single thing most likely to bite whoever adds the second settings page:
+
+| Route | Actually |
+|---|---|
+| `/api/me` | genuinely shared — returns the Twitch login |
+| `/api/filters`, `/api/publish`, `/api/preview` | **Quest Randomizer only**, despite the names |
+
+A second app must **not** extend `/api/filters`. Give it its own namespace (`/api/<app>/*`) and its
+own KV namespace or a prefixed key — `MHGU_BOT_PROFILES` is the Randomizer's, whatever it sounds
+like.
+
+### Separate pages, or one page with sections?
+
+Both work. Separate pages (`public/<app>.html`) are simplest and stay isolated. One page with
+per-app panels gives a single bookmark and free discovery, at the cost of growing monolithic — every
+app's JS loads for everyone and one broken section breaks the page for all.
+
+If it goes multi-app, the shape that survives a fourth and fifth app is **one shell with per-app
+panels, each in its own module file**.
+
+**Do not build the general shell before a second app needs server-side settings.** Talisman Bingo
+does not: everything it stores is client-side (grid size, pools, highlight, theme) in namespaced
+localStorage, and its only server state is an ephemeral live session. The second app that genuinely
+needs settings is what reveals whether tabs or separate pages fit; building it earlier is guessing.
+
 ## Adding a new app: checklist
 
 1. **`auth.js`** — add a `<NAME>_APP_URL` constant and one `RETURN_DESTINATIONS` entry. Match the
