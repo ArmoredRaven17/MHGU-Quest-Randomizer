@@ -13,6 +13,9 @@ const RETURN_COOKIE = "mhgu_return_app";
 export const MAIN_SITE_ORIGIN = "https://armoredraven17.github.io";
 export const MAIN_SITE_URL = MAIN_SITE_ORIGIN + "/MHGU-Quest-Randomizer/";
 export const BINGO_APP_URL = MAIN_SITE_ORIGIN + "/MHGU-Bingo/";
+// Lowercase and hyphenated, unlike its siblings above. GitHub Pages paths are
+// case-sensitive, so this is not a style choice to normalise away.
+export const TALISMAN_APP_URL = MAIN_SITE_ORIGIN + "/mhgu-talisman-bingo/";
 
 // Allowlist of where a login may return to. The KEY is what a caller may ask for; the
 // VALUE is a constant defined here. Adding an app means adding a line here, never
@@ -20,6 +23,7 @@ export const BINGO_APP_URL = MAIN_SITE_ORIGIN + "/MHGU-Bingo/";
 const RETURN_DESTINATIONS = {
   main: MAIN_SITE_URL,
   bingo: BINGO_APP_URL,
+  talisman: TALISMAN_APP_URL,
 };
 
 // A short, unpredictable value tying the redirect back to the /auth/login that started

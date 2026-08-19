@@ -17,6 +17,21 @@ id = "e63eaa0c9e224ec9bc66fcdc919b74d3"
 binding = "MHGU_BINGO_CARDS"
 id = "e25a7336e4b84ef7b830f1f89d4b9aae"
 
+# One Durable Object per live MHGU Talisman Bingo session, holding just the current draw
+# number. It is the first stateful primitive in this Worker, and it is a DO rather than a
+# third KV namespace for one decisive reason: KV has no compare-and-swap, so the guarantee
+# that the draw number never goes BACKWARDS would be unenforceable. See src/live-do.js.
+[[durable_objects.bindings]]
+name = "LIVE_SESSIONS"
+class_name = "LiveSession"
+
+# SQLite backend, not the KV backend: new_classes is rejected on the Workers free plan,
+# new_sqlite_classes is not. Adding a class is easy; REMOVING one later needs a follow-up
+# deleted_classes migration, so treat this tag as close to one-way.
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["LiveSession"]
+
 # The settings page (settings.html/.js/.css) — served directly by the platform; requests
 # that don't match a file here fall through to this Worker's fetch handler as usual.
 [assets]

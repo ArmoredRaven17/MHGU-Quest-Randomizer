@@ -3,6 +3,12 @@ import { handleLogin, handleCallback, handleLogout } from "./auth.js";
 import { handleMe, handleGetFilters, handlePreview, handlePublish, handleCorsPreflight } from "./api.js";
 import { handleBingoPublish, handleBingoGet, handleBingoLink, handleBingoRoll, handleBingoSet,
          handleBingoChannelGet, handleBingoChannelPut, handleBingoCorsPreflight } from "./bingo.js";
+// Live talisman-bingo sessions. Additive: /live* collides with nothing above, and the
+// Durable Object it uses is the first stateful primitive in this Worker. See live.js.
+import {
+  handleLiveCorsPreflight, handleLiveCreate, handleLiveGet,
+  handleLiveDraw, handleLiveEnd, handleLiveDelete, parseLiveSession,
+} from "./live.js";
 
 // The web app's already-public data.js — reused as-is rather than bundling a second
 // copy of the quest data that could drift out of sync. It's a JS file that assigns
@@ -209,6 +215,10 @@ async function handleChallengeOnly(url, env) {
   return textResponse(formatChallengeOnly(result));
 }
 
+// Required by the durable_objects binding in wrangler.toml — the class must be reachable
+// from the entry module, not merely defined somewhere in the bundle.
+export { LiveSession } from "./live-do.js";
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -275,6 +285,27 @@ export default {
         }
         return handleBingoRoll(env, BINGO_DATA);
       }
+    }
+
+    // Live talisman-bingo sessions. The session string is validated before a Durable
+    // Object is addressed, exactly as /bingo/:code validates its code above.
+    if (pathname === "/live" || pathname.startsWith("/live/")) {
+      if (method === "OPTIONS") return handleLiveCorsPreflight();
+      if (pathname === "/live") {
+        if (method === "POST") return handleLiveCreate(request, env);
+        return new Response("Not found", { status: 404 });
+      }
+      const rest = pathname.slice("/live/".length);
+      const slash = rest.indexOf("/");
+      const raw = slash < 0 ? rest : rest.slice(0, slash);
+      const tail = slash < 0 ? "" : rest.slice(slash + 1);
+      const id = parseLiveSession(decodeURIComponent(raw));
+      if (!id) return new Response("Not found", { status: 404 });
+      if (tail === "" && method === "GET") return handleLiveGet(request, env, id);
+      if (tail === "" && method === "DELETE") return handleLiveDelete(request, env, id);
+      if (tail === "draw" && method === "POST") return handleLiveDraw(request, env, id);
+      if (tail === "end" && method === "POST") return handleLiveEnd(request, env, id);
+      return new Response("Not found", { status: 404 });
     }
 
     // Anything else (including /settings.html, /settings.js, /settings.css) falls
