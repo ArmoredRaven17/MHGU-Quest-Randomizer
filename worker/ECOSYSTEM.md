@@ -185,18 +185,27 @@ this reason: cookie for Worker-hosted pages, bearer for the cross-origin Pages a
 
 **One login covers every settings page**, since they all share the Worker's origin and cookie.
 
-### ⚠️ `/api/*` is only half generic
+### The `/api/<app>/*` pattern
 
-The single thing most likely to bite whoever adds the second settings page:
-
-| Route | Actually |
+| Route | Scope |
 |---|---|
-| `/api/me` | genuinely shared — returns the Twitch login |
-| `/api/filters`, `/api/publish`, `/api/preview` | **Quest Randomizer only**, despite the names |
+| `/api/me` | **shared** — returns the Twitch login, nothing app-specific |
+| `/api/randomizer/filters`, `/api/randomizer/publish`, `/api/randomizer/preview` | Quest Randomizer |
+| `/api/<app>/...` | where a new app's settings routes go |
 
-A second app must **not** extend `/api/filters`. Give it its own namespace (`/api/<app>/*`) and its
-own KV namespace or a prefixed key — `MHGU_BOT_PROFILES` is the Randomizer's, whatever it sounds
-like.
+`/api/filters`, `/api/publish` and `/api/preview` still work as **permanent aliases** — they are the
+original names from when this Worker served one app and "filters" was unambiguous. `API_ALIASES` in
+`index.js` maps them to the canonical paths before dispatch. They are not deprecated and there is no
+plan to remove them: an alias is one map entry, and deleting it buys nothing while risking a client
+somewhere still calling it.
+
+**New apps add `/api/<app>/*`. They never extend the Randomizer's routes**, and never repurpose
+`MHGU_BOT_PROFILES` — despite the generic name that is the Randomizer's KV, holding both its filter
+profiles and its challenge-rotation tally. Create a new namespace with
+`wrangler kv namespace create <NAME>`; it is free and keeps lifecycles independent.
+
+So a new app's settings feature is three separate things, none shared:
+`/api/<app>/*` routes, its own KV namespace (or Durable Object), and its own page in `public/`.
 
 ### Separate pages, or one page with sections?
 

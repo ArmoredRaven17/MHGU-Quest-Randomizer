@@ -451,7 +451,7 @@
   }
 
   async function loadFiltersFromServer() {
-    const res = await fetch("/api/filters");
+    const res = await fetch("/api/randomizer/filters");
     if (!res.ok) return;
     const filters = await res.json();
     applyFilters(filters);
@@ -526,7 +526,7 @@
     $("previewBtn").addEventListener("click", async () => {
       $("resultBox").textContent = "Rolling…";
       try {
-        const res = await fetch("/api/preview", {
+        const res = await fetch("/api/randomizer/preview", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(assembleFilters()),
@@ -539,7 +539,7 @@
 
     $("saveBtn").addEventListener("click", async () => {
       try {
-        const res = await fetch("/api/publish", {
+        const res = await fetch("/api/randomizer/publish", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(assembleFilters()),

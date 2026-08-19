@@ -1340,7 +1340,7 @@
     if (!token || !isSyncEnabled()) return;
     clearTimeout(syncPushTimer);
     syncPushTimer = setTimeout(() => {
-      fetch(BOT_API_ORIGIN + "/api/publish", {
+      fetch(BOT_API_ORIGIN + "/api/randomizer/publish", {
         method: "POST",
         headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
         body: JSON.stringify(d),
@@ -1357,7 +1357,7 @@
   // so it just leaves the last-known local state in place rather than being noisy.
   async function pullAndApplySyncedFilters(token) {
     try {
-      const res = await fetch(BOT_API_ORIGIN + "/api/filters", { headers: { "Authorization": "Bearer " + token } });
+      const res = await fetch(BOT_API_ORIGIN + "/api/randomizer/filters", { headers: { "Authorization": "Bearer " + token } });
       if (res.status === 401) { clearSync(); return; }
       if (!res.ok) return;
       const filters = await res.json();

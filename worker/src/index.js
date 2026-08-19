@@ -234,12 +234,27 @@ export default {
     if (pathname === "/auth/callback" && method === "GET") return handleCallback(request, env);
     if (pathname === "/auth/logout" && method === "POST") return handleLogout();
 
-    if ((pathname === "/api/me" || pathname === "/api/filters" || pathname === "/api/publish")
+    // API namespacing: /api/<app>/* per app, with /api/me the one genuinely shared route
+    // (it returns the Twitch login and nothing app-specific).
+    //
+    // The bare /api/filters|preview|publish are the ORIGINAL names, from when this Worker
+    // served one app and "filters" was unambiguous. They are kept as permanent aliases, not
+    // deprecated: an alias is one map entry, and removing it buys nothing while risking a
+    // client somewhere still calling it. New apps must NOT extend them — add /api/<app>/*.
+    const API_ALIASES = {
+      "/api/filters": "/api/randomizer/filters",
+      "/api/preview": "/api/randomizer/preview",
+      "/api/publish": "/api/randomizer/publish",
+    };
+    const apiPath = API_ALIASES[pathname] || pathname;
+
+    if ((apiPath === "/api/me" || apiPath === "/api/randomizer/filters"
+         || apiPath === "/api/randomizer/publish" || apiPath === "/api/randomizer/preview")
         && method === "OPTIONS") return handleCorsPreflight();
 
-    if (pathname === "/api/me" && method === "GET") return handleMe(request, env);
-    if (pathname === "/api/filters" && method === "GET") return handleGetFilters(request, env);
-    if (pathname === "/api/preview" && method === "POST") {
+    if (apiPath === "/api/me" && method === "GET") return handleMe(request, env);
+    if (apiPath === "/api/randomizer/filters" && method === "GET") return handleGetFilters(request, env);
+    if (apiPath === "/api/randomizer/preview" && method === "POST") {
       let DATA;
       try {
         DATA = await getData();
@@ -248,7 +263,7 @@ export default {
       }
       return handlePreview(request, env, DATA);
     }
-    if (pathname === "/api/publish" && method === "POST") return handlePublish(request, env);
+    if (apiPath === "/api/randomizer/publish" && method === "POST") return handlePublish(request, env);
 
     // MHGU Bingo share codes. Independent of the OAuth routes above — a bingo card has
     // no identity, just a write key minted on first publish. See bingo.js.
