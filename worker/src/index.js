@@ -7,7 +7,7 @@ import { handleBingoPublish, handleBingoGet, handleBingoLink, handleBingoRoll, h
 // Durable Object it uses is the first stateful primitive in this Worker. See live.js.
 import {
   handleLiveCorsPreflight, handleLiveCreate, handleLiveGet,
-  handleLiveDraw, handleLiveEnd, handleLiveDelete, parseLiveSession,
+  handleLiveDraw, handleLiveEnd, handleLiveDelete, parseLiveSession, handleLiveLink,
 } from "./live.js";
 
 // The web app's already-public data.js — reused as-is rather than bundling a second
@@ -304,6 +304,7 @@ export default {
 
     // Live talisman-bingo sessions. The session string is validated before a Durable
     // Object is addressed, exactly as /bingo/:code validates its code above.
+    if (pathname === "/live-link" && method === "GET") return handleLiveLink(url, env);
     if (pathname === "/live" || pathname.startsWith("/live/")) {
       if (method === "OPTIONS") return handleLiveCorsPreflight();
       if (pathname === "/live") {

@@ -4,7 +4,7 @@
 // The Gamemaster draws and POSTs the new draw number; viewers poll for it. Only an integer
 // crosses the wire — every client turns it into the identical talisman locally.
 import { verifySessionCookie, getCookie } from "./session.js";
-import { SESSION_COOKIE_NAME, MAIN_SITE_ORIGIN } from "./auth.js";
+import { SESSION_COOKIE_NAME, MAIN_SITE_ORIGIN, TALISMAN_APP_URL } from "./auth.js";
 
 // This payload is one short seed string. bingo.js allows 96 KB because it uploads a whole
 // 10x10 card; there is nothing here that could legitimately approach 1 KB.
@@ -79,6 +79,20 @@ const cleanSession = (v) => {
   return s.length <= MAX_SESSION_LEN && SESSION_RE.test(s) ? s : null;
 };
 
+// A channel's current session, so chat can answer "how do I join?" without anyone reading a
+// 25-character seed aloud. Reuses MHGU_BINGO_CARDS with a `live:` prefix rather than adding a
+// binding: it collides with neither that namespace's 6-char card codes nor its `ch:` keys.
+//
+// KV is fine HERE and wrong for the counter. This is a pointer written once when a session
+// starts, so up to ~60s of propagation lag only means a viewer asking within the first minute
+// gets the previous answer. The draw number could not tolerate that, which is why it lives in
+// a Durable Object instead.
+const LINK_TTL_SECONDS = 24 * 3600;
+const channelKey = (raw) => {
+  const c = String(raw || "").trim().toLowerCase().replace(/^#/, "");
+  return /^[a-z0-9_]{1,25}$/.test(c) ? "live:ch:" + c : null;
+};
+
 const stub = (env, session) =>
   env.LIVE_SESSIONS.get(env.LIVE_SESSIONS.idFromName("live:" + session));
 
@@ -129,6 +143,14 @@ export async function handleLiveCreate(request, env) {
 
   const res = await stub(env, id).claim({ session: id, owner: session.login });
   if (res.error === "already_claimed") return json({ error: "already_claimed" }, 409);
+  // Point the owner's channel at this session so !talisman can answer. Best-effort: a failed
+  // write costs a chat command, not the game.
+  const ck = channelKey(session.login);
+  if (ck) {
+    try {
+      await env.MHGU_BINGO_CARDS.put(ck, id, { expirationTtl: LINK_TTL_SECONDS });
+    } catch (e) {}
+  }
   readCache.delete(id);
   return json({ ...res, session: id }, 201);
 }
@@ -217,6 +239,25 @@ export async function handleLiveDelete(request, env, id) {
     status: 204,
     headers: { "Access-Control-Allow-Origin": MAIN_SITE_ORIGIN },
   });
+}
+
+// GET /live-link?channel=NAME — plain text for a chat bot, mirroring handleBingoLink.
+// Returns a joinable URL, because a 25-character seed is not something anyone should have to
+// read out or retype.
+export async function handleLiveLink(url, env) {
+  const text = (body, status = 200) => new Response(body, {
+    status,
+    headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" },
+  });
+  const raw = url.searchParams.get("channel");
+  if (!raw) return text("This command needs a channel — check it passes ?channel= (Nightbot: $(channel)).");
+  const ck = channelKey(raw);
+  if (!ck) return text("That doesn't look like a Twitch channel name.");
+  let session = null;
+  try { session = await env.MHGU_BINGO_CARDS.get(ck); } catch (e) {}
+  if (!session) return text("No live talisman bingo session right now — ask the streamer to start one.");
+  return text("Join the talisman bingo: " + TALISMAN_APP_URL + "?session=" + encodeURIComponent(session)
+    + " — you get your own card and it follows the draws automatically.");
 }
 
 // Shared by the router so an invalid session string is rejected before a Durable Object is
