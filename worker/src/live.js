@@ -93,6 +93,12 @@ const channelKey = (raw) => {
   return /^[a-z0-9_]{1,25}$/.test(c) ? "live:ch:" + c : null;
 };
 
+async function clearChannelPointer(env, login) {
+  const ck = channelKey(login);
+  if (!ck) return;
+  try { await env.MHGU_BINGO_CARDS.delete(ck); } catch (e) {}
+}
+
 const stub = (env, session) =>
   env.LIVE_SESSIONS.get(env.LIVE_SESSIONS.idFromName("live:" + session));
 
@@ -224,6 +230,7 @@ export async function handleLiveEnd(request, env, id) {
   const res = await stub(env, id).end({ owner: session.login });
   if (res.error === "forbidden") return json({ error: "forbidden" }, 403);
   if (res.error === "not_found") return json({ error: "not_found" }, 404);
+  await clearChannelPointer(env, session.login);
   readCache.delete(id);
   return json(res);
 }
@@ -234,6 +241,7 @@ export async function handleLiveDelete(request, env, id) {
   const res = await stub(env, id).destroy({ owner: session.login });
   if (res.error === "forbidden") return json({ error: "forbidden" }, 403);
   if (res.error === "not_found") return json({ error: "not_found" }, 404);
+  await clearChannelPointer(env, session.login);
   readCache.delete(id);
   return new Response(null, {
     status: 204,
@@ -256,6 +264,14 @@ export async function handleLiveLink(url, env) {
   let session = null;
   try { session = await env.MHGU_BINGO_CARDS.get(ck); } catch (e) {}
   if (!session) return text("No live talisman bingo session right now — ask the streamer to start one.");
+  // The pointer is KV: eventually consistent, and it outlives a session that was ended,
+  // deleted or expired. The Durable Object is the only thing that knows if a game is
+  // actually running, so ask it before handing anyone a link to a dead one.
+  let state = null;
+  try { state = await stub(env, session).read(); } catch (e) {}
+  if (!state || state.ended) {
+    return text("No live talisman bingo session right now — ask the streamer to start one.");
+  }
   return text("Join the talisman bingo: " + TALISMAN_APP_URL + "?session=" + encodeURIComponent(session)
     + " — you get your own card and it follows the draws automatically.");
 }
