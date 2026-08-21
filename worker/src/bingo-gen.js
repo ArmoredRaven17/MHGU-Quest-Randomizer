@@ -49,7 +49,7 @@ const CATEGORY_COLORS = {
   Low: "#f2c53d", High: "#f5851f", G: "#e5383b",
   SP: "#8b31d9", Event: "#2456c7", Arena: "#8a8f98", "": "#8a8f98",
 };
-const POOL_COLORS = { objective: "#9b8cff", custom: "#5ec9a0", free: "#8a8f98" };
+const POOL_COLORS = { objective: "#9b8cff", talisman: "#d95a9c", custom: "#5ec9a0", free: "#8a8f98" };
 
 const SP_TIERS = {I:1,II:2,III:3,IV:4,V:5,VI:6,VII:7,VIII:8,IX:9,X:10,G1:11,G2:12,G3:13,G4:14,G5:15,EX:16};
 
@@ -59,8 +59,9 @@ const monsterIcon = (name) => name
   : FALLBACK_ICON;
 const weaponIcon = (w) => "assets/WeaponIcons/icon_" +
   w.toLowerCase().replace(/ & /g, "_and_").replace(/ /g, "_") + "_tinted.png";
+const talismanIcon = (r) => "assets/TalismanIcons/icon_talisman_r" + r + ".png";
 
-const DEFAULT_CFG = { size: 5, free: true, cats: { monster: 4, weapon: 3, objective: 2, custom: 3 } };
+const DEFAULT_CFG = { size: 5, free: true, cats: { monster: 4, weapon: 3, objective: 2, talisman: 2, custom: 3 } };
 
 const DEFAULT_POOL = [
   "Get carted by a large monster",
@@ -113,7 +114,7 @@ function weightedShuffle(items, rng) {
 
 const B32 = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
 const b32 = (n, len) => { let s = ""; for (let i = 0; i < len; i++) { s = B32[n & 31] + s; n = n >>> 5; } return s; };
-const CAT_LETTER = { monster:"M", weapon:"W", objective:"O", custom:"C" };
+const CAT_LETTER = { monster:"M", weapon:"W", objective:"O", talisman:"T", custom:"C" };
 
 // The only unseeded draw: a fresh card token per !bingo. Uses Web Crypto rather than
 // Math.random since Workers isolates can share a seeded PRNG state across requests.
@@ -285,6 +286,28 @@ function weaponGoals(pool, f) {
   return out;
 }
 
+// Talisman squares — mirrors docs/app.js. Rarity, slot count, skill; never points or
+// combos. The skill list is derived at build time and travels in DATA.talismans.
+function talismanGoals(DATA) {
+  const T = (DATA && DATA.talismans) || { names: {}, slots: [], skills: [] };
+  const out = [];
+  for (let r = 1; r <= 10; r++) {
+    const name = T.names[r];
+    if (!name) continue;
+    out.push({ key: "t:r:" + r, cat: "talisman", text: "Obtain a " + name,
+               sub: "", icon: talismanIcon(r), tint: POOL_COLORS.talisman });
+  }
+  for (const n of (T.slots || [])) {
+    out.push({ key: "t:s:" + n, cat: "talisman", text: "Obtain a " + n + "-slot Talisman",
+               sub: "", icon: "", tint: POOL_COLORS.talisman });
+  }
+  for (const name of (T.skills || [])) {
+    out.push({ key: "t:k:" + name, cat: "talisman", text: "Obtain a Talisman with " + name,
+               sub: "", icon: "", tint: POOL_COLORS.talisman });
+  }
+  return out;
+}
+
 // One objective per Objective Filters checkbox, in the panel's own order — see docs/app.js.
 // Ordering is load-bearing.
 const OBJECTIVES = [
@@ -313,18 +336,19 @@ const CATS = [
   { id:"monster",   items:(pool)       => monsterGoals(pool) },
   { id:"weapon",    items:(pool, f)    => weaponGoals(pool, f) },
   { id:"objective", items:(pool, f)    => objectiveGoals(pool, f) },
+  { id:"talisman",  items:(pool, f, cp, DATA) => talismanGoals(DATA) },
   { id:"custom",    items:(pool, f, cp) => customGoals(cp) },
 ];
 
 // ── Card construction (mirrors docs/app.js) ──────────────────────────────────
-function buildCells(rng, c, pool, f, customPool) {
+function buildCells(rng, c, pool, f, customPool, DATA) {
   const n = c.size * c.size;
   const freeIdx = effFree(c) ? (n - 1) / 2 : -1;
   const need = n - (freeIdx >= 0 ? 1 : 0);
   const active = CATS.filter(x => (c.cats[x.id] | 0) > 0);
 
   const bags = {};
-  for (const x of active) bags[x.id] = weightedShuffle(x.items(pool, f, customPool), rng);
+  for (const x of active) bags[x.id] = weightedShuffle(x.items(pool, f, customPool, DATA), rng);
 
   const used = new Set(), drawn = [];
   while (drawn.length < need) {
@@ -369,7 +393,7 @@ export function generateCard(DATA, token) {
   const body = seedBody(cfg, tok);
   const fp = b32(hashStr(fingerprint(DATA, f, customPool)), 4);
   // Seeded on the body only — never the fingerprint. See docs/app.js's generate().
-  const built = buildCells(makeRng(body), cfg, pool, f, customPool);
+  const built = buildCells(makeRng(body), cfg, pool, f, customPool, DATA);
 
   return {
     seed: body + "-" + fp,
