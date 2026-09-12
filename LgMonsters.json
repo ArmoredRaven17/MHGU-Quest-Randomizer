@@ -220,11 +220,19 @@
     "Species": "Flying Wyvern"
   },
   {
+    "MonsterName": "Silver Rathalos",
+    "Species": "Flying Wyvern"
+  },
+  {
     "MonsterName": "Rathian",
     "Species": "Flying Wyvern"
   },
   {
     "MonsterName": "Dreadqueen Rathian",
+    "Species": "Flying Wyvern"
+  },
+  {
+    "MonsterName": "Gold Rathian",
     "Species": "Flying Wyvern"
   },
   {
