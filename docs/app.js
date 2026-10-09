@@ -210,13 +210,8 @@
   const COLORS_ICON = Object.fromEntries(COLORS.filter(c => c[2]).map(([name,,icon]) => [name, icon]));
 
   // ── Icon path helpers ────────────────────────────────────────────────────
-  // Nakarkos is the one monster whose icon files are named for its parts
-  // (MHGU-Nakarkos_Body_Icon, MHGU-Nakarkos_Tentacle_Icon), so the bare name the quest
-  // data carries matches neither and used to 404 into the question mark. The body is the
-  // one that reads as the monster.
-  const ICON_ALIAS = { "Nakarkos": "Nakarkos Body" };
   const monsterIcon = (name) => name
-    ? "assets/MonsterIcons/MHGU-" + (ICON_ALIAS[name] || name).replace(/ /g, "_") + "_Icon.webp"
+    ? "assets/MonsterIcons/MHGU-" + name.replace(/ /g, "_") + "_Icon.webp"
     : FALLBACK_ICON;
   const FALLBACK_ICON = "assets/MonsterIcons/MHGU-Question_Mark_Icon.webp";
   const weaponIcon = (w) => "assets/WeaponIcons/icon_" +
