@@ -339,6 +339,9 @@
 
   buildChecklist($("weaponList"), WEAPONS, "w_", true);
   buildChecklist($("styleList"), STYLES, "s_", false);
+  // Locales come straight from the quest data, under the names quests already use.
+  const LOCALES = [...new Set(DATA.quests.map(q => q.Locale).filter(Boolean))].sort();
+  buildChecklist($("localeList"), LOCALES, "l_", false);
 
   // Blacklist UI
   function renderBlacklist() {
@@ -666,8 +669,9 @@
     const hasWeapon = isArena || anyChecked("#weaponList input") || $("p_prowler").checked;
     const hasStyle = isArena || anyChecked("#styleList input");
     const hasMonster = monsterChecks.some(m => m.input.checked);
+    const hasLocale = anyChecked("#localeList input");
     const biasOk = !$("p_prowler").checked || !$("p_rollBias").checked || anyChecked("#biasList input");
-    $("rollBtn").disabled = !(hasType && hasLevel && hasWeapon && hasStyle && hasMonster && biasOk);
+    $("rollBtn").disabled = !(hasType && hasLevel && hasWeapon && hasStyle && hasMonster && hasLocale && biasOk);
   }
 
   // ── Randomize ────────────────────────────────────────────────────────────
@@ -677,6 +681,7 @@
     const fromLv = $("fromLevel").value !== "" ? parseInt($("fromLevel").value, 10) : toLv;
     const inc = includedMonsters();
     const anyFiltered = inc.size < DATA.monsters.length;
+    const excludedLocales = new Set(uncheckedNames("#localeList input"));
 
     const f = {
       pQuests: $("p_quests").checked, large: $("f_large").checked,
@@ -693,6 +698,7 @@
 
       const rank = allRank(q);
       if (rank < 0 || !f.allLevels.has(rank)) return false;
+      if (excludedLocales.has(q.Locale)) return false;
 
       // ALL mode ranges over the unified 0–44 rank; a specific type ranges over that
       // type's own 1-based Level (fromLv/toLv are read in whichever space applies).
@@ -1199,7 +1205,7 @@
   $("questType").addEventListener("change", fillLevels);
   $("fromLevel").addEventListener("change", () => syncLevels("from"));
   $("toLevel").addEventListener("change", () => syncLevels("to"));
-  document.querySelectorAll("#weaponList,#styleList,#biasList").forEach(c =>
+  document.querySelectorAll("#weaponList,#styleList,#biasList,#localeList").forEach(c =>
     c.addEventListener("change", updateRollBtn));
   // "Prowler Quests?" and "Roll Bias?" only matter when "Prowler?" is on. Roll Bias
   // keeps its checked value while disabled (it's just a remembered preference), unlike
@@ -1296,7 +1302,7 @@
     fillLevels();
     syncTypeOptions();
     $("f_spArts").checked = true;
-    document.querySelectorAll("#weaponList input,#styleList input,#biasList input").forEach(i => i.checked = true);
+    document.querySelectorAll("#weaponList input,#styleList input,#biasList input,#localeList input").forEach(i => i.checked = true);
     setAllMonsters(true);
     setAllArts(true);
     blacklist = []; renderBlacklist();
@@ -1488,6 +1494,7 @@
       weapons: uncheckedNames("#weaponList input"),
       styles: uncheckedNames("#styleList input"),
       biases: uncheckedNames("#biasList input"),
+      locales: uncheckedNames("#localeList input"),
       monsters: monsterChecks.filter(m => !m.input.checked).map(m => m.name),
       arts: artLeaves.filter(l => !l.input.checked).map(l => l.name),
       blacklist: blacklist.slice(),
@@ -1517,6 +1524,7 @@
     applyUnchecked("#weaponList input", d.weapons);
     applyUnchecked("#styleList input", d.styles);
     applyUnchecked("#biasList input", d.biases);
+    applyUnchecked("#localeList input", d.locales);
     const ms = new Set(d.monsters || []); monsterChecks.forEach(m => { if (ms.has(m.name)) m.input.checked = false; });
     const as = new Set(d.arts || []);     artLeaves.forEach(l => { if (as.has(l.name)) l.input.checked = false; });
     if (d.t) {
@@ -1571,7 +1579,7 @@
       try {
         const d = JSON.parse(e.target.result);
         // Reset all to checked before applying the loaded unchecked sets
-        document.querySelectorAll("#weaponList input, #styleList input, #biasList input").forEach(i => i.checked = true);
+        document.querySelectorAll("#weaponList input, #styleList input, #biasList input, #localeList input").forEach(i => i.checked = true);
         monsterChecks.forEach(m => m.input.checked = true);
         artLeaves.forEach(l => l.input.checked = true);
         localStorage.setItem(FILTER_KEY, JSON.stringify(d));

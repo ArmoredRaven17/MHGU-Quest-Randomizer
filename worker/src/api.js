@@ -52,7 +52,7 @@ const DEFAULT_CHALLENGES = [
 ];
 
 const DEFAULT_SETTINGS_FILTERS = {
-  weapons: [], styles: [], biases: [], monsters: [], arts: [], blacklist: [],
+  weapons: [], styles: [], biases: [], monsters: [], locales: [], arts: [], blacklist: [],
   challenges: DEFAULT_CHALLENGES.map((c) => ({ ...c })),
   challengeCount: 1,
   t: {
@@ -86,7 +86,7 @@ function sanitizeFilters(filters) {
   const f = filters || {};
   const t = f.t || {};
   const clean = { t: {} };
-  ["weapons", "styles", "biases", "monsters", "arts"].forEach((k) => {
+  ["weapons", "styles", "biases", "monsters", "locales", "arts"].forEach((k) => {
     clean[k] = Array.isArray(f[k]) ? f[k].filter((v) => typeof v === "string") : [];
   });
   clean.blacklist = Array.isArray(f.blacklist)

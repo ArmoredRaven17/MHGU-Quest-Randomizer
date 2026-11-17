@@ -373,6 +373,7 @@
       weapons: uncheckedNames("#weaponList input"),
       styles: uncheckedNames("#styleList input"),
       biases: uncheckedNames("#biasList input"),
+      locales: uncheckedNames("#localeList input"),
       monsters: uncheckedNames("#monsterList input.leaf"),
       arts: uncheckedNames("#artList input.leaf"),
       blacklist: blacklist.slice(),
@@ -408,6 +409,7 @@
     applyUnchecked("#weaponList input", filters.weapons);
     applyUnchecked("#styleList input", filters.styles);
     applyUnchecked("#biasList input", filters.biases);
+    applyUnchecked("#localeList input", filters.locales);
     applyUnchecked("#monsterList input.leaf", filters.monsters);
     applyUnchecked("#artList input.leaf", filters.arts);
 
@@ -599,6 +601,8 @@
   async function init() {
     buildChecklist($("weaponList"), WEAPONS, "wpn");
     buildChecklist($("styleList"), STYLES, "sty");
+    // Names come straight from the quest data, same as the main site.
+    buildChecklist($("localeList"), [...new Set(DATA.quests.map((q) => q.Locale).filter(Boolean))].sort(), "loc");
     buildChecklist($("biasList"), BIAS_NAMES, "bias");
     buildRankGroups();
     buildMonsterList();

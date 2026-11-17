@@ -107,6 +107,7 @@ function normalizeFilters(filters) {
     uncheckedStyles: new Set(f2.styles || []),
     uncheckedBiases: new Set(f2.biases || []),
     uncheckedMonsters: new Set(f2.monsters || []),
+    uncheckedLocales: new Set(f2.locales || []),
     excludedArtNames: new Set(f2.arts || []),
     blacklist: f2.blacklist || [],
     spArtsEnabled: t.spArts !== false,
@@ -145,7 +146,7 @@ function rollChallenges(nf) {
 // Picks a single quest from DATA.quests respecting every quest-pool filter. Returns null
 // if nothing matches (caller shows a "no quests match" message).
 function pickFilteredQuest(DATA, nf) {
-  const { t, uncheckedMonsters } = nf;
+  const { t, uncheckedMonsters, uncheckedLocales } = nf;
   const inc = new Set(DATA.monsters.filter(m => !uncheckedMonsters.has(m.MonsterName)).map(m => m.MonsterName.toLowerCase()));
   const anyFiltered = inc.size < DATA.monsters.length;
 
@@ -164,6 +165,7 @@ function pickFilteredQuest(DATA, nf) {
   const pool = DATA.quests.filter(q => {
     const rank = allRank(q);
     if (rank < 0 || !allLevels.has(rank)) return false;
+    if (uncheckedLocales.has(q.Locale)) return false;
 
     if (q.LgMonster && !f.large) return false;
     if (f.keysOnly && !q.Key) return false;

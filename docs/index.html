@@ -76,6 +76,14 @@
       </section>
 
       <section class="panel" data-open="false">
+        <button class="panel-head">Locales <span class="chev">&#9662;</span></button>
+        <div class="panel-body">
+          <p class="hint">Uncheck to exclude from pool</p>
+          <div id="localeList"></div>
+        </div>
+      </section>
+
+      <section class="panel" data-open="false">
         <button class="panel-head">Weapons <span class="chev">&#9662;</span></button>
         <div class="panel-body">
           <p class="hint">Uncheck to exclude from pool</p>
@@ -242,7 +250,7 @@
     <p><strong>2. Narrow the pool with the sidebar filters:</strong></p>
     <ul>
       <li><strong>Quest Filters</strong> — uncheck categories to exclude them (all are on by default except Arena). Hypers, Captures, and Multi Monster sit under Large Monsters and are also excluded when it is off. The S. Permit filters (One Faint, On-Site Items) restrict those Special Permit quests. Quest Type Filters let you disable individual levels (e.g. turn off all G-Rank levels globally).</li>
-      <li><strong>Monsters / Weapons / Styles</strong> — uncheck anything to exclude it from the roll.</li>
+      <li><strong>Monsters / Locales / Weapons / Styles</strong> — uncheck anything to exclude it from the roll.</li>
       <li><strong>Hunter Arts</strong> — uncheck arts to exclude them, by weapon, by named art, or by individual level (I / II / III).</li>
       <li><strong>Restrictions</strong> — add weapon + style combos that will never be rolled together (e.g. Bow + Aerial).</li>
       <li><strong>Challenges</strong> — add your own conditions (e.g. "No Armor"), each with a chance %, that roll alongside the quest. Set how many can apply per quest, and toggle each one on/off. Names and chances are editable inline. <strong>Chaos Mode</strong> hands that decision over to the RNG instead — your on/off toggles lock, and the app decides what's active each roll.</li>
@@ -508,6 +516,6 @@
 </div>
 
 <script src="data.js?v=32"></script>
-<script src="app.js?v=154"></script>
+<script src="app.js?v=155"></script>
 </body>
 </html>
